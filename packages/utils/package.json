@@ -1,0 +1,14 @@
+{
+  "name": "@axi-engine/utils",
+  "version": "0.2.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "test": "echo 'No tests yet'"
+  },
+  "files": [
+    "dist"
+  ]
+}

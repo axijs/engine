@@ -1,0 +1,20 @@
+{
+  "name": "axi-engine",
+  "version": "0.0.2",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "typescript": "~5.8.2",
+    "tsup": "^8.5.1",
+    "@types/node": "latest"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "private": true
+}
