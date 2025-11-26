@@ -1,14 +1,33 @@
 {
   "name": "@axi-engine/utils",
-  "version": "0.2.0",
+  "version": "0.1.4",
+  "description": "Core utility library for Axi Engine, providing common functions for arrays, math, type guards, and more.",
+  "license": "MIT",
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev",
+    "utils"
+  ],
+  "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --clean",
-    "test": "echo 'No tests yet'"
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
+    "test": "echo 'No tests yet for @axi-engine/utils'"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "uuid": "^13.0.0"
+  }
 }

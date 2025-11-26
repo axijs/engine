@@ -1,20 +1,31 @@
 {
   "name": "axi-engine",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A modular game engine built with TypeScript and powered by Pixi.js",
+  "license": "MIT",
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev"
+  ],
   "main": "index.js",
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "devDependencies": {
-    "typescript": "~5.8.2",
+    "@types/node": "latest",
     "tsup": "^8.5.1",
-    "@types/node": "latest"
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.9.0",
+    "typescript": "~5.8.2"
   },
   "scripts": {
     "build": "npm run build --workspaces",
-    "test": "npm run test --workspaces"
+    "test": "npm run test --workspaces",
+    "build:utils": "npm run build --workspace=@axi-engine/utils",
+    "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
+    "release:utils": "npm run build:utils && npm run publish:utils"
   },
   "private": true
 }
