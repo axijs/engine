@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/fields",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "license": "MIT",
   "keywords": [
@@ -28,7 +28,9 @@
     "dist"
   ],
   "dependencies": {
-    "@preact/signals-core": "^1.12.1",
+    "@preact/signals-core": "^1.12.1"
+  },
+  "devDependencies": {
     "@axi-engine/events": "*",
     "@axi-engine/utils": "*"
   }
