@@ -30,7 +30,7 @@ const isSame = haveSameElements(['a', 'b'], ['b', 'a']); // Returns true
 ```
 
 
-API Reference
+## API Reference
 
 Will be available when code and repository will be fully published 
 
