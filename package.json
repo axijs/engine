@@ -23,6 +23,8 @@
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
     "build:events": "npm run build --workspace=@axi-engine/events",
+    "publish:events": "npm publish --workspace=@axi-engine/events --access public",
+    "release:events": "npm run build:events && npm run publish:events",
 
     "build:utils": "npm run build --workspace=@axi-engine/utils",
     "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",

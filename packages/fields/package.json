@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/fields",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "license": "MIT",
   "keywords": [
@@ -28,11 +28,8 @@
     "dist"
   ],
   "dependencies": {
-    "@axi-engine/utils": "*",
-    "eventemitter3": "^5.0.1"
-  },
-  "devDependencies": {
-    "@axi-engine/events": "0.1.0"
+    "@axi-engine/utils": "^0.1.4",
+    "@axi-engine/events": "^0.1.0"
   },
   "peerDependencies": {
     "@preact/signals-core": "^1.12.1"

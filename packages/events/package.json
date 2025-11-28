@@ -1,11 +1,14 @@
 {
   "name": "@axi-engine/events",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
-    "test": "echo 'No tests yet for @axi-engine/events'"
-  },
+  "description": "Event emitter for Axi Engine",
+  "license": "MIT",
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev",
+    "fields"
+  ],
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -15,6 +18,10 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "echo 'No tests yet for @axi-engine/events'"
   },
   "files": [
     "dist"
