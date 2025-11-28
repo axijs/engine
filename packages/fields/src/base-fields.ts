@@ -2,8 +2,9 @@ import {ReadonlySignal, signal, Signal} from '@preact/signals-core';
 import {Field} from './field';
 import {FieldCreatedEvent, FieldRemovedEvent} from './field-events';
 import {FieldsNodeType} from './fields-types';
-import {AxiEventEmitter} from '@axi-engine/events';
+import {AxiEventEmitter} from './internals/event-emitter';
 import {throwIf} from '@axi-engine/utils';
+
 
 /**
  * An abstract base class for managing a reactive collection of `Field` instances.

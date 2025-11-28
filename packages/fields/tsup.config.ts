@@ -5,5 +5,5 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
-  noExternal: ['@axi-engine/events'],
+  tsconfig: './tsconfig.base.json'
 });
