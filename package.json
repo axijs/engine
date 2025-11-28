@@ -22,6 +22,8 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
+    "build:events": "npm run build --workspace=@axi-engine/events",
+
     "build:utils": "npm run build --workspace=@axi-engine/utils",
     "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
     "release:utils": "npm run build:utils && npm run publish:utils",

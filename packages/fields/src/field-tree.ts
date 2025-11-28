@@ -5,8 +5,8 @@ import {NumberField} from './number-field';
 import {TypedFields} from './typed-fields';
 import {BaseFields} from './base-fields';
 import {FieldsNodeType} from './fields-types';
-import {AxiEventEmitter} from './internals/event-emitter';
 import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {AxiEventEmitter} from '@axi-engine/events';
 
 
 

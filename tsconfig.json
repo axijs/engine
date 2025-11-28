@@ -13,6 +13,7 @@
     "baseUrl": ".",
     "paths": {
       "@axi-engine/utils": ["packages/utils/src"],
+      "@axi-engine/events": ["packages/events/src"],
       "@axi-engine/fields": ["packages/fields/src"]
     }
   }
