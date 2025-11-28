@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/fields",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "license": "MIT",
   "keywords": [
@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
     "test": "echo 'No tests yet for @axi-engine/fields'"
   },
@@ -28,10 +28,10 @@
     "dist"
   ],
   "dependencies": {
-    "@preact/signals-core": "^1.12.1"
+    "@axi-engine/utils": "*",
+    "@axi-engine/events": "*"
   },
-  "devDependencies": {
-    "@axi-engine/events": "*",
-    "@axi-engine/utils": "*"
+  "peerDependencies": {
+    "@preact/signals-core": "^1.12.1"
   }
 }
