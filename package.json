@@ -22,17 +22,23 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
+
     "build:events": "npm run build --workspace=@axi-engine/events",
     "publish:events": "npm publish --workspace=@axi-engine/events --access public",
     "release:events": "npm run build:events && npm run publish:events",
 
-    "build:utils": "npm run build --workspace=@axi-engine/utils",
-    "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
-    "release:utils": "npm run build:utils && npm run publish:utils",
-
     "build:fields": "npm run build --workspace=@axi-engine/fields",
     "publish:fields": "npm publish --workspace=@axi-engine/fields --access public",
-    "release:fields": "npm run build:fields && npm run publish:fields"
+    "release:fields": "npm run build:fields && npm run publish:fields",
+
+    "build:states": "npm run build --workspace=@axi-engine/states",
+    "publish:states": "npm publish --workspace=@axi-engine/states --access public",
+    "release:states": "npm run build:states && npm run publish:states",
+
+    "build:utils": "npm run build --workspace=@axi-engine/utils",
+    "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
+    "release:utils": "npm run build:utils && npm run publish:utils"
+
   },
   "private": true
 }

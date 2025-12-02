@@ -1,13 +1,19 @@
 {
-  "name": "@axi-engine/utils",
-  "version": "0.1.5",
-  "description": "Core utility library for Axi Engine, providing common functions for arrays, math, type guards, and more.",
+  "name": "@axi-engine/states",
+  "version": "0.1.0",
+  "description": "A minimal, type-safe state machine for the Axi Engine, designed for managing game logic and component states with a simple API.",
   "license": "MIT",
   "keywords": [
     "axi-engine",
     "typescript",
     "gamedev",
-    "utils"
+    "game-development",
+    "game-engine",
+    "state-machine",
+    "finite-state-machine",
+    "fsm",
+    "state-management",
+    "events"
   ],
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -20,14 +26,14 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
-    "test": "echo 'No tests yet for @axi-engine/utils'"
+    "test": "echo 'No tests yet for @axi-engine/states'"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "uuid": "^13.0.0"
+    "@axi-engine/utils": "^0.1.5"
   }
 }
