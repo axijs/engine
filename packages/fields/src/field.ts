@@ -1,19 +1,24 @@
 import {FieldPolicy} from './field-policies';
-import {ReadonlySignal, Signal, signal} from '@preact/signals-core';
+import {Emitter} from '@axi-engine/utils';
 
 /**
- * A reactive state container that wraps a value, making it observable through a Preact Signal.
+ * A state container that wraps a value.
  * It allows applying a pipeline of transformation or validation "policies" before any new value is set.
  *
  * @template T The type of the value this field holds.
  *
  */
 export class Field<T> {
-  private readonly policies = new Map<string, FieldPolicy<T>>();
-  private readonly _val: Signal<T>;
-
   /** A unique identifier for the field. */
-  name: string;
+  private readonly _name: string;
+  private _val!: T;
+
+  private readonly policies = new Map<string, FieldPolicy<T>>();
+  readonly onChange: Emitter<[T]> = new Emitter<[T]>();
+
+  get name() {
+    return this._name;
+  }
 
   /**
    * Creates an instance of a Field.
@@ -23,8 +28,7 @@ export class Field<T> {
    * @param options.policies An array of policies to apply to the field's value on every `set` operation.
    */
   constructor(name: string, initialVal: T, options?: { policies?: FieldPolicy<T>[] }) {
-    this._val = signal<T>(initialVal);
-    this.name = name;
+    this._name = name;
     options?.policies?.forEach(policy => this.policies.set(policy.id, policy));
     this.set(initialVal);
   }
@@ -34,14 +38,6 @@ export class Field<T> {
    * For reactive updates, it's recommended to use the `.signal` property instead.
    */
   get val(): T {
-    return this._val.value;
-  }
-
-  /**
-   * Provides readonly access to the underlying Preact Signal.
-   * Subscribe to this signal to react to value changes.
-   */
-  get signal(): ReadonlySignal<T> {
     return this._val;
   }
 
@@ -53,7 +49,8 @@ export class Field<T> {
   set(val: T) {
     let finalVal = val;
     this.policies.forEach(policy => finalVal = policy.apply(finalVal));
-    this._val.value = finalVal;
+    this._val = finalVal;
+    this.onChange.emit(this._val);
   }
 
   /**

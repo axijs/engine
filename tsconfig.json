@@ -1,20 +1,42 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    // baseUrl and paths required for IDE for correct aliases resolving
     "baseUrl": ".",
     "paths": {
-      "@axi-engine/utils": ["packages/utils/src"],
-      "@axi-engine/events": ["packages/events/src"],
-      "@axi-engine/fields": ["packages/fields/src"]
+      "@axi-engine/utils": [
+        "packages/utils/src"
+      ],
+      "@axi-engine/fields": [
+        "packages/fields/src"
+      ],
+      "@axi-engine/states": [
+        "packages/states/src"
+      ]
     }
-  }
+  },
+
+  "files": [],
+  /**
+    * the references property to list all the projects of the monorepo.
+    * For each of the projects, we need to provide a path property with
+    * a relative file system path to the project root.
+    * The files field should contain an empty list to prevent double compilation of files
+    * (according to official TypeScript guidelines: https://www.typescriptlang.org/docs/handbook/project-references.html#guidance).
+  */
+  "references": [
+    {
+      "path": "packages/utils"
+    },
+    {
+      "path": "packages/fields"
+    },
+    {
+      "path": "packages/states"
+    },
+    {
+      "path": "apps/playground"
+    }
+  ]
 }
+

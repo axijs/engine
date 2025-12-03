@@ -1,4 +1,3 @@
-import {ReadonlySignal, signal, Signal} from '@preact/signals-core';
 import {Fields} from './fields';
 import {Field} from './field';
 import {NumberField} from './number-field';
@@ -6,7 +5,6 @@ import {TypedFields} from './typed-fields';
 import {BaseFields} from './base-fields';
 import {FieldsNodeType} from './fields-types';
 import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
-import {AxiEventEmitter} from '@axi-engine/events';
 
 
 
@@ -36,19 +34,11 @@ export type FieldTreeContainerEvent = {
  * - add node removing
  */
 export class FieldTree {
-  private readonly _items: Signal<Map<string, TreeOrFieldsContainer>>;
-  readonly events = new AxiEventEmitter<'created' | 'removed'>();
+  private readonly _items: Map<string, TreeOrFieldsContainer> = new Map();
+  // readonly events = new AxiEventEmitter<'created' | 'removed'>();
 
-  /**
-   * A readonly signal providing access to the map of child nodes.
-   * Use this with `effect` to react to structural changes in the tree (e.g., adding a new `Fields` container).
-   */
-  get items(): ReadonlySignal<ReadonlyMap<string, TreeOrFieldsContainer>> {
+  get items() {
     return this._items;
-  }
-
-  constructor() {
-    this._items = signal(new Map<string, TreeOrFieldsContainer>());
   }
 
   /**
@@ -61,7 +51,7 @@ export class FieldTree {
 
     for (let i = 0; i < pathParts.length; i++) {
       const part = pathParts[i];
-      const nextNode: TreeOrFieldsContainer | undefined = currentNode._items.value.get(part);
+      const nextNode: TreeOrFieldsContainer | undefined = currentNode._items.get(part);
       if (!nextNode) {
         return false;
       }
@@ -125,7 +115,7 @@ export class FieldTree {
    * @throws If a node with the given name cannot be found.
    */
   getNode(name: string): TreeOrFieldsContainer {
-    const node = this._items.value.get(name);
+    const node = this._items.get(name);
     throwIfEmpty(node, `Can't find node with name '${name}'`);
     return node!;
   }
@@ -229,7 +219,7 @@ export class FieldTree {
     const dump: Record<string, any> = {
       __type: FieldsNodeType.fieldTree
     };
-    this._items.value.forEach((node, key) => dump[key] = node.snapshot());
+    this._items.forEach((node, key) => dump[key] = node.snapshot());
     return dump;
   }
 
@@ -247,7 +237,7 @@ export class FieldTree {
       const field = snapshot[key];
       const type = field?.__type;
 
-      let node: TreeOrFieldsContainer | undefined = this._items.value.get(key);
+      let node: TreeOrFieldsContainer | undefined = this._items.get(key);
       if (!node) {
         if (type === FieldsNodeType.fields) {
           node = this.createFields(key);
@@ -269,20 +259,18 @@ export class FieldTree {
    * @returns The newly created node instance.
    */
   private createNode<T extends TreeOrFieldsContainer>(name: string, ctor: ContainerCtor<T>): T {
-    const currentItems = this._items.value;
-    throwIf(currentItems.has(name), `Can't create node with name: '${name}', node already exists`);
+    throwIf(this._items.has(name), `Can't create node with name: '${name}', node already exists`);
 
     const res = new ctor();
-    const newItems = new Map(currentItems);
-    newItems.set(name, res);
-    this._items.value = newItems;
+    this._items.set(name, res);
 
-    this.events.emit('created', {
-      type: 'created',
-      name: name,
-      path: [], // todo: need to decide how to pass full path
-      node: res
-    } as FieldTreeContainerEvent);
+    /** todo: restore */
+    // this.events.emit('created', {
+    //   type: 'created',
+    //   name: name,
+    //   path: [], // todo: need to decide how to pass full path
+    //   node: res
+    // } as FieldTreeContainerEvent);
 
     return res;
   }

@@ -1,26 +1,34 @@
 {
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
-    "target": "ES2022",
     "useDefineForClassFields": true,
-    "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
-    "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
 
     /* Linting */
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@axi-engine/utils": ["../../packages/utils/src"],
+      "@axi-engine/fields": ["../../packages/fields/src"],
+      "@axi-engine/states": ["../../packages/states/src"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "references": [
+    { "path": "../../packages/utils" },
+    { "path": "../../packages/fields" },
+    { "path": "../../packages/states" }
+  ]
 }

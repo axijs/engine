@@ -28,10 +28,6 @@
     "dist"
   ],
   "dependencies": {
-    "@axi-engine/utils": "^0.1.4",
-    "@axi-engine/events": "^0.1.0"
-  },
-  "peerDependencies": {
-    "@preact/signals-core": "^1.12.1"
+    "@axi-engine/utils": "^0.1.5"
   }
 }

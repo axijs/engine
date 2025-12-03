@@ -1,13 +1,11 @@
-import {ReadonlySignal, signal, Signal} from '@preact/signals-core';
 import {Field} from './field';
 import {FieldCreatedEvent, FieldRemovedEvent} from './field-events';
 import {FieldsNodeType} from './fields-types';
 import {throwIf} from '@axi-engine/utils';
-import {AxiEventEmitter} from '@axi-engine/events';
 
 
 /**
- * An abstract base class for managing a reactive collection of `Field` instances.
+ * An abstract base class for managing a collection of `Field` instances.
  *
  * This class is designed to be the foundation for state management systems,
  * such as managing stats, flags, or items.
@@ -15,15 +13,9 @@ import {AxiEventEmitter} from '@axi-engine/events';
  * @template T The common base type for the values held by the fields in this collection.
  */
 export abstract class BaseFields<T> {
-  protected readonly _fields: Signal<Map<string, Field<T>>> = signal(new Map());
-  readonly events = new AxiEventEmitter<'created' | 'removed'>();
+  protected readonly _fields: Map<string, Field<T>> = new Map();
 
-  /**
-   * A readonly signal providing access to the current map of fields.
-   * Use this signal with `effect` to react when fields are added or removed from the collection.
-   * Avoid to change any data in the map manually.
-   */
-  get fields(): ReadonlySignal<ReadonlyMap<string, Field<any>>> {
+  get fields() {
     return this._fields;
   }
 
@@ -33,7 +25,7 @@ export abstract class BaseFields<T> {
    * @returns `true` if the field exists, otherwise `false`.
    */
   has(name: string) {
-    return this._fields.value.has(name);
+    return this._fields.has(name);
   }
 
   /**
@@ -55,14 +47,13 @@ export abstract class BaseFields<T> {
   add(field: Field<T>): Field<T> {
     throwIf(this.has(field.name), `Field with name '${field.name}' already exists`);
 
-    const fieldsMap = new Map(this._fields.value);
-    fieldsMap.set(field.name, field);
-    this._fields.value = fieldsMap;
+    this._fields.set(field.name, field);
 
-    this.events.emit('created', {
-      fieldName: field.name,
-      field: field
-    } as FieldCreatedEvent<T>);
+    // todo: restore
+    // this.events.emit('created', {
+    //   fieldName: field.name,
+    //   field: field
+    // } as FieldCreatedEvent<T>);
 
     return field;
   }
@@ -74,8 +65,8 @@ export abstract class BaseFields<T> {
    * @returns The `Field` instance.
    */
   get(name: string): Field<T> {
-    throwIf(!this._fields.value.has(name), `Field with name '${name}' not exists`);
-    return this._fields.value.get(name)!;
+    throwIf(!this._fields.has(name), `Field with name '${name}' not exists`);
+    return this._fields.get(name)!;
   }
 
   /**
@@ -100,30 +91,28 @@ export abstract class BaseFields<T> {
    */
   remove(names: string | string[]) {
     const namesToRemove = Array.isArray(names) ? names : [names];
-    const fieldsMap = new Map(this._fields.value);
     const reallyRemoved = namesToRemove.filter(name => {
-      const field = fieldsMap.get(name);
+      const field = this._fields.get(name);
       if (!field) {
         return false;
       }
       field.destroy();
-      fieldsMap.delete(name);
-      return true;
+      return this._fields.delete(name);
     });
 
     if (!reallyRemoved.length) {
       return;
     }
 
-    this._fields.value = fieldsMap;
-    this.events.emit('removed', {fieldNames: reallyRemoved} as FieldRemovedEvent);
+    /** todo: restore */
+    // this.events.emit('removed', {fieldNames: reallyRemoved} as FieldRemovedEvent);
   }
 
   /**
    * Removes all fields from the collection, ensuring each is properly destroyed.
    */
   clear() {
-    this.remove(Array.from(this._fields.value.keys()));
+    this.remove(Array.from(this._fields.keys()));
   }
 
   /**
@@ -134,7 +123,7 @@ export abstract class BaseFields<T> {
     const dump: Record<string, any> = {
       __type: FieldsNodeType.fields
     };
-    this._fields.value.forEach((field, key) => dump[key] = field.val)
+    this._fields.forEach((field, key) => dump[key] = field.val)
     return dump;
   }
 

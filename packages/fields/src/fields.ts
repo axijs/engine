@@ -6,6 +6,10 @@ import {throwIf} from '@axi-engine/utils';
 
 export class Fields extends BaseFields<any> {
 
+  constructor() {
+    super();
+  }
+
   createNumber(name: string, initialValue: number, options?: NumberFieldOptions): NumberField {
     return this.add(new NumberField(name, initialValue, options)) as NumberField;
   }
@@ -40,7 +44,7 @@ export class Fields extends BaseFields<any> {
   }
 
   override get<T>(name: string): Field<T> {
-    throwIf(!this._fields.value.has(name), `Field with name '${name}' not exists`);
-    return this._fields.value.get(name) as Field<T>;
+    throwIf(!this._fields.has(name), `Field with name '${name}' not exists`);
+    return this._fields.get(name) as Field<T>;
   }
 }
