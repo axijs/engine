@@ -6,7 +6,7 @@
 
 # Class: ClampPolicy
 
-Defined in: field-policies.ts:7
+Defined in: policy.ts:7
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: field-policies.ts:7
 
 > **new ClampPolicy**(`min`, `max`): `ClampPolicy`
 
-Defined in: field-policies.ts:11
+Defined in: policy.ts:11
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: field-policies.ts:11
 
 > `readonly` **id**: `"clamp"` = `ClampPolicy.id`
 
-Defined in: field-policies.ts:9
+Defined in: policy.ts:9
 
 #### Implementation of
 
@@ -52,7 +52,7 @@ Defined in: field-policies.ts:9
 
 > **max**: `number`
 
-Defined in: field-policies.ts:11
+Defined in: policy.ts:11
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: field-policies.ts:11
 
 > **min**: `number`
 
-Defined in: field-policies.ts:11
+Defined in: policy.ts:11
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: field-policies.ts:11
 
 > `readonly` `static` **id**: `"clamp"` = `'clamp'`
 
-Defined in: field-policies.ts:8
+Defined in: policy.ts:8
 
 ## Methods
 
@@ -76,7 +76,7 @@ Defined in: field-policies.ts:8
 
 > **apply**(`val`): `number`
 
-Defined in: field-policies.ts:14
+Defined in: policy.ts:14
 
 #### Parameters
 
@@ -98,7 +98,7 @@ Defined in: field-policies.ts:14
 
 > **updateBounds**(`min`, `max`): `void`
 
-Defined in: field-policies.ts:18
+Defined in: policy.ts:18
 
 #### Parameters
 

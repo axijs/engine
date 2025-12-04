@@ -1,8 +1,7 @@
-// import {BaseField} from './field';
-// import {FieldCreatedEvent, FieldRemovedEvent} from './field-events';
 // import {FieldsNodeType} from './fields-types';
 // import {throwIf} from '@axi-engine/utils';
-//
+// import {FieldsFactory} from './base-fields-factory';
+// import {Field} from './types';
 //
 // /**
 //  * An abstract base class for managing a collection of `Field` instances.
@@ -12,11 +11,16 @@
 //  *
 //  * @template T The common base type for the values held by the fields in this collection.
 //  */
-// export abstract class BaseFields<T> {
-//   protected readonly _fields: Map<string, BaseField<T>> = new Map();
+// export abstract class BaseFields<T, F extends Field<T>> {
+//   protected readonly _fields: Map<string, F> = new Map();
+//   protected readonly _factory: FieldsFactory<T, F>;
 //
 //   get fields() {
 //     return this._fields;
+//   }
+//
+//   protected constructor(factory: FieldsFactory<T, F>) {
+//     this._factory = factory;
 //   }
 //
 //   /**
@@ -32,10 +36,11 @@
 //    * Creates and adds a new `Field` to the collection.
 //    * @param name The unique name for the new field.
 //    * @param initialValue The initial value for the new field.
+//    * @param options
 //    * @returns The newly created `Field` instance.
 //    */
-//   create(name: string, initialValue: T): BaseField<T> {
-//     return this.add(new BaseField<T>(name, initialValue));
+//   create(name: string, initialValue: T, options?: BaseFieldOptions<T>): F {
+//     return this.add(this._factory.create<T>(name, initialValue, options));
 //   }
 //
 //   /**
@@ -44,7 +49,7 @@
 //    * @param field The `Field` instance to add.
 //    * @returns The added `Field` instance.
 //    */
-//   add(field: BaseField<T>): BaseField<T> {
+//   add(field: F): F {
 //     throwIf(this.has(field.name), `Field with name '${field.name}' already exists`);
 //
 //     this._fields.set(field.name, field);
@@ -64,7 +69,7 @@
 //    * @param name The name of the field to retrieve.
 //    * @returns The `Field` instance.
 //    */
-//   get(name: string): BaseField<T> {
+//   get(name: string): F {
 //     throwIf(!this._fields.has(name), `Field with name '${name}' not exists`);
 //     return this._fields.get(name)!;
 //   }
@@ -75,10 +80,10 @@
 //    * @param value The value to set.
 //    * @returns The existing or newly created `Field` instance.
 //    */
-//   upset(name: string, value: T): BaseField<T> {
+//   upset(name: string, value: T): F {
 //     if (this.has(name)) {
 //       const field = this.get(name);
-//       field.set(value);
+//       field.value = value;
 //       return field;
 //     }
 //     return this.create(name, value);
@@ -123,7 +128,7 @@
 //     const dump: Record<string, any> = {
 //       __type: FieldsNodeType.fields
 //     };
-//     this._fields.forEach((field, key) => dump[key] = field.val)
+//     this._fields.forEach((field, key) => dump[key] = field.value)
 //     return dump;
 //   }
 //

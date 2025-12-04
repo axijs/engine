@@ -2,22 +2,22 @@ import {
   clampPolicy,
   clampMaxPolicy,
   clampMinPolicy,
-  FieldPolicy,
+  Policy,
   ClampPolicy,
   ClampMinPolicy,
   ClampMaxPolicy
-} from './field-policies';
-import {BaseField} from './base-field';
+} from './policies';
+import {DefaultField, DefaultFieldOptions} from './default-field';
 import {isNullOrUndefined} from '@axi-engine/utils';
+import {NumericField} from './types';
 
 
-export interface NumberFieldOptions {
+export interface DefaultNumericFieldOptions extends DefaultFieldOptions<number> {
   min?: number;
   max?: number;
-  policies?: FieldPolicy<number>[];
 }
 
-export class NumberField extends BaseField<number> {
+export class DefaultNumericField extends DefaultField<number> implements NumericField {
   get min(): number | undefined {
     const policy =
       this.policies.get<ClampPolicy>(ClampPolicy.id) ??
@@ -32,17 +32,7 @@ export class NumberField extends BaseField<number> {
     return policy?.max;
   }
 
-  get isMin(): boolean {
-    const min = this.min;
-    return isNullOrUndefined(min) ? false : this.value <= min!;
-  }
-
-  get isMax(): boolean {
-    const max = this.max;
-    return isNullOrUndefined(max) ? false : this.value >= max!;
-  }
-
-  constructor(name: string, initialVal: number, options?: NumberFieldOptions) {
+  constructor(name: string, initialVal: number, options?: DefaultNumericFieldOptions) {
     const policies = options?.policies ?? [];
     if (!isNullOrUndefined(options?.min) && !isNullOrUndefined(options?.max)) {
       policies.unshift(clampPolicy(options!.min!, options!.max!));
@@ -52,6 +42,16 @@ export class NumberField extends BaseField<number> {
       policies.unshift(clampMaxPolicy(options!.max!));
     }
     super(name, initialVal, {policies});
+  }
+
+  isMin(): boolean {
+    const min = this.min;
+    return isNullOrUndefined(min) ? false : this.value <= min!;
+  }
+
+  isMax(): boolean {
+    const max = this.max;
+    return isNullOrUndefined(max) ? false : this.value >= max!;
   }
 
   inc(amount = 1) {

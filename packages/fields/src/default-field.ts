@@ -1,8 +1,11 @@
-import {Field} from './field';
-import {FieldPolicy} from './field-policies';
 import {Emitter, Subscribable} from '@axi-engine/utils';
-import {FieldPolicyList} from './field-policy-list';
+import {Policies, Policy} from './policies';
 import {dequal} from 'dequal';
+import {Field} from './types';
+
+export interface DefaultFieldOptions<T> {
+  policies?: Policy<T>[]
+}
 
 /**
  * A state container that wraps a value.
@@ -11,13 +14,13 @@ import {dequal} from 'dequal';
  * @template T The type of the value this field holds.
  *
  */
-export class BaseField<T> implements Field<T> {
+export class DefaultField<T> implements Field<T> {
   /** A unique identifier for the field. */
   private readonly _name: string;
   private _value!: T;
   private readonly _onChange: Emitter<[newValue: T, oldvalue: T]> = new Emitter();
   readonly onChange: Subscribable<[newValue: T, oldvalue: T]>;
-  readonly policies: FieldPolicyList<T> = new FieldPolicyList();
+  readonly policies: Policies<T> = new Policies();
 
   get name() {
     return this._name;
@@ -58,9 +61,7 @@ export class BaseField<T> implements Field<T> {
   constructor(
     name: string,
     initialVal: T,
-    options?: {
-      policies?: FieldPolicy<T>[]
-    }
+    options?: DefaultFieldOptions<T>
   ) {
     this.onChange = this._onChange;
     this._name = name;

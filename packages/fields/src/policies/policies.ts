@@ -1,8 +1,8 @@
-import {FieldPolicy} from './field-policies';
+import {Policy} from './policy';
 
 
-export class FieldPolicyList<T> {
-  private readonly policies = new Map<string, FieldPolicy<T>>();
+export class Policies<T> {
+  private readonly policies = new Map<string, Policy<T>>();
 
   /**
    * Retrieves a specific policy instance by its ID.
@@ -11,7 +11,7 @@ export class FieldPolicyList<T> {
    * @param id The unique ID of the policy to retrieve.
    * @returns The policy instance, or `undefined` if not found.
    */
-  get<P extends FieldPolicy<T>>(id: string): P | undefined {
+  get<P extends Policy<T>>(id: string): P | undefined {
     return this.policies.get(id) as P;
   }
 
@@ -21,7 +21,7 @@ export class FieldPolicyList<T> {
    * If a policy with the same ID already exists, its `destroy` method will be called before it is replaced.
    * @param policy The policy instance to add.
    */
-  add(policy: FieldPolicy<T>) {
+  add(policy: Policy<T>) {
     const existed = this.policies.get(policy.id);
     existed?.destroy?.();
     this.policies.set(policy.id, policy);

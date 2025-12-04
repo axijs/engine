@@ -6,7 +6,7 @@
 
 # Interface: FieldPolicy\<T\>
 
-Defined in: field-policies.ts:1
+Defined in: policy.ts:1
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@ Defined in: field-policies.ts:1
 
 > **apply**: (`val`) => `T`
 
-Defined in: field-policies.ts:3
+Defined in: policy.ts:3
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: field-policies.ts:3
 
 > `optional` **destroy**: () => `void`
 
-Defined in: field-policies.ts:4
+Defined in: policy.ts:4
 
 #### Returns
 
@@ -50,4 +50,4 @@ Defined in: field-policies.ts:4
 
 > `readonly` **id**: `string`
 
-Defined in: field-policies.ts:2
+Defined in: policy.ts:2
