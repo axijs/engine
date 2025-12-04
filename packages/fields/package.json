@@ -28,6 +28,7 @@
     "dist"
   ],
   "dependencies": {
-    "@axi-engine/utils": "^0.1.5"
+    "@axi-engine/utils": "^0.1.5",
+    "dequal": "^2.0.3"
   }
 }

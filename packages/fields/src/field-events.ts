@@ -1,8 +1,8 @@
-import {Field} from './field';
+import {BaseField} from './field';
 
 export interface FieldCreatedEvent<T> {
   fieldName: string;
-  field: Field<T>;
+  field: BaseField<T>;
 }
 
 export interface FieldRemovedEvent {

@@ -1,12 +1,21 @@
 // file: packages/utils/src/emitter.ts
 
+import {Subscribable} from './types';
+
 /**
  * A minimal, type-safe event emitter for a single event.
  * It does not manage state, it only manages subscribers and event dispatching.
  * @template T A tuple representing the types of the event arguments.
  */
-export class Emitter<T extends any[]> {
+export class Emitter<T extends any[]> implements Subscribable<T>{
   private listeners: Set<(...args: T) => void> = new Set();
+
+  /**
+   * Returns the number of listeners.
+   */
+  get listenerCount(): number {
+    return this.listeners.size;
+  }
 
   /**
    * Subscribes a listener to this event.
@@ -37,12 +46,5 @@ export class Emitter<T extends any[]> {
    */
   clear(): void {
     this.listeners.clear();
-  }
-
-  /**
-   * Returns the number of listeners.
-   */
-  get listenerCount(): number {
-    return this.listeners.size;
   }
 }

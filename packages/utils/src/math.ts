@@ -1,5 +1,6 @@
 import {isNullOrUndefined} from './guards';
 
+
 /**
  * Clamps a number between an optional minimum and maximum value.
  * @param val The number to clamp.
