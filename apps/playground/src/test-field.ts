@@ -1,4 +1,4 @@
-import {DefaultField, DefaultNumericField} from '@axi-engine/fields';
+import {DefaultField, defaultFieldFactoryRegistry, DefaultNumericField, Fields} from '@axi-engine/fields';
 
 class a {
   name = 'im a';
@@ -43,27 +43,45 @@ class System {
   constructor() {
     // this.factory = factory;
   }
+
+  a() {
+    return this.factory.a();
+  }
 }
 
 type Constructor<T = {}> = new (...args: any[]) => T;
 
-export function testMixin<TBase extends Constructor<System>>(Base: TBase) {
-  return class Test extends Base {
+export function addA<TBase extends Constructor<System>>(Base: TBase) {
+  return class SystemWithA extends Base {
     a() {
       return this.factory.a();
     }
   };
 }
 
+export function addB<TBase extends Constructor<System>>(Base: TBase) {
+  return class SystemWithB extends Base {
+    b() {
+      return this.factory.b();
+    }
+  };
+}
 
 
 export function testOneStringField() {
 
-  const sisConstr = testMixin(System);
-  const sis = new sisConstr();
-  const a = sis.a();
+  const fields = new Fields(defaultFieldFactoryRegistry);
+  fields.onAdd.subscribe((event)=> {
+    console.log('add event:', event);
+  });
 
-  console.log('sis:', a.name, a.surname, typeof a);
+  const sisConstr = addB(addA(System));
+  const sis = new sisConstr();
+  // const sis = new System();
+  const a = sis.a();
+  const b = sis.b();
+
+  console.log('sis:', a.name, a.surname, b.name);
 
   console.log('test one string field');
 

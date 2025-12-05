@@ -1,11 +1,7 @@
 import {Emitter, Subscribable} from '@axi-engine/utils';
-import {Policies, Policy} from './policies';
+import {Policies} from '../policies';
 import {dequal} from 'dequal';
-import {Field} from './types';
-
-export interface DefaultFieldOptions<T> {
-  policies?: Policy<T>[]
-}
+import {Field, FieldOptions} from '../types';
 
 /**
  * A state container that wraps a value.
@@ -60,7 +56,7 @@ export class DefaultField<T> implements Field<T> {
   constructor(
     name: string,
     initialVal: T,
-    options?: DefaultFieldOptions<T>
+    options?: FieldOptions<T>
   ) {
     this.onChange = this._onChange;
     this._name = name;

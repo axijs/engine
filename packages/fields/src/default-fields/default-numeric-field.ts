@@ -2,17 +2,16 @@ import {
   clampPolicy,
   clampMaxPolicy,
   clampMinPolicy,
-  Policy,
   ClampPolicy,
   ClampMinPolicy,
   ClampMaxPolicy
-} from './policies';
-import {DefaultField, DefaultFieldOptions} from './default-field';
+} from '../policies';
+import {DefaultField} from './default-field';
 import {isNullOrUndefined} from '@axi-engine/utils';
-import {NumericField} from './types';
+import {FieldOptions, NumericField} from '../types';
 
 
-export interface DefaultNumericFieldOptions extends DefaultFieldOptions<number> {
+export interface DefaultNumericFieldOptions extends FieldOptions<number> {
   min?: number;
   max?: number;
 }

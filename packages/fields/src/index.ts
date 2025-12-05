@@ -1,11 +1,10 @@
 export * from './policies/index'
 
 export * from './fields-types'
-export * from './default-field'
-export * from './default-numeric-field'
+export * from './default-fields'
 
-// export * from './base-fields'
-// export * from './fields'
+export * from './field-registry'
+export * from './fields'
 // export * from './typed-fields'
 //
 // export * from './field-tree'
