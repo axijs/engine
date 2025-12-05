@@ -42,8 +42,7 @@ export class DefaultField<T> implements Field<T> {
   set value(val: T) {
     const oldVal = this._value;
     const finalVal = this.policies.apply(val);
-
-    if (!dequal(this._value, oldVal)) {
+    if (!dequal(this._value, finalVal)) {
       this._value = finalVal;
       this._onChange.emit(this._value, oldVal);
     }

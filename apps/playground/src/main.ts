@@ -2,13 +2,7 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import {setupCounter} from './counter.ts'
-import {Fields} from '@axi-engine/fields';
 import {testOneStringField} from './test-field.ts';
-// import { StateMachine } from '@axi-engine/states';
-
-let f = new Fields();
-f.createNumber('test', 10);
-console.log(f.getNumber('test').val);
 
 testOneStringField();
 
