@@ -64,6 +64,14 @@ export class DefaultField<T> implements Field<T> {
     this.value = initialVal;
   }
 
+  setValueSilently(val: T) {
+    this._value = this.policies.apply(val);
+  }
+
+  batchUpdate(updateFn: (currentValue: T) => T): void {
+    this.value = updateFn(this.value);
+  }
+
   /**
    * Cleans up resources used by the field and its policies.
    * This should be called when the field is no longer needed to prevent memory leaks from reactive policies.

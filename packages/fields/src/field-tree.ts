@@ -1,39 +1,33 @@
-// import {Fields} from './fields';
-// import {BaseField} from './field';
-// import {NumberField} from './number-field';
-// import {TypedFields} from './typed-fields';
-// import {BaseFields} from './base-fields';
-// import {FieldsNodeType} from './fields-types';
-// import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
-//
-//
-//
-// /** A type alias for any container that can be a child node in a FieldTree */
-// export type TreeOrFieldsContainer = FieldTree | Fields | TypedFields<any>;
-//
-// /** A helper type representing the constructor of a container */
-// type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
-//
-// /** Describes the payload for events emitted when a container is created or removed from a FieldTree. */
+import {DefaultFields} from './default-fields';
+
+
+/** A type alias for any container that can be a child node in a FieldTree */
+export type TreeOrFieldsContainer = FieldTree | DefaultFields;
+
+/** A helper type representing the constructor of a container */
+type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
+
+/** Describes the payload for events emitted when a container is created or removed from a FieldTree. */
 // export type FieldTreeContainerEvent = {
 //   type: 'created' | 'removed';
 //   name: string;
 //   path: [],
 //   node: TreeOrFieldsContainer
 // };
-//
-// /**
-//  * Represents the global, persistent state of the entire game.
-//  * This service acts as the single source of truth for long-term data that exists
-//  * across different scenes and scripts, such as player stats, inventory,
-//  * and overall game progress.
-//  * It is designed to be the foundational data layer,
-//  * independent of any single script's / minigames execution lifecycle.
-//  *
-//  * @todo:
-//  * - add node removing
-//  */
-// export class FieldTree {
+
+
+/**
+ * Represents the global, persistent state of the entire game.
+ * This service acts as the single source of truth for long-term data that exists
+ * across different scenes and scripts, such as player stats, inventory,
+ * and overall game progress.
+ * It is designed to be the foundational data layer,
+ * independent of any single script's / minigames execution lifecycle.
+ *
+ * @todo:
+ * - add node removing
+ */
+export class FieldTree {
 //   private readonly _items: Map<string, TreeOrFieldsContainer> = new Map();
 //   // readonly events = new AxiEventEmitter<'created' | 'removed'>();
 //
@@ -274,4 +268,4 @@
 //
 //     return res;
 //   }
-// }
+}

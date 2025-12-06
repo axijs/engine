@@ -6,6 +6,7 @@ export function WithNumericFields<TBase extends Constructor<Fields>>(Base: TBase
   type BaseInstance = InstanceType<TBase>;
   type NumericFieldInstance = InstanceType<BaseInstance['_factory']['numeric']>;
   type NumericFieldOptions = ConstructorParameters<BaseInstance['_factory']['numeric']>[2];
+
   return class FieldsWithNumeric extends Base {
     createNumeric(
       name: string,

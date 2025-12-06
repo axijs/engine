@@ -1,17 +1,17 @@
-import {DefaultField} from './default-fields';
-import {DefaultNumericField} from './default-fields';
-import {DefaultBooleanField} from './default-fields';
-import {DefaultStringField} from './default-fields';
+import {DefaultField} from './field-definitions';
+import {DefaultNumericField} from './field-definitions';
+import {DefaultBooleanField} from './field-definitions';
+import {DefaultStringField} from './field-definitions';
 
 export interface FieldConstructorRegistry {
-  default: typeof DefaultField,
+  generic: typeof DefaultField,
   numeric: typeof DefaultNumericField,
   boolean: typeof DefaultBooleanField,
   string: typeof DefaultStringField
 }
 
 export const defaultFieldFactoryRegistry: FieldConstructorRegistry = {
-  default: DefaultField,
+  generic: DefaultField,
   numeric: DefaultNumericField,
   boolean: DefaultBooleanField,
   string: DefaultStringField

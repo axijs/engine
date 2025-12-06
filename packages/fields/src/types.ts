@@ -9,6 +9,10 @@ export interface Field<T> {
   readonly name: string;
   value: T;
 
+  setValueSilently(val: T): void;
+
+  batchUpdate(updateFn: (currentValue: T) => T): void;
+
   onChange: Subscribable<[newValue: T, oldValue:T]>;
   destroy(): void;
 }
