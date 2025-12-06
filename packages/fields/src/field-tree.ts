@@ -1,11 +1,12 @@
-import {DefaultFields} from './default-fields';
+import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {Fields} from './fields';
 
 
 /** A type alias for any container that can be a child node in a FieldTree */
-export type TreeOrFieldsContainer = FieldTree | DefaultFields;
+export type TreeOrFieldsNode = FieldTree<any> | Fields;
 
 /** A helper type representing the constructor of a container */
-type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
+// type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
 
 /** Describes the payload for events emitted when a container is created or removed from a FieldTree. */
 // export type FieldTreeContainerEvent = {
@@ -17,67 +18,67 @@ type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
 
 
 /**
- * Represents the global, persistent state of the entire game.
+ * Represents the global, persistent state of the entire system.
  * This service acts as the single source of truth for long-term data that exists
  * across different scenes and scripts, such as player stats, inventory,
  * and overall game progress.
  * It is designed to be the foundational data layer,
  * independent of any single script's / minigames execution lifecycle.
- *
+ * @template T Branch or Leaf types (FieldTree or Fields with items)
  * @todo:
  * - add node removing
  */
-export class FieldTree {
-//   private readonly _items: Map<string, TreeOrFieldsContainer> = new Map();
+export class FieldTree<T extends TreeOrFieldsNode> {
+  private readonly _items: Map<string, T> = new Map();
 //   // readonly events = new AxiEventEmitter<'created' | 'removed'>();
-//
-//   get items() {
-//     return this._items;
-//   }
-//
-//   /**
-//    * Checks if a path to a node or fields container  or field exists without creating it.
-//    * @returns true if the entire path exists, false otherwise.
-//    */
-//   hasPath(path: PathType): boolean {
-//     const pathParts = ensurePathArray(path);
-//     let currentNode: FieldTree = this;
-//
-//     for (let i = 0; i < pathParts.length; i++) {
-//       const part = pathParts[i];
-//       const nextNode: TreeOrFieldsContainer | undefined = currentNode._items.get(part);
-//       if (!nextNode) {
-//         return false;
-//       }
-//       if (nextNode instanceof BaseFields) {
-//         /** if Fields last node - return true */
-//         if (i === pathParts.length - 1) {
-//           return true;
-//         }
-//         /** if after fields has more than one path parts throw error because wrong path to node  */
-//         throwIf(
-//           pathParts.length - i > 2,
-//           `Path validation failed, full path: ${ensurePathString(path)}, has extra nodes after Fields placed at: ${ensurePathString(pathParts.slice(0, i + 1))}`
-//         );
-//         return nextNode.has(pathParts[i + 1]);
-//       }
-//       currentNode = nextNode;
-//     }
-//     return true;
-//   }
-//
-//   /**
-//    * Retrieves a child node and asserts that it is an instance of `FieldTree`.
-//    * @param name The name of the child node.
-//    * @returns The `FieldTree` instance.
-//    * @throws If the node does not exist or is not a `FieldTree`.
-//    */
-//   getFieldTree(name: string) {
-//     const node = this.getNode(name);
-//     throwIf(!(node instanceof FieldTree), `Node '${name}' should be instance of FieldTree`);
-//     return node as FieldTree;
-//   }
-//
+
+  get items() {
+    return this._items;
+  }
+
+  /**
+   * Checks if a path to a node or fields container  or field exists without creating it.
+   * @returns true if the entire path exists, false otherwise.
+   */
+  hasPath(path: PathType): boolean {
+    const pathParts = ensurePathArray(path);
+    let currentNode: TreeOrFieldsNode = this;
+
+    for (let i = 0; i < pathParts.length; i++) {
+      const part = pathParts[i];
+      const nextNode: T | undefined = currentNode._items.get(part);
+      if (!nextNode) {
+        return false;
+      }
+      if (nextNode instanceof Fields) {
+        /** if Fields last node - return true */
+        if (i === pathParts.length - 1) {
+          return true;
+        }
+        /** if after fields has more than one path parts throw error because wrong path to node  */
+        throwIf(
+          pathParts.length - i > 2,
+          `Path validation failed, full path: ${ensurePathString(path)}, has extra nodes after Fields placed at: ${ensurePathString(pathParts.slice(0, i + 1))}`
+        );
+        return nextNode.has(pathParts[i + 1]);
+      }
+      currentNode = nextNode;
+    }
+    return true;
+  }
+
+  /**
+   * Retrieves a child node and asserts that it is an instance of `FieldTree`.
+   * @param name The name of the child node.
+   * @returns The `FieldTree` instance.
+   * @throws If the node does not exist or is not a `FieldTree`.
+   */
+  getFieldTree(name: string) {
+    const node = this.getNode(name);
+    throwIf(!(node instanceof FieldTree), `Node '${name}' should be instance of FieldTree`);
+    return node as FieldTree<T>;
+  }
+
 //   /**
 //    * Retrieves a child node and asserts that it is an instance of `Fields`.
 //    * @param name The name of the child node.
@@ -102,17 +103,17 @@ export class FieldTree {
 //     return node as TypedFields<T>;
 //   }
 //
-//   /**
-//    * Retrieves a child node from this tree level without type checking.
-//    * @param name The name of the child node.
-//    * @returns The retrieved node, which can be a `FieldTree` or a `Fields` container.
-//    * @throws If a node with the given name cannot be found.
-//    */
-//   getNode(name: string): TreeOrFieldsContainer {
-//     const node = this._items.get(name);
-//     throwIfEmpty(node, `Can't find node with name '${name}'`);
-//     return node!;
-//   }
+  /**
+   * Retrieves a child node from this tree level without type checking.
+   * @param name The name of the child node.
+   * @returns The retrieved node, which can be a `FieldTree` or a `Fields` container.
+   * @throws If a node with the given name cannot be found.
+   */
+  getNode(name: string): TreeOrFieldsNode {
+    const node = this._items.get(name);
+    throwIfEmpty(node, `Can't find node with name '${name}'`);
+    return node!;
+  }
 //
 //   /**
 //    * Creates and adds a new `FieldTree` node as a child of this one.
