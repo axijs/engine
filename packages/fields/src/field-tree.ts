@@ -161,7 +161,13 @@ export class FieldTree {
     path: PathType,
     options: { createPath?: boolean } = {}
   ) {
+    const pathArr = ensurePathArray(path);
+    throwIfEmpty(pathArr, 'The path is empty');
+    const leafName = pathArr.pop()!;
+    let node: TreeOrFieldsNode = this;
+    for (const part of pathArr) {
 
+    }
   }
 
 //   /**
