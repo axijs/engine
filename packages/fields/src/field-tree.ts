@@ -1,9 +1,21 @@
 import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
 import {Fields} from './fields';
+import {DefaultFields} from './default-fields';
+import {defaultFieldFactoryRegistry} from './field-registry';
 
+interface TreeNodeFactory {
+  fields<T extends Fields>(): T,
+
+  tree<T extends FieldTree>(): T
+}
+
+class DefaultNodeFactory implements TreeNodeFactory {
+  fields = () => new DefaultFields(defaultFieldFactoryRegistry) as any;
+  tree = () => new FieldTree(this) as any; // Передає саму себе в дочірні вузли
+}
 
 /** A type alias for any container that can be a child node in a FieldTree */
-export type TreeOrFieldsNode = FieldTree<any> | Fields;
+export type TreeOrFieldsNode = FieldTree | Fields;
 
 /** A helper type representing the constructor of a container */
 // type ContainerCtor<T extends TreeOrFieldsContainer> = new () => T;
@@ -28,12 +40,22 @@ export type TreeOrFieldsNode = FieldTree<any> | Fields;
  * @todo:
  * - add node removing
  */
-export class FieldTree<T extends TreeOrFieldsNode> {
-  private readonly _items: Map<string, T> = new Map();
+export class FieldTree {
+  private readonly _items: Map<string, TreeOrFieldsNode> = new Map();
+  private readonly _factory: TreeNodeFactory;
+
 //   // readonly events = new AxiEventEmitter<'created' | 'removed'>();
 
   get items() {
     return this._items;
+  }
+
+  constructor(factory: TreeNodeFactory) {
+    this._factory = factory;
+  }
+
+  has(name: string) {
+    return this._items.has(name);
   }
 
   /**
@@ -46,7 +68,7 @@ export class FieldTree<T extends TreeOrFieldsNode> {
 
     for (let i = 0; i < pathParts.length; i++) {
       const part = pathParts[i];
-      const nextNode: T | undefined = currentNode._items.get(part);
+      const nextNode: TreeOrFieldsNode | undefined = currentNode._items.get(part);
       if (!nextNode) {
         return false;
       }
@@ -67,42 +89,12 @@ export class FieldTree<T extends TreeOrFieldsNode> {
     return true;
   }
 
-  /**
-   * Retrieves a child node and asserts that it is an instance of `FieldTree`.
-   * @param name The name of the child node.
-   * @returns The `FieldTree` instance.
-   * @throws If the node does not exist or is not a `FieldTree`.
-   */
-  getFieldTree(name: string) {
-    const node = this.getNode(name);
-    throwIf(!(node instanceof FieldTree), `Node '${name}' should be instance of FieldTree`);
-    return node as FieldTree<T>;
+  addNode(name: string, node: TreeOrFieldsNode) {
+    throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
+    this._items.set(name, node);
+    return node;
   }
 
-//   /**
-//    * Retrieves a child node and asserts that it is an instance of `Fields`.
-//    * @param name The name of the child node.
-//    * @returns The `Fields` instance.
-//    * @throws If the node does not exist or is not a `Fields` container.
-//    */
-//   getFields(name: string) {
-//     const node = this.getNode(name);
-//     throwIf(!(node instanceof Fields), `Node '${name}' should be instance of Fields`);
-//     return node as Fields;
-//   }
-//
-//   /**
-//    * Retrieves a child node and asserts that it is an instance of `TypedFields`.
-//    * @param name The name of the child node.
-//    * @returns The `TypedFields` instance.
-//    * @throws If the node does not exist or is not a `TypedFields` container.
-//    */
-//   getTypedFields<T>(name: string) {
-//     const node = this.getNode(name);
-//     throwIf(!(node instanceof TypedFields), `Node '${name}' should be instance of TypedFields`);
-//     return node as TypedFields<T>;
-//   }
-//
   /**
    * Retrieves a child node from this tree level without type checking.
    * @param name The name of the child node.
@@ -114,50 +106,65 @@ export class FieldTree<T extends TreeOrFieldsNode> {
     throwIfEmpty(node, `Can't find node with name '${name}'`);
     return node!;
   }
-//
-//   /**
-//    * Creates and adds a new `FieldTree` node as a child of this one.
-//    * @param name The unique name for the new `FieldTree` node.
-//    * @returns The newly created `FieldTree` instance.
-//    */
-//   createFieldTree(name: string): FieldTree {
-//     return this.createNode<FieldTree>(name, FieldTree);
-//   }
-//
-//   /**
-//    * Creates and adds a new `Fields` container as a child of this one.
-//    * @param name The unique name for the new `Fields` container.
-//    * @returns The newly created `Fields` instance.
-//    */
-//   createFields(name: string): Fields {
-//     return this.createNode<Fields>(name, Fields);
-//   }
-//
-//   /**
-//    * Creates and adds a new `TypedFields` container as a child of this one.
-//    * @param name The unique name for the new `TypedFields` container.
-//    * @returns The newly created `TypedFields` instance.
-//    */
-//   createTypedFields<T>(name: string): TypedFields<T> {
-//     return this.createNode<TypedFields<T>>(name, TypedFields);
-//   }
-//
-//   /**
-//    * Navigates through the tree using a path and returns the `Fields` container at the end.
-//    * @param path The path to the `Fields` container (e.g., 'player/stats').
-//    * @returns The `Fields` container at the specified path.
-//    * @throws If the path is empty, or any intermediate node is not a `FieldTree`.
-//    */
-//   getFieldsByPath(path: PathType) {
-//     const pathParts = ensurePathArray(path);
-//     throwIf(!pathParts.length, 'Empty path');
-//     let container: FieldTree = this;
-//     for (let i = 0; i < pathParts.length - 1; i++) {
-//       container = container.getFieldTree(pathParts[i]);
-//     }
-//     return container.getFields(pathParts[pathParts.length - 1]);
-//   }
-//
+
+  /**
+   * Creates and adds a new `FieldTree` node as a child of this one.
+   * @param name The unique name for the new `FieldTree` node.
+   * @returns The newly created `FieldTree` instance.
+   */
+  createFieldTree<T extends FieldTree>(name: string): T {
+    return this.addNode(name, this._factory.tree<T>()) as T;
+  }
+
+  /**
+   * Creates and adds a new `Fields` container as a child of this one.
+   * @param name The unique name for the new `Fields` container.
+   * @returns The newly created `Fields` instance.
+   */
+  createFields<T extends Fields>(name: string): T {
+    return this.addNode(name, this._factory.fields<T>()) as T;
+  }
+
+  /**
+   * Retrieves a child node and asserts that it is an instance of `FieldTree`.
+   * @param name The name of the child node.
+   * @returns The `FieldTree` instance.
+   * @throws If the node does not exist or is not a `FieldTree`.
+   */
+  getFieldTree(name: string) {
+    const node = this.getNode(name);
+    throwIf(!(node instanceof FieldTree), `Node '${name}' should be instance of FieldTree`);
+    return node as FieldTree;
+  }
+
+  /**
+   * Retrieves a child node and asserts that it is an instance of `Fields`.
+   * @param name The name of the child node.
+   * @returns The `Fields` instance.
+   * @throws If the node does not exist or is not a `Fields` container.
+   */
+  getFields(name: string) {
+    const node = this.getNode(name);
+    throwIf(!(node instanceof Fields), `Node '${name}' should be instance of Fields`);
+    return node as Fields;
+  }
+
+  /**
+   * Navigates through the tree using a path and returns the `Fields` container at the end.
+   * @param path The path to the `Fields` container (e.g., 'player/stats').
+   * @returns The `Fields` container at the specified path.
+   * @throws If the path is empty, or any intermediate node is not a `FieldTree`.
+   */
+  getFieldsByPath(path: PathType) {
+    const pathParts = ensurePathArray(path);
+    throwIf(!pathParts.length, 'Empty path');
+    let container: FieldTree = this;
+    for (let i = 0; i < pathParts.length - 1; i++) {
+      container = container.getFieldTree(pathParts[i]);
+    }
+    return container.getFields(pathParts[pathParts.length - 1]);
+  }
+
 //   /**
 //    * Creates a `Field` at a deeply nested path.
 //    * The last part of the path is treated as the field name, and the preceding parts as the path to its container.
@@ -205,7 +212,8 @@ export class FieldTree<T extends TreeOrFieldsNode> {
 //     const fieldName = fullPath.pop()!;
 //     return this.getFieldsByPath(fullPath).getNumber(fieldName);
 //   }
-//
+
+
 //   /**
 //    * Creates a serializable snapshot of the entire tree and its contained fields.
 //    * @returns A plain JavaScript object representing the complete state managed by this tree.
