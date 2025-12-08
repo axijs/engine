@@ -1,101 +1,81 @@
 import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
 import {Fields} from './fields';
-import {DefaultFields} from './default-fields';
-import {defaultFieldFactoryRegistry} from './field-registry';
+import {TreeNodeFactory} from './field-tree-node-factory';
 
-interface TreeNodeFactory {
-  fields<T extends Fields>(): T,
-
-  tree<T extends FieldTree>(): T
-}
-
-class DefaultNodeFactory implements TreeNodeFactory {
-  fields = () => new DefaultFields(defaultFieldFactoryRegistry) as any;
-  tree = () => new FieldTree(this) as any; // Передає саму себе в дочірні вузли
-}
 
 /** A type alias for any container that can be a child node in a FieldTree */
 export type TreeOrFieldsNode = FieldTree | Fields;
 
-/** Describes the payload for events emitted when a container is created or removed from a FieldTree. */
-// export type FieldTreeContainerEvent = {
-//   type: 'created' | 'removed';
-//   name: string;
-//   path: [],
-//   node: TreeOrFieldsContainer
-// };
-
-
 /**
- * Represents the global, persistent state of the entire system.
- * This service acts as the single source of truth for long-term data that exists
+ * Represents a hierarchical data structure for managing the global state of the system.
+ *
+ * This class acts as the single source of truth for long-term data that exists
  * across different scenes and scripts, such as player stats, inventory,
- * and overall game progress.
- * It is designed to be the foundational data layer,
- * independent of any single script's / minigames execution lifecycle.
- * @template T Branch or Leaf types (FieldTree or Fields with items)
- * @todo:
- * - add node removing
+ * and overall game progress. It uses a path-based system for accessing and
+ * manipulating nested data, similar to a file system.
+ *
+ * @todo
+ * - Add node removal functionality.
+ * - Implement an event system for node creation/removal.
  */
 export class FieldTree {
+  /** @private The internal map storing child nodes (branches or leaves). */
   private readonly _items: Map<string, TreeOrFieldsNode> = new Map();
+
+  /** @private The factory used to create new child nodes. */
   private readonly _factory: TreeNodeFactory;
 
-  // readonly events = new AxiEventEmitter<'created' | 'removed'>();
-
+  /**
+   * Gets the collection of direct child nodes of this tree branch.
+   */
   get items() {
     return this._items;
   }
 
+  /**
+   * Creates an instance of FieldTree.
+   * @param {TreeNodeFactory} factory - A factory responsible for creating new nodes within the tree.
+   */
   constructor(factory: TreeNodeFactory) {
     this._factory = factory;
   }
 
-  has(name: string) {
+  /**
+   * Checks if a direct child node with the given name exists.
+   * @param {string} name - The name of the direct child node.
+   * @returns {boolean} `true` if the node exists, otherwise `false`.
+   */
+  has(name: string): boolean {
     return this._items.has(name);
   }
 
   /**
-   * Checks if a path to a node or fields container  or field exists without creating it.
-   * @returns true if the entire path exists, false otherwise.
+   * Checks if a node exists at a given path, traversing the tree.
+   * @param {PathType} path - The path to check (e.g., 'player/stats' or ['player', 'stats']).
+   * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
    */
   hasPath(path: PathType): boolean {
-    const pathParts = ensurePathArray(path);
-    let currentNode: TreeOrFieldsNode = this;
-
-    for (let i = 0; i < pathParts.length; i++) {
-      const part = pathParts[i];
-      const nextNode: TreeOrFieldsNode | undefined = currentNode._items.get(part);
-      if (!nextNode) {
-        return false;
-      }
-      if (nextNode instanceof Fields) {
-        /** if Fields last node - return true */
-        if (i === pathParts.length - 1) {
-          return true;
-        }
-        /** if after fields has more than one path parts throw error because wrong path to node  */
-        throwIf(
-          pathParts.length - i > 2,
-          `Path validation failed, full path: ${ensurePathString(path)}, has extra nodes after Fields placed at: ${ensurePathString(pathParts.slice(0, i + 1))}`
-        );
-        return nextNode.has(pathParts[i + 1]);
-      }
-      currentNode = nextNode;
-    }
-    return true;
+    const traversedPath = this.traversePath(path);
+    return traversedPath.branch.has(traversedPath.leafName);
   }
 
-  addNode(name: string, node: TreeOrFieldsNode) {
+  /**
+   * Adds a pre-existing node as a direct child of this tree branch.
+   * @param {string} name - The name to assign to the new child node.
+   * @param {TreeOrFieldsNode} node - The node instance to add.
+   * @returns {TreeOrFieldsNode} The added node.
+   * @throws If a node with the same name already exists.
+   */
+  addNode(name: string, node: TreeOrFieldsNode): TreeOrFieldsNode {
     throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
     this._items.set(name, node);
     return node;
   }
 
   /**
-   * Retrieves a child node from this tree level without type checking.
-   * @param name The name of the child node.
-   * @returns The retrieved node, which can be a `FieldTree` or a `Fields` container.
+   * Retrieves a direct child node by its name.
+   * @param {string} name - The name of the child node.
+   * @returns {TreeOrFieldsNode} The retrieved node.
    * @throws If a node with the given name cannot be found.
    */
   getNode(name: string): TreeOrFieldsNode {
@@ -105,108 +85,117 @@ export class FieldTree {
   }
 
   /**
-   * Creates and adds a new `FieldTree` node as a child of this one.
-   * @param name The unique name for the new `FieldTree` node.
-   * @returns The newly created `FieldTree` instance.
+   * Creates a new `FieldTree` (branch) node at the specified path.
+   * @param {PathType} path - The path where the new `FieldTree` should be created.
+   * @param {boolean} [createPath=false] - If `true`, any missing parent branches in the path will be created automatically.
+   * @returns {FieldTree} The newly created `FieldTree` instance.
+   * @throws If the path is invalid or a node already exists at the target location.
    */
-  createFieldTree<T extends FieldTree>(name: string): T {
-    return this.addNode(name, this._factory.tree<T>()) as T;
+  createFieldTree<T extends FieldTree>(path: PathType, createPath?: boolean): T {
+    const traversedPath = this.traversePath(path, createPath);
+    return traversedPath.branch.addNode(traversedPath.leafName, this._factory.tree()) as T;
   }
 
   /**
-   * Creates and adds a new `Fields` container as a child of this one.
-   * @param name The unique name for the new `Fields` container.
-   * @returns The newly created `Fields` instance.
+   * Creates a new `Fields` (leaf) container at the specified path.
+   * @param {PathType} path - The path where the new `Fields` container should be created.
+   * @param {boolean} [createPath=false] - If `true`, any missing parent branches in the path will be created automatically.
+   * @returns {Fields} The newly created `Fields` instance.
+   * @throws If the path is invalid or a node already exists at the target location.
    */
-  createFields<T extends Fields>(name: string): T {
-    return this.addNode(name, this._factory.fields<T>()) as T;
+  createFields<T extends Fields>(path: PathType, createPath?: boolean): T {
+    const traversedPath = this.traversePath(path, createPath);
+    return traversedPath.branch.addNode(traversedPath.leafName, this._factory.fields()) as T;
   }
 
   /**
-   * Retrieves a child node and asserts that it is an instance of `FieldTree`.
-   * @param path The name or path to the child node.
-   * @returns The `FieldTree` instance.
-   * @throws If the node does not exist or is not a `FieldTree`.
+   * Retrieves a `FieldTree` (branch) node from a specified path.
+   * @param {PathType} path - The path to the `FieldTree` node.
+   * @returns {FieldTree} The `FieldTree` instance at the specified path.
+   * @throws If the path is invalid or the node at the path is not a `FieldTree`.
    */
   getFieldTree(path: PathType): FieldTree {
-    const pathArr = ensurePathArray(path);
-    throwIfEmpty(pathArr, 'The path is empty');
-    let container: FieldTree | Fields = this;
-    for (let i = 0; i < pathArr.length; i++) {
-      throwIf(!(container instanceof FieldTree), `Node '${pathArr[0]}' should be instance of FieldTree`);
-      container = (container as FieldTree).getNode(pathArr[i]);
-    }
-    return container as FieldTree;
+    const traversedPath = this.traversePath(path);
+    const node = traversedPath.branch.getNode(traversedPath.leafName);
+    throwIf(
+      !(node instanceof FieldTree),
+      `Node with name: ${traversedPath.leafName} by path: '${ensurePathString(path)}' should be instance of FieldTree`
+    );
+    return node as FieldTree;
   }
 
   /**
-   * Retrieves a child node and asserts that it is an instance of `Fields`.
-   * @param path The name of the child node.
-   * @returns The `Fields` instance.
-   * @throws If the node does not exist or is not a `Fields` container.
+   * Retrieves a `Fields` (leaf) container from a specified path.
+   * @param {PathType} path - The path to the `Fields` container.
+   * @returns {Fields} The `Fields` instance at the specified path.
+   * @throws If the path is invalid or the node at the path is not a `Fields` container.
    */
-  getFields(path: PathType) {
-    const pathArr = ensurePathArray(path);
-    throwIfEmpty(pathArr, 'The path is empty');
-    const name = pathArr.pop()!;
-
-    const tree = !pathArr.length ? this : this.getFieldTree(pathArr);
-    const node = tree.getNode(name);
-
-    throwIf(!(node instanceof Fields), `Node '${ensurePathString(path)}' should be instance of Fields`);
+  getFields(path: PathType): Fields {
+    const traversedPath = this.traversePath(path);
+    const node = traversedPath.branch.getNode(traversedPath.leafName);
+    throwIf(
+      !(node instanceof Fields),
+      `Node with name: ${traversedPath.leafName} by path: '${ensurePathString(path)}' should be instance of Fields`
+    );
     return node as Fields;
   }
 
+  /**
+   * Retrieves a `FieldTree` at the specified path. If it or any part of the path doesn't exist, it will be created.
+   * @param {PathType} path - The path to the `FieldTree` node.
+   * @returns {FieldTree} The existing or newly created `FieldTree` instance.
+   */
+  getOrCreateFieldTree(path: PathType): FieldTree {
+    const traversedPath = this.traversePath(path, true);
+    return traversedPath.branch.has(traversedPath.leafName) ?
+      traversedPath.branch.getFieldTree(traversedPath.leafName) :
+      traversedPath.branch.createFieldTree(traversedPath.leafName);
+  }
+
+  /**
+   * Retrieves a `Fields` container at the specified path. If it or any part of the path doesn't exist, it will be created.
+   * @param {PathType} path - The path to the `Fields` container.
+   * @returns {Fields} The existing or newly created `Fields` instance.
+   */
+  getOrCreateFields(path: PathType): Fields {
+    const traversedPath = this.traversePath(path, true);
+    return traversedPath.branch.has(traversedPath.leafName) ?
+      traversedPath.branch.getFields(traversedPath.leafName) :
+      traversedPath.branch.createFields(traversedPath.leafName);
+  }
+
+  /**
+   * @private
+   * Navigates the tree to the parent of a target node.
+   * This is the core traversal logic for all path-based operations.
+   * @param {PathType} path - The full path to the target node.
+   * @param {boolean} [createPath=false] - If `true`, creates missing `FieldTree` branches along the path.
+   * @returns {{branch: FieldTree, leafName: string}} An object containing the final branch (parent node) and the name of the leaf (target node).
+   * @throws If the path is empty, invalid, or contains a `Fields` container as an intermediate segment.
+   */
   private traversePath(
     path: PathType,
-    options: { createPath?: boolean } = {}
-  ) {
+    createPath?: boolean
+  ): { branch: FieldTree, leafName: string } {
     const pathArr = ensurePathArray(path);
     throwIfEmpty(pathArr, 'The path is empty');
     const leafName = pathArr.pop()!;
-    let node: TreeOrFieldsNode = this;
-    for (const part of pathArr) {
+    let currentNode: FieldTree = this;
 
+    for (const pathPart of pathArr) {
+      let node: TreeOrFieldsNode | undefined;
+      if (currentNode.has(pathPart)) {
+        node = currentNode.getNode(pathPart);
+      } else {
+        if (createPath) {
+          node = currentNode.createFieldTree(pathPart);
+        }
+      }
+      throwIfEmpty(node, `Can't find node with name ${pathPart} by path parsing: ${ensurePathString(path)}`);
+      throwIf(node instanceof Fields, `Node with name ${pathPart} should be instance of FieldTree`);
+      currentNode = node as FieldTree;
     }
-  }
 
-//   /**
-//    * Creates a serializable snapshot of the entire tree and its contained fields.
-//    * @returns A plain JavaScript object representing the complete state managed by this tree.
-//    */
-//   snapshot() {
-//     const dump: Record<string, any> = {
-//       __type: FieldsNodeType.fieldTree
-//     };
-//     this._items.forEach((node, key) => dump[key] = node.snapshot());
-//     return dump;
-//   }
-//
-//   /**
-//    * Restores the state of the tree from a snapshot.
-//    * It intelligently creates missing nodes based on `__type` metadata and delegates hydration to child nodes.
-//    * @param snapshot The snapshot object to load.
-//    */
-//   hydrate(snapshot: any) {
-//     for (const key in snapshot) {
-//       if (key === '__type') {
-//         continue;
-//       }
-//
-//       const field = snapshot[key];
-//       const type = field?.__type;
-//
-//       let node: TreeOrFieldsContainer | undefined = this._items.get(key);
-//       if (!node) {
-//         if (type === FieldsNodeType.fields) {
-//           node = this.createFields(key);
-//         } else if (type === FieldsNodeType.fieldTree) {
-//           node = this.createFieldTree(key);
-//         } else {
-//           console.warn(`Node '${key}' in snapshot has no __type metadata. Skipping.`);
-//         }
-//       }
-//       node?.hydrate(field);
-//     }
-//   }
+    return {branch: currentNode, leafName: leafName};
+  }
 }

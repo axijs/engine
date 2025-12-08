@@ -1,87 +1,41 @@
-import {DefaultField, defaultFieldFactoryRegistry, DefaultNumericField, Fields} from '@axi-engine/fields';
-
-class a {
-  name = 'im a';
-  constructor() {
-  }
-}
-
-class b {
-  name = 'im b';
-  constructor() {
-  }
-}
-
-class c extends a {
-  name = 'im c';
-  constructor() {
-    super();
-  }
-
-  get surname() {
-    return 'a is my father';
-  }
-}
-
-
-interface instBuilder {
-  a(): a,
-  b(): b,
-}
-
-interface instBuilder {
-  a(): c
-}
-
-class instFactory implements instBuilder {
-  a() {return new c }
-  b() { return new b }
-}
-
-class System {
-  factory: instBuilder = new instFactory;
-  constructor() {
-    // this.factory = factory;
-  }
-
-  a() {
-    return this.factory.a();
-  }
-}
-
-type Constructor<T = {}> = new (...args: any[]) => T;
-
-export function addA<TBase extends Constructor<System>>(Base: TBase) {
-  return class SystemWithA extends Base {
-    a() {
-      return this.factory.a();
-    }
-  };
-}
-
-export function addB<TBase extends Constructor<System>>(Base: TBase) {
-  return class SystemWithB extends Base {
-    b() {
-      return this.factory.b();
-    }
-  };
-}
+import {
+  DefaultField,
+  defaultFieldFactoryRegistry, DefaultTreeNodeFactory,
+  DefaultNumericField,
+  Fields,
+  FieldTree, DefaultFields, FieldSerializer, DefaultBooleanField, DefaultStringField
+} from '@axi-engine/fields';
 
 
 export function testOneStringField() {
+
+  const tree = new FieldTree(new DefaultTreeNodeFactory);
+  const testChildTree = tree.createFieldTree(['test1', 'test2'], true);
+  const heroFields = testChildTree.createFields<DefaultFields>('hero');
+  const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
+  console.log(testChildTree);
+
+  const heroObj = heroFields.create<number>('numbObj', 20);
+
+  console.log('<!-- asdasdasd -->');
+
+  console.log(health.constructor === DefaultNumericField);
+  console.log(health.constructor === DefaultBooleanField);
+  console.log(health.constructor === DefaultField);
+
+  console.log(heroObj.constructor === DefaultNumericField);
+  console.log(heroObj.constructor === DefaultBooleanField);
+  console.log(heroObj.constructor === DefaultField);
+
+
+  console.log('<!-- asdasdasd  1-->');
+  console.log(FieldSerializer.snapshot(health));
+  console.log('<!-- asdasdasd  2-->');
 
   const fields = new Fields(defaultFieldFactoryRegistry);
   fields.onAdd.subscribe((event)=> {
     console.log('add event:', event);
   });
-
-  const sisConstr = addB(addA(System));
-  const sis = new sisConstr();
-  // const sis = new System();
-  const a = sis.a();
-  const b = sis.b();
-
-  console.log('sis:', a.name, a.surname, b.name);
 
   console.log('test one string field');
 
