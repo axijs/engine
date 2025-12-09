@@ -4,6 +4,10 @@ import {Policy} from './policy';
 export class Policies<T> {
   private readonly policies = new Map<string, Policy<T>>();
 
+  get items() {
+    return this.policies;
+  }
+
   /**
    * Retrieves a specific policy instance by its ID.
    * Useful for accessing a policy's internal state or methods.

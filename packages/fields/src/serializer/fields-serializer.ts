@@ -1,15 +1,24 @@
+import {Fields} from '@axi-engine/fields';
+
 export class FieldsSerializer {
   /**
    * Creates a serializable snapshot of the current state of all fields.
    * @returns A plain JavaScript object representing the values of all fields.
    */
-  // snapshot() {
-  //   const dump: Record<string, any> = {
-  //     __type: FieldsNodeType.fields
-  //   };
-  //   this._fields.forEach((field, key) => dump[key] = field.value)
-  //   return dump;
-  // }
+  snapshot(fields: Fields) {
+    const dump: Record<string, any> = {
+      __type: 'fields'
+    };
+
+    // this._fields.forEach((field, key) => dump[key] = field.value)
+    fields.fields.forEach(field => {
+
+    });
+
+    return {
+      __type: 'fields',
+    };
+  }
 
   /**
    * Restores the state of the fields from a snapshot.

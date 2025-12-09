@@ -3,7 +3,9 @@ import {
   defaultFieldFactoryRegistry, DefaultTreeNodeFactory,
   DefaultNumericField,
   Fields,
-  FieldTree, DefaultFields, FieldSerializer, DefaultBooleanField, DefaultStringField
+  FieldTree, DefaultFields, FieldSerializer, DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
+  ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
+  ClampMaxPolicy, DefaultStringField,
 } from '@axi-engine/fields';
 
 
@@ -19,18 +21,35 @@ export function testOneStringField() {
 
   console.log('<!-- asdasdasd -->');
 
-  console.log(health.constructor === DefaultNumericField);
-  console.log(health.constructor === DefaultBooleanField);
-  console.log(health.constructor === DefaultField);
+  console.log(DefaultNumericField.typeName);
+  console.log(DefaultBooleanField.typeName);
+  console.log(DefaultField.typeName);
 
   console.log(heroObj.constructor === DefaultNumericField);
   console.log(heroObj.constructor === DefaultBooleanField);
   console.log(heroObj.constructor === DefaultField);
 
 
-  console.log('<!-- asdasdasd  1-->');
-  console.log(FieldSerializer.snapshot(health));
-  console.log('<!-- asdasdasd  2-->');
+  const policySerializer = new PolicySerializer();
+  policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());
+  policySerializer.register(ClampMinPolicy.id, new ClampMinPolicySerializerHandler());
+  policySerializer.register(ClampMaxPolicy.id, new ClampMaxPolicySerializerHandler());
+
+  const fieldRegistry = new FieldRegistry();
+  fieldRegistry.register(DefaultField.typeName, DefaultField);
+  fieldRegistry.register(DefaultNumericField.typeName, DefaultNumericField);
+  fieldRegistry.register(DefaultStringField.typeName, DefaultStringField);
+  fieldRegistry.register(DefaultBooleanField.typeName, DefaultBooleanField);
+
+  const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
+
+  const fieldSnapshot = fieldSerializer.snapshot(health);
+
+  console.log('<!-- numeric field snapshot: -->');
+  console.log(fieldSnapshot);
+  console.log('<!-- numeric restored field: -->');
+  console.log(fieldSerializer.hydrate(fieldSnapshot));
+
 
   const fields = new Fields(defaultFieldFactoryRegistry);
   fields.onAdd.subscribe((event)=> {

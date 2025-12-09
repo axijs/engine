@@ -11,6 +11,10 @@ import {Field, FieldOptions} from '../types';
  *
  */
 export class DefaultField<T> implements Field<T> {
+  /** A type keyword of the field */
+  static typeName = 'generic';
+  readonly typeName = DefaultField.typeName;
+
   /** A unique identifier for the field. */
   private readonly _name: string;
   private _value!: T;

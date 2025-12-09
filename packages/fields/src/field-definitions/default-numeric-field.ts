@@ -17,6 +17,9 @@ export interface DefaultNumericFieldOptions extends FieldOptions<number> {
 }
 
 export class DefaultNumericField extends DefaultField<number> implements NumericField {
+  static typeName = 'numeric';
+  readonly typeName = DefaultNumericField.typeName;
+
   get min(): number | undefined {
     const policy =
       this.policies.get<ClampPolicy>(ClampPolicy.id) ??

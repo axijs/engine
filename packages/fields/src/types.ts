@@ -1,13 +1,15 @@
 import {Subscribable} from '@axi-engine/utils';
-import {Policy} from './policies';
+import {Policies, Policy} from './policies';
 
 export interface FieldOptions<T> {
   policies?: Policy<T>[]
 }
 
 export interface Field<T> {
+  readonly typeName: string;
   readonly name: string;
   value: T;
+  policies: Policies<T>;
 
   setValueSilently(val: T): void;
 

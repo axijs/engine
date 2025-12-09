@@ -28,6 +28,7 @@ export class PolicySerializer {
   register(policyId: string, handler: PolicySerializerHandler<any, any>) {
     throwIf(this.handlers.has(policyId), `A handler for policy ID '${policyId}' is already registered.`);
     this.handlers.set(policyId, handler);
+    return this;
   }
 
   clearHandlers() {
