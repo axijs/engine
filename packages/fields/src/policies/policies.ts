@@ -47,6 +47,10 @@ export class Policies<T> {
     return this.policies.delete(policyId);
   }
 
+  isEmpty() {
+    return this.policies.size === 0;
+  }
+
   /**
    * Removes all policies from the field.
    * After this, `set()` will no longer apply any transformations to the value until new policies are added.

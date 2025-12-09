@@ -1,10 +1,10 @@
 import {Emitter, throwIf} from '@axi-engine/utils';
 import {Field} from './types';
-import {FieldConstructorRegistry} from './field-registry';
+import {FieldRegistry} from './field-registry';
 
 export class Fields {
   readonly _fields: Map<string, Field<any>> = new Map();
-  readonly _factory: FieldConstructorRegistry;
+  readonly _fieldRegistry: FieldRegistry;
 
   onAdd = new Emitter<[event: {
     name: string,
@@ -19,8 +19,8 @@ export class Fields {
     return this._fields;
   }
 
-  constructor(factory: FieldConstructorRegistry) {
-    this._factory = factory;
+  constructor(fieldRegistry: FieldRegistry) {
+    this._fieldRegistry = fieldRegistry;
   }
 
   /**

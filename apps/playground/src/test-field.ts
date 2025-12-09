@@ -51,7 +51,7 @@ export function testOneStringField() {
   console.log(fieldSerializer.hydrate(fieldSnapshot));
 
 
-  const fields = new Fields(defaultFieldFactoryRegistry);
+  const fields = new Fields(fieldRegistry);
   fields.onAdd.subscribe((event)=> {
     console.log('add event:', event);
   });

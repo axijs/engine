@@ -1,38 +1,35 @@
 import {Constructor} from '@axi-engine/utils';
 import {Fields} from '../fields';
+import {DefaultNumericField, DefaultNumericFieldOptions} from '@axi-engine/fields';
 
 export function WithNumericFields<TBase extends Constructor<Fields>>(Base: TBase) {
-
-  type BaseInstance = InstanceType<TBase>;
-  type NumericFieldInstance = InstanceType<BaseInstance['_factory']['numeric']>;
-  type NumericFieldOptions = ConstructorParameters<BaseInstance['_factory']['numeric']>[2];
 
   return class FieldsWithNumeric extends Base {
     createNumeric(
       name: string,
       initialValue: number,
-      options?: NumericFieldOptions
-    ): NumericFieldInstance {
-      const Ctor = this._factory.numeric;
+      options?: DefaultNumericFieldOptions
+    ): DefaultNumericField {
+      const Ctor = this._fieldRegistry.get(DefaultNumericField.typeName);
       const field = new Ctor(name, initialValue, options);
       this.add(field);
-      return field as NumericFieldInstance;
+      return field as DefaultNumericField;
     }
 
     upsetNumeric(
       name: string,
       value: number,
-      options?: NumericFieldOptions
-    ): NumericFieldInstance {
+      options?: DefaultNumericFieldOptions
+    ): DefaultNumericField {
       if (this.has(name)) {
-        const field = this.get<NumericFieldInstance>(name);
+        const field = this.get<DefaultNumericField>(name);
         field.value = value;
         return field;
       }
       return this.createNumeric(name, value, options);
     }
 
-    getNumeric(name: string): NumericFieldInstance {
+    getNumeric(name: string): DefaultNumericField {
       return this.get(name);
     }
   }
