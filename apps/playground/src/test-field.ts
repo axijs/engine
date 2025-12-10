@@ -1,45 +1,34 @@
 import {
   DefaultField,
-  defaultFieldFactoryRegistry, DefaultTreeNodeFactory,
   DefaultNumericField,
   Fields,
   FieldTree, DefaultFields, FieldSerializer, DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, DefaultStringField,
+  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, type DefaultNumericFieldOptions,
 } from '@axi-engine/fields';
 
 
 export function testOneStringField() {
-
-  const tree = new FieldTree(new DefaultTreeNodeFactory);
-  const testChildTree = tree.createFieldTree(['test1', 'test2'], true);
-  const heroFields = testChildTree.createFields<DefaultFields>('hero');
-  const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
-  console.log(testChildTree);
-
-  const heroObj = heroFields.create<number>('numbObj', 20);
-
-  console.log('<!-- asdasdasd -->');
-
-  console.log(DefaultNumericField.typeName);
-  console.log(DefaultBooleanField.typeName);
-  console.log(DefaultField.typeName);
-
-  console.log(heroObj.constructor === DefaultNumericField);
-  console.log(heroObj.constructor === DefaultBooleanField);
-  console.log(heroObj.constructor === DefaultField);
-
-
-  const policySerializer = new PolicySerializer();
-  policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());
-  policySerializer.register(ClampMinPolicy.id, new ClampMinPolicySerializerHandler());
-  policySerializer.register(ClampMaxPolicy.id, new ClampMaxPolicySerializerHandler());
 
   const fieldRegistry = new FieldRegistry();
   fieldRegistry.register(DefaultField.typeName, DefaultField);
   fieldRegistry.register(DefaultNumericField.typeName, DefaultNumericField);
   fieldRegistry.register(DefaultStringField.typeName, DefaultStringField);
   fieldRegistry.register(DefaultBooleanField.typeName, DefaultBooleanField);
+
+  const tree = new FieldTree(new DefaultTreeNodeFactory(fieldRegistry));
+  const testChildTree = tree.createFieldTree(['test1', 'test2'], true);
+  const heroFields = testChildTree.createFields<DefaultFields>('hero');
+  const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
+  console.log(testChildTree);
+
+  const testGeneric = heroFields.createGeneric<number, DefaultNumericField, DefaultNumericFieldOptions>(DefaultNumericField, 'testGeneric', 10);
+  console.log('testGeneric:', testGeneric.value, testGeneric.typeName);
+
+  const policySerializer = new PolicySerializer();
+  policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());
+  policySerializer.register(ClampMinPolicy.id, new ClampMinPolicySerializerHandler());
+  policySerializer.register(ClampMaxPolicy.id, new ClampMaxPolicySerializerHandler());
 
   const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
 

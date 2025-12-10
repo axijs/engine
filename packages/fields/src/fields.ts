@@ -2,6 +2,7 @@ import {Emitter, throwIf} from '@axi-engine/utils';
 import {Field} from './types';
 import {FieldRegistry} from './field-registry';
 
+
 export class Fields {
   readonly _fields: Map<string, Field<any>> = new Map();
   readonly _fieldRegistry: FieldRegistry;
@@ -38,7 +39,7 @@ export class Fields {
    * @param field The `Field` instance to add.
    * @returns The added `Field` instance.
    */
-  add(field: Field<any>): Field<any> {
+  add<T extends Field<any>>(field: Field<any>): T {
     throwIf(this.has(field.name), `Field with name '${field.name}' already exists`);
 
     this._fields.set(field.name, field);
@@ -48,7 +49,33 @@ export class Fields {
       field: field
     });
 
-    return field;
+    return field as T;
+  }
+
+  create<T extends Field<any>>(
+    typeName: string,
+    name: string,
+    initialValue: any,
+    options?: any
+  ): T {
+    const Ctor = this._fieldRegistry.get(typeName);
+    const field = new Ctor(name, initialValue, options);
+    this.add(field);
+    return field as T;
+  }
+
+  upset<T extends Field<any>>(
+    typeName: string,
+    name: string,
+    value: any,
+    options?: any
+  ): T {
+    if (this.has(name)) {
+      const field = this.get<T>(name);
+      field.value = value;
+      return field;
+    }
+    return this.create<T>(typeName, name, value, options);
   }
 
   /**

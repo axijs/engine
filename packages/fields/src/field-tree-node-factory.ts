@@ -1,7 +1,7 @@
 import {Fields} from './fields';
 import {FieldTree} from './field-tree';
 import {DefaultFields} from './default-fields';
-import {defaultFieldFactoryRegistry} from './field-registry';
+import {FieldRegistry} from './field-registry';
 
 /**
  * Defines the contract for a factory that creates nodes for a FieldTree.
@@ -16,6 +16,10 @@ export interface TreeNodeFactory {
  * The default factory implementation that creates standard DefaultFields and FieldTree instances.
  */
 export class DefaultTreeNodeFactory implements TreeNodeFactory {
-  fields = () => new DefaultFields(defaultFieldFactoryRegistry) as any;
-  tree = () => new FieldTree(this) as any; // Передає саму себе в дочірні вузли
+
+  constructor(private readonly fieldRegistry: FieldRegistry) {
+  }
+
+  fields = () => new DefaultFields(this.fieldRegistry) as any;
+  tree = () => new FieldTree(this) as any;
 }
