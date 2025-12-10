@@ -20,6 +20,11 @@ export interface FieldSnapshot {
  * plain, storable data (snapshots) and vice-versa. It uses a `FieldRegistry`
  * to resolve class constructors and a `PolicySerializer` to handle the state
  * of any attached policies.
+ *
+ * @todo Implement a `patch(field, snapshot)` method.
+ *       Unlike `hydrate`, which creates a new
+ *       instance, `patch` should update the state of an *existing* field instance
+ *       without breaking external references to it.
  */
 export class FieldSerializer {
 

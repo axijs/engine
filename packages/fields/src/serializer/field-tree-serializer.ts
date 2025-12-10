@@ -1,5 +1,12 @@
 import {FieldTree} from '@axi-engine/fields';
 
+/**
+ *
+ *
+ * @todo Implement a `patch(tree, snapshot)` method for recursive, non-destructive
+ *       updates. This method should traverse the existing tree and the snapshot,
+ *       patching nodes in place to maintain object references.
+ */
 export class FieldTreeSerializer {
 
   /**
