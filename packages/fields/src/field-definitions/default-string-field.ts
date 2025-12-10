@@ -1,10 +1,10 @@
 import {DefaultField} from './default-field';
-import {FieldOptions, StringField} from '../types';
+import {FieldOptions, StringField} from '../field';
 
 export interface DefaultStringFieldOptions extends FieldOptions<string> { }
 
 export class DefaultStringField extends DefaultField<string> implements StringField {
-  static typeName = 'string';
+  static readonly typeName: string = 'string';
   readonly typeName = DefaultStringField.typeName;
 
   constructor(name: string, initialVal: string, options?: DefaultStringFieldOptions) {

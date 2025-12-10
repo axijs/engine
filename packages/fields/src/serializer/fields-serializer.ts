@@ -1,37 +1,41 @@
-import {Fields} from '@axi-engine/fields';
+import {
+  DefaultFields,
+  FieldRegistry,
+  Fields,
+  FieldSerializer,
+  FieldSnapshot,
+  PolicySerializer
+} from '@axi-engine/fields';
+
+
+export interface FieldsSnapshot {
+  __type: string;
+  fields: FieldSnapshot[]
+}
 
 export class FieldsSerializer {
-  /**
-   * Creates a serializable snapshot of the current state of all fields.
-   * @returns A plain JavaScript object representing the values of all fields.
-   */
-  snapshot(fields: Fields) {
-    const dump: Record<string, any> = {
-      __type: 'fields'
-    };
 
-    // this._fields.forEach((field, key) => dump[key] = field.value)
-    fields.fields.forEach(field => {
+  constructor(
+    private readonly fieldRegistry: FieldRegistry,
+    private readonly policySerializer: PolicySerializer
+  ) {
+  }
 
-    });
+  snapshot(fields: Fields): FieldsSnapshot {
+    const fieldSerializer = new FieldSerializer(this.fieldRegistry, this.policySerializer);
+    const fieldsDump: FieldSnapshot[] = [];
+    fields.fields.forEach(field => fieldsDump.push(fieldSerializer.snapshot(field)));
 
     return {
       __type: 'fields',
+      fields: fieldsDump
     };
   }
 
-  /**
-   * Restores the state of the fields from a snapshot.
-   * It uses the `upset` logic to create or update fields based on the snapshot data.
-   * @param snapshot The snapshot object to load.
-   */
-  // hydrate(snapshot: any) {
-  //   for (let key in snapshot) {
-  //     if (key === '__type') {
-  //       continue;
-  //     }
-  //     this.upset(key, snapshot[key]);
-  //   }
-  // }
-
+  hydrate(snapshot: FieldsSnapshot): DefaultFields {
+    const fieldSerializer = new FieldSerializer(this.fieldRegistry, this.policySerializer);
+    const fields = new DefaultFields(this.fieldRegistry);
+    snapshot.fields.forEach(fieldSnapshot => fields.add(fieldSerializer.hydrate(fieldSnapshot)));
+    return  fields;
+  }
 }

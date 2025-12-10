@@ -1,9 +1,13 @@
 import {Emitter, throwIf} from '@axi-engine/utils';
-import {Field} from './types';
 import {FieldRegistry} from './field-registry';
+import {Field} from './field';
 
 
 export class Fields {
+  static readonly typeName = 'fields';
+  readonly typeName = Fields.typeName;
+  readonly name?: string;
+
   readonly _fields: Map<string, Field<any>> = new Map();
   readonly _fieldRegistry: FieldRegistry;
 
@@ -20,8 +24,9 @@ export class Fields {
     return this._fields;
   }
 
-  constructor(fieldRegistry: FieldRegistry) {
+  constructor(fieldRegistry: FieldRegistry, name?: string) {
     this._fieldRegistry = fieldRegistry;
+    this.name = name;
   }
 
   /**

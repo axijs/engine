@@ -4,7 +4,7 @@ import {
   Fields,
   FieldTree, DefaultFields, FieldSerializer, DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, type DefaultNumericFieldOptions,
+  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory
 } from '@axi-engine/fields';
 
 
@@ -21,9 +21,6 @@ export function testOneStringField() {
   const heroFields = testChildTree.createFields<DefaultFields>('hero');
   const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
   console.log(testChildTree);
-
-  const testGeneric = heroFields.createGeneric<number, DefaultNumericField, DefaultNumericFieldOptions>(DefaultNumericField, 'testGeneric', 10);
-  console.log('testGeneric:', testGeneric.value, testGeneric.typeName);
 
   const policySerializer = new PolicySerializer();
   policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());

@@ -1,7 +1,8 @@
 import {Emitter, Subscribable} from '@axi-engine/utils';
 import {Policies} from '../policies';
 import {dequal} from 'dequal';
-import {Field, FieldOptions} from '../types';
+import {Field, FieldOptions} from '../field';
+
 
 /**
  * A state container that wraps a value.
@@ -12,8 +13,8 @@ import {Field, FieldOptions} from '../types';
  */
 export class DefaultField<T> implements Field<T> {
   /** A type keyword of the field */
-  static typeName = 'generic';
-  readonly typeName = DefaultField.typeName;
+  static readonly typeName: string = 'default';
+  readonly typeName: string = DefaultField.typeName;
 
   /** A unique identifier for the field. */
   private readonly _name: string;
@@ -21,6 +22,7 @@ export class DefaultField<T> implements Field<T> {
   private readonly _onChange: Emitter<[newValue: T, oldvalue: T]> = new Emitter();
   readonly onChange: Subscribable<[newValue: T, oldvalue: T]>;
   readonly policies: Policies<T> = new Policies();
+
 
   get name() {
     return this._name;

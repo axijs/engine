@@ -8,7 +8,7 @@ import {
 } from '../policies';
 import {DefaultField} from './default-field';
 import {isNullOrUndefined} from '@axi-engine/utils';
-import {FieldOptions, NumericField} from '../types';
+import {FieldOptions, NumericField} from '../field';
 
 
 export interface DefaultNumericFieldOptions extends FieldOptions<number> {
@@ -17,7 +17,7 @@ export interface DefaultNumericFieldOptions extends FieldOptions<number> {
 }
 
 export class DefaultNumericField extends DefaultField<number> implements NumericField {
-  static typeName = 'numeric';
+  static readonly typeName: string = 'numeric';
   readonly typeName = DefaultNumericField.typeName;
 
   get min(): number | undefined {

@@ -1,6 +1,6 @@
 export * from './policies/index'
 
-export * from './types'
+export * from './field'
 export * from './field-definitions'
 export * from './field-registry'
 export * from './fields'
