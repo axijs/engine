@@ -1,4 +1,5 @@
-import {FieldTree} from '@axi-engine/fields';
+import {FieldRegistry, FieldTree, PolicySerializer} from '@axi-engine/fields';
+import {FieldsSerializer} from './fields-serializer';
 
 /**
  *
@@ -8,6 +9,14 @@ import {FieldTree} from '@axi-engine/fields';
  *       patching nodes in place to maintain object references.
  */
 export class FieldTreeSerializer {
+
+  fieldsSerializer: FieldsSerializer;
+  constructor(
+    private readonly fieldRegistry: FieldRegistry,
+    private readonly policySerializer: PolicySerializer
+  ) {
+    this.fieldsSerializer = new FieldsSerializer(this.fieldRegistry, this.policySerializer);
+  }
 
   /**
    * Creates a serializable snapshot of the entire tree and its contained fields.
