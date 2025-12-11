@@ -1,12 +1,8 @@
-import {
-  DefaultFields,
-  FieldRegistry,
-  Fields,
-  FieldSerializer,
-  FieldSnapshot,
-  PolicySerializer
-} from '@axi-engine/fields';
-
+import {FieldSerializer, FieldSnapshot} from './field-serializer';
+import {FieldRegistry} from '../field-registry';
+import {PolicySerializer} from './policy-serializer';
+import {Fields} from '../fields';
+import {DefaultFields} from '../default-fields';
 
 /**
  * A plain object representation of a Fields container's state for serialization.
@@ -63,11 +59,7 @@ export class FieldsSerializer {
   snapshot(fields: Fields): FieldsSnapshot {
     const fieldsDump: FieldSnapshot[] = [];
     fields.fields.forEach(field => fieldsDump.push(this.fieldSerializer.snapshot(field)));
-
-    return {
-      __type: 'fields',
-      fields: fieldsDump
-    };
+    return { __type: 'fields', fields: fieldsDump};
   }
 
   /**

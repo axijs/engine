@@ -6,7 +6,7 @@ import {Field} from './field';
 export class Fields {
   static readonly typeName = 'fields';
   readonly typeName = Fields.typeName;
-  readonly name?: string;
+
 
   readonly _fields: Map<string, Field<any>> = new Map();
   readonly _fieldRegistry: FieldRegistry;
@@ -24,9 +24,8 @@ export class Fields {
     return this._fields;
   }
 
-  constructor(fieldRegistry: FieldRegistry, name?: string) {
+  constructor(fieldRegistry: FieldRegistry) {
     this._fieldRegistry = fieldRegistry;
-    this.name = name;
   }
 
   /**

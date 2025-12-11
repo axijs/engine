@@ -19,8 +19,11 @@ export type TreeOrFieldsNode = FieldTree | Fields;
  * - Implement an event system for node creation/removal.
  */
 export class FieldTree {
+  static readonly typeName = 'fieldTree';
+  readonly typeName = FieldTree.typeName;
+
   /** @private The internal map storing child nodes (branches or leaves). */
-  private readonly _items: Map<string, TreeOrFieldsNode> = new Map();
+  private readonly _nodes: Map<string, TreeOrFieldsNode> = new Map();
 
   /** @private The factory used to create new child nodes. */
   private readonly _factory: TreeNodeFactory;
@@ -28,8 +31,8 @@ export class FieldTree {
   /**
    * Gets the collection of direct child nodes of this tree branch.
    */
-  get items() {
-    return this._items;
+  get nodes() {
+    return this._nodes;
   }
 
   /**
@@ -46,7 +49,7 @@ export class FieldTree {
    * @returns {boolean} `true` if the node exists, otherwise `false`.
    */
   has(name: string): boolean {
-    return this._items.has(name);
+    return this._nodes.has(name);
   }
 
   /**
@@ -68,7 +71,7 @@ export class FieldTree {
    */
   addNode(name: string, node: TreeOrFieldsNode): TreeOrFieldsNode {
     throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
-    this._items.set(name, node);
+    this._nodes.set(name, node);
     return node;
   }
 
@@ -79,7 +82,7 @@ export class FieldTree {
    * @throws If a node with the given name cannot be found.
    */
   getNode(name: string): TreeOrFieldsNode {
-    const node = this._items.get(name);
+    const node = this._nodes.get(name);
     throwIfEmpty(node, `Can't find node with name '${name}'`);
     return node!;
   }

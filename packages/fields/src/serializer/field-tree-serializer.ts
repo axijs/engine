@@ -1,4 +1,4 @@
-import {FieldRegistry, FieldTree, PolicySerializer} from '@axi-engine/fields';
+import {FieldRegistry, Fields, FieldTree, PolicySerializer, TreeOrFieldsNode} from '@axi-engine/fields';
 import {FieldsSerializer} from './fields-serializer';
 
 /**
@@ -23,11 +23,18 @@ export class FieldTreeSerializer {
    * @returns A plain JavaScript object representing the complete state managed by this tree.
    */
   snapshot(tree: FieldTree) {
-    // const dump: Record<string, any> = {
-    //   __type: FieldsNodeType.fieldTree
-    // };
-    // this._items.forEach((node, key) => dump[key] = node.snapshot());
-    // return dump;
+    const res: Record<string, any> = {
+      __type: tree.typeName
+    };
+
+    tree.nodes.forEach((node: TreeOrFieldsNode, key: string) => {
+      if (node.typeName === tree.typeName) {
+        res[key] = this.snapshot(node);
+      } else if (node.typeName === Fields.typeName) {
+        res[key] = this.fieldsSerializer.snapshot(node);
+      }
+    });
+    return res;
   }
 
   /**
