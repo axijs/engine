@@ -9,7 +9,7 @@ import {DefaultFields} from '../default-fields';
  */
 export interface FieldsSnapshot {
   __type: string;
-  fields: FieldSnapshot[]
+  [fieldName: string]: FieldSnapshot | string;
 }
 
 /**
@@ -57,9 +57,12 @@ export class FieldsSerializer {
    * @returns {FieldsSnapshot} A plain object ready for JSON serialization.
    */
   snapshot(fields: Fields): FieldsSnapshot {
-    const fieldsDump: FieldSnapshot[] = [];
-    fields.fields.forEach(field => fieldsDump.push(this.fieldSerializer.snapshot(field)));
-    return { __type: 'fields', fields: fieldsDump};
+    const res: FieldsSnapshot = {
+      __type: fields.typeName,
+    };
+
+    fields.fields.forEach(field => res[field.name] = this.fieldSerializer.snapshot(field));
+    return res;
   }
 
   /**
@@ -71,8 +74,15 @@ export class FieldsSerializer {
    * @returns {DefaultFields} A new `DefaultFields` instance populated with the restored fields.
    */
   hydrate(snapshot: FieldsSnapshot): DefaultFields {
+    const { __type, ...fieldsData } = snapshot;
     const fields = new DefaultFields(this.fieldRegistry);
-    snapshot.fields.forEach(fieldSnapshot => fields.add(this.fieldSerializer.hydrate(fieldSnapshot)));
+
+    for (const fieldName in fieldsData) {
+      const fieldSnapshot = fieldsData[fieldName];
+      const restoredField = this.fieldSerializer.hydrate(fieldSnapshot as FieldSnapshot);
+      fields.add(restoredField);
+    }
+
     return fields;
   }
 }
