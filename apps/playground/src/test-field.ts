@@ -4,7 +4,7 @@ import {
   Fields,
   FieldTree, DefaultFields, DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, FieldTreeSerializer, FieldSerializer
+  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, FieldTreeSerializer, FieldSerializer, FieldsSerializer
 } from '@axi-engine/fields';
 
 
@@ -21,16 +21,17 @@ export function testOneStringField() {
   fieldRegistry.register(DefaultStringField.typeName, DefaultStringField);
   fieldRegistry.register(DefaultBooleanField.typeName, DefaultBooleanField);
 
+  const treeNodeFactory = new DefaultTreeNodeFactory(fieldRegistry);
+
   const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
-  const treeSerializer = new FieldTreeSerializer(fieldRegistry, policySerializer);
+  const fieldsSerializer = new FieldsSerializer(fieldRegistry, policySerializer);
+  const treeSerializer = new FieldTreeSerializer(treeNodeFactory, fieldsSerializer);
 
-  const tree = new FieldTree(new DefaultTreeNodeFactory(fieldRegistry));
-  const paramsTree = tree.createFieldTree('paramsTree');
-  const testChildTree = tree.createFieldTree(['test1', 'test2'], true);
-  const heroFields = testChildTree.createFields<DefaultFields>('hero');
+  const tree = new FieldTree(treeNodeFactory);
+
+  const heroFields = tree.createFields<DefaultFields>('hero');
   const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
-  console.log(testChildTree);
-
+  const paramsTree = tree.createFieldTree('paramsTree');
   const params1 = paramsTree.createFields<DefaultFields>('params1');
   params1.createString('name', 'hero');
   params1.createNumeric('health', 10);
@@ -48,6 +49,8 @@ export function testOneStringField() {
   console.log('<!-- tree snapshot -->');
   console.log(treeSnapshot);
 
+  const restoredFieldTree = treeSerializer.hydrate(treeSnapshot);
+  console.log('restored tree: ', restoredFieldTree);
 
   const fields = new Fields(fieldRegistry);
   fields.onAdd.subscribe((event)=> {

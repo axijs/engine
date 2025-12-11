@@ -1,8 +1,39 @@
-import {FieldRegistry, Fields, FieldTree, PolicySerializer, TreeOrFieldsNode} from '@axi-engine/fields';
+import {
+  Fields,
+  FieldsSnapshot,
+  FieldTree,
+  TreeNodeFactory,
+  TreeOrFieldsNode
+} from '@axi-engine/fields';
 import {FieldsSerializer} from './fields-serializer';
+import {isString} from '@axi-engine/utils';
+
 
 /**
+ * Represents the serializable state of a `FieldTree` container.
  *
+ * This type describes a plain object that has:
+ * 1. A required `__type` property to identify the tree's class.
+ * 2. An arbitrary number of other properties, where each key is the `name`
+ *    of a child node, and the value is the snapshot of that child node.
+ *    The `| string` is included to ensure compatibility with the `__type` property.
+ */
+export interface FieldTreeSnapshot {
+  __type: string;
+  [fieldName: string]: FieldsSnapshot | FieldTreeSnapshot | string;
+}
+
+/**
+ * Orchestrates the recursive serialization and deserialization of `FieldTree` instances.
+ *
+ * This class handles the conversion of an entire `FieldTree` object graph into a
+ * plain, storable snapshot and vice-versa. It delegates the processing of `Fields`
+ * leaf nodes to a dedicated `FieldsSerializer`.
+ * @todo Refactoring: The current implementation uses `if/else` logic in `snapshot` and `hydrate`
+ *       to process different node types. A more extensible approach would be to use a
+ *       registry of dedicated handlers for each node type.
+ *       This would allow new node types to be supported without
+ *       modifying this class, adhering to the Open/Closed Principle.
  *
  * @todo Implement a `patch(tree, snapshot)` method for recursive, non-destructive
  *       updates. This method should traverse the existing tree and the snapshot,
@@ -10,19 +41,17 @@ import {FieldsSerializer} from './fields-serializer';
  */
 export class FieldTreeSerializer {
 
-  fieldsSerializer: FieldsSerializer;
   constructor(
-    private readonly fieldRegistry: FieldRegistry,
-    private readonly policySerializer: PolicySerializer
+    private readonly fieldTreeNodeFactory: TreeNodeFactory,
+    private readonly fieldsSerializer: FieldsSerializer
   ) {
-    this.fieldsSerializer = new FieldsSerializer(this.fieldRegistry, this.policySerializer);
   }
 
   /**
    * Creates a serializable snapshot of the entire tree and its contained fields.
    * @returns A plain JavaScript object representing the complete state managed by this tree.
    */
-  snapshot(tree: FieldTree) {
+  snapshot(tree: FieldTree): FieldTreeSnapshot {
     const res: Record<string, any> = {
       __type: tree.typeName
     };
@@ -34,7 +63,7 @@ export class FieldTreeSerializer {
         res[key] = this.fieldsSerializer.snapshot(node);
       }
     });
-    return res;
+    return res as FieldTreeSnapshot;
   }
 
   /**
@@ -42,26 +71,22 @@ export class FieldTreeSerializer {
    * It intelligently creates missing nodes based on `__type` metadata and delegates hydration to child nodes.
    * @param snapshot The snapshot object to load.
    */
-  hydrate(snapshot: any) {
-    // for (const key in snapshot) {
-    //   if (key === '__type') {
-    //     continue;
-    //   }
-    //
-    //   const field = snapshot[key];
-    //   const type = field?.__type;
-    //
-    //   let node: TreeOrFieldsContainer | undefined = this._items.get(key);
-    //   if (!node) {
-    //     if (type === FieldsNodeType.fields) {
-    //       node = this.createFields(key);
-    //     } else if (type === FieldsNodeType.fieldTree) {
-    //       node = this.createFieldTree(key);
-    //     } else {
-    //       console.warn(`Node '${key}' in snapshot has no __type metadata. Skipping.`);
-    //     }
-    //   }
-    //   node?.hydrate(field);
-    // }
+  hydrate(snapshot: FieldTreeSnapshot): FieldTree {
+    const { __type, ...nodes } = snapshot;
+    const tree = this.fieldTreeNodeFactory.tree();
+
+    for (const key in nodes) {
+      const nodeData = nodes[key];
+      if (isString(nodeData)) {
+        continue;
+      }
+      if (nodeData.__type === FieldTree.typeName) {
+        tree.addNode(key, this.hydrate(nodeData as FieldTreeSnapshot))
+      } else {
+        tree.addNode(key, this.fieldsSerializer.hydrate(nodeData as FieldsSnapshot))
+      }
+    }
+
+    return tree;
   }
 }
