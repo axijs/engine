@@ -4,7 +4,7 @@ import {TreeNodeFactory} from './field-tree-node-factory';
 
 
 /** A type alias for any container that can be a child node in a FieldTree */
-export type TreeOrFieldsNode = FieldTree | Fields;
+export type TreeNode<F extends Fields> = FieldTree<F> | F;
 
 /**
  * Represents a hierarchical data structure for managing the global state of the system.
@@ -18,12 +18,12 @@ export type TreeOrFieldsNode = FieldTree | Fields;
  * - Add node removal functionality.
  * - Implement an event system for node creation/removal.
  */
-export class FieldTree {
+export class FieldTree<TFields extends Fields> {
   static readonly typeName = 'fieldTree';
   readonly typeName = FieldTree.typeName;
 
   /** @private The internal map storing child nodes (branches or leaves). */
-  private readonly _nodes: Map<string, TreeOrFieldsNode> = new Map();
+  private readonly _nodes: Map<string, TreeNode<TFields>> = new Map();
 
   /** @private The factory used to create new child nodes. */
   private readonly _factory: TreeNodeFactory;
@@ -65,11 +65,11 @@ export class FieldTree {
   /**
    * Adds a pre-existing node as a direct child of this tree branch.
    * @param {string} name - The name to assign to the new child node.
-   * @param {TreeOrFieldsNode} node - The node instance to add.
-   * @returns {TreeOrFieldsNode} The added node.
+   * @param {TreeNode} node - The node instance to add.
+   * @returns {TreeNode} The added node.
    * @throws If a node with the same name already exists.
    */
-  addNode(name: string, node: TreeOrFieldsNode): TreeOrFieldsNode {
+  addNode(name: string, node: TreeNode<TFields>): TreeNode<TFields> {
     throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
     this._nodes.set(name, node);
     return node;
@@ -78,10 +78,10 @@ export class FieldTree {
   /**
    * Retrieves a direct child node by its name.
    * @param {string} name - The name of the child node.
-   * @returns {TreeOrFieldsNode} The retrieved node.
+   * @returns {TreeNode} The retrieved node.
    * @throws If a node with the given name cannot be found.
    */
-  getNode(name: string): TreeOrFieldsNode {
+  getNode(name: string): TreeNode<TFields> {
     const node = this._nodes.get(name);
     throwIfEmpty(node, `Can't find node with name '${name}'`);
     return node!;
@@ -94,7 +94,7 @@ export class FieldTree {
    * @returns {FieldTree} The newly created `FieldTree` instance.
    * @throws If the path is invalid or a node already exists at the target location.
    */
-  createFieldTree<T extends FieldTree>(path: PathType, createPath?: boolean): T {
+  createFieldTree<T extends FieldTree<TFields>>(path: PathType, createPath?: boolean): T {
     const traversedPath = this.traversePath(path, createPath);
     return traversedPath.branch.addNode(traversedPath.leafName, this._factory.tree()) as T;
   }
@@ -106,9 +106,9 @@ export class FieldTree {
    * @returns {Fields} The newly created `Fields` instance.
    * @throws If the path is invalid or a node already exists at the target location.
    */
-  createFields<T extends Fields>(path: PathType, createPath?: boolean): T {
+  createFields(path: PathType, createPath?: boolean): TFields {
     const traversedPath = this.traversePath(path, createPath);
-    return traversedPath.branch.addNode(traversedPath.leafName, this._factory.fields()) as T;
+    return traversedPath.branch.addNode(traversedPath.leafName, this._factory.fields()) as TFields;
   }
 
   /**
@@ -117,14 +117,14 @@ export class FieldTree {
    * @returns {FieldTree} The `FieldTree` instance at the specified path.
    * @throws If the path is invalid or the node at the path is not a `FieldTree`.
    */
-  getFieldTree(path: PathType): FieldTree {
+  getFieldTree(path: PathType): FieldTree<TFields> {
     const traversedPath = this.traversePath(path);
     const node = traversedPath.branch.getNode(traversedPath.leafName);
     throwIf(
       !(node instanceof FieldTree),
       `Node with name: ${traversedPath.leafName} by path: '${ensurePathString(path)}' should be instance of FieldTree`
     );
-    return node as FieldTree;
+    return node as FieldTree<TFields>;
   }
 
   /**
@@ -133,14 +133,14 @@ export class FieldTree {
    * @returns {Fields} The `Fields` instance at the specified path.
    * @throws If the path is invalid or the node at the path is not a `Fields` container.
    */
-  getFields(path: PathType): Fields {
+  getFields(path: PathType): TFields {
     const traversedPath = this.traversePath(path);
     const node = traversedPath.branch.getNode(traversedPath.leafName);
     throwIf(
       !(node instanceof Fields),
       `Node with name: ${traversedPath.leafName} by path: '${ensurePathString(path)}' should be instance of Fields`
     );
-    return node as Fields;
+    return node as TFields;
   }
 
   /**
@@ -148,7 +148,7 @@ export class FieldTree {
    * @param {PathType} path - The path to the `FieldTree` node.
    * @returns {FieldTree} The existing or newly created `FieldTree` instance.
    */
-  getOrCreateFieldTree(path: PathType): FieldTree {
+  getOrCreateFieldTree(path: PathType): FieldTree<TFields> {
     const traversedPath = this.traversePath(path, true);
     return traversedPath.branch.has(traversedPath.leafName) ?
       traversedPath.branch.getFieldTree(traversedPath.leafName) :
@@ -179,14 +179,14 @@ export class FieldTree {
   private traversePath(
     path: PathType,
     createPath?: boolean
-  ): { branch: FieldTree, leafName: string } {
+  ): { branch: FieldTree<TFields>, leafName: string } {
     const pathArr = ensurePathArray(path);
     throwIfEmpty(pathArr, 'The path is empty');
     const leafName = pathArr.pop()!;
-    let currentNode: FieldTree = this;
+    let currentNode: FieldTree<TFields> = this;
 
     for (const pathPart of pathArr) {
-      let node: TreeOrFieldsNode | undefined;
+      let node: TreeNode<TFields> | undefined;
       if (currentNode.has(pathPart)) {
         node = currentNode.getNode(pathPart);
       } else {
@@ -196,7 +196,7 @@ export class FieldTree {
       }
       throwIfEmpty(node, `Can't find node with name ${pathPart} by path parsing: ${ensurePathString(path)}`);
       throwIf(node instanceof Fields, `Node with name ${pathPart} should be instance of FieldTree`);
-      currentNode = node as FieldTree;
+      currentNode = node as FieldTree<TFields>;
     }
 
     return {branch: currentNode, leafName: leafName};

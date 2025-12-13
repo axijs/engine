@@ -3,7 +3,7 @@ import {
   FieldsSnapshot,
   FieldTree,
   TreeNodeFactory,
-  TreeOrFieldsNode
+  TreeNode
 } from '@axi-engine/fields';
 import {FieldsSerializer} from './fields-serializer';
 import {isString} from '@axi-engine/utils';
@@ -56,7 +56,7 @@ export class FieldTreeSerializer {
       __type: tree.typeName
     };
 
-    tree.nodes.forEach((node: TreeOrFieldsNode, key: string) => {
+    tree.nodes.forEach((node: TreeNode, key: string) => {
       if (node.typeName === tree.typeName) {
         res[key] = this.snapshot(node);
       } else if (node.typeName === Fields.typeName) {
