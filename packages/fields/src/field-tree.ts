@@ -1,7 +1,6 @@
-import {ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {Emitter, ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
 import {Fields} from './fields';
 import {TreeNodeFactory} from './field-tree-node-factory';
-
 
 /** A type alias for any container that can be a child node in a FieldTree */
 export type TreeNode<F extends Fields> = FieldTree<F> | F;
@@ -14,9 +13,6 @@ export type TreeNode<F extends Fields> = FieldTree<F> | F;
  * and overall game progress. It uses a path-based system for accessing and
  * manipulating nested data, similar to a file system.
  *
- * @todo
- * - Add node removal functionality.
- * - Implement an event system for node creation/removal.
  */
 export class FieldTree<TFields extends Fields> {
   static readonly typeName = 'fieldTree';
@@ -27,6 +23,36 @@ export class FieldTree<TFields extends Fields> {
 
   /** @private The factory used to create new child nodes. */
   private readonly _factory: TreeNodeFactory<TFields>;
+
+  /**
+   * An event emitter that fires immediately after a new node is added to this tree branch.
+   * @event
+   * @param {object} event - The event payload.
+   * @param {string} event.name - The name (key) of the added node.
+   * @param event.node - The node instance that was added.
+   * @example
+   * myTree.onAdd.subscribe(({ name, node }) => {
+   *   console.log(`Node '${name}' was added.`, node);
+   * });
+   */
+  onAdd = new Emitter<[event: {
+    name: string,
+    node: TreeNode<TFields>
+  }]>();
+
+  /**
+   * An event emitter that fires once after one or more nodes have been successfully removed.
+   * @event
+   * @param {object} event - The event payload.
+   * @param {string[]} event.names - An array of names of the nodes that were removed.
+   * @example
+   * myTree.onRemove.subscribe(({ names }) => {
+   *   console.log(`Nodes removed: ${names.join(', ')}`);
+   * });
+   */
+  onRemove = new Emitter<[event: {
+    names: string[]
+  }]>();
 
   /**
    * Gets the collection of direct child nodes of this tree branch.
@@ -72,6 +98,7 @@ export class FieldTree<TFields extends Fields> {
   addNode(name: string, node: TreeNode<TFields>): TreeNode<TFields> {
     throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
     this._nodes.set(name, node);
+    this.onAdd.emit({ name, node });
     return node;
   }
 
@@ -85,6 +112,30 @@ export class FieldTree<TFields extends Fields> {
     const node = this._nodes.get(name);
     throwIfEmpty(node, `Can't find node with name '${name}'`);
     return node!;
+  }
+
+  /**
+   * Removes one or more nodes from this tree branch.
+   *
+   * This method first validates that all specified nodes exist. If validation passes,
+   * it recursively calls `destroy()` on each node to ensure proper cleanup of the entire subtree.
+   * Finally, it emits a single `onRemove` event with the names of all successfully removed nodes.
+   *
+   * @param {string | string[]} names - A single name or an array of names of the nodes to remove.
+   * @throws If any of the specified names do not correspond to an existing node.
+   */
+  removeNode(names: string | string[]) {
+    const toRemoveNames = Array.isArray(names) ? names : [names];
+    toRemoveNames.forEach(name => {
+      throwIf(!this.has(name), `Can't remove node with name: '${name}', node doesn't exists`);
+    });
+    toRemoveNames.forEach(name => {
+      this._nodes.get(name)!.destroy();
+      this._nodes.delete(name);
+    });
+    if (toRemoveNames.length) {
+      this.onRemove.emit({names: toRemoveNames});
+    }
   }
 
   /**
@@ -165,6 +216,28 @@ export class FieldTree<TFields extends Fields> {
     return traversedPath.branch.has(traversedPath.leafName) ?
       traversedPath.branch.getFields(traversedPath.leafName) :
       traversedPath.branch.createFields(traversedPath.leafName);
+  }
+
+  /**
+   * Removes all child nodes from this tree branch.
+   * This method ensures that `destroy()` is called on each child node, allowing for
+   * a full, recursive cleanup of the entire subtree.
+   */
+  clear() {
+    this.removeNode(Array.from(this._nodes.keys()));
+  }
+
+  /**
+   * Performs a complete cleanup of this node and its entire subtree.
+   *
+   * It recursively destroys all child nodes by calling `clear()` and then
+   * unsubscribes all listeners from its own event emitters.
+   * This method should be called when a node is no longer needed.
+   */
+  destroy() {
+    this.clear();
+    this.onAdd.clear();
+    this.onRemove.clear();
   }
 
   /**

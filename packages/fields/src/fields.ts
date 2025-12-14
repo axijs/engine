@@ -169,4 +169,10 @@ export class Fields {
   clear() {
     this.remove(Array.from(this._fields.keys()));
   }
+
+  destroy() {
+    this.clear();
+    this.onAdd.clear();
+    this.onRemove.clear();
+  }
 }
