@@ -2,7 +2,7 @@ import {
   DefaultField,
   DefaultNumericField,
   Fields,
-  FieldTree, DefaultFields, DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
+  DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
   ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, FieldTreeSerializer, FieldSerializer, FieldsSerializer
 } from '@axi-engine/fields';
@@ -24,15 +24,15 @@ export function testOneStringField() {
   const treeNodeFactory = new DefaultTreeNodeFactory(fieldRegistry);
 
   const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
-  const fieldsSerializer = new FieldsSerializer(fieldRegistry, policySerializer);
+  const fieldsSerializer = new FieldsSerializer(treeNodeFactory, fieldSerializer);
   const treeSerializer = new FieldTreeSerializer(treeNodeFactory, fieldsSerializer);
 
-  const tree = new FieldTree(treeNodeFactory);
+  const tree = treeNodeFactory.tree();
 
-  const heroFields = tree.createFields<DefaultFields>('hero');
+  const heroFields = tree.createFields('hero');
   const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
   const paramsTree = tree.createFieldTree('paramsTree');
-  const params1 = paramsTree.createFields<DefaultFields>('params1');
+  const params1 = paramsTree.createFields('params1');
   params1.createString('name', 'hero');
   params1.createNumeric('health', 10);
   params1.createNumeric('gold', 100);

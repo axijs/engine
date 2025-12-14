@@ -39,11 +39,11 @@ export interface FieldTreeSnapshot {
  *       updates. This method should traverse the existing tree and the snapshot,
  *       patching nodes in place to maintain object references.
  */
-export class FieldTreeSerializer {
+export class FieldTreeSerializer<TFields extends Fields> {
 
   constructor(
-    private readonly fieldTreeNodeFactory: TreeNodeFactory,
-    private readonly fieldsSerializer: FieldsSerializer
+    private readonly fieldTreeNodeFactory: TreeNodeFactory<TFields>,
+    private readonly fieldsSerializer: FieldsSerializer<TFields>
   ) {
   }
 
@@ -51,12 +51,12 @@ export class FieldTreeSerializer {
    * Creates a serializable snapshot of the entire tree and its contained fields.
    * @returns A plain JavaScript object representing the complete state managed by this tree.
    */
-  snapshot(tree: FieldTree): FieldTreeSnapshot {
+  snapshot(tree: FieldTree<TFields>): FieldTreeSnapshot {
     const res: Record<string, any> = {
       __type: tree.typeName
     };
 
-    tree.nodes.forEach((node: TreeNode, key: string) => {
+    tree.nodes.forEach((node: TreeNode<TFields>, key: string) => {
       if (node.typeName === tree.typeName) {
         res[key] = this.snapshot(node);
       } else if (node.typeName === Fields.typeName) {
@@ -71,7 +71,7 @@ export class FieldTreeSerializer {
    * It intelligently creates missing nodes based on `__type` metadata and delegates hydration to child nodes.
    * @param snapshot The snapshot object to load.
    */
-  hydrate(snapshot: FieldTreeSnapshot): FieldTree {
+  hydrate(snapshot: FieldTreeSnapshot): FieldTree<TFields> {
     const { __type, ...nodes } = snapshot;
     const tree = this.fieldTreeNodeFactory.tree();
 
@@ -82,7 +82,7 @@ export class FieldTreeSerializer {
       }
       if (nodeData.__type === FieldTree.typeName) {
         tree.addNode(key, this.hydrate(nodeData as FieldTreeSnapshot))
-      } else {
+      } else if (nodeData.__type === Fields.typeName) {
         tree.addNode(key, this.fieldsSerializer.hydrate(nodeData as FieldsSnapshot))
       }
     }

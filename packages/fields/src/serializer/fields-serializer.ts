@@ -1,8 +1,6 @@
 import {FieldSerializer, FieldSnapshot} from './field-serializer';
-import {FieldRegistry} from '../field-registry';
-import {PolicySerializer} from './policy-serializer';
 import {Fields} from '../fields';
-import {DefaultFields} from '../default-fields';
+import {FieldsFactory} from '../field-tree-node-factory';
 
 /**
  * A plain object representation of a Fields container's state for serialization.
@@ -19,33 +17,20 @@ export interface FieldsSnapshot {
  * into a storable snapshot and back.
  * It delegates the actual serialization of each `Field` and `Policy` to their respective serializers.
  *
- * @todo This implementation is coupled to creating `DefaultFields` instances during hydration.
- *       To make the system fully extensible, this class should be refactored to use a
- *       `FieldsRegistry` (a `ConstructorRegistry<Fields>`). This would allow it to
- *       hydrate any custom `Fields` class (e.g., `ReactiveFields`) based on the `__type`
- *       property in the snapshot, mirroring the pattern used by `FieldSerializer`.
- *
  * @todo Implement a `patch(fields, snapshot)` method. It should perform a non-destructive
  *       update, creating new fields, removing missing ones, and patching existing ones
  *       in place, preserving the container instance itself.
  */
-export class FieldsSerializer {
-  /**
-   * An internal instance of FieldSerializer to handle individual fields.
-   * @private
-   */
-  private readonly fieldSerializer: FieldSerializer;
-
+export class FieldsSerializer<TFields extends Fields> {
   /**
    * Creates an instance of FieldsSerializer.
-   * @param {FieldRegistry} fieldRegistry - A registry that maps string type names to Field constructors.
-   * @param {PolicySerializer} policySerializer - A serializer dedicated to handling Policy instances.
+   * @param {FieldsFactory} fieldsFactory - A registry that maps string type names to Field constructors.
+   * @param {FieldSerializer} fieldSerializer - A serializer of field instances.
    */
   constructor(
-    private readonly fieldRegistry: FieldRegistry,
-    private readonly policySerializer: PolicySerializer
+    private readonly fieldsFactory: FieldsFactory<TFields>,
+    private readonly fieldSerializer: FieldSerializer
   ) {
-    this.fieldSerializer = new FieldSerializer(this.fieldRegistry, this.policySerializer);
   }
 
   /**
@@ -68,14 +53,13 @@ export class FieldsSerializer {
   /**
    * Restores a `Fields` container instance from its snapshot representation.
    *
-   * **Limitation:** This method is currently hardcoded to always create an instance of `DefaultFields`.
    * It iterates through the field snapshots and hydrates them individually, adding them to the new container.
    * @param {FieldsSnapshot} snapshot - The plain object snapshot to deserialize.
-   * @returns {DefaultFields} A new `DefaultFields` instance populated with the restored fields.
+   * @returns {Fields} A new `DefaultFields` instance populated with the restored fields.
    */
-  hydrate(snapshot: FieldsSnapshot): DefaultFields {
+  hydrate(snapshot: FieldsSnapshot): TFields {
     const { __type, ...fieldsData } = snapshot;
-    const fields = new DefaultFields(this.fieldRegistry);
+    const fields = this.fieldsFactory.fields();
 
     for (const fieldName in fieldsData) {
       const fieldSnapshot = fieldsData[fieldName];
