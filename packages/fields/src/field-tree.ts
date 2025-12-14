@@ -26,7 +26,7 @@ export class FieldTree<TFields extends Fields> {
   private readonly _nodes: Map<string, TreeNode<TFields>> = new Map();
 
   /** @private The factory used to create new child nodes. */
-  private readonly _factory: TreeNodeFactory;
+  private readonly _factory: TreeNodeFactory<TFields>;
 
   /**
    * Gets the collection of direct child nodes of this tree branch.
@@ -39,7 +39,7 @@ export class FieldTree<TFields extends Fields> {
    * Creates an instance of FieldTree.
    * @param {TreeNodeFactory} factory - A factory responsible for creating new nodes within the tree.
    */
-  constructor(factory: TreeNodeFactory) {
+  constructor(factory: TreeNodeFactory<TFields>) {
     this._factory = factory;
   }
 

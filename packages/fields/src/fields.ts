@@ -13,7 +13,6 @@ export class Fields {
   static readonly typeName = 'fields';
   readonly typeName = Fields.typeName;
 
-
   readonly _fields: Map<string, Field<any>> = new Map();
   readonly _fieldRegistry: FieldRegistry;
 
