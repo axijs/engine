@@ -4,7 +4,7 @@ import {
   Fields,
   DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, DefaultStringField, DefaultTreeNodeFactory, FieldTreeSerializer, FieldSerializer, FieldsSerializer
+  ClampMaxPolicy, DefaultStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory
 } from '@axi-engine/fields';
 
 
@@ -21,7 +21,7 @@ export function testOneStringField() {
   fieldRegistry.register(DefaultStringField.typeName, DefaultStringField);
   fieldRegistry.register(DefaultBooleanField.typeName, DefaultBooleanField);
 
-  const treeNodeFactory = new DefaultTreeNodeFactory(fieldRegistry);
+  const treeNodeFactory = new CoreTreeNodeFactory(fieldRegistry);
 
   const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
   const fieldsSerializer = new FieldsSerializer(treeNodeFactory, fieldSerializer);

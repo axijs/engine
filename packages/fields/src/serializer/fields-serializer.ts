@@ -1,6 +1,6 @@
 import {FieldSerializer, FieldSnapshot} from './field-serializer';
 import {Fields} from '../fields';
-import {FieldsFactory} from '../field-tree-node-factory';
+import {FieldsFactory} from '../fields-factory';
 
 /**
  * A plain object representation of a Fields container's state for serialization.

@@ -1,8 +1,7 @@
 import {
   Fields,
   FieldsSnapshot,
-  FieldTree,
-  TreeNodeFactory,
+  FieldTree, FieldTreeFactory,
   TreeNode
 } from '@axi-engine/fields';
 import {FieldsSerializer} from './fields-serializer';
@@ -42,7 +41,7 @@ export interface FieldTreeSnapshot {
 export class FieldTreeSerializer<TFields extends Fields> {
 
   constructor(
-    private readonly fieldTreeNodeFactory: TreeNodeFactory<TFields>,
+    private readonly fieldTreeNodeFactory: FieldTreeFactory<TFields>,
     private readonly fieldsSerializer: FieldsSerializer<TFields>
   ) {
   }

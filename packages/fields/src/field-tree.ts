@@ -1,6 +1,6 @@
 import {Emitter, ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
 import {Fields} from './fields';
-import {TreeNodeFactory} from './field-tree-node-factory';
+import {FieldTreeFactory} from './field-tree-factory';
 
 /** A type alias for any container that can be a child node in a FieldTree */
 export type TreeNode<F extends Fields> = FieldTree<F> | F;
@@ -22,7 +22,7 @@ export class FieldTree<TFields extends Fields> {
   private readonly _nodes: Map<string, TreeNode<TFields>> = new Map();
 
   /** @private The factory used to create new child nodes. */
-  private readonly _factory: TreeNodeFactory<TFields>;
+  private readonly _factory: FieldTreeFactory<TFields>;
 
   /**
    * An event emitter that fires immediately after a new node is added to this tree branch.
@@ -63,9 +63,9 @@ export class FieldTree<TFields extends Fields> {
 
   /**
    * Creates an instance of FieldTree.
-   * @param {TreeNodeFactory} factory - A factory responsible for creating new nodes within the tree.
+   * @param {FieldTreeFactory} factory - A factory responsible for creating new nodes within the tree.
    */
-  constructor(factory: TreeNodeFactory<TFields>) {
+  constructor(factory: FieldTreeFactory<TFields>) {
     this._factory = factory;
   }
 
