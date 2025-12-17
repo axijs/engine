@@ -1,6 +1,7 @@
 import {Constructor} from '@axi-engine/utils';
 import {DefaultField, FieldOptions, Fields} from '@axi-engine/fields';
 
+
 export function WithDefaultGenericFields<TBase extends Constructor<Fields>>(Base: TBase) {
 
   return class FieldsWithDefaultGeneric extends Base {
@@ -17,3 +18,4 @@ export function WithDefaultGenericFields<TBase extends Constructor<Fields>>(Base
     }
   }
 }
+

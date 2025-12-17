@@ -1,5 +1,6 @@
 export * from './policies/index'
 
+export * from './mixins/mixin-factory'
 export * from './field'
 export * from './field-definitions'
 export * from './field-registry'

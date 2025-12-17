@@ -1,20 +1,8 @@
-import {Constructor} from '@axi-engine/utils';
-import {Fields} from '../fields';
-import {DefaultNumericField, DefaultNumericFieldOptions} from '@axi-engine/fields';
+import {DefaultBooleanField, DefaultNumericField} from '@axi-engine/fields';
+import {createTypedMethodsMixin} from './mixin-factory';
 
-export function WithNumericFields<TBase extends Constructor<Fields>>(Base: TBase) {
 
-  return class FieldsWithNumeric extends Base {
-    createNumeric(name: string, initialValue: number, options?: DefaultNumericFieldOptions): DefaultNumericField {
-      return this.create(DefaultNumericField.typeName, name, initialValue, options);
-    }
-
-    upsetNumeric(name: string, value: number, options?: DefaultNumericFieldOptions): DefaultNumericField {
-      return this.upset(DefaultNumericField.typeName, name, value, options);
-    }
-
-    getNumeric(name: string): DefaultNumericField {
-      return this.get(name);
-    }
-  }
-}
+export const WithNumericFields = createTypedMethodsMixin<
+  typeof DefaultNumericField,
+  'Numeric'
+>(DefaultBooleanField.typeName, 'Numeric')

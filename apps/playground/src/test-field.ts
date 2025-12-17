@@ -37,6 +37,8 @@ export function testOneStringField() {
   params1.createNumeric('health', 10);
   params1.createNumeric('gold', 100);
   params1.createBoolean('alive', true);
+  const genField = params1.createGeneric('gen', 'genField hello');
+  console.log('genField value:', genField.value);
 
   const fieldSnapshot = fieldSerializer.snapshot(health);
 
