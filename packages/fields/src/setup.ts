@@ -2,12 +2,19 @@ import {FieldRegistry} from './field-registry';
 import {
   ClampMaxPolicySerializerHandler,
   ClampMinPolicySerializerHandler,
-  ClampPolicySerializerHandler,
+  ClampPolicySerializerHandler, FieldSerializer, FieldsSerializer, FieldTreeSerializer,
   PolicySerializer
 } from './serializer';
 import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './policies';
 import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './field-definitions';
+import {CoreFields} from './core-fields';
+import {CoreTreeNodeFactory} from './core-field-tree-factory';
 
+
+/**
+ * Creates and configures a FieldRegistry with all the core field types.
+ * @returns {FieldRegistry} A pre-configured FieldRegistry instance.
+ */
 export function createCoreFieldRegistry(): FieldRegistry {
   const fieldRegistry = new FieldRegistry();
   fieldRegistry.register(CoreField.typeName, CoreField);
@@ -17,10 +24,61 @@ export function createCoreFieldRegistry(): FieldRegistry {
   return fieldRegistry;
 }
 
+/**
+ * Creates and configures a PolicySerializer with handlers for core policies.
+ * @returns {PolicySerializer} A pre-configured PolicySerializer instance.
+ */
 export function createCorePolicySerializer(): PolicySerializer {
   const policySerializer = new PolicySerializer();
   policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());
   policySerializer.register(ClampMinPolicy.id, new ClampMinPolicySerializerHandler());
   policySerializer.register(ClampMaxPolicy.id, new ClampMaxPolicySerializerHandler());
   return policySerializer;
+}
+
+/**
+ * Creates a factory for CoreFieldTree and CoreFields nodes.
+ * @param {FieldRegistry} fieldRegistry - The registry to be used by the factory.
+ * @returns {CoreTreeNodeFactory} A new CoreTreeNodeFactory instance.
+ */
+export function createCoreTreeNodeFactory(fieldRegistry: FieldRegistry): CoreTreeNodeFactory {
+  return new CoreTreeNodeFactory(fieldRegistry);
+}
+
+/**
+ * Creates a fully configured serializer for a FieldTree.
+ * This function composes all necessary serializers (FieldTree, Fields, Field) for a complete setup.
+ * @param {CoreTreeNodeFactory} fieldTreeNodeFactory - The factory used to create new tree nodes during deserialization.
+ * @param policySerializer
+ * @returns {FieldTreeSerializer<CoreFields>} A top-level serializer for the entire field tree.
+ */
+export function createCoreTreeSerializer(
+  fieldTreeNodeFactory: CoreTreeNodeFactory,
+  policySerializer?: PolicySerializer
+): FieldTreeSerializer<CoreFields> {
+  return new FieldTreeSerializer(
+    fieldTreeNodeFactory,
+    new FieldsSerializer(
+      fieldTreeNodeFactory,
+      new FieldSerializer(fieldTreeNodeFactory.fieldRegistry, policySerializer ?? createCorePolicySerializer())
+    )
+  );
+}
+
+export interface CoreFieldSystemConfig {
+  registry?: FieldRegistry,
+  policySerializer?: PolicySerializer
+}
+
+/**
+ * Creates a complete core setup for the field system.
+ * @returns {{factory: CoreTreeNodeFactory, serializer: FieldTreeSerializer<CoreFields>}}
+ */
+export function createCoreFieldSystem(config?: CoreFieldSystemConfig):
+  { factory: CoreTreeNodeFactory, serializer: FieldTreeSerializer<CoreFields> }
+{
+  const registry = config?.registry ?? createCoreFieldRegistry();
+  const factory = createCoreTreeNodeFactory(registry);
+  const serializer = createCoreTreeSerializer(factory, config?.policySerializer);
+  return { factory, serializer };
 }

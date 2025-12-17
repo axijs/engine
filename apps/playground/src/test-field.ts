@@ -4,11 +4,15 @@ import {
   Fields,
   CoreBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, CoreStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory
+  ClampMaxPolicy, CoreStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory,
+  createCoreFieldSystem
 } from '@axi-engine/fields';
 
 
 export function testOneStringField() {
+
+  const system = createCoreFieldSystem();
+  console.log(system);
 
   const policySerializer = new PolicySerializer();
   policySerializer.register(ClampPolicy.id, new ClampPolicySerializerHandler());
