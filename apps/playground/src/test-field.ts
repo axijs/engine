@@ -1,10 +1,10 @@
 import {
-  DefaultField,
-  DefaultNumericField,
+  CoreField,
+  CoreNumericField,
   Fields,
-  DefaultBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
+  CoreBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, DefaultStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory
+  ClampMaxPolicy, CoreStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory
 } from '@axi-engine/fields';
 
 
@@ -16,10 +16,10 @@ export function testOneStringField() {
   policySerializer.register(ClampMaxPolicy.id, new ClampMaxPolicySerializerHandler());
 
   const fieldRegistry = new FieldRegistry();
-  fieldRegistry.register(DefaultField.typeName, DefaultField);
-  fieldRegistry.register(DefaultNumericField.typeName, DefaultNumericField);
-  fieldRegistry.register(DefaultStringField.typeName, DefaultStringField);
-  fieldRegistry.register(DefaultBooleanField.typeName, DefaultBooleanField);
+  fieldRegistry.register(CoreField.typeName, CoreField);
+  fieldRegistry.register(CoreNumericField.typeName, CoreNumericField);
+  fieldRegistry.register(CoreStringField.typeName, CoreStringField);
+  fieldRegistry.register(CoreBooleanField.typeName, CoreBooleanField);
 
   const treeNodeFactory = new CoreTreeNodeFactory(fieldRegistry);
 
@@ -61,7 +61,7 @@ export function testOneStringField() {
 
   console.log('test one string field');
 
-  const testField = new DefaultField<string>('name', 'hello');
+  const testField = new CoreField<string>('name', 'hello');
   console.log(testField.value);
 
   testField.value = 'hello 2';
@@ -71,7 +71,7 @@ export function testOneStringField() {
   testField.value = 'hello 3';
   console.log(testField.value);
 
-  const numberF = new DefaultNumericField('number', 10);
+  const numberF = new CoreNumericField('number', 10);
   console.log(numberF.value);
 }
 

@@ -1,7 +1,7 @@
-import {DefaultBooleanField} from '@axi-engine/fields';
+import {CoreBooleanField} from '@axi-engine/fields';
 import {createTypedMethodsMixin} from './mixin-factory';
 
 export const WithBooleanFields = createTypedMethodsMixin<
-  typeof DefaultBooleanField,
+  typeof CoreBooleanField,
   'Boolean'
->(DefaultBooleanField.typeName, 'Boolean')
+>(CoreBooleanField.typeName, 'Boolean')

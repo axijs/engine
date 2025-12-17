@@ -11,10 +11,10 @@ import {Field, FieldOptions} from '../field';
  * @template T The type of the value this field holds.
  *
  */
-export class DefaultField<T> implements Field<T> {
+export class CoreField<T> implements Field<T> {
   /** A type keyword of the field */
   static readonly typeName: string = 'default';
-  readonly typeName: string = DefaultField.typeName;
+  readonly typeName: string = CoreField.typeName;
 
   /** A unique identifier for the field. */
   private readonly _name: string;

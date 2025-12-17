@@ -1,8 +1,8 @@
-import {DefaultBooleanField, DefaultNumericField} from '@axi-engine/fields';
+import {CoreBooleanField, CoreNumericField} from '@axi-engine/fields';
 import {createTypedMethodsMixin} from './mixin-factory';
 
 
 export const WithNumericFields = createTypedMethodsMixin<
-  typeof DefaultNumericField,
+  typeof CoreNumericField,
   'Numeric'
->(DefaultBooleanField.typeName, 'Numeric')
+>(CoreBooleanField.typeName, 'Numeric')

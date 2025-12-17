@@ -1,10 +1,10 @@
 import {
-  DefaultBooleanField,
-  DefaultStringField,
+  CoreBooleanField,
+  CoreStringField,
 } from '@axi-engine/fields';
 import {createTypedMethodsMixin} from './mixin-factory';
 
 export const WithStringFields = createTypedMethodsMixin<
-  typeof DefaultStringField,
+  typeof CoreStringField,
   'String'
->(DefaultBooleanField.typeName, 'String')
+>(CoreBooleanField.typeName, 'String')

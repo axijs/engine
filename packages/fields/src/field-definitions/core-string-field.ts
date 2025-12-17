@@ -1,13 +1,13 @@
-import {DefaultField} from './default-field';
+import {CoreField} from './core-field';
 import {FieldOptions, StringField} from '../field';
 
-export interface DefaultStringFieldOptions extends FieldOptions<string> { }
+export interface CoreStringFieldOptions extends FieldOptions<string> { }
 
-export class DefaultStringField extends DefaultField<string> implements StringField {
+export class CoreStringField extends CoreField<string> implements StringField {
   static readonly typeName: string = 'string';
-  readonly typeName = DefaultStringField.typeName;
+  readonly typeName = CoreStringField.typeName;
 
-  constructor(name: string, initialVal: string, options?: DefaultStringFieldOptions) {
+  constructor(name: string, initialVal: string, options?: CoreStringFieldOptions) {
     super(name, initialVal, options);
   }
 

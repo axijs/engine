@@ -6,19 +6,19 @@ import {
   ClampMinPolicy,
   ClampMaxPolicy
 } from '../policies';
-import {DefaultField} from './default-field';
+import {CoreField} from './core-field';
 import {isNullOrUndefined} from '@axi-engine/utils';
 import {FieldOptions, NumericField} from '../field';
 
 
-export interface DefaultNumericFieldOptions extends FieldOptions<number> {
+export interface CoreNumericFieldOptions extends FieldOptions<number> {
   min?: number;
   max?: number;
 }
 
-export class DefaultNumericField extends DefaultField<number> implements NumericField {
+export class CoreNumericField extends CoreField<number> implements NumericField {
   static readonly typeName: string = 'numeric';
-  readonly typeName = DefaultNumericField.typeName;
+  readonly typeName = CoreNumericField.typeName;
 
   get min(): number | undefined {
     const policy =
@@ -34,7 +34,7 @@ export class DefaultNumericField extends DefaultField<number> implements Numeric
     return policy?.max;
   }
 
-  constructor(name: string, initialVal: number, options?: DefaultNumericFieldOptions) {
+  constructor(name: string, initialVal: number, options?: CoreNumericFieldOptions) {
     const policies = options?.policies ?? [];
     if (!isNullOrUndefined(options?.min) && !isNullOrUndefined(options?.max)) {
       policies.unshift(clampPolicy(options!.min!, options!.max!));
