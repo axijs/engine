@@ -130,14 +130,14 @@ export class Fields {
 
   /**
    * Retrieves a field by its name.
-   * @template T - The expected `Field` type to be returned.
+   * @template TField - The expected `Field` type to be returned.
    * @param {string} name - The name of the field to retrieve.
-   * @returns {T} The `Field` instance.
+   * @returns {TField} The `Field` instance.
    * @throws If the field does not exist.
    */
-  get<T extends Field<any>>(name: string): T {
+  get<TField extends Field<any>>(name: string): TField {
     throwIf(!this._fields.has(name), `Field with name '${name}' not exists`);
-    return this._fields.get(name)! as T;
+    return this._fields.get(name)! as TField;
   }
 
   /**

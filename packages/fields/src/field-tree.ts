@@ -219,6 +219,17 @@ export class FieldTree<TFields extends Fields> {
   }
 
   /**
+   * Finds the parent node for a given path.
+   * @param path The path to the target node.
+   * @returns The parent node (either a FieldTree or Fields).
+   * @throws An error if the path is invalid or any intermediate node is not a FieldTree.
+   */
+  findParentNode(path: PathType): FieldTree<TFields> | TFields {
+    const info = this.traversePath(path);
+    return info.branch;
+  }
+
+  /**
    * Removes all child nodes from this tree branch.
    * This method ensures that `destroy()` is called on each child node, allowing for
    * a full, recursive cleanup of the entire subtree.
