@@ -211,7 +211,7 @@ export class FieldTree<TFields extends Fields> {
    * @param {PathType} path - The path to the `Fields` container.
    * @returns {Fields} The existing or newly created `Fields` instance.
    */
-  getOrCreateFields(path: PathType): Fields {
+  getOrCreateFields(path: PathType): TFields {
     const traversedPath = this.traversePath(path, true);
     return traversedPath.branch.has(traversedPath.leafName) ?
       traversedPath.branch.getFields(traversedPath.leafName) :

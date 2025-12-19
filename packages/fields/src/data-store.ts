@@ -68,23 +68,28 @@ export class DataStore implements Store {
   }
 
   createGeneric<T>(path: PathType, val: T, options?: FieldOptions<T>): CoreField<T> {
+    const pathArr = ensurePathArray(path);
 
+    // if (this.)
+
+    this.tree.getFields(path)
+    // this.tree.getOrCreateFields()getFields()
   }
 
   getBoolean(path: PathType): CoreBooleanField {
-
+    return this.getField<CoreBooleanField>(path);
   }
 
   getNumeric(path: PathType): CoreNumericField {
-
+    return this.getField<CoreNumericField>(path);
   }
 
   getString(path: PathType): CoreStringField {
-
+    return this.getField<CoreStringField>(path);
   }
 
   getGeneric<T>(path: PathType): CoreField<T> {
-
+    return this.getField<CoreField<T>>(path);
   }
 
   getField<TField extends Field<any>>(path: PathType): TField {
@@ -100,11 +105,11 @@ export class DataStore implements Store {
   }
 
   createFields(path: PathType): CoreFields {
-    return this.tree.createFields(path);
+    return this.tree.createFields(path, true);
   }
 
   createTree(path: PathType): CoreFieldTree {
-    return this.tree.createFieldTree(path);
+    return this.tree.createFieldTree(path, true);
   }
 
   getFields(path: PathType): CoreFields {
