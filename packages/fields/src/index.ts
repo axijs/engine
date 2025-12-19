@@ -16,5 +16,7 @@ export * from './core-field-tree'
 export * from './core-field-tree-factory'
 
 export * from './serializer/index'
+export * from './store'
+export * from './data-store'
 
 export * from './setup'

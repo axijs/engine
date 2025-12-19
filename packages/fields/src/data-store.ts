@@ -7,7 +7,6 @@ import {
 } from './data-store-field-resolver';
 import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
 import {Field, FieldOptions} from './field';
-import {CoreTreeNodeFactory} from './core-field-tree-factory';
 import {CoreFieldTree} from './core-field-tree';
 import {
   CoreBooleanField,
@@ -16,17 +15,21 @@ import {
   CoreNumericFieldOptions, CoreStringField, CoreStringFieldOptions
 } from './field-definitions';
 import {CoreFields} from './core-fields';
-import {Fields} from './fields';
-import {FieldTree} from './field-tree';
+
 
 export class DataStore implements Store {
   private readonly resolvers: DataStoreFieldResolver[] = [];
   private readonly rootFieldsName = '__root_fields';
+  private _rootFields: CoreFields | undefined;
 
-  constructor(
-    private readonly tree: CoreFieldTree,
-    private readonly factory: CoreTreeNodeFactory
-  ) {
+  private get rootFields(): CoreFields {
+    if (!this._rootFields) {
+      this._rootFields = this.tree.getOrCreateFields(this.rootFieldsName);
+    }
+    return this._rootFields!;
+  }
+
+  constructor(private readonly tree: CoreFieldTree) {
     this.registerResolver(new NumericFieldResolver());
     this.registerResolver(new BooleanFieldResolver());
     this.registerResolver(new StringFieldResolver());
@@ -42,38 +45,60 @@ export class DataStore implements Store {
   }
 
   getValue<T>(path: PathType): T {
-    return undefined as T;
+    return this.getField(path).value;
   }
 
   setValue<T>(path: PathType, val: T): T {
-    return undefined as T;
+    /** for case when field has policies */
+    const field = this.getField(path);
+    field.value = val;
+    return field.value;
   }
 
-  create<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): Field<T> {
+  createValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
+    const dest = this.getDestinationFields(path);
+    if (options?.fieldType) {
+      return dest.fields.create(options.fieldType, dest.leafName, val, options).value;
+    }
+    for (let resolver of this.resolvers) {
+      if (resolver.supports(val)) {
+        return dest.fields.create(resolver.typeName, dest.leafName, val, options).value;
+      }
+    }
+    return dest.fields.createGeneric<T>(dest.leafName, val, options).value;
   }
 
-  upset<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): Field<T> {
+  upsetValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
+    const dest = this.getDestinationFields(path);
+    if (options?.fieldType) {
+      return dest.fields.upset(options.fieldType, dest.leafName, val, options).value;
+    }
+    for (let resolver of this.resolvers) {
+      if (resolver.supports(val)) {
+        return dest.fields.upset(resolver.typeName, dest.leafName, val, options).value;
+      }
+    }
+    return dest.fields.upsetGeneric<T>(dest.leafName, val, options).value;
   }
 
-  createBoolean(path: PathType, val: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField {
-
+  createBoolean(path: PathType, initialValue: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField {
+    const dest = this.getDestinationFields(path);
+    return dest.fields.createBoolean(dest.leafName, initialValue, options);
   }
 
-  createNumeric(path: PathType, val: number, options?: CoreNumericFieldOptions): CoreNumericField {
-
+  createNumeric(path: PathType, initialValue: number, options?: CoreNumericFieldOptions): CoreNumericField {
+    const dest = this.getDestinationFields(path);
+    return dest.fields.createNumeric(dest.leafName, initialValue, options);
   }
 
-  createString(path: PathType, val: string, options?: CoreStringFieldOptions): CoreStringField {
-
+  createString(path: PathType, initialValue: string, options?: CoreStringFieldOptions): CoreStringField {
+    const dest = this.getDestinationFields(path);
+    return dest.fields.createString(dest.leafName, initialValue, options);
   }
 
-  createGeneric<T>(path: PathType, val: T, options?: FieldOptions<T>): CoreField<T> {
-    const pathArr = ensurePathArray(path);
-
-    // if (this.)
-
-    this.tree.getFields(path)
-    // this.tree.getOrCreateFields()getFields()
+  createGeneric<T>(path: PathType, initialValue: T, options?: FieldOptions<T>): CoreField<T> {
+    const dest = this.getDestinationFields(path);
+    return dest.fields.createGeneric<T>(dest.leafName, initialValue, options);
   }
 
   getBoolean(path: PathType): CoreBooleanField {
@@ -96,8 +121,8 @@ export class DataStore implements Store {
     const pathArr = ensurePathArray(path);
     throwIfEmpty(pathArr, `Wrong path or path is empty: ${ensurePathString(path)}, should contain at least one path segment`);
 
-    if (pathArr.length === 1) {
-      return this.getRootFields().get<F>(pathArr[0]) as TField;
+    if (this.isPathToRootFields(pathArr)) {
+      return this.rootFields.get<TField>(pathArr[0]) as TField;
     }
     const fieldName = pathArr.pop()!;
     const fields = this.tree.getFields(pathArr);
@@ -125,8 +150,8 @@ export class DataStore implements Store {
     throwIfEmpty(pathArr, `Wrong path or path is empty: ${ensurePathString(path)}, should contain at least one path segment`);
 
     /** remove field from root fields */
-    if (pathArr.length === 1) {
-      this.getRootFields().remove(pathArr);
+    if (this.isPathToRootFields(pathArr)) {
+      this.rootFields.remove(pathArr);
       return;
     }
 
@@ -140,10 +165,17 @@ export class DataStore implements Store {
     }
   }
 
-  private getRootFields(): CoreFields {
-    return this.tree.has(this.rootFieldsName) ?
-      this.tree.getFields(this.rootFieldsName) :
-      this.tree.createFields(this.rootFieldsName);
+  private isPathToRootFields(path: PathType) {
+    return ensurePathArray(path).length === 1;
+  }
+
+  private getDestinationFields(path: PathType): { fields: CoreFields, leafName: string } {
+    const pathArr = ensurePathArray(path);
+    if (this.isPathToRootFields(pathArr)) {
+      return {fields: this.rootFields, leafName: pathArr[0]};
+    }
+    const leafName = pathArr.pop()!;
+    return {fields: this.tree.getOrCreateFields(path), leafName };
   }
 }
 

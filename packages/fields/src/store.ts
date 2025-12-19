@@ -47,45 +47,45 @@ export interface Store {
    * @param path The full path where the new field will be created.
    * @param val The initial value for the field.
    * @param options Optional configuration, including policies and the ability to override field type.
-   * @returns {Field<T>} The newly created Field instance.
+   * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  create<T>(path: PathType, val:T, options?: FieldOptions<T> & StoreCreateFieldOptions): Field<T>
+  createValue<T>(path: PathType, val:T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
 
   /**
-   * Updates an existing Field's value or creates a new one if it doesn't exist.
-   * This is a flexible operation that will create any missing parent nodes in the path.
-   * @template T The type of the value.
-   * @param path The path to the field to update or create.
-   * @param val The value to set.
-   * @param options Optional configuration, used only if a new field is created.
-   * @returns {Field<T>} The existing or newly created Field instance.
+   * Creates new or update a Field at a specified path, inferring its type from the provided value.
+   * @template T The type of the initial value.
+   * @param path The full path where the new field will be created.
+   * @param val The initial value for the field.
+   * @param options Optional configuration, including policies and the ability to override field type.
+   * @returns {T} value of the newly created Field instance.
+   * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  upset<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): Field<T>
+  upsetValue<T>(path: PathType, val:T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
 
   /**
    * Creates a new, strongly-typed CoreBooleanField.
    * @throws An error if a node already exists at the path.
    */
-  createBoolean(path: PathType, val: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField
+  createBoolean(path: PathType, initialValue: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField
 
   /**
    * Creates a new, strongly-typed CoreNumericField.
    * @throws An error if a node already exists at the path.
    */
-  createNumeric(path: PathType, val: number, options?: CoreNumericFieldOptions): CoreNumericField
+  createNumeric(path: PathType, initialValue: number, options?: CoreNumericFieldOptions): CoreNumericField
 
   /**
    * Creates a new, strongly-typed CoreStringField.
    * @throws An error if a node already exists at the path.
    */
-  createString(path: PathType, val: string, options?: CoreStringFieldOptions): CoreStringField
+  createString(path: PathType, initialValue: string, options?: CoreStringFieldOptions): CoreStringField
 
   /**
    * Creates a new, generic CoreField instance for any data type.
    * @throws An error if a node already exists at the path.
    */
-  createGeneric<T>(path: PathType, val: T, options?: FieldOptions<T>): CoreField<T>
+  createGeneric<T>(path: PathType, initialValue: T, options?: FieldOptions<T>): CoreField<T>
 
   /**
    * Retrieves a strongly-typed CoreBooleanField instance.
