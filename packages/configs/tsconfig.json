@@ -5,8 +5,8 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@axi-engine/events": [
-        "../events/src"
+      "@axi-engine/configs": [
+        "../configs/src"
       ]
     }
   },
@@ -15,7 +15,7 @@
   ],
   "references": [
     {
-      "path": "../events"
+      "path": "../configs"
     }
   ]
 }

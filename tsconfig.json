@@ -4,14 +4,17 @@
     // baseUrl and paths required for IDE for correct aliases resolving
     "baseUrl": ".",
     "paths": {
-      "@axi-engine/utils": [
-        "packages/utils/src"
+      "@axi-engine/configs": [
+        "packages/utils/configs"
       ],
       "@axi-engine/fields": [
         "packages/fields/src"
       ],
       "@axi-engine/states": [
         "packages/states/src"
+      ],
+      "@axi-engine/utils": [
+        "packages/utils/src"
       ]
     }
   },
@@ -26,13 +29,16 @@
   */
   "references": [
     {
-      "path": "packages/utils"
+      "path": "packages/configs"
     },
     {
       "path": "packages/fields"
     },
     {
       "path": "packages/states"
+    },
+    {
+      "path": "packages/utils"
     },
     {
       "path": "apps/playground"

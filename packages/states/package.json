@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/states",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A minimal, type-safe state machine for the Axi Engine, designed for managing game logic and component states with a simple API.",
   "license": "MIT",
   "keywords": [
@@ -33,7 +33,10 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@axi-engine/utils": "^0.1.5"
+  "devDependencies": {
+    "@axi-engine/utils": "^0.1.6"
+  },
+  "peerDependencies": {
+    "@axi-engine/utils": "^0.1.6"
   }
 }

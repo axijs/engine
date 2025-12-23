@@ -1,13 +1,13 @@
 {
-  "name": "@axi-engine/events",
-  "version": "0.1.0",
-  "description": "Event emitter for Axi Engine",
+  "name": "@axi-engine/configs",
+  "version": "0.1.1",
+  "description": "",
   "license": "MIT",
   "keywords": [
     "axi-engine",
     "typescript",
     "gamedev",
-    "fields"
+    "configs"
   ],
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -21,12 +21,19 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "echo 'No tests yet for @axi-engine/events'"
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
+    "test": "echo 'No tests yet for @axi-engine/configs'"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "eventemitter3": "^5.0.1"
+    "deepmerge-ts": "^7.1.5"
+  },
+  "devDependencies": {
+    "@axi-engine/utils": "^0.1.6"
+  },
+  "peerDependencies": {
+    "@axi-engine/utils": "^0.1.6"
   }
 }
