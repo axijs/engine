@@ -1,4 +1,4 @@
-import {ConstructorRegistry} from './utils/constructor-registry';
+import {ConstructorRegistry} from '@axi-engine/utils';
 import {Field} from './field';
 
 

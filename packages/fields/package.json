@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/fields",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "",
   "license": "MIT",
   "keywords": [
@@ -31,9 +31,9 @@
     "dequal": "^2.0.3"
   },
   "devDependencies": {
-    "@axi-engine/utils": "^0.1.6"
+    "@axi-engine/utils": "^0.1.7"
   },
   "peerDependencies": {
-    "@axi-engine/utils": "^0.1.6"
+    "@axi-engine/utils": "^0.1.7"
   }
 }
