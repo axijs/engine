@@ -1,8 +1,13 @@
 {
   "name": "@axi-engine/states",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A minimal, type-safe state machine for the Axi Engine, designed for managing game logic and component states with a simple API.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/states"
+  },
   "keywords": [
     "axi-engine",
     "typescript",

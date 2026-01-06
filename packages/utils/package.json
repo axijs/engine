@@ -1,8 +1,13 @@
 {
   "name": "@axi-engine/utils",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Core utility library for Axi Engine, providing common functions for arrays, math, type guards, and more.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/utils"
+  },
   "keywords": [
     "axi-engine",
     "typescript",

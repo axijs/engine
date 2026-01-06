@@ -1,8 +1,13 @@
 {
   "name": "@axi-engine/fields",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/fields"
+  },
   "keywords": [
     "axi-engine",
     "typescript",

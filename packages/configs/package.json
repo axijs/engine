@@ -1,8 +1,13 @@
 {
   "name": "@axi-engine/configs",
-  "version": "0.1.1",
-  "description": "",
+  "version": "0.1.2",
+  "description": "A lightweight, type-safe, and hierarchical configuration resolver",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/configs"
+  },
   "keywords": [
     "axi-engine",
     "typescript",
