@@ -1,0 +1,35 @@
+{
+  "name": "@axi-engine/tasks",
+  "version": "0.1.0",
+  "description": "A lightweight utility for creating and composing skippable asynchronous tasks.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/tasks"
+  },
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev",
+    "tasks"
+  ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
+    "test": "echo 'No tests yet for @axi-engine/tasks'"
+  },
+  "files": [
+    "dist"
+  ]
+}

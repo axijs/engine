@@ -13,6 +13,9 @@
       "@axi-engine/states": [
         "packages/states/src"
       ],
+      "@axi-engine/tasks": [
+        "packages/tasks/src"
+      ],
       "@axi-engine/utils": [
         "packages/utils/src"
       ]
@@ -36,6 +39,9 @@
     },
     {
       "path": "packages/states"
+    },
+    {
+      "path": "packages/tasks"
     },
     {
       "path": "packages/utils"

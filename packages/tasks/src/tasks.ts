@@ -2,25 +2,37 @@ import {AsyncTask, CompletableTask} from './types';
 
 
 /**
- * to prevent creating empty task each time on resolved() call we will use this RESOLVED_TASK singleton
- *
+ * A frozen, pre-resolved task singleton to avoid unnecessary object creation.
+ * @private
  */
-const RESOLVED_TASK: CompletableTask<void> = Object.freeze({
+const RESOLVED_TASK: CompletableTask = Object.freeze({
   promise: Promise.resolve(),
   complete: () => {
   }
 });
 
+
+/**
+ * A utility object that provides factory methods for creating and composing asynchronous tasks.
+ * These tasks are enhanced Promises that can be forcibly completed, making them ideal for
+ * scripting animations, cutscenes, or any sequential logic that needs to be skippable.
+ */
 export const Tasks = {
 
   /**
-   * to use when need an empty sync task, instead of call sync<void>(() => {})
+   * @description Returns a pre-resolved, completed task. Useful as a synchronous no-op.
+   * @returns {CompletableTask<void>} A task that is already complete.
    */
   resolved(): CompletableTask {
     return RESOLVED_TASK as CompletableTask;
   },
 
   /**
+   * @description Creates a task that runs multiple tasks concurrently.
+   * The parent task completes when all child tasks have completed.
+   * Calling `complete` on the parent task will call `complete` on all its children.
+   * @param {CompletableTask<any>[]} tasks An array of tasks to run in parallel.
+   * @returns {CompletableTask<void>} A new task that manages the parallel execution.
    */
   parallel(tasks: CompletableTask<any>[]): CompletableTask {
     return {
@@ -31,11 +43,20 @@ export const Tasks = {
     }
   },
 
-  /** execute one by one */
+  /**
+   * @description Creates a task that runs a sequence of tasks one after another.
+   * Calling `complete` on the sequence will fast-forward it to its final state.
+   * @template T The return type of the optional result task. Defaults to `void`.
+   * @param {CompletableTask<any>[]} tasks An array of tasks to run in sequence.
+   * @param {CompletableTask<T>} [resTask] An optional final task whose result will be returned by the sequence.
+   * @returns {CompletableTask<T>} A new task that manages the sequential execution.
+   * It resolves with the result of `resTask` if provided, otherwise with `void`.
+   */
   sequence<T extends void = void>(tasks: CompletableTask[], resTask?: CompletableTask<T>): CompletableTask<T> {
     let isSkipping = false;
     let currentIndex = -1;
-    // Create a new array for preventing of mutating the original.
+
+    // Create a new array to prevent mutating the original.
     const allTasks = [...tasks];
     if (resTask) {
       allTasks.push(resTask);
@@ -60,12 +81,13 @@ export const Tasks = {
         if (isSkipping) {
           task.complete();
         }
+
         const promiseResult = await task.promise;
         if (i === allTasks.length - 1) {
           finalResult = promiseResult as T;
         }
       }
-      return finalResult;
+      return finalResult!;
     })
 
     return {
@@ -74,6 +96,12 @@ export const Tasks = {
     };
   },
 
+  /**
+   * @description Wraps a synchronous function in a task. If the function throws an error, the task's promise will be rejected.
+   * @template T The return type of the synchronous function.
+   * @param {() => T} syncFunction The synchronous function to execute.
+   * @returns {CompletableTask<T>} A task that resolves with the function's return value.
+   */
   sync<T>(syncFunction: () => T): CompletableTask<T> {
     try {
       const result = syncFunction();
@@ -91,6 +119,13 @@ export const Tasks = {
     }
   },
 
+  /**
+   * @description Wraps a standard Promise into a `CompletableTask`.
+   * The `complete` method is a no-op, as a native promise cannot be externally completed.
+   * @template T The type of the promise's resolved value.
+   * @param {Promise<T>} promise The promise to wrap.
+   * @returns {CompletableTask<T>} A task wrapping the promise.
+   */
   fromPromise<T>(promise: Promise<T>): CompletableTask<T> {
     return {
       promise,
@@ -99,8 +134,11 @@ export const Tasks = {
     }
   },
 
-  /*
-  */
+  /**
+   * @description Creates a task that waits for a specified duration. This task can be completed or canceled.
+   * @param {number} duration The time to wait in milliseconds.
+   * @returns {AsyncTask<void>} A controllable task that resolves after the duration.
+   */
   wait(duration: number): AsyncTask<void> {
     let timerId: number;
     let resolver: () => void;
@@ -134,9 +172,13 @@ export const Tasks = {
   },
 
   /**
-   * create promise that can be controlled outside
+   * @description Creates a task with externally accessible `resolve` and `reject` functions.
+   * This is useful for tasks that are completed by external events (e.g., user input or a server response).
+   * @template T The type of the value the promise will resolve with.
+   * @returns {{ task: CompletableTask<T>, controller: { resolve: (value: T) => void, reject: (reason?: any) => void } }}
+   * An object containing the task and a controller to manage its state.
    */
-  controllable<T>() {
+  controllable<T>(): { task: CompletableTask<T>, controller: { resolve: (value: T) => void, reject: (reason?: any) => void } } {
     let resolver: (value: T) => void;
     let rejecter: (reason?: any) => void;
 
