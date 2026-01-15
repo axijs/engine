@@ -16,6 +16,9 @@
       "@axi-engine/tasks": [
         "packages/tasks/src"
       ],
+      "@axi-engine/tasks-anime": [
+        "packages/tasks-anime/src"
+      ],
       "@axi-engine/utils": [
         "packages/utils/src"
       ]
@@ -42,6 +45,9 @@
     },
     {
       "path": "packages/tasks"
+    },
+    {
+      "path": "packages/tasks-anime"
     },
     {
       "path": "packages/utils"

@@ -42,6 +42,10 @@
     "publish:tasks": "npm publish --workspace=@axi-engine/tasks --access public",
     "release:tasks": "npm run build:tasks && npm run publish:tasks",
 
+    "build:tasks-anime": "npm run build --workspace=@axi-engine/tasks-anime",
+    "publish:tasks-anime": "npm publish --workspace=@axi-engine/tasks-anime --access public",
+    "release:tasks-anime": "npm run build:tasks-anime && npm run publish:tasks-anime",
+
     "build:utils": "npm run build --workspace=@axi-engine/utils",
     "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
     "release:utils": "npm run build:utils && npm run publish:utils"
