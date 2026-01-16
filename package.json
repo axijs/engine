@@ -16,7 +16,7 @@
   ],
   "devDependencies": {
     "@types/node": "latest",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.20.0-beta.3",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "~5.9.3"
@@ -24,6 +24,8 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
+
+    "build:playground": "npm run build --workspace=playground",
     "dev:playground": "npm run dev --workspace=playground",
 
     "build:configs": "npm run build --workspace=@axi-engine/configs",
@@ -48,6 +50,8 @@
 
     "build:utils": "npm run build --workspace=@axi-engine/utils",
     "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
-    "release:utils": "npm run build:utils && npm run publish:utils"
+    "release:utils": "npm run build:utils && npm run publish:utils",
+
+    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields"
   }
 }

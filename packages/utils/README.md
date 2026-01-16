@@ -32,11 +32,8 @@ const isSame = haveSameElements(['a', 'b'], ['b', 'a']); // Returns true
 
 ## API Reference
 
-Will be available when code and repository will be fully published 
+[**Browse the API Documentation here**](https://github.com/axijs/engine/tree/main/packages/utils/docs/api)
 
-<!-- 
-[**Full API Documentation**](https://github.com/.../blob/main/packages/utils/docs/api/README.md)
--->
 
 
 

@@ -1,6 +1,6 @@
 # @axi-engine/fields
 
-[![NPM version](https://img.shields.io/npm/v/@axi-engine/utils.svg)](https://www.npmjs.com/package/@axi-engine/fields)
+[![NPM version](https://img.shields.io/npm/v/@axi-engine/fields.svg)](https://www.npmjs.com/package/@axi-engine/fields)
 
 
 ## Description
@@ -27,4 +27,8 @@ npm install @axi-engine/fields
 
 ## API Reference
 
-Will be available when code and repository will be fully published 
+[**Browse the API Documentation here**](https://github.com/axijs/engine/tree/main/packages/fields/docs/api) 
+
+## License
+
+MIT

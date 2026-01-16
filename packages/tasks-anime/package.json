@@ -26,7 +26,7 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsdown src/index.ts --format cjs,esm --dts --clean",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
     "test": "echo 'No tests yet for @axi-engine/tasks-anime'"
   },

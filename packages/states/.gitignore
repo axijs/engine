@@ -2,3 +2,5 @@
 /dist
 /tmp
 
+# TypeScript cache
+*.tsbuildinfo
