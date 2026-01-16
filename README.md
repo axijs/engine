@@ -1,10 +1,6 @@
 # axi-engine
 
-![alt text](https://img.shields.io/github/actions/workflow/status/axijs/engine/ci.yml?branch=main)
-
-
 ![alt text](https://img.shields.io/badge/License-MIT-yellow.svg)
-
 
 
 ## The Idea Behind It
