@@ -1,11 +1,8 @@
-import {
-  Fields,
-  FieldsSnapshot,
-  FieldTree, FieldTreeFactory,
-  TreeNode
-} from '@axi-engine/fields';
-import {FieldsSerializer} from './fields-serializer';
+import {FieldsSerializer, FieldsSnapshot} from './fields-serializer';
 import {isString} from '@axi-engine/utils';
+import {Fields} from '../fields';
+import {FieldTreeFactory} from '../field-tree-factory';
+import {FieldTree, TreeNode} from '../field-tree';
 
 
 /**

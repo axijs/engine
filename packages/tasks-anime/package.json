@@ -1,7 +1,7 @@
 {
   "name": "@axi-engine/tasks-anime",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.1",
+  "description": "An anime.js adapter for @axi-engine/tasks, enabling skippable animation sequences.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     }
   },
   "scripts": {
-    "build": "tsdown src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
     "test": "echo 'No tests yet for @axi-engine/tasks-anime'"
   },

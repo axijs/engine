@@ -16,7 +16,9 @@
   ],
   "devDependencies": {
     "@types/node": "latest",
+    "dts-bundle-generator": "^9.5.1",
     "tsdown": "^0.20.0-beta.3",
+    "tsup": "^8.5.1",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.9.0",
     "typescript": "~5.9.3"
@@ -24,34 +26,26 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
-
     "build:playground": "npm run build --workspace=playground",
     "dev:playground": "npm run dev --workspace=playground",
-
     "build:configs": "npm run build --workspace=@axi-engine/configs",
     "publish:configs": "npm publish --workspace=@axi-engine/configs --access public",
     "release:configs": "npm run build:configs && npm run publish:configs",
-
     "build:fields": "npm run build --workspace=@axi-engine/fields",
     "publish:fields": "npm publish --workspace=@axi-engine/fields --access public",
     "release:fields": "npm run build:fields && npm run publish:fields",
-
     "build:states": "npm run build --workspace=@axi-engine/states",
     "publish:states": "npm publish --workspace=@axi-engine/states --access public",
     "release:states": "npm run build:states && npm run publish:states",
-
     "build:tasks": "npm run build --workspace=@axi-engine/tasks",
     "publish:tasks": "npm publish --workspace=@axi-engine/tasks --access public",
     "release:tasks": "npm run build:tasks && npm run publish:tasks",
-
     "build:tasks-anime": "npm run build --workspace=@axi-engine/tasks-anime",
     "publish:tasks-anime": "npm publish --workspace=@axi-engine/tasks-anime --access public",
     "release:tasks-anime": "npm run build:tasks-anime && npm run publish:tasks-anime",
-
     "build:utils": "npm run build --workspace=@axi-engine/utils",
     "publish:utils": "npm publish --workspace=@axi-engine/utils --access public",
     "release:utils": "npm run build:utils && npm run publish:utils",
-
     "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields"
   }
 }

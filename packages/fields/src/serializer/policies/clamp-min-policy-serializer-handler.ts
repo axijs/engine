@@ -1,5 +1,6 @@
 import {PolicySerializerHandler} from '../policy-serializer';
-import {ClampMinPolicy} from '@axi-engine/fields';
+import {ClampMinPolicy} from '../../policies';
+
 
 export class ClampMinPolicySerializerHandler implements PolicySerializerHandler<ClampMinPolicy, { min: number }> {
   snapshot(policy: ClampMinPolicy) {

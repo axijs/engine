@@ -1,5 +1,7 @@
 import {Constructor} from '@axi-engine/utils';
-import {CoreField, FieldOptions, Fields} from '@axi-engine/fields';
+import {Fields} from '../fields';
+import {CoreField} from '../field-definitions';
+import {FieldOptions} from '../field';
 
 
 export function WithDefaultGenericFields<TBase extends Constructor<Fields>>(Base: TBase) {

@@ -1,5 +1,6 @@
-import {Field, Fields} from '@axi-engine/fields';
 import {Constructor} from '@axi-engine/utils';
+import {Field} from '../field';
+import {Fields} from '../fields';
 
 /**
  * extract field type

@@ -1,5 +1,5 @@
 import {PolicySerializerHandler} from '../policy-serializer';
-import {ClampMaxPolicy} from '@axi-engine/fields';
+import {ClampMaxPolicy} from '../../policies';
 
 export class ClampMaxPolicySerializerHandler implements PolicySerializerHandler<ClampMaxPolicy, { max: number }> {
   snapshot(policy: ClampMaxPolicy) {

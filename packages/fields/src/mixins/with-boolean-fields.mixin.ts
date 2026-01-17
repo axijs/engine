@@ -1,5 +1,5 @@
-import {CoreBooleanField} from '@axi-engine/fields';
 import {createTypedMethodsMixin} from './mixin-factory';
+import {CoreBooleanField} from '../field-definitions';
 
 export const WithBooleanFields = createTypedMethodsMixin<
   typeof CoreBooleanField,

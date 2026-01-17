@@ -3,17 +3,9 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@axi-engine/utils": [
-        "../utils/src"
-      ]
-    }
+    "rootDir": "./src"
   },
   "include": [
     "src"
-  ],
-  "references": [
   ]
 }

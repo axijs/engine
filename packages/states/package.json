@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/states",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A minimal, type-safe state machine for the Axi Engine, designed for managing game logic and component states with a simple API.",
   "license": "MIT",
   "repository": {
@@ -31,7 +31,7 @@
     }
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsup",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
     "test": "echo 'No tests yet for @axi-engine/states'"
   },

@@ -44,6 +44,10 @@ This monorepo contains the following packages:
 | **`@axi-engine/configs`** | Utilities for loading and managing game configuration files.                 |
 | **`playground`** | A development app for testing and demonstrating features.                    |
 
+## Contributing
+
+To learn about our development process and specific technical decisions, 
+please read our [**Contributing Guidelines**](CONTRIBUTING.md)
 
 ## License
 

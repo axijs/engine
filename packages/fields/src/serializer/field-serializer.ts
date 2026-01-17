@@ -1,6 +1,8 @@
-import {Field, FieldRegistry, Policy} from '@axi-engine/fields';
 import {PolicySerializer} from './policy-serializer';
 import {isNullOrUndefined, throwIfEmpty} from '@axi-engine/utils';
+import {FieldRegistry} from '../field-registry';
+import {Field} from '../field';
+import {Policy} from '../policies';
 
 
 /**

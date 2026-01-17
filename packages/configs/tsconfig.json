@@ -4,16 +4,9 @@
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@axi-engine/configs": [
-        "../configs/src"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src"
-  ],
-  "references": [
   ]
 }

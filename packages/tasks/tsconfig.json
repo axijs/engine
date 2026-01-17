@@ -4,13 +4,9 @@
     "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-    }
+    "baseUrl": "."
   },
   "include": [
     "src"
   ],
-  "references": [
-  ]
 }

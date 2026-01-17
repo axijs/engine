@@ -1,4 +1,5 @@
-import {Constructor, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {Constructor} from './types';
+import {throwIf, throwIfEmpty} from './assertion';
 
 /**
  * A generic registry for mapping string identifiers to class constructors.

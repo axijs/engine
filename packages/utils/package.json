@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/utils",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Core utility library for Axi Engine, providing common functions for arrays, math, type guards, and more.",
   "license": "MIT",
   "repository": {
@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "build": "tsdown src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
     "test": "echo 'No tests yet for @axi-engine/utils'"
   },
