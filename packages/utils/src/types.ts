@@ -1,4 +1,11 @@
 /**
+ * Simple scalar type
+ *
+ */
+export type ScalarType = string | number | boolean;
+
+
+/**
  * Represents a path that can be provided as a single string
  * or an array of segments.
  * @example
