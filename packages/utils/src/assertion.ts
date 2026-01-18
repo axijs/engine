@@ -2,12 +2,12 @@ import {isNullOrUndefined} from './guards';
 
 /**
  * Throws an error if the condition is true.
- * @param conditionForThrow - If true, an error will be thrown.
+ * @param condition  - If true, an error will be thrown.
  * @param exceptionMessage - The message for the error.
  * @throws {Error} if the value is true
  */
-export function throwIf(conditionForThrow: boolean, exceptionMessage: string): void | never {
-  if (conditionForThrow) {
+export function throwIf(condition: boolean, exceptionMessage: string): asserts condition is false {
+  if (condition) {
     throw new Error(exceptionMessage);
   }
 }
