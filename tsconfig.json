@@ -5,7 +5,10 @@
     "baseUrl": ".",
     "paths": {
       "@axi-engine/configs": [
-        "packages/utils/configs"
+        "packages/configs/src"
+      ],
+      "@axi-engine/expressions": [
+        "packages/expressions/src"
       ],
       "@axi-engine/fields": [
         "packages/fields/src"
@@ -36,6 +39,9 @@
   "references": [
     {
       "path": "packages/configs"
+    },
+    {
+      "path": "packages/expressions"
     },
     {
       "path": "packages/fields"
