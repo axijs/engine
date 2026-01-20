@@ -45,9 +45,7 @@ export function createExpressionEvaluator(additionalHandlers?: ExpressionHandler
   evaluator.register(new NotExpressionHandler());
   evaluator.register(new OrExpressionHandler());
 
-  if (additionalHandlers) {
-    additionalHandlers.forEach(handler => evaluator.register(handler));
-  }
+  additionalHandlers?.forEach(handler => evaluator.register(handler));
 
   return evaluator;
 }
