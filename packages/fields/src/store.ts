@@ -158,4 +158,11 @@ export interface Store {
    * @param path The path to the node to remove.
    */
   remove(path: PathType): void
+
+  /**
+   * Checks if a path valid.
+   * @param {PathType} path The path to the node.
+   * @returns {boolean} `true` if the node exists, otherwise `false`.
+   */
+  has(path: PathType): boolean
 }

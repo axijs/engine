@@ -1,3 +1,4 @@
+import {DataStorage, ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
 import {Store, StoreCreateFieldOptions} from './store';
 import {
   BooleanFieldResolver,
@@ -5,7 +6,6 @@ import {
   NumericFieldResolver,
   StringFieldResolver
 } from './data-store-field-resolver';
-import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
 import {Field, FieldOptions} from './field';
 import {CoreFieldTree} from './core-field-tree';
 import {
@@ -17,7 +17,7 @@ import {
 import {CoreFields} from './core-fields';
 
 
-export class DataStore implements Store {
+export class DataStore implements Store, DataStorage {
   private readonly resolvers: DataStoreFieldResolver[] = [];
   private readonly rootFieldsName = '__root_fields';
   private _rootFields: CoreFields | undefined;
@@ -176,6 +176,27 @@ export class DataStore implements Store {
     }
     const leafName = pathArr.pop()!;
     return {fields: this.tree.getOrCreateFields(path), leafName };
+  }
+
+  has(path: PathType): boolean {
+    return false;
+  }
+
+  /** implementation of the DataStore from utils */
+  get(path: PathType): unknown {
+    return 0;
+  }
+
+  set(path: PathType, value: unknown) {
+
+  }
+
+  create(path: PathType, value: unknown) {
+
+  }
+
+  delete(path: PathType) {
+
   }
 }
 
