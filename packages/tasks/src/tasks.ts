@@ -47,21 +47,16 @@ export const Tasks = {
    * @description Creates a task that runs a sequence of tasks one after another.
    * Calling `complete` on the sequence will fast-forward it to its final state.
    * @template T The return type of the optional result task. Defaults to `void`.
-   * @param {CompletableTask<any>[]} tasks An array of tasks to run in sequence.
-   * @param {CompletableTask<T>} [resTask] An optional final task whose result will be returned by the sequence.
+   * @param {CompletableTask<any>[] | [...CompletableTask<any>[], CompletableTask<T>]} tasks An array of tasks to run in sequence.
    * @returns {CompletableTask<T>} A new task that manages the sequential execution.
    * It resolves with the result of `resTask` if provided, otherwise with `void`.
    */
-  sequence<T extends void = void>(tasks: CompletableTask[], resTask?: CompletableTask<T>): CompletableTask<T> {
+  sequence<T = void>(tasks: CompletableTask<any>[] | [...CompletableTask<any>[], CompletableTask<T>]): CompletableTask<T> {
     let isSkipping = false;
     let currentIndex = -1;
 
     // Create a new array to prevent mutating the original.
-    const allTasks = [...tasks];
-    if (resTask) {
-      allTasks.push(resTask);
-    }
-
+    const allTasks: CompletableTask<any>[] = [...tasks];
     const complete = () => {
       if (isSkipping) {
         return;

@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/tasks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A lightweight utility for creating and composing skippable asynchronous tasks.",
   "license": "MIT",
   "repository": {
@@ -26,8 +26,9 @@
   },
   "scripts": {
     "build": "tsup",
-    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
-    "test": "echo 'No tests yet for @axi-engine/tasks'"
+    "prebuild": "npm test",
+    "test": "vitest run --root ../../ src/",
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
   },
   "files": [
     "dist"

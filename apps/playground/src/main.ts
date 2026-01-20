@@ -3,8 +3,12 @@ import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import {setupCounter} from './counter.ts'
 import {testOneStringField} from './test-field.ts';
+import {testTasks} from './test-tasks.ts';
 
 testOneStringField();
+testTasks().then(() => {
+  console.log('done testTasks');
+});
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>

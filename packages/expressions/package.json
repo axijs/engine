@@ -24,9 +24,9 @@
     }
   },
   "scripts": {
-    "test": "vitest run --root ../../ src/",
     "build": "tsup",
     "prebuild": "npm test",
+    "test": "vitest run --root ../../ src/",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
   },
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/tasks-anime",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An anime.js adapter for @axi-engine/tasks, enabling skippable animation sequences.",
   "license": "MIT",
   "repository": {
@@ -34,11 +34,11 @@
     "dist"
   ],
   "devDependencies": {
-    "@axi-engine/tasks": "^0.1.0",
+    "@axi-engine/tasks": "^0.1.2",
     "animejs": "^4.2.2"
   },
   "peerDependencies": {
-    "@axi-engine/tasks": "^0.1.0",
+    "@axi-engine/tasks": "^0.1.2",
     "animejs": "^4.2.2"
   }
 }
