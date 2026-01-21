@@ -58,7 +58,7 @@ describe('resolveOperand', () => {
     };
 
     expect(() => resolveOperand(operand, mockDataSource))
-      .toThrow('Arithmetic operations require number operands');
+      .toThrow('Require number operand');
   });
 
   it('should throw an error when trying to retrieve scalar type from object', () => {
