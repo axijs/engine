@@ -44,3 +44,11 @@ export function throwIfEmpty<T>(
     throw new Error(exceptionMessage);
   }
 }
+
+/**
+ * Throws an error unconditionally.
+ * @param message The message for the error.
+ */
+export function throwError(message: string): never {
+  throw new Error(message);
+}

@@ -1,6 +1,7 @@
 import {Operand} from './types';
-import {DataSource, isNumber, isScalar, ScalarType, throwIf} from '@axi-engine/utils';
+import {DataSource, isScalar, ScalarType, throwError, throwIf} from '@axi-engine/utils';
 import {isArithmeticOperand, isReferenceOperand, isValueOperand} from './guards';
+import {resolveMath} from './resolve-math';
 
 /**
  * Recursively resolves an Operand into its final scalar value.
@@ -27,22 +28,9 @@ export function resolveOperand(op: Operand, source: DataSource): unknown {
   if (isArithmeticOperand(op)) {
     const leftVal = resolveOperand(op.arithmetic.left, source);
     const rightVal = resolveOperand(op.arithmetic.right, source);
-    throwIf(
-      !isNumber(leftVal) || !isNumber(rightVal),
-      `Arithmetic operations require number operands, but got ${typeof leftVal} and ${typeof rightVal}.`
-    );
-
-    switch (op.arithmetic.op) {
-      case "+": return Number(leftVal) + Number(rightVal)
-      case "-": return Number(leftVal) - Number(rightVal)
-      case "*": return Number(leftVal) * Number(rightVal)
-      case "/": return Number(leftVal) / Number(rightVal)
-      default:
-        throwIf(true, `Unknown arithmetic operator: ${op.arithmetic.op}`);
-    }
+    return resolveMath(op.arithmetic.op, leftVal, rightVal);
   }
-  throwIf(true, `Unknown operand type: ${JSON.stringify(op)}`);
-  return undefined as never;
+  return throwError(`Unknown operand type: ${JSON.stringify(op)}`);
 }
 
 /**

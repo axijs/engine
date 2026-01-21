@@ -2,7 +2,7 @@ import {ExpressionHandler} from '../expression-handler';
 import {ChanceExpression, ExpressionName} from '../expressions';
 import {ExpressionEvaluatorContext} from '../expression-evaluator';
 import {resolveOperandAsScalar} from '../resolve-operand';
-import {isNumber, isString, randInt, throwIf} from '@axi-engine/utils';
+import {isNumber, isString, randInt, throwError, throwIf} from '@axi-engine/utils';
 
 /**
  * An expression handler for the `chance` expression.
@@ -39,7 +39,7 @@ export class ChanceExpressionHandler implements ExpressionHandler<ChanceExpressi
       throwIf(isNaN(parsed), `Chance value as a string must be a valid number, but got '${resolvedValue}'.`);
       numericValue = parsed;
     } else {
-      throwIf(true, `Chance value must be a number or a string, but got a boolean.`);
+      throwError(`Chance value must be a number or a string, but got a boolean.`);
     }
     const randomRoll  = randInt(0, 100);
     return randomRoll < numericValue!;
