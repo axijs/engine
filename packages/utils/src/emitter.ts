@@ -1,5 +1,3 @@
-// file: packages/utils/src/emitter.ts
-
 import {Subscribable} from './types';
 
 /**

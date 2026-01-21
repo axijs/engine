@@ -1,4 +1,4 @@
-import {DataStorage, ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
+import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
 import {Store, StoreCreateFieldOptions} from './store';
 import {
   BooleanFieldResolver,
@@ -17,7 +17,7 @@ import {
 import {CoreFields} from './core-fields';
 
 
-export class DataStore implements Store, DataStorage {
+export class DataStore implements Store {
   private readonly resolvers: DataStoreFieldResolver[] = [];
   private readonly rootFieldsName = '__root_fields';
   private _rootFields: CoreFields | undefined;
@@ -179,24 +179,32 @@ export class DataStore implements Store, DataStorage {
   }
 
   has(path: PathType): boolean {
-    return false;
+    const pathArr = ensurePathArray(path);
+    if (this.isPathToRootFields(pathArr)) {
+      return this.rootFields.has(pathArr[0]);
+    }
+    return this.tree.hasPath(pathArr);
   }
 
   /** implementation of the DataStore from utils */
   get(path: PathType): unknown {
-    return 0;
+    return this.getField(path).value;
   }
 
   set(path: PathType, value: unknown) {
-
+    this.setValue(path, value);
   }
 
   create(path: PathType, value: unknown) {
+    this.createValue(path, value);
+  }
 
+  upset(path: PathType, value: unknown) {
+    this.upsetValue(path, value);
   }
 
   delete(path: PathType) {
-
+    this.remove(path);
   }
 }
 

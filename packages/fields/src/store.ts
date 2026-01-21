@@ -1,4 +1,4 @@
-import {PathType} from '@axi-engine/utils';
+import {DataStorage, PathType} from '@axi-engine/utils';
 import {Field, FieldOptions} from './field';
 import {
   CoreBooleanField,
@@ -19,7 +19,7 @@ export interface StoreCreateFieldOptions {
  * It acts as a facade, simplifying access to the underlying FieldTree and providing
  * both type-safe and dynamic methods for manipulating data.
  */
-export interface Store {
+export interface Store extends DataStorage {
 
   /**
    * Retrieves the raw value of a Field at a specific path.
@@ -158,11 +158,4 @@ export interface Store {
    * @param path The path to the node to remove.
    */
   remove(path: PathType): void
-
-  /**
-   * Checks if a path valid.
-   * @param {PathType} path The path to the node.
-   * @returns {boolean} `true` if the node exists, otherwise `false`.
-   */
-  has(path: PathType): boolean
 }
