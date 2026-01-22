@@ -99,7 +99,7 @@ export class Fields {
     initialValue: any,
     options?: any
   ): T {
-    const Ctor = this._fieldRegistry.get(typeName);
+    const Ctor = this._fieldRegistry.getOrThrow(typeName);
     const field = new Ctor(name, initialValue, options);
     this.add(field);
     return field as T;

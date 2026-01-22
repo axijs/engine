@@ -1,5 +1,5 @@
-import {ConstructorRegistry} from '@axi-engine/utils';
+import {Constructor, Registry} from '@axi-engine/utils';
 import {Field} from './field';
 
 
-export class FieldRegistry extends ConstructorRegistry<Field<any>> { }
+export class FieldRegistry extends Registry<string, Constructor<Field<any>>> { }

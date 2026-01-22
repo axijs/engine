@@ -1,20 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { Tasks } from './tasks';
 
-describe('Tasks.sequence', () => {
+describe('Tasks.sequence', async () => {
   it('should execute tasks sequentially and resolve with the value of the final task', async () => {
     const sequenceTask = Tasks.sequence<number>([
       Tasks.wait(10),
       Tasks.wait(20),
-      Tasks.sync<number>(() => 100)
-    ]);
-
-    expect(sequenceTask.promise).resolves.toBe(100);
-  });
-
-  it('should correctly resolve with a value when the last task returns one', async () => {
-    const sequenceTask = Tasks.sequence<number | void>([
-      Tasks.wait(10),
       Tasks.sync<number>(() => 100)
     ]);
 

@@ -3,17 +3,8 @@ import {isNullOrUndefined, throwIfEmpty} from '@axi-engine/utils';
 import {FieldRegistry} from '../field-registry';
 import {Field} from '../field';
 import {Policy} from '../policies';
+import {FieldSnapshot} from './field-snapshot';
 
-
-/**
- * A plain object representation of a Field's state for serialization.
- */
-export interface FieldSnapshot {
-  __type: string;
-  name: string;
-  value: any;
-  policies?: object[];
-}
 
 /**
  * Orchestrates the serialization and deserialization of Field instances.
@@ -74,7 +65,7 @@ export class FieldSerializer {
   hydrate(snapshot: FieldSnapshot): Field<any> {
     const fieldType = snapshot.__type;
     throwIfEmpty(fieldType, 'Invalid field snapshot: missing "__type" identifier.');
-    const Ctor = this.fieldRegistry.get(fieldType);
+    const Ctor = this.fieldRegistry.getOrThrow(fieldType);
 
     let policies: Policy<any>[] | undefined;
     if (!isNullOrUndefined(snapshot.policies)) {

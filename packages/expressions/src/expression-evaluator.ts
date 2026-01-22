@@ -1,10 +1,8 @@
 import {Expression, ExpressionName} from './expressions';
 import {ExpressionHandler} from './expression-handler';
 import {
-  throwIf,
-  throwIfEmpty,
   firstKeyOf,
-  DataSource,
+  DataSource, Registry,
 } from '@axi-engine/utils';
 
 /**
@@ -46,7 +44,7 @@ export interface ExpressionEvaluatorContext {
  */
 export class ExpressionEvaluator {
   /** @internal A map of registered expression handlers. */
-  handlers = new Map<ExpressionName, ExpressionHandler>();
+  handlers = new Registry<ExpressionName, ExpressionHandler>();
 
   /**
    * Registers a new `ExpressionHandler` with the evaluator.
@@ -58,8 +56,7 @@ export class ExpressionEvaluator {
    * is already registered.
    */
   register(handler: ExpressionHandler) {
-    throwIf(this.handlers.has(handler.type), `Expression handler for: '${handler.type}' expression already registered`);
-    this.handlers.set(handler.type, handler);
+    this.handlers.register(handler.type, handler);
   }
 
   /**
@@ -77,9 +74,7 @@ export class ExpressionEvaluator {
    */
   async resolve(expression: Expression, data: DataSource) {
     const key = firstKeyOf(expression) as ExpressionName;
-    const handler = this.handlers.get(key);
-    throwIfEmpty(handler, `Can't find expression handler for: '${key}' expression`);
-
+    const handler = this.handlers.getOrThrow(key);
     const context: ExpressionEvaluatorContext = {
       resolve: (expression: Expression) => this.resolve(expression, data),
       source: () => data

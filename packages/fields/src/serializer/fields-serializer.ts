@@ -1,14 +1,8 @@
-import {FieldSerializer, FieldSnapshot} from './field-serializer';
+import {FieldSerializer} from './field-serializer';
 import {Fields} from '../fields';
 import {FieldsFactory} from '../fields-factory';
-
-/**
- * A plain object representation of a Fields container's state for serialization.
- */
-export interface FieldsSnapshot {
-  __type: string;
-  [fieldName: string]: FieldSnapshot | string;
-}
+import {FieldSnapshot} from './field-snapshot';
+import {FieldsSnapshot} from './fields-snapshot';
 
 /**
  * Orchestrates the serialization and deserialization of `Fields` container instances.

@@ -1,5 +1,5 @@
 import {Policy} from '../policies';
-import {throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {Registry, throwIfEmpty} from '@axi-engine/utils';
 
 /**
  * Defines the contract for a handler that can serialize and deserialize a specific type of Policy.
@@ -23,16 +23,10 @@ export interface PolicySerializerHandler<T extends Policy<any>, S extends object
 }
 
 export class PolicySerializer {
-  private readonly handlers = new Map<string, PolicySerializerHandler<any, any>>();
+  handlers = new Registry<string, PolicySerializerHandler<any, any>>();
 
   register(policyId: string, handler: PolicySerializerHandler<any, any>) {
-    throwIf(this.handlers.has(policyId), `A handler for policy ID '${policyId}' is already registered.`);
-    this.handlers.set(policyId, handler);
-    return this;
-  }
-
-  clearHandlers() {
-    this.handlers.clear();
+    this.handlers.register(policyId, handler);
   }
 
   /**
@@ -43,8 +37,7 @@ export class PolicySerializer {
    * @throws If no handler is registered for the policy's ID.
    */
   snapshot(policy: Policy<any>): object {
-    const handler = this.handlers.get(policy.id);
-    throwIfEmpty(handler, `No serializer handler registered for policy ID: '${policy.id}'`);
+    const handler = this.handlers.getOrThrow(policy.id);
     const data = handler.snapshot(policy);
 
     return {
@@ -62,8 +55,7 @@ export class PolicySerializer {
   hydrate(snapshot: any): Policy<any> {
     const typeId = snapshot?.__type;
     throwIfEmpty(typeId, 'Invalid policy snapshot: missing "__type" identifier.');
-    const handler = this.handlers.get(typeId);
-    throwIfEmpty(handler, `No serializer handler registered for policy ID: '${typeId}'`);
+    const handler = this.handlers.getOrThrow(typeId);
     const { __type, ...data } = snapshot;
 
     return handler.hydrate(data);

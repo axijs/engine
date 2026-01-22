@@ -1,6 +1,6 @@
 {
   "name": "axi-engine",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A modular game engine built with TypeScript and powered by Pixi.js",
   "license": "MIT",
   "keywords": [
@@ -60,6 +60,6 @@
     "docs:expressions": "npm run docs --workspace=@axi-engine/expressions",
     "docs:tasks": "npm run docs --workspace=@axi-engine/tasks",
     "// --- ETC ---": "",
-    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields npm run build:expressions"
+    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields && npm run build:expressions"
   }
 }
