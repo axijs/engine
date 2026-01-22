@@ -8,7 +8,7 @@ import {throwIf, throwIfEmpty} from './assertion';
  * @template K - The type of the key (must be a string).
  * @template V - The type of the value being stored.
  */
-export class Registry<K extends string, V> {
+export class Registry<K extends PropertyKey, V> {
   protected readonly items = new Map<K, V>();
 
   /**
@@ -18,7 +18,7 @@ export class Registry<K extends string, V> {
    * @param value The item to register.
    */
   register(key: K, value: V): void {
-    throwIf(this.items.has(key), `An item with the key '${key}' is already registered and will be overwritten.`);
+    throwIf(this.items.has(key), `An item with the key '${String(key)}' is already registered and will be overwritten.`);
     this.items.set(key, value);
   }
 
@@ -47,7 +47,7 @@ export class Registry<K extends string, V> {
    */
   getOrThrow(key: K): V {
     const item = this.get(key);
-    throwIfEmpty(item, `No item registered for the key '${key}'.`);
+    throwIfEmpty(item, `No item registered for the key '${String(key)}'.`);
     return item!;
   }
 
