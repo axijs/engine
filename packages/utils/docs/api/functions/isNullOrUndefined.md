@@ -8,7 +8,9 @@
 
 > **isNullOrUndefined**(`val`): val is null \| undefined
 
-Defined in: guards.ts:1
+Defined in: guards.ts:36
+
+Type guard that checks if a value is either `null` or `undefined`.
 
 ## Parameters
 
@@ -16,6 +18,10 @@ Defined in: guards.ts:1
 
 `unknown`
 
+The value to check.
+
 ## Returns
 
 val is null \| undefined
+
+`true` if the value is `null` or `undefined`, otherwise `false`.

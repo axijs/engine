@@ -6,7 +6,7 @@
 
 # Function: throwIf()
 
-> **throwIf**(`conditionForThrow`, `exceptionMessage`): `void`
+> **throwIf**(`condition`, `exceptionMessage`): `asserts condition is false`
 
 Defined in: assertion.ts:9
 
@@ -14,7 +14,7 @@ Throws an error if the condition is true.
 
 ## Parameters
 
-### conditionForThrow
+### condition
 
 `boolean`
 
@@ -28,7 +28,7 @@ The message for the error.
 
 ## Returns
 
-`void`
+`asserts condition is false`
 
 ## Throws
 

@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/utils",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Core utility library for Axi Engine, providing common functions for arrays, math, type guards, and more.",
   "license": "MIT",
   "repository": {

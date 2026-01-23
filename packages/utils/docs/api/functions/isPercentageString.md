@@ -8,7 +8,7 @@
 
 > **isPercentageString**(`val`): `val is string`
 
-Defined in: guards.ts:26
+Defined in: guards.ts:103
 
 Type guard to check if a value is a string that ends with '%'.
 

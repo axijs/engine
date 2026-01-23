@@ -8,7 +8,7 @@
 
 > **PathType** = `string` \| `string`[]
 
-Defined in: types.ts:8
+Defined in: types.ts:15
 
 Represents a path that can be provided as a single string
 or an array of segments.
