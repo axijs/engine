@@ -20,6 +20,7 @@ export interface StoreCreateFieldOptions {
  * both type-safe and dynamic methods for manipulating data.
  */
 export interface Store extends DataStorage {
+  readonly typeName: string;
 
   /**
    * Retrieves the raw value of a Field at a specific path.
@@ -38,7 +39,7 @@ export interface Store extends DataStorage {
    * @returns {T} The value that was set.
    * @throws An error if no field exists at the specified path.
    */
-  setValue<T>(path: PathType, val:T): T
+  setValue<T>(path: PathType, val: T): T
 
   /**
    * Creates a new Field at a specified path, inferring its type from the provided value.
@@ -50,7 +51,7 @@ export interface Store extends DataStorage {
    * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  createValue<T>(path: PathType, val:T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
+  createValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
 
   /**
    * Creates new or update a Field at a specified path, inferring its type from the provided value.
@@ -61,7 +62,7 @@ export interface Store extends DataStorage {
    * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  upsetValue<T>(path: PathType, val:T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
+  upsetValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
 
   /**
    * Creates a new, strongly-typed CoreBooleanField.
@@ -158,4 +159,15 @@ export interface Store extends DataStorage {
    * @param path The path to the node to remove.
    */
   remove(path: PathType): void
+
+  /**
+   * Creates a new, independent instance of the Store.
+   *
+   * The returned store must operate on a completely separate data structure,
+   * ensuring that operations on the new instance do not affect the current one (and vice versa).
+   * Typically used for creating local execution scopes, stack frames, or sandbox environments.
+   *
+   * @returns {Store} A new, isolated Store instance.
+   */
+  createIsolated(): Store
 }

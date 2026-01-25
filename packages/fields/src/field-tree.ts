@@ -55,10 +55,28 @@ export class FieldTree<TFields extends Fields> {
   }]>();
 
   /**
-   * Gets the collection of direct child nodes of this tree branch.
+   * Provides direct access to the internal node storage.
+   *
+   * @remarks
+   * This is primarily intended for **serialization**, debugging, or low-level iteration.
+   * Avoid modifying this map directly to maintain internal consistency; use {@link addNode} or {@link removeNode} instead.
+   * @internal
    */
   get nodes() {
     return this._nodes;
+  }
+
+  /**
+   * Exposes the internal factory instance used by this tree.
+   *
+   * @remarks
+   * Direct usage of this getter is generally unnecessary.
+   * Prefer using {@link createDetachedTree} or {@link createDetachedFields} to create isolated instances.
+   *
+   * @returns {FieldTreeFactory} The factory instance.
+   */
+  get factory(): FieldTreeFactory<TFields> {
+    return this._factory;
   }
 
   /**
@@ -98,7 +116,7 @@ export class FieldTree<TFields extends Fields> {
   addNode(name: string, node: TreeNode<TFields>): TreeNode<TFields> {
     throwIf(this.has(name), `Can't add node with name: '${name}', node already exists`);
     this._nodes.set(name, node);
-    this.onAdd.emit({ name, node });
+    this.onAdd.emit({name, node});
     return node;
   }
 
@@ -249,6 +267,25 @@ export class FieldTree<TFields extends Fields> {
     this.clear();
     this.onAdd.clear();
     this.onRemove.clear();
+  }
+
+  /**
+   * Creates a new, detached FieldTree instance using the same factory as this tree.
+   * This new tree has no parent and is completely isolated.
+   *
+   * @returns A new instance of the same tree type.
+   */
+  createDetachedTree(): FieldTree<TFields> {
+    return this._factory.tree();
+  }
+
+  /**
+   * Creates a new, detached Fields container using the same factory.
+   *
+   * @returns
+   */
+  createDetachedFields(): TFields {
+    return this._factory.fields();
   }
 
   /**

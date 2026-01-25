@@ -18,6 +18,9 @@ import {CoreFields} from './core-fields';
 
 
 export class DataStore implements Store {
+  static readonly typeName = 'dataStore';
+  readonly typeName = DataStore.typeName;
+
   private readonly resolvers: DataStoreFieldResolver[] = [];
   private readonly rootFieldsName = '__root_fields';
   private _rootFields: CoreFields | undefined;
@@ -178,6 +181,21 @@ export class DataStore implements Store {
     return {fields: this.tree.getOrCreateFields(path), leafName };
   }
 
+
+  /**
+   * Creates a new, independent instance of the Store with a fresh, empty data state (FieldsTree).
+   *
+   * The new instance retains the same capabilities (e.g., factory configuration)
+   * as the current one but is completely detached from the existing data hierarchy.
+   * This is useful for creating local scopes, stack frames, or temporary data contexts.
+   *
+   * @returns {DataStore} A new, isolated DataStore instance.
+   */
+  createIsolated(): DataStore {
+    return new DataStore(this.tree.createDetachedTree());
+  }
+
+  /** code below -> implementation of the DataStore from utils */
   has(path: PathType): boolean {
     const pathArr = ensurePathArray(path);
     if (this.isPathToRootFields(pathArr)) {
@@ -186,7 +204,6 @@ export class DataStore implements Store {
     return this.tree.hasPath(pathArr);
   }
 
-  /** implementation of the DataStore from utils */
   get(path: PathType): unknown {
     return this.getField(path).value;
   }

@@ -40,6 +40,9 @@ export class Fields {
 
   /**
    * Gets the read-only map of all `Field` instances in this container.
+   *
+   * @internal
+   *
    * @returns {Map<string, Field<any>>} The collection of fields.
    */
   get fields(): Map<string, Field<any>> {
