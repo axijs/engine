@@ -30,10 +30,10 @@ export function isFieldTree(value: unknown): value is FieldTree<any> {
  * It verifies this by checking the static `typeName` property on the instance.
  *
  * @param value The `unknown` value to check.
- * @returns {boolean} `true` if the value is a `DataSource` instance, otherwise `false`.
+ * @returns {boolean} `true` if the value is a `DataStore` instance, otherwise `false`.
  *
  * @example
- * function processData(source: DataSource) {
+ * function processData(source: DataStore) {
  *   if (isDataStore(source)) {
  *     // Inside this block, TypeScript now knows `source` is a full `Store`.
  *     // We can safely call Store-specific methods like `createFields`.
