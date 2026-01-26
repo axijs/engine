@@ -13,11 +13,6 @@ import {FieldSnapshot} from './field-snapshot';
  * plain, storable data (snapshots) and vice-versa. It uses a `FieldRegistry`
  * to resolve class constructors and a `PolicySerializer` to handle the state
  * of any attached policies.
- *
- * @todo Implement a `patch(field, snapshot)` method.
- *       Unlike `hydrate`, which creates a new
- *       instance, `patch` should update the state of an *existing* field instance
- *       without breaking external references to it.
  */
 export class FieldSerializer {
 
@@ -66,13 +61,36 @@ export class FieldSerializer {
     const fieldType = snapshot.__type;
     throwIfEmpty(fieldType, 'Invalid field snapshot: missing "__type" identifier.');
     const Ctor = this.fieldRegistry.getOrThrow(fieldType);
-
-    let policies: Policy<any>[] | undefined;
-    if (!isNullOrUndefined(snapshot.policies)) {
-      policies = [];
-      snapshot.policies!.forEach((p: any) => policies!.push(this.policySerializer.hydrate(p)));
-    }
+    let policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
 
     return new Ctor(snapshot.name, snapshot.value, {policies}) as Field<any>;
+  }
+
+  /**
+   * Updates an existing Field instance with data from a snapshot.
+   *
+   * This method modifies the field in-place, preserving the object reference.
+   * It updates the field's value and completely replaces its current policies
+   * with the ones defined in the snapshot.
+   *
+   * @param {Field<any>} field - The existing Field instance to update.
+   * @param {FieldSnapshot} snapshot - The snapshot containing the new state.
+   */
+  patch(field: Field<any>, snapshot: FieldSnapshot) {
+    let policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
+    field.policies.clear();
+    if (policies) {
+      policies.forEach(p => field.policies.add(p));
+    }
+    field.value = snapshot.value;
+  }
+
+  private hydratePolicies(snapshot: FieldSnapshot) {
+    if (isNullOrUndefined(snapshot.policies)) {
+      return undefined;
+    }
+    const policies: Policy<any>[] = [];
+    snapshot.policies!.forEach((p: any) => policies!.push(this.policySerializer.hydrate(p)));
+    return policies;
   }
 }

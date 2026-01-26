@@ -26,7 +26,7 @@ export class DataStore implements Store {
   private readonly resolvers: DataStoreFieldResolver[] = [];
   private _variables: CoreFields | undefined;
   private _tree: CoreFieldTree | undefined;
-  private _factory: FieldTreeFactory<CoreFields>;
+  private readonly _factory: FieldTreeFactory<CoreFields>;
 
   private get variables(): CoreFields {
     if (!this._variables) {
@@ -42,14 +42,16 @@ export class DataStore implements Store {
     return this._tree!;
   }
 
-  constructor(treeOrFactory: CoreFieldTree | FieldTreeFactory<CoreFields>) {
+  constructor(treeOrFactory: CoreFieldTree | FieldTreeFactory<CoreFields>, variables?: CoreFields) {
     if (!isFieldTree(treeOrFactory)) {
       this._factory = treeOrFactory;
     } else {
       this._tree = treeOrFactory;
       this._factory = this._tree.factory;
     }
-
+    if (variables) {
+      this._variables = variables;
+    }
     this.registerResolver(new NumericFieldResolver());
     this.registerResolver(new BooleanFieldResolver());
     this.registerResolver(new StringFieldResolver());

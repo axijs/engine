@@ -7,7 +7,6 @@ import {FieldTreeSnapshot} from './field-tree-snapshot';
 import {FieldsSnapshot} from './fields-snapshot';
 
 
-
 /**
  * Orchestrates the recursive serialization and deserialization of `FieldTree` instances.
  *
@@ -26,10 +25,20 @@ import {FieldsSnapshot} from './fields-snapshot';
  */
 export class FieldTreeSerializer<TFields extends Fields> {
 
-  constructor(
-    private readonly fieldTreeNodeFactory: FieldTreeFactory<TFields>,
-    private readonly fieldsSerializer: FieldsSerializer<TFields>
-  ) {
+  _factory: FieldTreeFactory<TFields>;
+  _fieldsSerializer: FieldsSerializer<TFields>
+
+  get factory() {
+    return this._factory;
+  }
+
+  get fieldsSerializer() {
+    return this._fieldsSerializer;
+  }
+
+  constructor(fieldTreeNodeFactory: FieldTreeFactory<TFields>, fieldsSerializer: FieldsSerializer<TFields>) {
+    this._factory = fieldTreeNodeFactory;
+    this._fieldsSerializer = fieldsSerializer;
   }
 
   /**
@@ -58,7 +67,7 @@ export class FieldTreeSerializer<TFields extends Fields> {
    */
   hydrate(snapshot: FieldTreeSnapshot): FieldTree<TFields> {
     const { __type, ...nodes } = snapshot;
-    const tree = this.fieldTreeNodeFactory.tree();
+    const tree = this._factory.tree();
 
     for (const key in nodes) {
       const nodeData = nodes[key];
