@@ -20,6 +20,8 @@ export interface StoreCreateFieldOptions {
  * both type-safe and dynamic methods for manipulating data.
  */
 export interface Store extends DataStorage {
+  /**
+   */
   readonly typeName: string;
 
   /**

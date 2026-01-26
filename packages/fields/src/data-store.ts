@@ -15,6 +15,8 @@ import {
   CoreNumericFieldOptions, CoreStringField, CoreStringFieldOptions
 } from './field-definitions';
 import {CoreFields} from './core-fields';
+import {FieldTreeFactory} from './field-tree-factory';
+import {isFieldTree} from './guards';
 
 
 export class DataStore implements Store {
@@ -22,17 +24,32 @@ export class DataStore implements Store {
   readonly typeName = DataStore.typeName;
 
   private readonly resolvers: DataStoreFieldResolver[] = [];
-  private readonly rootFieldsName = '__root_fields';
-  private _rootFields: CoreFields | undefined;
+  private _variables: CoreFields | undefined;
+  private _tree: CoreFieldTree | undefined;
+  private _factory: FieldTreeFactory<CoreFields>;
 
-  private get rootFields(): CoreFields {
-    if (!this._rootFields) {
-      this._rootFields = this.tree.getOrCreateFields(this.rootFieldsName);
+  private get variables(): CoreFields {
+    if (!this._variables) {
+      this._variables = this._factory.fields();
     }
-    return this._rootFields!;
+    return this._variables!;
   }
 
-  constructor(private readonly tree: CoreFieldTree) {
+  private get tree(): CoreFieldTree {
+    if (!this._tree) {
+      this._tree = this._factory.tree();
+    }
+    return this._tree!;
+  }
+
+  constructor(treeOrFactory: CoreFieldTree | FieldTreeFactory<CoreFields>) {
+    if (!isFieldTree(treeOrFactory)) {
+      this._factory = treeOrFactory;
+    } else {
+      this._tree = treeOrFactory;
+      this._factory = this._tree.factory;
+    }
+
     this.registerResolver(new NumericFieldResolver());
     this.registerResolver(new BooleanFieldResolver());
     this.registerResolver(new StringFieldResolver());
@@ -124,8 +141,8 @@ export class DataStore implements Store {
     const pathArr = ensurePathArray(path);
     throwIfEmpty(pathArr, `Wrong path or path is empty: ${ensurePathString(path)}, should contain at least one path segment`);
 
-    if (this.isPathToRootFields(pathArr)) {
-      return this.rootFields.get<TField>(pathArr[0]) as TField;
+    if (this.isPathToVariables(pathArr)) {
+      return this.variables.get<TField>(pathArr[0]) as TField;
     }
     const fieldName = pathArr.pop()!;
     const fields = this.tree.getFields(pathArr);
@@ -153,8 +170,8 @@ export class DataStore implements Store {
     throwIfEmpty(pathArr, `Wrong path or path is empty: ${ensurePathString(path)}, should contain at least one path segment`);
 
     /** remove field from root fields */
-    if (this.isPathToRootFields(pathArr)) {
-      this.rootFields.remove(pathArr);
+    if (this.isPathToVariables(pathArr)) {
+      this.variables.remove(pathArr);
       return;
     }
 
@@ -168,19 +185,6 @@ export class DataStore implements Store {
     }
   }
 
-  private isPathToRootFields(path: PathType) {
-    return ensurePathArray(path).length === 1;
-  }
-
-  private getDestinationFields(path: PathType): { fields: CoreFields, leafName: string } {
-    const pathArr = ensurePathArray(path);
-    if (this.isPathToRootFields(pathArr)) {
-      return {fields: this.rootFields, leafName: pathArr[0]};
-    }
-    const leafName = pathArr.pop()!;
-    return {fields: this.tree.getOrCreateFields(path), leafName };
-  }
-
 
   /**
    * Creates a new, independent instance of the Store with a fresh, empty data state (FieldsTree).
@@ -192,14 +196,14 @@ export class DataStore implements Store {
    * @returns {DataStore} A new, isolated DataStore instance.
    */
   createIsolated(): DataStore {
-    return new DataStore(this.tree.createDetachedTree());
+    return new DataStore(this._factory);
   }
 
   /** code below -> implementation of the DataStore from utils */
   has(path: PathType): boolean {
     const pathArr = ensurePathArray(path);
-    if (this.isPathToRootFields(pathArr)) {
-      return this.rootFields.has(pathArr[0]);
+    if (this.isPathToVariables(pathArr)) {
+      return this.variables.has(pathArr[0]);
     }
     return this.tree.hasPath(pathArr);
   }
@@ -223,5 +227,39 @@ export class DataStore implements Store {
   delete(path: PathType) {
     this.remove(path);
   }
+
+  /**
+   * @internal Used for serialization
+   */
+  getInternalVariables(): CoreFields  | undefined {
+    return this._variables;
+  }
+
+  /**
+   * @internal Used for serialization
+   */
+  getInternalTree(): CoreFieldTree | undefined {
+    return this._tree;
+  }
+
+  /**
+   * @private
+  */
+  private isPathToVariables(path: PathType) {
+    return ensurePathArray(path).length === 1;
+  }
+
+  /**
+   * @private
+   */
+  private getDestinationFields(path: PathType): { fields: CoreFields, leafName: string } {
+    const pathArr = ensurePathArray(path);
+    if (this.isPathToVariables(pathArr)) {
+      return {fields: this.variables, leafName: pathArr[0]};
+    }
+    const leafName = pathArr.pop()!;
+    return {fields: this.tree.getOrCreateFields(path), leafName };
+  }
+
 }
 
