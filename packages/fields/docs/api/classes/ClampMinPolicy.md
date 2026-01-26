@@ -6,11 +6,11 @@
 
 # Class: ClampMinPolicy
 
-Defined in: policy.ts:24
+Defined in: fields/src/policies/clamp-min-policy.ts:3
 
 ## Implements
 
-- [`FieldPolicy`](../interfaces/FieldPolicy.md)\<`number`\>
+- [`Policy`](../interfaces/Policy.md)\<`number`\>
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: policy.ts:24
 
 > **new ClampMinPolicy**(`min`): `ClampMinPolicy`
 
-Defined in: policy.ts:28
+Defined in: fields/src/policies/clamp-min-policy.ts:7
 
 #### Parameters
 
@@ -36,11 +36,11 @@ Defined in: policy.ts:28
 
 > `readonly` **id**: `"clampMin"` = `ClampMinPolicy.id`
 
-Defined in: policy.ts:26
+Defined in: fields/src/policies/clamp-min-policy.ts:5
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`id`](../interfaces/FieldPolicy.md#id)
+[`Policy`](../interfaces/Policy.md).[`id`](../interfaces/Policy.md#id)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: policy.ts:26
 
 > **min**: `number`
 
-Defined in: policy.ts:28
+Defined in: fields/src/policies/clamp-min-policy.ts:7
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: policy.ts:28
 
 > `readonly` `static` **id**: `"clampMin"` = `'clampMin'`
 
-Defined in: policy.ts:25
+Defined in: fields/src/policies/clamp-min-policy.ts:4
 
 ## Methods
 
@@ -64,7 +64,7 @@ Defined in: policy.ts:25
 
 > **apply**(`val`): `number`
 
-Defined in: policy.ts:31
+Defined in: fields/src/policies/clamp-min-policy.ts:10
 
 #### Parameters
 
@@ -78,7 +78,7 @@ Defined in: policy.ts:31
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`apply`](../interfaces/FieldPolicy.md#apply)
+[`Policy`](../interfaces/Policy.md).[`apply`](../interfaces/Policy.md#apply)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: policy.ts:31
 
 > **updateBounds**(`min`): `void`
 
-Defined in: policy.ts:35
+Defined in: fields/src/policies/clamp-min-policy.ts:14
 
 #### Parameters
 

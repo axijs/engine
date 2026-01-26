@@ -1,0 +1,43 @@
+[**@axi-engine/fields**](../README.md)
+
+***
+
+[@axi-engine/fields](../README.md) / FieldSnapshot
+
+# Interface: FieldSnapshot
+
+Defined in: fields/src/serializer/field-snapshot.ts:4
+
+A plain object representation of a Field's state for serialization.
+
+## Properties
+
+### \_\_type
+
+> **\_\_type**: `string`
+
+Defined in: fields/src/serializer/field-snapshot.ts:5
+
+***
+
+### name
+
+> **name**: `string`
+
+Defined in: fields/src/serializer/field-snapshot.ts:6
+
+***
+
+### policies?
+
+> `optional` **policies**: `object`[]
+
+Defined in: fields/src/serializer/field-snapshot.ts:8
+
+***
+
+### value
+
+> **value**: `any`
+
+Defined in: fields/src/serializer/field-snapshot.ts:7

@@ -6,11 +6,11 @@
 
 # Class: ClampPolicy
 
-Defined in: policy.ts:7
+Defined in: fields/src/policies/clamp-policy.ts:3
 
 ## Implements
 
-- [`FieldPolicy`](../interfaces/FieldPolicy.md)\<`number`\>
+- [`Policy`](../interfaces/Policy.md)\<`number`\>
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: policy.ts:7
 
 > **new ClampPolicy**(`min`, `max`): `ClampPolicy`
 
-Defined in: policy.ts:11
+Defined in: fields/src/policies/clamp-policy.ts:7
 
 #### Parameters
 
@@ -40,11 +40,11 @@ Defined in: policy.ts:11
 
 > `readonly` **id**: `"clamp"` = `ClampPolicy.id`
 
-Defined in: policy.ts:9
+Defined in: fields/src/policies/clamp-policy.ts:5
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`id`](../interfaces/FieldPolicy.md#id)
+[`Policy`](../interfaces/Policy.md).[`id`](../interfaces/Policy.md#id)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: policy.ts:9
 
 > **max**: `number`
 
-Defined in: policy.ts:11
+Defined in: fields/src/policies/clamp-policy.ts:7
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: policy.ts:11
 
 > **min**: `number`
 
-Defined in: policy.ts:11
+Defined in: fields/src/policies/clamp-policy.ts:7
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: policy.ts:11
 
 > `readonly` `static` **id**: `"clamp"` = `'clamp'`
 
-Defined in: policy.ts:8
+Defined in: fields/src/policies/clamp-policy.ts:4
 
 ## Methods
 
@@ -76,7 +76,7 @@ Defined in: policy.ts:8
 
 > **apply**(`val`): `number`
 
-Defined in: policy.ts:14
+Defined in: fields/src/policies/clamp-policy.ts:10
 
 #### Parameters
 
@@ -90,7 +90,7 @@ Defined in: policy.ts:14
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`apply`](../interfaces/FieldPolicy.md#apply)
+[`Policy`](../interfaces/Policy.md).[`apply`](../interfaces/Policy.md#apply)
 
 ***
 
@@ -98,7 +98,7 @@ Defined in: policy.ts:14
 
 > **updateBounds**(`min`, `max`): `void`
 
-Defined in: policy.ts:18
+Defined in: fields/src/policies/clamp-policy.ts:14
 
 #### Parameters
 

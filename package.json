@@ -58,6 +58,7 @@
     "release:utils": "npm run build:utils && npm run publish:utils",
     "// --- DOCUMENTATION ---": "",
     "docs:expressions": "npm run docs --workspace=@axi-engine/expressions",
+    "docs:fields": "npm run docs --workspace=@axi-engine/fields",
     "docs:tasks": "npm run docs --workspace=@axi-engine/tasks",
     "docs:utils": "npm run docs --workspace=@axi-engine/utils",
     "// --- ETC ---": "",

@@ -2,11 +2,11 @@
 
 ***
 
-[@axi-engine/fields](../README.md) / FieldPolicy
+[@axi-engine/fields](../README.md) / Policy
 
-# Interface: FieldPolicy\<T\>
+# Interface: Policy\<T\>
 
-Defined in: policy.ts:1
+Defined in: fields/src/policies/policy.ts:1
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@ Defined in: policy.ts:1
 
 > **apply**: (`val`) => `T`
 
-Defined in: policy.ts:3
+Defined in: fields/src/policies/policy.ts:3
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: policy.ts:3
 
 > `optional` **destroy**: () => `void`
 
-Defined in: policy.ts:4
+Defined in: fields/src/policies/policy.ts:4
 
 #### Returns
 
@@ -50,4 +50,4 @@ Defined in: policy.ts:4
 
 > `readonly` **id**: `string`
 
-Defined in: policy.ts:2
+Defined in: fields/src/policies/policy.ts:2

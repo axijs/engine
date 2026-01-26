@@ -8,7 +8,7 @@
 
 > **clampPolicy**(`min`, `max`): [`ClampPolicy`](../classes/ClampPolicy.md)
 
-Defined in: policy.ts:56
+Defined in: fields/src/policies/clamp-policy.ts:20
 
 ## Parameters
 

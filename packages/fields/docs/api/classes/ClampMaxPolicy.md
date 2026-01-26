@@ -6,11 +6,11 @@
 
 # Class: ClampMaxPolicy
 
-Defined in: policy.ts:40
+Defined in: fields/src/policies/clamp-max-policy.ts:3
 
 ## Implements
 
-- [`FieldPolicy`](../interfaces/FieldPolicy.md)\<`number`\>
+- [`Policy`](../interfaces/Policy.md)\<`number`\>
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: policy.ts:40
 
 > **new ClampMaxPolicy**(`max`): `ClampMaxPolicy`
 
-Defined in: policy.ts:44
+Defined in: fields/src/policies/clamp-max-policy.ts:7
 
 #### Parameters
 
@@ -36,11 +36,11 @@ Defined in: policy.ts:44
 
 > `readonly` **id**: `"clampMax"` = `ClampMaxPolicy.id`
 
-Defined in: policy.ts:42
+Defined in: fields/src/policies/clamp-max-policy.ts:5
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`id`](../interfaces/FieldPolicy.md#id)
+[`Policy`](../interfaces/Policy.md).[`id`](../interfaces/Policy.md#id)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: policy.ts:42
 
 > **max**: `number`
 
-Defined in: policy.ts:44
+Defined in: fields/src/policies/clamp-max-policy.ts:7
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: policy.ts:44
 
 > `readonly` `static` **id**: `"clampMax"` = `'clampMax'`
 
-Defined in: policy.ts:41
+Defined in: fields/src/policies/clamp-max-policy.ts:4
 
 ## Methods
 
@@ -64,7 +64,7 @@ Defined in: policy.ts:41
 
 > **apply**(`val`): `number`
 
-Defined in: policy.ts:47
+Defined in: fields/src/policies/clamp-max-policy.ts:10
 
 #### Parameters
 
@@ -78,7 +78,7 @@ Defined in: policy.ts:47
 
 #### Implementation of
 
-[`FieldPolicy`](../interfaces/FieldPolicy.md).[`apply`](../interfaces/FieldPolicy.md#apply)
+[`Policy`](../interfaces/Policy.md).[`apply`](../interfaces/Policy.md#apply)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: policy.ts:47
 
 > **updateBounds**(`max`): `void`
 
-Defined in: policy.ts:51
+Defined in: fields/src/policies/clamp-max-policy.ts:14
 
 #### Parameters
 

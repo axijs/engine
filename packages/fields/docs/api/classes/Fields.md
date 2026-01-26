@@ -6,54 +6,67 @@
 
 # Class: Fields
 
-Defined in: fields.ts:7
+Defined in: fields/src/fields.ts:12
 
-An abstract base class for managing a reactive collection of `Field` instances.
+A container for a collection of named `Field` instances.
 
-This class is designed to be the foundation for state management systems,
-such as managing stats, flags, or items.
-
-## Extends
-
-- [`BaseFields`](BaseFields.md)\<`any`\>
+This class acts as a "leaf" node in the `FieldTree` hierarchy, managing a flat
+key-value store of reactive data points. It uses a `FieldRegistry` to dynamically
+create `Field` instances of different types.
 
 ## Constructors
 
 ### Constructor
 
-> **new Fields**(): `Fields`
+> **new Fields**(`fieldRegistry`): `Fields`
+
+Defined in: fields/src/fields.ts:56
+
+Creates an instance of Fields.
+
+#### Parameters
+
+##### fieldRegistry
+
+[`FieldRegistry`](FieldRegistry.md)
+
+The registry used to create new `Field` instances.
 
 #### Returns
 
 `Fields`
 
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`constructor`](BaseFields.md#constructor)
-
 ## Properties
 
-### \_fields
+### \_fieldRegistry
 
-> `protected` `readonly` **\_fields**: `Signal`\<`Map`\<`string`, [`Field`](Field.md)\<`any`\>\>\>
+> `readonly` **\_fieldRegistry**: [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: base-fields.ts:17
-
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`_fields`](BaseFields.md#_fields)
+Defined in: fields/src/fields.ts:17
 
 ***
 
-### events
+### \_fields
 
-> `readonly` **events**: `AxiEventEmitter`\<`"created"` \| `"removed"`\>
+> `readonly` **\_fields**: `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: base-fields.ts:18
+Defined in: fields/src/fields.ts:16
 
-#### Inherited from
+***
 
-[`BaseFields`](BaseFields.md).[`events`](BaseFields.md#events)
+### typeName
+
+> `readonly` **typeName**: `"fields"` = `Fields.typeName`
+
+Defined in: fields/src/fields.ts:14
+
+***
+
+### typeName
+
+> `readonly` `static` **typeName**: `"fields"` = `'fields'`
+
+Defined in: fields/src/fields.ts:13
 
 ## Accessors
 
@@ -61,50 +74,55 @@ Defined in: base-fields.ts:18
 
 #### Get Signature
 
-> **get** **fields**(): `ReadonlySignal`\<`ReadonlyMap`\<`string`, [`Field`](Field.md)\<`any`\>\>\>
+> **get** **fields**(): `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: base-fields.ts:25
+Defined in: fields/src/fields.ts:48
 
-A readonly signal providing access to the current map of fields.
-Use this signal with `effect` to react when fields are added or removed from the collection.
-Avoid to change any data in the map manually.
+**`Internal`**
+
+Gets the read-only map of all `Field` instances in this container.
 
 ##### Returns
 
-`ReadonlySignal`\<`ReadonlyMap`\<`string`, [`Field`](Field.md)\<`any`\>\>\>
+`Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`fields`](BaseFields.md#fields)
+The collection of fields.
 
 ## Methods
 
 ### add()
 
-> **add**(`field`): [`Field`](Field.md)\<`any`\>
+> **add**\<`T`\>(`field`): `T`
 
-Defined in: base-fields.ts:54
+Defined in: fields/src/fields.ts:76
 
-Adds a pre-existing `Field` instance to the collection.
-Throws an error if a field with the same name already exists.
+Adds a pre-existing `Field` instance to the collection and fires the `onAdd` event.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
+
+The specific `Field` type being added.
 
 #### Parameters
 
 ##### field
 
-[`Field`](Field.md)\<`any`\>
+[`Field`](../interfaces/Field.md)\<`any`\>
 
 The `Field` instance to add.
 
 #### Returns
 
-[`Field`](Field.md)\<`any`\>
+`T`
 
-The added `Field` instance.
+The added `Field` instance, cast to type `T`.
 
-#### Inherited from
+#### Throws
 
-[`BaseFields`](BaseFields.md).[`add`](BaseFields.md#add)
+If a field with the same name already exists.
 
 ***
 
@@ -112,7 +130,7 @@ The added `Field` instance.
 
 > **clear**(): `void`
 
-Defined in: base-fields.ts:124
+Defined in: fields/src/fields.ts:172
 
 Removes all fields from the collection, ensuring each is properly destroyed.
 
@@ -120,27 +138,32 @@ Removes all fields from the collection, ensuring each is properly destroyed.
 
 `void`
 
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`clear`](BaseFields.md#clear)
-
 ***
 
 ### create()
 
-> **create**\<`T`\>(`name`, `initialValue`): [`Field`](Field.md)\<`T`\>
+> **create**\<`T`\>(`typeName`, `name`, `initialValue`, `options?`): `T`
 
-Defined in: fields.ts:29
+Defined in: fields/src/fields.ts:99
 
-Creates and adds a new `Field` to the collection.
+Creates a new `Field` instance of a specified type, adds it to the collection, and returns it.
+This is the primary factory method for creating fields within this container.
 
 #### Type Parameters
 
 ##### T
 
-`T`
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
+
+The expected `Field` type to be returned.
 
 #### Parameters
+
+##### typeName
+
+`string`
+
+The registered type name of the field to create (e.g., 'numeric', 'boolean').
 
 ##### name
 
@@ -150,62 +173,51 @@ The unique name for the new field.
 
 ##### initialValue
 
-`T`
+`any`
 
 The initial value for the new field.
 
+##### options?
+
+`any`
+
+Optional configuration passed to the field's constructor.
+
 #### Returns
 
-[`Field`](Field.md)\<`T`\>
+`T`
 
 The newly created `Field` instance.
 
-#### Overrides
-
-[`BaseFields`](BaseFields.md).[`create`](BaseFields.md#create)
-
 ***
 
-### createNumber()
+### destroy()
 
-> **createNumber**(`name`, `initialValue`, `options?`): [`NumberField`](NumberField.md)
+> **destroy**(): `void`
 
-Defined in: fields.ts:9
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### initialValue
-
-`number`
-
-##### options?
-
-[`NumberFieldOptions`](../interfaces/NumberFieldOptions.md)
+Defined in: fields/src/fields.ts:176
 
 #### Returns
 
-[`NumberField`](NumberField.md)
+`void`
 
 ***
 
 ### get()
 
-> **get**\<`T`\>(`name`): [`Field`](Field.md)\<`T`\>
+> **get**\<`TField`\>(`name`): `TField`
 
-Defined in: fields.ts:42
+Defined in: fields/src/fields.ts:141
 
 Retrieves a field by its name.
-Throws an error if the field does not exist.
 
 #### Type Parameters
 
-##### T
+##### TField
 
-`T`
+`TField` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
+
+The expected `Field` type to be returned.
 
 #### Parameters
 
@@ -217,31 +229,13 @@ The name of the field to retrieve.
 
 #### Returns
 
-[`Field`](Field.md)\<`T`\>
+`TField`
 
 The `Field` instance.
 
-#### Overrides
+#### Throws
 
-[`BaseFields`](BaseFields.md).[`get`](BaseFields.md#get)
-
-***
-
-### getNumber()
-
-> **getNumber**(`name`): [`NumberField`](NumberField.md)
-
-Defined in: fields.ts:23
-
-#### Parameters
-
-##### name
-
-`string`
-
-#### Returns
-
-[`NumberField`](NumberField.md)
+If the field does not exist.
 
 ***
 
@@ -249,7 +243,7 @@ Defined in: fields.ts:23
 
 > **has**(`name`): `boolean`
 
-Defined in: base-fields.ts:34
+Defined in: fields/src/fields.ts:65
 
 Checks if a field with the given name exists in the collection.
 
@@ -267,44 +261,13 @@ The name of the field to check.
 
 `true` if the field exists, otherwise `false`.
 
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`has`](BaseFields.md#has)
-
-***
-
-### hydrate()
-
-> **hydrate**(`snapshot`): `void`
-
-Defined in: base-fields.ts:145
-
-Restores the state of the fields from a snapshot.
-It uses the `upset` logic to create or update fields based on the snapshot data.
-
-#### Parameters
-
-##### snapshot
-
-`any`
-
-The snapshot object to load.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`hydrate`](BaseFields.md#hydrate)
-
 ***
 
 ### remove()
 
 > **remove**(`names`): `void`
 
-Defined in: base-fields.ts:100
+Defined in: fields/src/fields.ts:151
 
 Removes one or more fields from the collection.
 This method ensures that the `destroy` method of each removed field is called to clean up its resources.
@@ -321,92 +284,92 @@ A single name or an array of names to remove.
 
 `void`
 
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`remove`](BaseFields.md#remove)
-
-***
-
-### snapshot()
-
-> **snapshot**(): `Record`\<`string`, `any`\>
-
-Defined in: base-fields.ts:132
-
-Creates a serializable snapshot of the current state of all fields.
-
-#### Returns
-
-`Record`\<`string`, `any`\>
-
-A plain JavaScript object representing the values of all fields.
-
-#### Inherited from
-
-[`BaseFields`](BaseFields.md).[`snapshot`](BaseFields.md#snapshot)
-
 ***
 
 ### upset()
 
-> **upset**\<`T`\>(`name`, `value`): [`Field`](Field.md)\<`T`\>
+> **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
-Defined in: fields.ts:33
+Defined in: fields/src/fields.ts:120
 
-"Update or Insert": Updates a field's value if it exists, or creates a new one if it doesn't.
+Updates an existing field's value or creates a new one if it doesn't exist.
 
 #### Type Parameters
 
 ##### T
 
-`T`
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
+
+The expected `Field` type.
 
 #### Parameters
+
+##### typeName
+
+`string`
+
+The type name to use if a new field needs to be created.
 
 ##### name
 
 `string`
 
-The name of the field.
+The name of the field to update or create.
 
 ##### value
 
-`T`
+`any`
 
-The value to set.
-
-#### Returns
-
-[`Field`](Field.md)\<`T`\>
-
-The existing or newly created `Field` instance.
-
-#### Overrides
-
-[`BaseFields`](BaseFields.md).[`upset`](BaseFields.md#upset)
-
-***
-
-### upsetNumber()
-
-> **upsetNumber**(`name`, `value`, `options?`): [`NumberField`](NumberField.md)
-
-Defined in: fields.ts:13
-
-#### Parameters
-
-##### name
-
-`string`
-
-##### value
-
-`number`
+The new value to set.
 
 ##### options?
 
-[`NumberFieldOptions`](../interfaces/NumberFieldOptions.md)
+`any`
+
+Optional configuration, used only if a new field is created.
 
 #### Returns
 
-[`NumberField`](NumberField.md)
+`T`
+
+The existing or newly created `Field` instance.
+
+## Events
+
+### onAdd
+
+> **onAdd**: `Emitter`\<\[`object`\]\>
+
+Defined in: fields/src/fields.ts:26
+
+An event emitter that fires when a new field is added to the collection.
+
+#### Param
+
+The event payload.
+
+#### Param
+
+The name of the added field.
+
+#### Param
+
+The `Field` instance that was added.
+
+***
+
+### onRemove
+
+> **onRemove**: `Emitter`\<\[`object`\]\>
+
+Defined in: fields/src/fields.ts:37
+
+An event emitter that fires after one or more fields have been removed.
+
+#### Param
+
+The event payload.
+
+#### Param
+
+An array of names of the fields that were successfully removed.
