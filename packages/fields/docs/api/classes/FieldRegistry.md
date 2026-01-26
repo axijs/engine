@@ -32,7 +32,7 @@ Defined in: fields/src/field-registry.ts:5
 
 > `protected` `readonly` **items**: `Map`\<`string`, `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\>\>
 
-Defined in: utils/dist/index.d.ts:342
+Defined in: utils/dist/index.d.ts:394
 
 #### Inherited from
 
@@ -44,7 +44,7 @@ Defined in: utils/dist/index.d.ts:342
 
 > **clear**(): `void`
 
-Defined in: utils/dist/index.d.ts:372
+Defined in: utils/dist/index.d.ts:424
 
 Clears all registered items from the registry.
 
@@ -62,7 +62,7 @@ Clears all registered items from the registry.
 
 > **delete**(`key`): `boolean`
 
-Defined in: utils/dist/index.d.ts:368
+Defined in: utils/dist/index.d.ts:420
 
 #### Parameters
 
@@ -84,7 +84,7 @@ Defined in: utils/dist/index.d.ts:368
 
 > **get**(`key`): `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\> \| `undefined`
 
-Defined in: utils/dist/index.d.ts:360
+Defined in: utils/dist/index.d.ts:412
 
 Retrieves an item by its key.
 
@@ -112,7 +112,7 @@ The item, or `undefined` if not found.
 
 > **getOrThrow**(`key`): `Constructor`
 
-Defined in: utils/dist/index.d.ts:367
+Defined in: utils/dist/index.d.ts:419
 
 Retrieves an item by its key, throwing an error if it's not found.
 
@@ -144,7 +144,7 @@ if no item is found for the given key.
 
 > **has**(`key`): `boolean`
 
-Defined in: utils/dist/index.d.ts:354
+Defined in: utils/dist/index.d.ts:406
 
 Checks if an item with the given key is registered.
 
@@ -170,7 +170,7 @@ The key to check.
 
 > **register**(`key`, `value`): `void`
 
-Defined in: utils/dist/index.d.ts:349
+Defined in: utils/dist/index.d.ts:401
 
 Registers an item with a specific key.
 Warns if an item with the same key is already registered.

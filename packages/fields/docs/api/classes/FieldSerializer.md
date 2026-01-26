@@ -6,7 +6,7 @@
 
 # Class: FieldSerializer
 
-Defined in: fields/src/serializer/field-serializer.ts:22
+Defined in: fields/src/serializer/field-serializer.ts:17
 
 Orchestrates the serialization and deserialization of Field instances.
 
@@ -15,20 +15,13 @@ plain, storable data (snapshots) and vice-versa. It uses a `FieldRegistry`
 to resolve class constructors and a `PolicySerializer` to handle the state
 of any attached policies.
 
-## Todo
-
-Implement a `patch(field, snapshot)` method.
-      Unlike `hydrate`, which creates a new
-      instance, `patch` should update the state of an *existing* field instance
-      without breaking external references to it.
-
 ## Constructors
 
 ### Constructor
 
 > **new FieldSerializer**(`fieldRegistry`, `policySerializer`): `FieldSerializer`
 
-Defined in: fields/src/serializer/field-serializer.ts:29
+Defined in: fields/src/serializer/field-serializer.ts:24
 
 Creates an instance of FieldSerializer.
 
@@ -56,7 +49,7 @@ A serializer dedicated to handling Policy instances.
 
 > **hydrate**(`snapshot`): [`Field`](../interfaces/Field.md)\<`any`\>
 
-Defined in: fields/src/serializer/field-serializer.ts:65
+Defined in: fields/src/serializer/field-serializer.ts:60
 
 Restores a Field instance from its snapshot representation.
 It uses the `__type` property to find the correct constructor and hydrates
@@ -82,11 +75,43 @@ If the snapshot is invalid, missing a `__type`, or if the type is not registered
 
 ***
 
+### patch()
+
+> **patch**(`field`, `snapshot`): `void`
+
+Defined in: fields/src/serializer/field-serializer.ts:79
+
+Updates an existing Field instance with data from a snapshot.
+
+This method modifies the field in-place, preserving the object reference.
+It updates the field's value and completely replaces its current policies
+with the ones defined in the snapshot.
+
+#### Parameters
+
+##### field
+
+[`Field`](../interfaces/Field.md)\<`any`\>
+
+The existing Field instance to update.
+
+##### snapshot
+
+[`FieldSnapshot`](../interfaces/FieldSnapshot.md)
+
+The snapshot containing the new state.
+
+#### Returns
+
+`void`
+
+***
+
 ### snapshot()
 
 > **snapshot**(`field`): [`FieldSnapshot`](../interfaces/FieldSnapshot.md)
 
-Defined in: fields/src/serializer/field-serializer.ts:41
+Defined in: fields/src/serializer/field-serializer.ts:36
 
 Creates a serializable snapshot of a Field instance.
 The snapshot includes the field's type, name, current value, and the state of all its policies.

@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@axi-engine/utils": "0.2.6",
-    "@axi-engine/fields": "0.3.9",
+    "@axi-engine/fields": "0.3.10",
     "@axi-engine/tasks": "0.1.2"
 
   }

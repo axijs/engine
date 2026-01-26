@@ -6,7 +6,7 @@
 
 # Class: FieldTreeSerializer\<TFields\>
 
-Defined in: fields/src/serializer/field-tree-serializer.ts:27
+Defined in: fields/src/serializer/field-tree-serializer.ts:26
 
 Orchestrates the recursive serialization and deserialization of `FieldTree` instances.
 
@@ -40,7 +40,7 @@ Implement a `patch(tree, snapshot)` method for recursive, non-destructive
 
 > **new FieldTreeSerializer**\<`TFields`\>(`fieldTreeNodeFactory`, `fieldsSerializer`): `FieldTreeSerializer`\<`TFields`\>
 
-Defined in: fields/src/serializer/field-tree-serializer.ts:29
+Defined in: fields/src/serializer/field-tree-serializer.ts:39
 
 #### Parameters
 
@@ -56,13 +56,57 @@ Defined in: fields/src/serializer/field-tree-serializer.ts:29
 
 `FieldTreeSerializer`\<`TFields`\>
 
+## Properties
+
+### \_factory
+
+> **\_factory**: [`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
+
+Defined in: fields/src/serializer/field-tree-serializer.ts:28
+
+***
+
+### \_fieldsSerializer
+
+> **\_fieldsSerializer**: [`FieldsSerializer`](FieldsSerializer.md)\<`TFields`\>
+
+Defined in: fields/src/serializer/field-tree-serializer.ts:29
+
+## Accessors
+
+### factory
+
+#### Get Signature
+
+> **get** **factory**(): [`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
+
+Defined in: fields/src/serializer/field-tree-serializer.ts:31
+
+##### Returns
+
+[`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
+
+***
+
+### fieldsSerializer
+
+#### Get Signature
+
+> **get** **fieldsSerializer**(): [`FieldsSerializer`](FieldsSerializer.md)\<`TFields`\>
+
+Defined in: fields/src/serializer/field-tree-serializer.ts:35
+
+##### Returns
+
+[`FieldsSerializer`](FieldsSerializer.md)\<`TFields`\>
+
 ## Methods
 
 ### hydrate()
 
 > **hydrate**(`snapshot`): [`FieldTree`](FieldTree.md)\<`TFields`\>
 
-Defined in: fields/src/serializer/field-tree-serializer.ts:59
+Defined in: fields/src/serializer/field-tree-serializer.ts:68
 
 Restores the state of the tree from a snapshot.
 It intelligently creates missing nodes based on `__type` metadata and delegates hydration to child nodes.
@@ -85,7 +129,7 @@ The snapshot object to load.
 
 > **snapshot**(`tree`): [`FieldTreeSnapshot`](../interfaces/FieldTreeSnapshot.md)
 
-Defined in: fields/src/serializer/field-tree-serializer.ts:39
+Defined in: fields/src/serializer/field-tree-serializer.ts:48
 
 Creates a serializable snapshot of the entire tree and its contained fields.
 
