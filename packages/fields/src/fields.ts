@@ -150,6 +150,9 @@ export class Fields {
    */
   remove(names: string | string[]) {
     const namesToRemove = Array.isArray(names) ? names : [names];
+    if (!namesToRemove.length) {
+      return;
+    }
     const reallyRemoved = namesToRemove.filter(name => {
       const field = this._fields.get(name);
       if (!field) {

@@ -10,10 +10,6 @@ import {FieldsSnapshot} from './fields-snapshot';
  * This class acts as a high-level composer, responsible for converting an entire `Fields` object
  * into a storable snapshot and back.
  * It delegates the actual serialization of each `Field` and `Policy` to their respective serializers.
- *
- * @todo Implement a `patch(fields, snapshot)` method. It should perform a non-destructive
- *       update, creating new fields, removing missing ones, and patching existing ones
- *       in place, preserving the container instance itself.
  */
 export class FieldsSerializer<TFields extends Fields> {
   /**
@@ -62,5 +58,43 @@ export class FieldsSerializer<TFields extends Fields> {
     }
 
     return fields;
+  }
+
+  /**
+   * Synchronizes an existing `Fields` container with a snapshot.
+   *
+   * This method performs a "smart update":
+   * 1. **Removes** fields from the container that are missing in the snapshot.
+   * 2. **Patches** existing fields in-place using {@link FieldSerializer.patch}, preserving object references.
+   * 3. **Creates** (hydrates) and adds new fields that exist in the snapshot but not in the container.
+   *
+   * @param {Fields} fields - The target `Fields` container to update.
+   * @param {FieldsSnapshot} snapshot - The source snapshot containing the desired state.
+   */
+  patch(fields: TFields, snapshot: FieldsSnapshot): void {
+    const { __type, ...fieldsData } = snapshot;
+    const snapshotKeys = new Set(Object.keys(fieldsData));
+
+    // 1. Identify and remove fields that are not present in the snapshot
+    const fieldsToRemove: string[] = Array.from(fields.fields.values())
+      .filter(f => !snapshotKeys.has(f.name))
+      .map(f => f.name);
+
+    // Batch remove
+    fields.remove(fieldsToRemove);
+
+    // 2. Iterate through snapshot data to Patch existing or Create new fields
+    for (const fieldName in fieldsData) {
+      const fieldSnapshot = fieldsData[fieldName] as FieldSnapshot;
+      if (fields.has(fieldName)) {
+        // Patch existing field in-place
+        const existingField = fields.get(fieldName);
+        this.fieldSerializer.patch(existingField, fieldSnapshot);
+      } else {
+        // Create and add new field
+        const newField = this.fieldSerializer.hydrate(fieldSnapshot);
+        fields.add(newField);
+      }
+    }
   }
 }
