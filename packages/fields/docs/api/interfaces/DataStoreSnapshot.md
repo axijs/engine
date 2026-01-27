@@ -6,7 +6,7 @@
 
 # Interface: DataStoreSnapshot
 
-Defined in: fields/src/serializer/data-store-snapshot.ts:10
+Defined in: fields/src/serializers/data-store-snapshot.ts:10
 
 A plain object representation of a DataStore's state, used for serialization.
 
@@ -19,7 +19,7 @@ and the hierarchical 'tree' structure (used for global/persistent data).
 
 > **\_\_type**: `string`
 
-Defined in: fields/src/serializer/data-store-snapshot.ts:15
+Defined in: fields/src/serializers/data-store-snapshot.ts:15
 
 The type identifier for the store (e.g., 'dataStore').
 Used for type guards and polymorphic deserialization.
@@ -30,7 +30,7 @@ Used for type guards and polymorphic deserialization.
 
 > `optional` **tree**: [`FieldTreeSnapshot`](FieldTreeSnapshot.md)
 
-Defined in: fields/src/serializer/data-store-snapshot.ts:27
+Defined in: fields/src/serializers/data-store-snapshot.ts:27
 
 Snapshot of the nested data hierarchy (CoreFieldTree).
 Present only if the store managed a complex tree structure.
@@ -41,7 +41,7 @@ Present only if the store managed a complex tree structure.
 
 > `optional` **variables**: [`FieldsSnapshot`](FieldsSnapshot.md)
 
-Defined in: fields/src/serializer/data-store-snapshot.ts:21
+Defined in: fields/src/serializers/data-store-snapshot.ts:21
 
 Snapshot of the independent, root-level variables (CoreFields).
 Present only if the store contained detached variables.

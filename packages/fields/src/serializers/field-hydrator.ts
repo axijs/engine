@@ -14,7 +14,7 @@ import {FieldSnapshot} from './field-snapshot';
  * to resolve class constructors and a `PolicySerializer` to handle the state
  * of any attached policies.
  */
-export class FieldSerializer {
+export class FieldHydrator {
 
   /**
    * Creates an instance of FieldSerializer.
@@ -25,28 +25,6 @@ export class FieldSerializer {
     private readonly fieldRegistry: FieldRegistry,
     private readonly policySerializer: PolicySerializer
   ) {
-  }
-
-  /**
-   * Creates a serializable snapshot of a Field instance.
-   * The snapshot includes the field's type, name, current value, and the state of all its policies.
-   * @param {Field<any>} field - The Field instance to serialize.
-   * @returns {FieldSnapshot} A plain object ready for JSON serialization.
-   */
-  snapshot(field: Field<any>): FieldSnapshot {
-    let snapshot: any = {
-      __type: field.typeName,
-      name: field.name,
-      value: field.value,
-    }
-
-    if (!field.policies.isEmpty()) {
-      const serializedPolicies: object[] = [];
-      field.policies.items.forEach(policy => serializedPolicies.push(this.policySerializer.snapshot(policy)));
-      snapshot.policies = serializedPolicies;
-    }
-
-    return snapshot;
   }
 
   /**
@@ -77,20 +55,15 @@ export class FieldSerializer {
    * @param {FieldSnapshot} snapshot - The snapshot containing the new state.
    */
   patch(field: Field<any>, snapshot: FieldSnapshot) {
-    let policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
     field.policies.clear();
-    if (policies) {
-      policies.forEach(p => field.policies.add(p));
-    }
+    const policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
+    policies?.forEach(p => field.policies.add(p));
     field.value = snapshot.value;
   }
 
   private hydratePolicies(snapshot: FieldSnapshot) {
-    if (isNullOrUndefined(snapshot.policies)) {
-      return undefined;
-    }
-    const policies: Policy<any>[] = [];
-    snapshot.policies!.forEach((p: any) => policies!.push(this.policySerializer.hydrate(p)));
-    return policies;
+    return isNullOrUndefined(snapshot.policies) ?
+      undefined :
+      snapshot.policies.map((p: any) => this.policySerializer.hydrate(p));
   }
 }

@@ -6,7 +6,7 @@
 
 # Interface: FieldsSnapshot
 
-Defined in: fields/src/serializer/fields-snapshot.ts:6
+Defined in: fields/src/serializers/fields-snapshot.ts:6
 
 A plain object representation of a Fields container's state for serialization.
 
@@ -20,4 +20,4 @@ A plain object representation of a Fields container's state for serialization.
 
 > **\_\_type**: `string`
 
-Defined in: fields/src/serializer/fields-snapshot.ts:7
+Defined in: fields/src/serializers/fields-snapshot.ts:7

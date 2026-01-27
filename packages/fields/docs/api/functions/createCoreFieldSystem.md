@@ -28,4 +28,4 @@ Creates a complete core setup for the field system.
 
 ### serializer
 
-> **serializer**: [`FieldTreeSerializer`](../classes/FieldTreeSerializer.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+> **serializer**: [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>

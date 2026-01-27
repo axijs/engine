@@ -6,7 +6,7 @@
 
 # Function: createCoreTreeSerializer()
 
-> **createCoreTreeSerializer**(`fieldTreeNodeFactory`, `policySerializer?`): [`FieldTreeSerializer`](../classes/FieldTreeSerializer.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+> **createCoreTreeSerializer**(`fieldTreeNodeFactory`, `policySerializer?`): [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
 
 Defined in: fields/src/setup.ts:55
 
@@ -27,6 +27,6 @@ The factory used to create new tree nodes during deserialization.
 
 ## Returns
 
-[`FieldTreeSerializer`](../classes/FieldTreeSerializer.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+[`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
 
 A top-level serializer for the entire field tree.

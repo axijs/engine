@@ -6,7 +6,7 @@
 
 # Class: ClampMaxPolicySerializerHandler
 
-Defined in: fields/src/serializer/policies/clamp-max-policy-serializer-handler.ts:4
+Defined in: fields/src/serializers/policies/clamp-max-policy-serializer-handler.ts:4
 
 Defines the contract for a handler that can serialize and deserialize a specific type of Policy.
 
@@ -30,7 +30,7 @@ Defines the contract for a handler that can serialize and deserialize a specific
 
 > **hydrate**(`data`): [`ClampMaxPolicy`](ClampMaxPolicy.md)
 
-Defined in: fields/src/serializer/policies/clamp-max-policy-serializer-handler.ts:9
+Defined in: fields/src/serializers/policies/clamp-max-policy-serializer-handler.ts:9
 
 Creates a new Policy instance from a plain object.
 
@@ -58,7 +58,7 @@ A new instance of the Policy.
 
 > **snapshot**(`policy`): `object`
 
-Defined in: fields/src/serializer/policies/clamp-max-policy-serializer-handler.ts:5
+Defined in: fields/src/serializers/policies/clamp-max-policy-serializer-handler.ts:5
 
 Converts a Policy instance into a serializable plain object.
 

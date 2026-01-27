@@ -2,9 +2,9 @@ import {FieldRegistry} from './field-registry';
 import {
   ClampMaxPolicySerializerHandler,
   ClampMinPolicySerializerHandler,
-  ClampPolicySerializerHandler, FieldSerializer, FieldsSerializer, FieldTreeSerializer,
+  ClampPolicySerializerHandler, FieldHydrator, FieldsHydrator, FieldTreeHydrator,
   PolicySerializer
-} from './serializer';
+} from './serializers';
 import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './policies';
 import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './field-definitions';
 import {CoreFields} from './core-fields';
@@ -50,17 +50,17 @@ export function createCoreTreeNodeFactory(fieldRegistry: FieldRegistry): CoreTre
  * This function composes all necessary serializers (FieldTree, Fields, Field) for a complete setup.
  * @param {CoreTreeNodeFactory} fieldTreeNodeFactory - The factory used to create new tree nodes during deserialization.
  * @param policySerializer
- * @returns {FieldTreeSerializer<CoreFields>} A top-level serializer for the entire field tree.
+ * @returns {FieldTreeHydrator<CoreFields>} A top-level serializer for the entire field tree.
  */
 export function createCoreTreeSerializer(
   fieldTreeNodeFactory: CoreTreeNodeFactory,
   policySerializer?: PolicySerializer
-): FieldTreeSerializer<CoreFields> {
-  return new FieldTreeSerializer(
+): FieldTreeHydrator<CoreFields> {
+  return new FieldTreeHydrator(
     fieldTreeNodeFactory,
-    new FieldsSerializer(
+    new FieldsHydrator(
       fieldTreeNodeFactory,
-      new FieldSerializer(fieldTreeNodeFactory.fieldRegistry, policySerializer ?? createCorePolicySerializer())
+      new FieldHydrator(fieldTreeNodeFactory.fieldRegistry, policySerializer ?? createCorePolicySerializer())
     )
   );
 }
@@ -72,10 +72,10 @@ export interface CoreFieldSystemConfig {
 
 /**
  * Creates a complete core setup for the field system.
- * @returns {{factory: CoreTreeNodeFactory, serializer: FieldTreeSerializer<CoreFields>}}
+ * @returns {{factory: CoreTreeNodeFactory, serializer: FieldTreeHydrator<CoreFields>}}
  */
 export function createCoreFieldSystem(config?: CoreFieldSystemConfig):
-  { factory: CoreTreeNodeFactory, serializer: FieldTreeSerializer<CoreFields> }
+  { factory: CoreTreeNodeFactory, serializer: FieldTreeHydrator<CoreFields> }
 {
   const registry = config?.registry ?? createCoreFieldRegistry();
   const factory = createCoreTreeNodeFactory(registry);

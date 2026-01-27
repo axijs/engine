@@ -1,43 +1,23 @@
-import {FieldSerializer} from './field-serializer';
+import {FieldHydrator} from './field-hydrator';
 import {Fields} from '../fields';
 import {FieldsFactory} from '../fields-factory';
 import {FieldSnapshot} from './field-snapshot';
 import {FieldsSnapshot} from './fields-snapshot';
 
 /**
- * Orchestrates the serialization and deserialization of `Fields` container instances.
- *
- * This class acts as a high-level composer, responsible for converting an entire `Fields` object
- * into a storable snapshot and back.
- * It delegates the actual serialization of each `Field` and `Policy` to their respective serializers.
+ * Deserialization of `Fields` container instances.
+ * Responsible for converting snapshot of `Fields` object into a `Fields` instance.
  */
-export class FieldsSerializer<TFields extends Fields> {
+export class FieldsHydrator<TFields extends Fields> {
   /**
    * Creates an instance of FieldsSerializer.
    * @param {FieldsFactory} fieldsFactory - A registry that maps string type names to Field constructors.
-   * @param {FieldSerializer} fieldSerializer - A serializer of field instances.
+   * @param {FieldHydrator} fieldHydrator - A hydrator of field instances.
    */
   constructor(
     private readonly fieldsFactory: FieldsFactory<TFields>,
-    private readonly fieldSerializer: FieldSerializer
+    private readonly fieldHydrator: FieldHydrator
   ) {
-  }
-
-  /**
-   * Creates a serializable snapshot of a `Fields` container.
-   *
-   * The snapshot includes a `__type` identifier (currently hardcoded) and an array of snapshots
-   * for each `Field` within the container.
-   * @param {Fields} fields - The `Fields` instance to serialize.
-   * @returns {FieldsSnapshot} A plain object ready for JSON serialization.
-   */
-  snapshot(fields: Fields): FieldsSnapshot {
-    const res: FieldsSnapshot = {
-      __type: fields.typeName,
-    };
-
-    fields.fields.forEach(field => res[field.name] = this.fieldSerializer.snapshot(field));
-    return res;
   }
 
   /**
@@ -53,7 +33,7 @@ export class FieldsSerializer<TFields extends Fields> {
 
     for (const fieldName in fieldsData) {
       const fieldSnapshot = fieldsData[fieldName];
-      const restoredField = this.fieldSerializer.hydrate(fieldSnapshot as FieldSnapshot);
+      const restoredField = this.fieldHydrator.hydrate(fieldSnapshot as FieldSnapshot);
       fields.add(restoredField);
     }
 
@@ -65,7 +45,7 @@ export class FieldsSerializer<TFields extends Fields> {
    *
    * This method performs a "smart update":
    * 1. **Removes** fields from the container that are missing in the snapshot.
-   * 2. **Patches** existing fields in-place using {@link FieldSerializer.patch}, preserving object references.
+   * 2. **Patches** existing fields in-place using {@link FieldHydrator.patch}, preserving object references.
    * 3. **Creates** (hydrates) and adds new fields that exist in the snapshot but not in the container.
    *
    * @param {Fields} fields - The target `Fields` container to update.
@@ -89,10 +69,10 @@ export class FieldsSerializer<TFields extends Fields> {
       if (fields.has(fieldName)) {
         // Patch existing field in-place
         const existingField = fields.get(fieldName);
-        this.fieldSerializer.patch(existingField, fieldSnapshot);
+        this.fieldHydrator.patch(existingField, fieldSnapshot);
       } else {
         // Create and add new field
-        const newField = this.fieldSerializer.hydrate(fieldSnapshot);
+        const newField = this.fieldHydrator.hydrate(fieldSnapshot);
         fields.add(newField);
       }
     }

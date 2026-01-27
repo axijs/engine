@@ -245,6 +245,20 @@ export class DataStore implements Store {
   }
 
   /**
+   * @internal Used for serialization
+   */
+  getOrCreateInternalVariables(): CoreFields {
+    return this.variables;
+  }
+
+  /**
+   * @internal Used for serialization
+   */
+  getOrCreateInternalTree(): CoreFieldTree {
+    return this.tree;
+  }
+
+  /**
    * @private
   */
   private isPathToVariables(path: PathType) {

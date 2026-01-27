@@ -637,6 +637,38 @@ An error if the path is invalid or the field is not of the expected type.
 
 ***
 
+### getOrCreateInternalTree()
+
+> **getOrCreateInternalTree**(): [`CoreFieldTree`](CoreFieldTree.md)
+
+Defined in: fields/src/data-store.ts:257
+
+**`Internal`**
+
+Used for serialization
+
+#### Returns
+
+[`CoreFieldTree`](CoreFieldTree.md)
+
+***
+
+### getOrCreateInternalVariables()
+
+> **getOrCreateInternalVariables**(): [`CoreFields`](CoreFields.md)
+
+Defined in: fields/src/data-store.ts:250
+
+**`Internal`**
+
+Used for serialization
+
+#### Returns
+
+[`CoreFields`](CoreFields.md)
+
+***
+
 ### getString()
 
 > **getString**(`path`): [`CoreStringField`](CoreStringField.md)

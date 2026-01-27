@@ -4,8 +4,8 @@ import {
   Fields,
   CoreBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
-  ClampMaxPolicy, CoreStringField, FieldTreeSerializer, FieldSerializer, FieldsSerializer, CoreTreeNodeFactory,
-  createCoreFieldSystem
+  ClampMaxPolicy, CoreStringField, FieldTreeHydrator, FieldHydrator, FieldsHydrator, CoreTreeNodeFactory,
+  createCoreFieldSystem, FieldSnapshotter, FieldsSnapshotter, FieldTreeSnapshotter
 } from '@axi-engine/fields';
 
 
@@ -27,9 +27,13 @@ export function testOneStringField() {
 
   const treeNodeFactory = new CoreTreeNodeFactory(fieldRegistry);
 
-  const fieldSerializer = new FieldSerializer(fieldRegistry, policySerializer);
-  const fieldsSerializer = new FieldsSerializer(treeNodeFactory, fieldSerializer);
-  const treeSerializer = new FieldTreeSerializer(treeNodeFactory, fieldsSerializer);
+  const fieldHydrator = new FieldHydrator(fieldRegistry, policySerializer);
+  const fieldsHydrator = new FieldsHydrator(treeNodeFactory, fieldHydrator);
+  const treeHydrator = new FieldTreeHydrator(treeNodeFactory, fieldsHydrator);
+
+  const fieldSnapshotter = new FieldSnapshotter(policySerializer);
+  const fieldsSnapshotter = new FieldsSnapshotter(fieldSnapshotter);
+  const treeSnapshotter = new FieldTreeSnapshotter(fieldsSnapshotter);
 
   const tree = treeNodeFactory.tree();
 
@@ -44,18 +48,18 @@ export function testOneStringField() {
   const genField = params1.createGeneric('gen', 'genField hello');
   console.log('genField value:', genField.value);
 
-  const fieldSnapshot = fieldSerializer.snapshot(health);
+  const fieldSnapshot = fieldSnapshotter.snapshot(health);
 
   console.log('<!-- numeric field snapshot: -->');
   console.log(fieldSnapshot);
   console.log('<!-- numeric restored field: -->');
-  console.log(fieldSerializer.hydrate(fieldSnapshot));
+  console.log(fieldHydrator.hydrate(fieldSnapshot));
 
-  const treeSnapshot = treeSerializer.snapshot(tree);
+  const treeSnapshot = treeSnapshotter.snapshot(tree);
   console.log('<!-- tree snapshot -->');
   console.log(treeSnapshot);
 
-  const restoredFieldTree = treeSerializer.hydrate(treeSnapshot);
+  const restoredFieldTree = treeHydrator.hydrate(treeSnapshot);
   console.log('restored tree: ', restoredFieldTree);
 
   const fields = new Fields(fieldRegistry);

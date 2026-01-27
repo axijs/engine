@@ -368,7 +368,7 @@ If a field with the same name already exists.
 
 > **clear**(): `void`
 
-Defined in: fields/src/fields.ts:172
+Defined in: fields/src/fields.ts:175
 
 Removes all fields from the collection, ensuring each is properly destroyed.
 
@@ -477,7 +477,7 @@ Defined in: fields/src/mixins/with-default-generic-fields.mixin.ts:10
 
 > **destroy**(): `void`
 
-Defined in: fields/src/fields.ts:176
+Defined in: fields/src/fields.ts:179
 
 #### Returns
 

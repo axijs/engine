@@ -2,11 +2,11 @@
 
 ***
 
-[@axi-engine/fields](../README.md) / FieldSerializer
+[@axi-engine/fields](../README.md) / FieldHydrator
 
-# Class: FieldSerializer
+# Class: FieldHydrator
 
-Defined in: fields/src/serializer/field-serializer.ts:17
+Defined in: fields/src/serializers/field-hydrator.ts:17
 
 Orchestrates the serialization and deserialization of Field instances.
 
@@ -19,9 +19,9 @@ of any attached policies.
 
 ### Constructor
 
-> **new FieldSerializer**(`fieldRegistry`, `policySerializer`): `FieldSerializer`
+> **new FieldHydrator**(`fieldRegistry`, `policySerializer`): `FieldHydrator`
 
-Defined in: fields/src/serializer/field-serializer.ts:24
+Defined in: fields/src/serializers/field-hydrator.ts:24
 
 Creates an instance of FieldSerializer.
 
@@ -41,7 +41,7 @@ A serializer dedicated to handling Policy instances.
 
 #### Returns
 
-`FieldSerializer`
+`FieldHydrator`
 
 ## Methods
 
@@ -49,7 +49,7 @@ A serializer dedicated to handling Policy instances.
 
 > **hydrate**(`snapshot`): [`Field`](../interfaces/Field.md)\<`any`\>
 
-Defined in: fields/src/serializer/field-serializer.ts:60
+Defined in: fields/src/serializers/field-hydrator.ts:38
 
 Restores a Field instance from its snapshot representation.
 It uses the `__type` property to find the correct constructor and hydrates
@@ -79,7 +79,7 @@ If the snapshot is invalid, missing a `__type`, or if the type is not registered
 
 > **patch**(`field`, `snapshot`): `void`
 
-Defined in: fields/src/serializer/field-serializer.ts:79
+Defined in: fields/src/serializers/field-hydrator.ts:57
 
 Updates an existing Field instance with data from a snapshot.
 
@@ -104,28 +104,3 @@ The snapshot containing the new state.
 #### Returns
 
 `void`
-
-***
-
-### snapshot()
-
-> **snapshot**(`field`): [`FieldSnapshot`](../interfaces/FieldSnapshot.md)
-
-Defined in: fields/src/serializer/field-serializer.ts:36
-
-Creates a serializable snapshot of a Field instance.
-The snapshot includes the field's type, name, current value, and the state of all its policies.
-
-#### Parameters
-
-##### field
-
-[`Field`](../interfaces/Field.md)\<`any`\>
-
-The Field instance to serialize.
-
-#### Returns
-
-[`FieldSnapshot`](../interfaces/FieldSnapshot.md)
-
-A plain object ready for JSON serialization.
