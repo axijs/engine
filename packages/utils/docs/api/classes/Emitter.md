@@ -6,10 +6,14 @@
 
 # Class: Emitter\<T\>
 
-Defined in: emitter.ts:8
+Defined in: emitter.ts:9
 
 A minimal, type-safe event emitter for a single event.
 It does not manage state, it only manages subscribers and event dispatching.
+
+## Extended by
+
+- [`StateEmitter`](StateEmitter.md)
 
 ## Type Parameters
 
@@ -41,7 +45,7 @@ A tuple representing the types of the event arguments.
 
 > **get** **listenerCount**(): `number`
 
-Defined in: emitter.ts:14
+Defined in: emitter.ts:15
 
 Returns the number of listeners.
 
@@ -59,7 +63,7 @@ Returns the number of listeners.
 
 > **clear**(): `void`
 
-Defined in: emitter.ts:45
+Defined in: emitter.ts:46
 
 Clears all listeners.
 
@@ -77,7 +81,7 @@ Clears all listeners.
 
 > **emit**(...`args`): `void`
 
-Defined in: emitter.ts:38
+Defined in: emitter.ts:39
 
 Dispatches the event to all subscribed listeners.
 
@@ -97,7 +101,7 @@ Dispatches the event to all subscribed listeners.
 
 > **subscribe**(`listener`): () => `void`
 
-Defined in: emitter.ts:22
+Defined in: emitter.ts:23
 
 Subscribes a listener to this event.
 
@@ -127,7 +131,7 @@ A function to unsubscribe the listener.
 
 > **unsubscribe**(`listener`): `boolean`
 
-Defined in: emitter.ts:31
+Defined in: emitter.ts:32
 
 Manually unsubscribe by listener
 

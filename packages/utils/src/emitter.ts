@@ -1,4 +1,5 @@
 import {Subscribable} from './types';
+import {isUndefined} from './guards';
 
 /**
  * A minimal, type-safe event emitter for a single event.
@@ -44,5 +45,45 @@ export class Emitter<T extends any[]> implements Subscribable<T>{
    */
   clear(): void {
     this.listeners.clear();
+  }
+}
+
+/**
+ * An Emitter that stores the last emitted value.
+ * New subscribers immediately receive the last value upon subscription.
+ */
+export class StateEmitter<T extends any[]> extends Emitter<T> {
+  private _lastValue: T | undefined;
+
+  constructor(initialValue?: T) {
+    super();
+    this._lastValue = initialValue ?? undefined;
+  }
+
+  /**
+   * Gets the current value synchronously without subscribing.
+   */
+  get value(): T | undefined {
+    return this._lastValue;
+  }
+
+  override emit(...args: T): void {
+    this._lastValue = args;
+    super.emit(...args);
+  }
+
+  override subscribe(listener: (...args: T) => void): () => void {
+    const unsubscribe = super.subscribe(listener);
+
+    if (!isUndefined(this._lastValue)) {
+      listener(...this._lastValue);
+    }
+
+    return unsubscribe;
+  }
+
+  override clear() {
+    super.clear();
+    this._lastValue = undefined;
   }
 }

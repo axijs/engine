@@ -8,6 +8,7 @@
 
 - [Emitter](classes/Emitter.md)
 - [Registry](classes/Registry.md)
+- [StateEmitter](classes/StateEmitter.md)
 
 ## Interfaces
 
