@@ -8,7 +8,7 @@
 
 > **Subscribable**\<`T`\> = `object`
 
-Defined in: types.ts:49
+Defined in: types.ts:56
 
 Defines the public, read-only contract for an event emitter.
 It allows subscribing to an event but not emitting it.
@@ -27,7 +27,7 @@ A tuple representing the types of the event arguments.
 
 > `readonly` **listenerCount**: `number`
 
-Defined in: types.ts:50
+Defined in: types.ts:57
 
 ## Methods
 
@@ -35,7 +35,7 @@ Defined in: types.ts:50
 
 > **clear**(): `void`
 
-Defined in: types.ts:60
+Defined in: types.ts:67
 
 #### Returns
 
@@ -45,9 +45,9 @@ Defined in: types.ts:60
 
 ### subscribe()
 
-> **subscribe**(`listener`): () => `void`
+> **subscribe**(`listener`): [`Unsubscribable`](../interfaces/Unsubscribable.md)
 
-Defined in: types.ts:56
+Defined in: types.ts:63
 
 Subscribes a listener to this event.
 
@@ -59,13 +59,9 @@ Subscribes a listener to this event.
 
 #### Returns
 
+[`Unsubscribable`](../interfaces/Unsubscribable.md)
+
 A function to unsubscribe the listener.
-
-> (): `void`
-
-##### Returns
-
-`void`
 
 ***
 
@@ -73,7 +69,7 @@ A function to unsubscribe the listener.
 
 > **unsubscribe**(`listener`): `boolean`
 
-Defined in: types.ts:58
+Defined in: types.ts:65
 
 #### Parameters
 

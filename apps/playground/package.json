@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@axi-engine/utils": "0.2.8",
-    "@axi-engine/fields": "0.3.11",
+    "@axi-engine/utils": "0.2.9",
+    "@axi-engine/fields": "0.3.12",
     "@axi-engine/tasks": "0.1.2"
 
   }

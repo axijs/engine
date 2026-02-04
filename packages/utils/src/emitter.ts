@@ -1,5 +1,6 @@
 import {Subscribable} from './types';
 import {isUndefined} from './guards';
+import {Subscription} from './subscription';
 
 /**
  * A minimal, type-safe event emitter for a single event.
@@ -18,11 +19,24 @@ export class Emitter<T extends any[]> implements Subscribable<T>{
 
   /**
    * Subscribes a listener to this event.
-   * @returns A function to unsubscribe the listener.
+   * @returns A Subscription object to manage the unsubscription.
    */
-  subscribe(listener: (...args: T) => void): () => void {
+  subscribe(listener: (...args: T) => void): Subscription {
     this.listeners.add(listener);
-    return () => this.listeners.delete(listener);
+    return new Subscription(() => this.unsubscribe(listener));
+  }
+
+  /**
+   * Subscribes a listener that triggers only once and then automatically unsubscribes.
+   * @param listener The callback function to execute once.
+   * @returns A Subscription object (can be used to cancel before the event fires).
+   */
+  once(listener: (...args: T) => void): Subscription {
+    const wrapper = (...args: T) => {
+      this.unsubscribe(wrapper);
+      listener(...args);
+    };
+    return this.subscribe(wrapper);
   }
 
   /**
@@ -55,6 +69,9 @@ export class Emitter<T extends any[]> implements Subscribable<T>{
 export class StateEmitter<T extends any[]> extends Emitter<T> {
   private _lastValue: T | undefined;
 
+  /**
+   * @param initialValue Optional initial value to set.
+   */
   constructor(initialValue?: T) {
     super();
     this._lastValue = initialValue ?? undefined;
@@ -67,12 +84,21 @@ export class StateEmitter<T extends any[]> extends Emitter<T> {
     return this._lastValue;
   }
 
+  /**
+   * Updates the state and notifies all listeners.
+   * @param args The new value(s).
+   */
   override emit(...args: T): void {
     this._lastValue = args;
     super.emit(...args);
   }
 
-  override subscribe(listener: (...args: T) => void): () => void {
+  /**
+   * Subscribes to the event. If a value exists, the listener is called immediately.
+   * @param listener The callback function.
+   * @returns A Subscription object.
+   */
+  override subscribe(listener: (...args: T) => void): Subscription {
     const unsubscribe = super.subscribe(listener);
 
     if (!isUndefined(this._lastValue)) {

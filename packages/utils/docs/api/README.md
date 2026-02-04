@@ -9,6 +9,7 @@
 - [Emitter](classes/Emitter.md)
 - [Registry](classes/Registry.md)
 - [StateEmitter](classes/StateEmitter.md)
+- [Subscription](classes/Subscription.md)
 
 ## Interfaces
 
@@ -16,6 +17,7 @@
 - [DataSink](interfaces/DataSink.md)
 - [DataSource](interfaces/DataSource.md)
 - [DataStorage](interfaces/DataStorage.md)
+- [Unsubscribable](interfaces/Unsubscribable.md)
 
 ## Type Aliases
 

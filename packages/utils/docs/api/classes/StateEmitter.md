@@ -6,7 +6,7 @@
 
 # Class: StateEmitter\<T\>
 
-Defined in: emitter.ts:55
+Defined in: emitter.ts:69
 
 An Emitter that stores the last emitted value.
 New subscribers immediately receive the last value upon subscription.
@@ -27,13 +27,15 @@ New subscribers immediately receive the last value upon subscription.
 
 > **new StateEmitter**\<`T`\>(`initialValue?`): `StateEmitter`\<`T`\>
 
-Defined in: emitter.ts:58
+Defined in: emitter.ts:75
 
 #### Parameters
 
 ##### initialValue?
 
 `T`
+
+Optional initial value to set.
 
 #### Returns
 
@@ -51,7 +53,7 @@ Defined in: emitter.ts:58
 
 > **get** **listenerCount**(): `number`
 
-Defined in: emitter.ts:15
+Defined in: emitter.ts:16
 
 Returns the number of listeners.
 
@@ -71,7 +73,7 @@ Returns the number of listeners.
 
 > **get** **value**(): `T` \| `undefined`
 
-Defined in: emitter.ts:66
+Defined in: emitter.ts:83
 
 Gets the current value synchronously without subscribing.
 
@@ -85,7 +87,7 @@ Gets the current value synchronously without subscribing.
 
 > **clear**(): `void`
 
-Defined in: emitter.ts:85
+Defined in: emitter.ts:111
 
 Clears all listeners.
 
@@ -103,15 +105,17 @@ Clears all listeners.
 
 > **emit**(...`args`): `void`
 
-Defined in: emitter.ts:70
+Defined in: emitter.ts:91
 
-Dispatches the event to all subscribed listeners.
+Updates the state and notifies all listeners.
 
 #### Parameters
 
 ##### args
 
 ...`T`
+
+The new value(s).
 
 #### Returns
 
@@ -123,13 +127,13 @@ Dispatches the event to all subscribed listeners.
 
 ***
 
-### subscribe()
+### once()
 
-> **subscribe**(`listener`): () => `void`
+> **once**(`listener`): [`Subscription`](Subscription.md)
 
-Defined in: emitter.ts:75
+Defined in: emitter.ts:34
 
-Subscribes a listener to this event.
+Subscribes a listener that triggers only once and then automatically unsubscribes.
 
 #### Parameters
 
@@ -137,15 +141,41 @@ Subscribes a listener to this event.
 
 (...`args`) => `void`
 
+The callback function to execute once.
+
 #### Returns
 
-A function to unsubscribe the listener.
+[`Subscription`](Subscription.md)
 
-> (): `void`
+A Subscription object (can be used to cancel before the event fires).
 
-##### Returns
+#### Inherited from
 
-`void`
+[`Emitter`](Emitter.md).[`once`](Emitter.md#once)
+
+***
+
+### subscribe()
+
+> **subscribe**(`listener`): [`Subscription`](Subscription.md)
+
+Defined in: emitter.ts:101
+
+Subscribes to the event. If a value exists, the listener is called immediately.
+
+#### Parameters
+
+##### listener
+
+(...`args`) => `void`
+
+The callback function.
+
+#### Returns
+
+[`Subscription`](Subscription.md)
+
+A Subscription object.
 
 #### Overrides
 
@@ -157,7 +187,7 @@ A function to unsubscribe the listener.
 
 > **unsubscribe**(`listener`): `boolean`
 
-Defined in: emitter.ts:32
+Defined in: emitter.ts:46
 
 Manually unsubscribe by listener
 
