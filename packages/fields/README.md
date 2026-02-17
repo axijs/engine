@@ -5,8 +5,6 @@
 
 ## Description
 
-Description
-
 This package offers a compact yet robust solution for state management. 
 Designed with minimal dependencies, it serves as a core component of the axi-engine 
 but is also powerful enough to be used as a standalone library in any TypeScript project.

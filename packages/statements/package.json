@@ -1,0 +1,44 @@
+{
+  "name": "@axi-engine/statements",
+  "version": "0.2.0",
+  "description": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/statements"
+  },
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev",
+    "statements"
+  ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
+    "test": "echo 'No tests yet for @axi-engine/statements'"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@axi-engine/utils": "^0.2.9",
+    "@axi-engine/expressions": "^0.2.3"
+
+  },
+  "peerDependencies": {
+    "@axi-engine/utils": "^0.2.9",
+    "@axi-engine/expressions": "^0.2.3"
+  }
+}
