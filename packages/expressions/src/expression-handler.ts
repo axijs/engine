@@ -1,5 +1,5 @@
 import {Expression, ExpressionName} from './expressions';
-import {ExpressionEvaluatorContext} from './expression-evaluator';
+import {ExpressionEvaluatorContext} from './expression-evaluator-context';
 
 /**
  * Defines the contract for a class that can evaluate a specific type of expression.

@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {ExpressionName, InExpression} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 import {resolveOperand, resolveOperandAsScalar} from '../resolve-operand';
 import {isScalar, ScalarType, throwIf} from '@axi-engine/utils';
 import {Operand} from '../types';
