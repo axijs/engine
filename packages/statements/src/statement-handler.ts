@@ -1,4 +1,3 @@
-import {StatementResult} from './statement-result';
 import {Statement, StatementName} from './statements';
 import {StatementResolverContext} from './statement-resolver-context';
 
@@ -12,5 +11,5 @@ export interface StatementHandler<
   process(
     statement: T,
     context: C
-  ): Promise<StatementResult | void>;
+  ): Promise<void>;
 }
