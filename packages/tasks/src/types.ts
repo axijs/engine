@@ -50,3 +50,12 @@ export interface CancellableTask<T = void> extends Cancelable {
 export interface AsyncTask<T = void> extends CancellableTask<T>, CompletableTask<T> {
 }
 
+/**
+ * Interface for controlling the state of a task externally.
+ * Allows resolving or rejecting the associated promise.
+ * @template T The type of the value that the promise resolves with.
+ */
+export interface TaskController<T = void> {
+  resolve: (value: T) => void;
+  reject: (reason?: any) => void;
+}

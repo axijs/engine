@@ -1,4 +1,4 @@
-import {AsyncTask, CompletableTask} from './types';
+import {AsyncTask, CompletableTask, TaskController} from './types';
 
 
 /**
@@ -31,10 +31,17 @@ export const Tasks = {
    * @description Creates a task that runs multiple tasks concurrently.
    * The parent task completes when all child tasks have completed.
    * Calling `complete` on the parent task will call `complete` on all its children.
+   *
+   * @todo
+   * Improve typing to return an array of results from child tasks instead of void.
+   *
+   *
    * @param {CompletableTask<any>[]} tasks An array of tasks to run in parallel.
    * @returns {CompletableTask<void>} A new task that manages the parallel execution.
+   *
+   *
    */
-  parallel(tasks: CompletableTask<any>[]): CompletableTask {
+  parallel<T extends CompletableTask<any>[]>(tasks: [...T]): CompletableTask {
     return {
       promise: (async () => {
         await Promise.all(tasks.map(task => task.promise));
@@ -170,10 +177,10 @@ export const Tasks = {
    * @description Creates a task with externally accessible `resolve` and `reject` functions.
    * This is useful for tasks that are completed by external events (e.g., user input or a server response).
    * @template T The type of the value the promise will resolve with.
-   * @returns {{ task: CompletableTask<T>, controller: { resolve: (value: T) => void, reject: (reason?: any) => void } }}
+   * @returns {{ task: CompletableTask<T>, controller: TaskController<T>}}
    * An object containing the task and a controller to manage its state.
    */
-  controllable<T>(): { task: CompletableTask<T>, controller: { resolve: (value: T) => void, reject: (reason?: any) => void } } {
+  controllable<T>(defaultValueOnComplete?: T): { task: CompletableTask<T>, controller: TaskController<T> } {
     let resolver: (value: T) => void;
     let rejecter: (reason?: any) => void;
 
@@ -183,7 +190,7 @@ export const Tasks = {
     });
 
     const complete = () => {
-      resolver(undefined as T)
+      resolver(defaultValueOnComplete as T)
     };
 
     return {
