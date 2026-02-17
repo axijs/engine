@@ -13,6 +13,9 @@
       "@axi-engine/fields": [
         "packages/fields/src"
       ],
+      "@axi-engine/statements": [
+        "packages/statements/src"
+      ],
       "@axi-engine/states": [
         "packages/states/src"
       ],
@@ -45,6 +48,9 @@
     },
     {
       "path": "packages/fields"
+    },
+    {
+      "path": "packages/statements"
     },
     {
       "path": "packages/states"

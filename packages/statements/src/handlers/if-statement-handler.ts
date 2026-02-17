@@ -8,14 +8,14 @@ export class IfStatementHandler implements StatementHandler<IfStatement> {
   name: StatementName = 'if';
 
   async process(
-    instruction: IfStatement,
+    statement: IfStatement,
     context: StatementResolverContext,
   ) {
-    const condition = await context.expressions().resolve(instruction.if.condition, context.storage());
+    const condition = await context.expressions().resolve(statement.if.condition, context.storage());
     if (condition) {
-      return context.statements().execute(instruction.if.then, context);
-    } else if (!isNullOrUndefined(instruction.if.else)) {
-      return context.statements().execute(instruction.if.else, context);
+      return context.statements().execute(statement.if.then, context);
+    } else if (!isNullOrUndefined(statement.if.else)) {
+      return context.statements().execute(statement.if.else, context);
     }
   }
 }

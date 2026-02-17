@@ -4,7 +4,7 @@ import {CreateVariableStatement, StatementName} from '../statements';
 import {StatementResolverContext} from '../statement-resolver-context';
 
 
-export class CreateStatementHandler implements StatementHandler<CreateVariableStatement> {
+export class CreateVariableStatementHandler implements StatementHandler<CreateVariableStatement> {
   name: StatementName = 'create';
 
   async process(

@@ -1,34 +1,75 @@
 import {StatementHandler} from './statement-handler';
 import {StatementResolver} from './statement-resolver';
 import {
-  CreateStatementHandler,
+  CreateVariableStatementHandler,
   DeleteVariableStatementHandler,
   IfStatementHandler,
-  SetVariableStatementHandler,
+  SetVariableStatementHandler, SwitchStatementHandler,
   UpSetVariableStatementHandler
 } from './handlers';
 import {LogStatementHandler} from './handlers/log-statement-handler';
 
 /**
- * @param {StatementHandler[]} [additionalHandlers]
- * @return StatementResolver
+ * Returns a new array of standard statement handlers.
  */
-export function createStatementResolver(additionalHandlers?: StatementHandler[]) {
-  const resolver = new StatementResolver();
-
-  const handlers = [
+export function createDefaultStatementHandlers(): StatementHandler[] {
+  return [
     new LogStatementHandler(),
-    new CreateStatementHandler(),
+    new CreateVariableStatementHandler(),
     new DeleteVariableStatementHandler(),
     new IfStatementHandler(),
     new SetVariableStatementHandler(),
-    new UpSetVariableStatementHandler()
+    new UpSetVariableStatementHandler(),
+    new SwitchStatementHandler()
   ];
-  if (additionalHandlers) {
-    handlers.push(...additionalHandlers);
+}
+
+
+/**
+ * Builder for configuring and creating a StatementResolver instance.
+ */
+export class StatementResolverBuilder {
+  private handlers: StatementHandler[] = [];
+
+  /**
+   * Adds the standard set of handlers (log, set, if, switch, etc.).
+   */
+  withDefaults(): this {
+    this.handlers.push(...createDefaultStatementHandlers());
+    return this;
   }
 
-  handlers.forEach(handler => resolver.register(handler));
+  /**
+   * Adds a specific handler.
+   */
+  add(handler: StatementHandler): this {
+    this.handlers.push(handler);
+    return this;
+  }
 
-  return resolver;
+  /**
+   * Adds multiple handlers at once.
+   */
+  addMany(handlers: StatementHandler[]): this {
+    this.handlers.push(...handlers);
+    return this;
+  }
+
+  /**
+   * Creates the resolver and registers all configured handlers.
+   */
+  build(): StatementResolver {
+    const resolver = new StatementResolver();
+    this.handlers.forEach(handler => resolver.register(handler));
+    return resolver;
+  }
+}
+
+
+/**
+ * Entry point to start configuring a statement resolver.
+ * @returns A new builder instance.
+ */
+export function configureStatements(): StatementResolverBuilder {
+  return new StatementResolverBuilder();
 }
