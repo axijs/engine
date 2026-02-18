@@ -46,7 +46,7 @@ Execution stops if any statement throws an error.
 
 ##### C
 
-`C` *extends* `InstructionResolverContext`
+`C` *extends* [`InstructionResolverContext`](../interfaces/InstructionResolverContext.md)
 
 #### Parameters
 

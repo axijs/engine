@@ -20,7 +20,7 @@ The specific instruction interface (e.g., LogInstruction).
 
 ### C
 
-`C` *extends* `InstructionResolverContext` = `InstructionResolverContext`
+`C` *extends* [`InstructionResolverContext`](InstructionResolverContext.md) = [`InstructionResolverContext`](InstructionResolverContext.md)
 
 The context type, defaults to standard instructionResolverContext.
 

@@ -1,5 +1,6 @@
 export * from './instructions'
 export * from './instruction-resolver'
+export * from './instruction-resolver-context'
 export * from './instruction-handler'
 
 export * from './errors'

@@ -6,7 +6,7 @@
 
 # Class: InstructionResolverBuilder
 
-Defined in: packages/instructions/src/setup.ts:54
+Defined in: packages/instructions/src/setup.ts:53
 
 A builder class for configuring and creating an `InstructionResolver` instance.
 Allows selecting specific groups of instructions or adding custom ones using a fluent API.
@@ -27,7 +27,7 @@ Allows selecting specific groups of instructions or adding custom ones using a f
 
 > **add**(`handler`): `this`
 
-Defined in: packages/instructions/src/setup.ts:98
+Defined in: packages/instructions/src/setup.ts:97
 
 Registers one or more custom instruction handlers.
 Useful for plugins or game-specific instructions.
@@ -38,7 +38,7 @@ Useful for plugins or game-specific instructions.
 
 A single handler instance or an array of handlers.
 
-[`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`Instruction`](../type-aliases/Instruction.md), `InstructionResolverContext`\> | [`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`Instruction`](../type-aliases/Instruction.md), `InstructionResolverContext`\>[]
+[`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`Instruction`](../type-aliases/Instruction.md), [`InstructionResolverContext`](../interfaces/InstructionResolverContext.md)\> | [`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`Instruction`](../type-aliases/Instruction.md), [`InstructionResolverContext`](../interfaces/InstructionResolverContext.md)\>[]
 
 #### Returns
 
@@ -48,15 +48,15 @@ A single handler instance or an array of handlers.
 
 ### build()
 
-> **build**(): [`InstructionResolver`](../interfaces/InstructionResolver.md)
+> **build**(): [`CoreInstructionResolver`](CoreInstructionResolver.md)
 
-Defined in: packages/instructions/src/setup.ts:111
+Defined in: packages/instructions/src/setup.ts:110
 
 Constructs the `CoreInstructionResolver` and registers all configured handlers.
 
 #### Returns
 
-[`InstructionResolver`](../interfaces/InstructionResolver.md)
+[`CoreInstructionResolver`](CoreInstructionResolver.md)
 
 A fully initialized resolver ready to execute instructions.
 
@@ -66,7 +66,7 @@ A fully initialized resolver ready to execute instructions.
 
 > **withData**(): `this`
 
-Defined in: packages/instructions/src/setup.ts:72
+Defined in: packages/instructions/src/setup.ts:71
 
 Adds only the data manipulation handlers.
 
@@ -80,7 +80,7 @@ Adds only the data manipulation handlers.
 
 > **withDefaults**(): `this`
 
-Defined in: packages/instructions/src/setup.ts:61
+Defined in: packages/instructions/src/setup.ts:60
 
 Adds the complete standard set of handlers (Data, Logical, and Util).
 Recommended for most use cases.
@@ -95,7 +95,7 @@ Recommended for most use cases.
 
 > **withLogic**(): `this`
 
-Defined in: packages/instructions/src/setup.ts:80
+Defined in: packages/instructions/src/setup.ts:79
 
 Adds only the logical control flow handlers.
 
@@ -109,7 +109,7 @@ Adds only the logical control flow handlers.
 
 > **withUtil**(): `this`
 
-Defined in: packages/instructions/src/setup.ts:88
+Defined in: packages/instructions/src/setup.ts:87
 
 Adds only the utility handlers.
 

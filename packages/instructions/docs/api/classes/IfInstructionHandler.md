@@ -56,7 +56,7 @@ The instruction data object.
 
 ##### context
 
-`InstructionResolverContext`
+[`InstructionResolverContext`](../interfaces/InstructionResolverContext.md)
 
 Services available during execution.
 

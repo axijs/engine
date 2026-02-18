@@ -24,6 +24,7 @@
 - [IfInstruction](interfaces/IfInstruction.md)
 - [InstructionHandler](interfaces/InstructionHandler.md)
 - [InstructionResolver](interfaces/InstructionResolver.md)
+- [InstructionResolverContext](interfaces/InstructionResolverContext.md)
 - [LogInstruction](interfaces/LogInstruction.md)
 - [RegisteredInstructions](interfaces/RegisteredInstructions.md)
 - [SetVariableInstruction](interfaces/SetVariableInstruction.md)

@@ -8,7 +8,7 @@
 
 > **configureInstructions**(): [`InstructionResolverBuilder`](../classes/InstructionResolverBuilder.md)
 
-Defined in: packages/instructions/src/setup.ts:122
+Defined in: packages/instructions/src/setup.ts:121
 
 Entry point to start configuring an instruction resolver.
 
