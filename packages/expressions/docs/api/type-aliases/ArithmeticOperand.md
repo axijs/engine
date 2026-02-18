@@ -8,7 +8,23 @@
 
 > **ArithmeticOperand** = `object`
 
-Defined in: types.ts:21
+Defined in: types.ts:33
+
+Represents an operand that is a mathematical calculation.
+The result of this calculation is used as the operand's value.
+
+## Example
+
+```ts
+// Represents the expression: player.hp + 10
+{
+  "arithmetic": {
+    "op": "+",
+    "left": { "path": "player.hp" },
+    "right": { "value": 10 }
+  }
+}
+```
 
 ## Properties
 
@@ -16,7 +32,7 @@ Defined in: types.ts:21
 
 > **arithmetic**: `object`
 
-Defined in: types.ts:22
+Defined in: types.ts:34
 
 #### left
 

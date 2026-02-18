@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {AndExpression, ExpressionName} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 
 export class AndExpressionHandler implements ExpressionHandler<AndExpression> {
   type: ExpressionName = 'and';

@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {ComparisonExpression, ExpressionName} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 import {resolveOperandAsScalar} from '../resolve-operand';
 
 export class ComparisonExpressionHandler implements ExpressionHandler<ComparisonExpression> {

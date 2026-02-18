@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {ExpressionName, OrExpression} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 
 export class OrExpressionHandler implements ExpressionHandler<OrExpression> {
   type: ExpressionName = 'or';

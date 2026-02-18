@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {ExpressionName, LiteralExpression} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 
 export class LiteralExpressionHandler implements ExpressionHandler<LiteralExpression> {
   type: ExpressionName = 'literal';

@@ -1,51 +1,72 @@
 import {ExpressionHandler} from './expression-handler';
-import {ExpressionEvaluator} from './expression-evaluator';
 import {
   AndExpressionHandler,
   ChanceExpressionHandler,
   ComparisonExpressionHandler,
   ExistsExpressionHandler, InExpressionHandler, LiteralExpressionHandler, NotExpressionHandler, OrExpressionHandler
 } from './handlers';
-
+import {CoreExpressionEvaluator} from './core-expression-evaluator';
 
 /**
- * A factory function that creates and initializes an `ExpressionEvaluator` instance.
- *
- * This is the recommended way to set up the evaluator, as it comes pre-configured
- * with handlers for all core expression types (logical, comparison, chance, etc.).
- * It also provides a simple way to extend the evaluator with custom logic by passing
- * additional handlers.
- *
- * @param {ExpressionHandler[]} [additionalHandlers] - An optional array of custom
- *   `ExpressionHandler` instances to register in addition to the core ones. This allows for
- *   extending the expression language with new capabilities.
- * @returns {ExpressionEvaluator} A fully configured `ExpressionEvaluator` instance,
- *   ready for resolving expressions.
- *
- * @example
- * // Basic setup with only core handlers
- * const coreEvaluator = createExpressionEvaluator();
- * const result = await coreEvaluator.resolve(someExpression, dataSource);
- *
- * @example
- * // Setup with a custom handler for a new expression type
- * const customHandlers = [new MyCustomExpressionHandler()];
- * const extendedEvaluator = createExpressionEvaluator(customHandlers);
- * const customResult = await extendedEvaluator.resolve(myCustomExpression, dataSource);
+* Creates an array containing instances of all standard expression handlers.
+* Includes logic (AND, OR, NOT), comparison, existence checks, and literals.
+*/
+function createDefaultExpressionHandlers() {
+  return [
+    new AndExpressionHandler(),
+    new ChanceExpressionHandler(),
+    new ComparisonExpressionHandler(),
+    new ExistsExpressionHandler(),
+    new InExpressionHandler(),
+    new LiteralExpressionHandler(),
+    new NotExpressionHandler(),
+    new OrExpressionHandler(),
+  ]
+}
+
+/**
+ * A builder class for configuring and creating a `CoreExpressionEvaluator`.
+ * Allows enabling standard handlers or registering custom ones via a fluent API.
  */
-export function createExpressionEvaluator(additionalHandlers?: ExpressionHandler[]): ExpressionEvaluator {
-  const evaluator = new ExpressionEvaluator();
+export class ExpressionEvaluatorBuilder {
+  private handlers: ExpressionHandler[] = [];
 
-  evaluator.register(new AndExpressionHandler());
-  evaluator.register(new ChanceExpressionHandler());
-  evaluator.register(new ComparisonExpressionHandler());
-  evaluator.register(new ExistsExpressionHandler());
-  evaluator.register(new InExpressionHandler());
-  evaluator.register(new LiteralExpressionHandler());
-  evaluator.register(new NotExpressionHandler());
-  evaluator.register(new OrExpressionHandler());
+  /**
+   * Adds the complete set of standard expression handlers to the configuration.
+   * This is the recommended starting point for most applications.
+   */
+  withDefaults() {
+    this.handlers.push(...createDefaultExpressionHandlers());
+    return this;
+  }
 
-  additionalHandlers?.forEach(handler => evaluator.register(handler));
+  /**
+   * Registers one or more custom expression handlers.
+   * @param handler A single handler instance or an array of handlers.
+   */
+  add(handler: ExpressionHandler | ExpressionHandler[]): this {
+    if (!Array.isArray(handler)) {
+      this.handlers.push(handler);
+    } else {
+      this.handlers.push(...handler);
+    }
+    return this;
+  }
 
-  return evaluator;
+  /**
+   * @return CoreExpressionEvaluator
+   */
+  build() {
+    const evaluator = new CoreExpressionEvaluator();
+    this.handlers.forEach(handler => evaluator.register(handler));
+    return evaluator;
+  }
+}
+
+/**
+ * Entry point to start configuring the expression evaluator.
+ * @returns A new builder instance.
+ */
+export function configureExpressions(): ExpressionEvaluatorBuilder {
+  return new ExpressionEvaluatorBuilder();
 }

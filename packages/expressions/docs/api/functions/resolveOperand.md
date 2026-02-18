@@ -8,7 +8,7 @@
 
 > **resolveOperand**(`op`, `source`): `unknown`
 
-Defined in: resolve-operand.ts:20
+Defined in: resolve-operand.ts:21
 
 Recursively resolves an Operand into its final scalar value.
 

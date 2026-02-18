@@ -8,7 +8,10 @@
 
 > **isArithmeticOperand**(`val`): `val is ArithmeticOperand`
 
-Defined in: guards.ts:12
+Defined in: guards.ts:33
+
+Type guard that checks if a value is an `ArithmeticOperand`.
+An `ArithmeticOperand` represents a mathematical calculation.
 
 ## Parameters
 
@@ -16,6 +19,10 @@ Defined in: guards.ts:12
 
 `unknown`
 
+The value to check.
+
 ## Returns
 
 `val is ArithmeticOperand`
+
+`true` if the value is an `ArithmeticOperand`, otherwise `false`.

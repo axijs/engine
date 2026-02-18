@@ -8,4 +8,6 @@
 
 > **ComparisonOperationType** = `"<"` \| `">"` \| `"<="` \| `">="` \| `"=="` \| `"!="`
 
-Defined in: types.ts:35
+Defined in: types.ts:50
+
+Defines the set of allowed operators for a `ComparisonExpression`.

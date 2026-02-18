@@ -1,6 +1,6 @@
 import {ExpressionHandler} from '../expression-handler';
 import {ExpressionName, NotExpression} from '../expressions';
-import {ExpressionEvaluatorContext} from '../expression-evaluator';
+import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 
 export class NotExpressionHandler implements ExpressionHandler<NotExpression> {
   type: ExpressionName = 'not';

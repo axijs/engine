@@ -8,7 +8,10 @@
 
 > **isReferenceOperand**(`val`): `val is ReferenceOperand`
 
-Defined in: guards.ts:8
+Defined in: guards.ts:22
+
+Type guard that checks if a value is a `ReferenceOperand`.
+A `ReferenceOperand` represents a reference to a value via a path.
 
 ## Parameters
 
@@ -16,6 +19,10 @@ Defined in: guards.ts:8
 
 `unknown`
 
+The value to check.
+
 ## Returns
 
 `val is ReferenceOperand`
+
+`true` if the value is a `ReferenceOperand`, otherwise `false`.

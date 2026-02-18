@@ -9,8 +9,9 @@
 - [AndExpressionHandler](classes/AndExpressionHandler.md)
 - [ChanceExpressionHandler](classes/ChanceExpressionHandler.md)
 - [ComparisonExpressionHandler](classes/ComparisonExpressionHandler.md)
+- [CoreExpressionEvaluator](classes/CoreExpressionEvaluator.md)
 - [ExistsExpressionHandler](classes/ExistsExpressionHandler.md)
-- [ExpressionEvaluator](classes/ExpressionEvaluator.md)
+- [ExpressionEvaluatorBuilder](classes/ExpressionEvaluatorBuilder.md)
 - [InExpressionHandler](classes/InExpressionHandler.md)
 - [LiteralExpressionHandler](classes/LiteralExpressionHandler.md)
 - [NotExpressionHandler](classes/NotExpressionHandler.md)
@@ -23,6 +24,7 @@
 - [ComparisonExpression](interfaces/ComparisonExpression.md)
 - [ExistsExpression](interfaces/ExistsExpression.md)
 - [ExpressionDefinitions](interfaces/ExpressionDefinitions.md)
+- [ExpressionEvaluator](interfaces/ExpressionEvaluator.md)
 - [ExpressionEvaluatorContext](interfaces/ExpressionEvaluatorContext.md)
 - [ExpressionHandler](interfaces/ExpressionHandler.md)
 - [InExpression](interfaces/InExpression.md)
@@ -43,10 +45,11 @@
 
 ## Functions
 
-- [createExpressionEvaluator](functions/createExpressionEvaluator.md)
+- [configureExpressions](functions/configureExpressions.md)
 - [isArithmeticOperand](functions/isArithmeticOperand.md)
 - [isOperand](functions/isOperand.md)
 - [isReferenceOperand](functions/isReferenceOperand.md)
 - [isValueOperand](functions/isValueOperand.md)
+- [resolveMath](functions/resolveMath.md)
 - [resolveOperand](functions/resolveOperand.md)
 - [resolveOperandAsScalar](functions/resolveOperandAsScalar.md)

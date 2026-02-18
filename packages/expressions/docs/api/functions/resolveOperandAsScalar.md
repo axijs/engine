@@ -8,7 +8,7 @@
 
 > **resolveOperandAsScalar**(`op`, `source`): `ScalarType`
 
-Defined in: resolve-operand.ts:62
+Defined in: resolve-operand.ts:50
 
 Resolves an operand and asserts that the result is a `ScalarType`.
 

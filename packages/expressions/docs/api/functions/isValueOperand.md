@@ -8,7 +8,10 @@
 
 > **isValueOperand**(`val`): `val is ValueOperand`
 
-Defined in: guards.ts:4
+Defined in: guards.ts:11
+
+Type guard that checks if a value is a `ValueOperand`.
+A `ValueOperand` represents a direct, literal value.
 
 ## Parameters
 
@@ -16,6 +19,10 @@ Defined in: guards.ts:4
 
 `unknown`
 
+The value to check.
+
 ## Returns
 
 `val is ValueOperand`
+
+`true` if the value is a `ValueOperand`, otherwise `false`.
