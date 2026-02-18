@@ -1,29 +1,13 @@
 import {describe, it, expect} from 'vitest';
 import {resolveOperand, resolveOperandAsScalar} from './resolve-operand';
-import {DataSource, ensurePathString, PathType} from '@axi-engine/utils';
 import {Operand} from './types';
+import {createMockDataSource} from './test-utils';
 
 
-/**
- * simple mocked data source
- */
-const mockDataSource: DataSource = {
-  get: (path: PathType) => {
-    const data = new Map<string, any>([
-      ['player/hp', 100],
-      ['player/name', 'Alex'],
-      ['player/isAlive', true],
-      ['config/difficulty', 2],
-      ['inventory/etc', {bottles: 10, garbage: 20}]
-    ]);
-    return data.get(ensurePathString(path));
-  },
-  has: (path: PathType) => {
-    return ensurePathString(path) === 'player/hp';
-  }
-};
 
 describe('resolveOperand', () => {
+  const mockDataSource = createMockDataSource();
+
   it('should return the value directly from a ValueOperand', () => {
     const operand: Operand = {value: 'hello world'};
     const result = resolveOperand(operand, mockDataSource);

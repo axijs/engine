@@ -7,7 +7,10 @@ import {
 } from './handlers';
 import {CoreExpressionEvaluator} from './core-expression-evaluator';
 
-
+/**
+* Creates an array containing instances of all standard expression handlers.
+* Includes logic (AND, OR, NOT), comparison, existence checks, and literals.
+*/
 function createDefaultExpressionHandlers() {
   return [
     new AndExpressionHandler(),
@@ -21,14 +24,26 @@ function createDefaultExpressionHandlers() {
   ]
 }
 
+/**
+ * A builder class for configuring and creating a `CoreExpressionEvaluator`.
+ * Allows enabling standard handlers or registering custom ones via a fluent API.
+ */
 export class ExpressionEvaluatorBuilder {
   private handlers: ExpressionHandler[] = [];
 
+  /**
+   * Adds the complete set of standard expression handlers to the configuration.
+   * This is the recommended starting point for most applications.
+   */
   withDefaults() {
     this.handlers.push(...createDefaultExpressionHandlers());
     return this;
   }
 
+  /**
+   * Registers one or more custom expression handlers.
+   * @param handler A single handler instance or an array of handlers.
+   */
   add(handler: ExpressionHandler | ExpressionHandler[]): this {
     if (!Array.isArray(handler)) {
       this.handlers.push(handler);
