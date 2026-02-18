@@ -36,6 +36,7 @@
     "build:configs": "npm run build --workspace=@axi-engine/configs",
     "build:expressions": "npm run build --workspace=@axi-engine/expressions",
     "build:fields": "npm run build --workspace=@axi-engine/fields",
+    "build:instructions": "npm run build --workspace=@axi-engine/instructions",
     "build:states": "npm run build --workspace=@axi-engine/states",
     "build:tasks": "npm run build --workspace=@axi-engine/tasks",
     "build:tasks-anime": "npm run build --workspace=@axi-engine/tasks-anime",
@@ -44,6 +45,7 @@
     "publish:configs": "npm publish --workspace=@axi-engine/configs --access public",
     "publish:expressions": "npm publish --workspace=@axi-engine/expressions --access public",
     "publish:fields": "npm publish --workspace=@axi-engine/fields --access public",
+    "publish:instructions": "npm publish --workspace=@axi-engine/instructions --access public",
     "publish:states": "npm publish --workspace=@axi-engine/states --access public",
     "publish:tasks": "npm publish --workspace=@axi-engine/tasks --access public",
     "publish:tasks-anime": "npm publish --workspace=@axi-engine/tasks-anime --access public",
@@ -52,6 +54,7 @@
     "release:configs": "npm run build:configs && npm run publish:configs",
     "release:expressions": "npm run build:expressions && npm run publish:expressions",
     "release:fields": "npm run build:fields && npm run publish:fields",
+    "release:instructions": "npm run build:instructions && npm run publish:instructions",
     "release:states": "npm run build:states && npm run publish:states",
     "release:tasks": "npm run build:tasks && npm run publish:tasks",
     "release:tasks-anime": "npm run build:tasks-anime && npm run publish:tasks-anime",
@@ -59,10 +62,10 @@
     "// --- DOCUMENTATION ---": "",
     "docs:expressions": "npm run docs --workspace=@axi-engine/expressions",
     "docs:fields": "npm run docs --workspace=@axi-engine/fields",
+    "docs:instructions": "npm run docs --workspace=@axi-engine/instructions",
     "docs:tasks": "npm run docs --workspace=@axi-engine/tasks",
     "docs:utils": "npm run docs --workspace=@axi-engine/utils",
     "// --- ETC ---": "",
-    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields && npm run build:expressions"
-
+    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:fields && npm run build:expressions && npm run build:instructions"
   }
 }

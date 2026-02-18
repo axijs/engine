@@ -1,6 +1,0 @@
-export * from './create-variable-statement-handler'
-export * from './delete-variable-statement-handler'
-export * from './if-statement-handler'
-export * from './set-variable-statement-handler'
-export * from './switch-statement-handler'
-export * from './upset-variable-statement-handler'

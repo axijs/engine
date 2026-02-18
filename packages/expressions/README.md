@@ -25,7 +25,7 @@ npm install @axi-engine/expressions
 - **`DataSource`**: A simple interface (`{ get(path), has(path) }`) that provides the data against which expressions are evaluated. This can be your game's state manager, a local scope, or any other data source.
 - **`ExpressionEvaluator`**: The main class that takes an `Expression` and a `DataSource` and resolves them to a boolean result.
 
-## Basic Usage
+## Usage
 
 Here's how to set up the evaluator and resolve a simple expression.
 
@@ -34,8 +34,8 @@ import { createExpressionEvaluator } from '@axi-engine/expressions';
 import type { Expression } from '@axi-engine/expressions';
 import type { DataSource } from '@axi-engine/utils';
 
-// 1. Create the evaluator (it comes with all core handlers pre-registered)
-const evaluator = createExpressionEvaluator();
+// 1. Use the builder to create an CoreExpressionEvaluator.
+const evaluator = configureExpressions().withDefaults().build();
 
 // 2. Define a data source that provides the state
 const myGameDataSource: DataSource = {
