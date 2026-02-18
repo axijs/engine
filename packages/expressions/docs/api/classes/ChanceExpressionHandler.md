@@ -36,6 +36,9 @@ a random number roll.
 
 Defined in: handlers/chance-expression-handler.ts:15
 
+The unique key for the expression type this handler processes.
+This must match one of the keys in the `ExpressionDefinitions` interface.
+
 #### Implementation of
 
 [`ExpressionHandler`](../interfaces/ExpressionHandler.md).[`type`](../interfaces/ExpressionHandler.md#type)

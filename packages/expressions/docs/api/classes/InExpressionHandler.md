@@ -36,6 +36,9 @@ resolved from a data source via an operand.
 
 Defined in: handlers/in-expression-handler.ts:17
 
+The unique key for the expression type this handler processes.
+This must match one of the keys in the `ExpressionDefinitions` interface.
+
 #### Implementation of
 
 [`ExpressionHandler`](../interfaces/ExpressionHandler.md).[`type`](../interfaces/ExpressionHandler.md#type)

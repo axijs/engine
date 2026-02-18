@@ -8,4 +8,6 @@
 
 > **MathOperationType** = `"+"` \| `"-"` \| `"*"` \| `"/"`
 
-Defined in: types.ts:37
+Defined in: types.ts:55
+
+Defines the set of allowed operators for an `ArithmeticOperand`.
