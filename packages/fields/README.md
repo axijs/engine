@@ -3,6 +3,12 @@
 [![NPM version](https://img.shields.io/npm/v/@axi-engine/fields.svg)](https://www.npmjs.com/package/@axi-engine/fields)
 
 
+## ⚠️ DEPRECATED
+
+**This package has been renamed.**
+Please use [@axi-engine/data](https://www.npmjs.com/package/@axi-engine/data) instead.
+
+
 ## Description
 
 This package offers a compact yet robust solution for state management. 
