@@ -9,7 +9,7 @@ It allows you to define application logic using JSON-serializable objects,
 making it ideal for quests, dialogues, cutscenes, and AI behaviors.
 
 It works in tandem with `@axi-engine/expressions` for logic evaluation.
-It relies on core interfaces from `@axi-engine/utils` and pairs perfectly with `@axi-engine/fields` for concrete data storage implementations.
+It relies on core interfaces from `@axi-engine/utils` and pairs perfectly with `@axi-engine/data` for concrete data storage implementations.
 
 ## Installation
 
@@ -45,7 +45,7 @@ To execute instructions, you need a context that provides access to your Data St
 
 ```TypeScript
 const context = {
-  storage: () => myDataStorage,       // Implementation of DataStorage (e.g., from @axi-engine/fields)
+  storage: () => myDataStorage,       // Implementation of DataStorage (e.g., from @axi-engine/data)
   expressions: () => myEvaluator,     // Instance of ExpressionEvaluator
   instructions: () => resolver        // Self-reference for recursive instructions
 };

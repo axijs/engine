@@ -1,18 +1,18 @@
 {
-  "name": "@axi-engine/instructions",
-  "version": "0.2.2",
-  "description": "",
+  "name": "@axi-engine/data",
+  "version": "0.3.14",
+  "description": "A compact, reactive state management library based on a tree of observable fields.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/axijs/engine.git",
-    "directory": "packages/instructions"
+    "directory": "packages/data"
   },
   "keywords": [
     "axi-engine",
     "typescript",
     "gamedev",
-    "instructions"
+    "data"
   ],
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -26,20 +26,19 @@
   },
   "scripts": {
     "build": "tsup",
-    "prebuild": "npm test",
-    "test": "vitest run --root ../../ src/",
-    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
+    "test": "echo 'No tests yet for @axi-engine/data'"
   },
   "files": [
     "dist"
   ],
+  "dependencies": {
+    "dequal": "^2.0.3"
+  },
   "devDependencies": {
-    "@axi-engine/utils": "^0.2.9",
-    "@axi-engine/expressions": "^0.2.4"
-
+    "@axi-engine/utils": "^0.2.9"
   },
   "peerDependencies": {
-    "@axi-engine/utils": "^0.2.9",
-    "@axi-engine/expressions": "^0.2.4"
+    "@axi-engine/utils": "^0.2.9"
   }
 }

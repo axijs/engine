@@ -10,8 +10,8 @@
       "@axi-engine/expressions": [
         "packages/expressions/src"
       ],
-      "@axi-engine/fields": [
-        "packages/fields/src"
+      "@axi-engine/data": [
+        "packages/data/src"
       ],
       "@axi-engine/instructions": [
         "packages/instructions/src"
@@ -47,7 +47,7 @@
       "path": "packages/expressions"
     },
     {
-      "path": "packages/fields"
+      "path": "packages/data"
     },
     {
       "path": "packages/instructions"

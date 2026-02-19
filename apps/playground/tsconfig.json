@@ -21,7 +21,7 @@
     "baseUrl": ".",
     "paths": {
       "@axi-engine/utils": ["../../packages/utils/src"],
-      "@axi-engine/fields": ["../../packages/fields/src"],
+      "@axi-engine/data": ["../../packages/fields/src"],
       "@axi-engine/states": ["../../packages/states/src"],
       "@axi-engine/tasks": ["../../packages/tasks/src"]
     }
@@ -29,7 +29,7 @@
   "include": ["src"],
   "references": [
     { "path": "../../packages/utils" },
-    { "path": "../../packages/fields" },
+    { "path": "../../packages/data"},
     { "path": "../../packages/states" },
     { "path": "../../packages/tasks" }
   ]
