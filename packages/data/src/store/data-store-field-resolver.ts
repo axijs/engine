@@ -1,4 +1,4 @@
-import {CoreBooleanField, CoreNumericField, CoreStringField} from './field-definitions';
+import {CoreBooleanField, CoreNumericField, CoreStringField} from '../fields';
 import {isBoolean, isNumber, isString} from '@axi-engine/utils';
 
 export interface DataStoreFieldResolver {

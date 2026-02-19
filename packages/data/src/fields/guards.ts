@@ -1,7 +1,7 @@
 import {isNullOrUndefined} from '@axi-engine/utils';
 import {Fields} from './fields';
 import {FieldTree} from './field-tree';
-import {DataStore} from './data-store';
+import {DataStore} from '../store/data-store';
 
 /**
  * Type guard that checks if a value is an instance of the `Fields` class.

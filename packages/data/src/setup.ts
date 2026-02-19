@@ -1,14 +1,14 @@
-import {FieldRegistry} from './field-registry';
+import {FieldRegistry} from './fields/field-registry';
 import {
   ClampMaxPolicySerializerHandler,
   ClampMinPolicySerializerHandler,
   ClampPolicySerializerHandler, FieldHydrator, FieldsHydrator, FieldTreeHydrator,
   PolicySerializer
-} from './serializers';
-import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './policies';
-import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './field-definitions';
-import {CoreFields} from './core-fields';
-import {CoreTreeNodeFactory} from './core-field-tree-factory';
+} from './fields/serializers';
+import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './fields/policies';
+import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './fields/field-definitions';
+import {CoreFields} from './fields/core-fields';
+import {CoreTreeNodeFactory} from './fields/core-field-tree-factory';
 
 
 /**

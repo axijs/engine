@@ -1,7 +1,7 @@
 import {FieldTreeHydrator} from './field-tree-hydrator';
 import {CoreFields} from '../core-fields';
 import {DataStoreSnapshot} from './data-store-snapshot';
-import {DataStore} from '../data-store';
+import {DataStore} from '../../store/data-store';
 import {CoreFieldTree} from '../core-field-tree';
 import {isNullOrUndefined} from '@axi-engine/utils';
 

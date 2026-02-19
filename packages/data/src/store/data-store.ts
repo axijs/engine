@@ -6,18 +6,15 @@ import {
   NumericFieldResolver,
   StringFieldResolver
 } from './data-store-field-resolver';
-import {Field, FieldOptions} from './field';
-import {CoreFieldTree} from './core-field-tree';
+
 import {
   CoreBooleanField,
   CoreBooleanFieldOptions, CoreField,
   CoreNumericField,
-  CoreNumericFieldOptions, CoreStringField, CoreStringFieldOptions
-} from './field-definitions';
-import {CoreFields} from './core-fields';
-import {FieldTreeFactory} from './field-tree-factory';
-import {isFieldTree} from './guards';
-
+  CoreNumericFieldOptions, CoreStringField, CoreStringFieldOptions,
+  Field, FieldOptions, CoreFieldTree,
+  CoreFields, FieldTreeFactory, isFieldTree
+} from '../fields';
 
 export class DataStore implements Store {
   static readonly typeName = 'dataStore';
@@ -233,7 +230,7 @@ export class DataStore implements Store {
   /**
    * @internal Used for serialization
    */
-  getInternalVariables(): CoreFields  | undefined {
+  getInternalVariables(): CoreFields | undefined {
     return this._variables;
   }
 
@@ -260,7 +257,7 @@ export class DataStore implements Store {
 
   /**
    * @private
-  */
+   */
   private isPathToVariables(path: PathType) {
     return ensurePathArray(path).length === 1;
   }
@@ -274,7 +271,7 @@ export class DataStore implements Store {
       return {fields: this.variables, leafName: pathArr[0]};
     }
     const leafName = pathArr.pop()!;
-    return {fields: this.tree.getOrCreateFields(path), leafName };
+    return {fields: this.tree.getOrCreateFields(path), leafName};
   }
 
 }

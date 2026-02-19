@@ -1,13 +1,13 @@
 import {DataStorage, PathType} from '@axi-engine/utils';
-import {Field, FieldOptions} from './field';
 import {
+  Field, FieldOptions,
   CoreBooleanField,
   CoreBooleanFieldOptions, CoreField, CoreNumericField,
   CoreNumericFieldOptions, CoreStringField,
-  CoreStringFieldOptions
-} from './field-definitions';
-import {CoreFields} from './core-fields';
-import {CoreFieldTree} from './core-field-tree';
+  CoreStringFieldOptions,
+  CoreFields,
+  CoreFieldTree
+} from '../fields';
 
 export interface StoreCreateFieldOptions {
   /** Allows to explicitly specify the field type, overriding the automatic type detection. */

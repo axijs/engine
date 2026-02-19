@@ -1,5 +1,5 @@
 import {DataStoreSnapshot} from './data-store-snapshot';
-import {DataStore} from '../data-store';
+import {DataStore} from '../../store/data-store';
 import {FieldTreeSnapshotter} from './field-tree-snapshotter';
 
 /**
