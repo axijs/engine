@@ -1,5 +1,5 @@
 import {DataStoreSnapshot} from './data-store-snapshot';
-import {DataStore} from '../../store/data-store';
+import {CoreStore} from '../../store';
 import {FieldTreeSnapshotter} from './field-tree-snapshotter';
 
 /**
@@ -18,10 +18,10 @@ export class DataStoreSnapshotter {
    * It checks for the existence of internal variables and the internal tree,
    * serializing them only if they have been initialized (lazy serialization).
    *
-   * @param {DataStore} store - The store instance to serialize.
+   * @param {CoreStore} store - The store instance to serialize.
    * @returns {DataStoreSnapshot} The snapshot object.
    */
-  snapshot(store: DataStore): DataStoreSnapshot {
+  snapshot(store: CoreStore): DataStoreSnapshot {
     let snapshot: DataStoreSnapshot = {
       __type: store.typeName,
     }

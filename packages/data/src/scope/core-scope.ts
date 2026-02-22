@@ -1,15 +1,15 @@
 import {Scope} from './scope';
-import {DataStore} from '../store'
+import {CoreStore} from '../store'
 import {ensurePathArray, ensurePathString, PathType} from '@axi-engine/utils';
 
 export interface ScopeOptions {
-  data: DataStore,
+  data: CoreStore,
   name?: string,
   parent?: Scope
 }
 
 export class CoreScope implements Scope {
-  data: DataStore;
+  data: CoreStore;
   name?: string;
   parent?: Scope;
 

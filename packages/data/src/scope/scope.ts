@@ -1,6 +1,7 @@
 import {DataStorage, PathType} from '@axi-engine/utils';
 
 export interface Scope extends DataStorage {
+  readonly name?: string;
 
   /**
    *

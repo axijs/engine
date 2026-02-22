@@ -1,7 +1,7 @@
 import {FieldTreeHydrator} from './field-tree-hydrator';
 import {CoreFields} from '../core-fields';
 import {DataStoreSnapshot} from './data-store-snapshot';
-import {DataStore} from '../../store/data-store';
+import {CoreStore} from '../../store';
 import {CoreFieldTree} from '../core-field-tree';
 import {isNullOrUndefined} from '@axi-engine/utils';
 
@@ -24,9 +24,9 @@ export class DataStoreHydrator {
    * detached variables are injected if present.
    *
    * @param {DataStoreSnapshot} snapshot - The snapshot to hydrate.
-   * @returns {DataStore} A new, fully restored DataStore instance.
+   * @returns {CoreStore} A new, fully restored DataStore instance.
    */
-  hydrate(snapshot: DataStoreSnapshot): DataStore {
+  hydrate(snapshot: DataStoreSnapshot): CoreStore {
     const tree: CoreFieldTree | undefined = isNullOrUndefined(snapshot.tree) ?
       undefined :
       this.fieldsFieldTreeHydrator.hydrate(snapshot.tree);
@@ -35,7 +35,7 @@ export class DataStoreHydrator {
       undefined :
       this.fieldsFieldTreeHydrator.fieldsHydrator.hydrate(snapshot.variables);
 
-    return new DataStore(tree ? tree : this.fieldsFieldTreeHydrator.factory, variables);
+    return new CoreStore(tree ? tree : this.fieldsFieldTreeHydrator.factory, variables);
   }
 
   /**
@@ -48,10 +48,10 @@ export class DataStoreHydrator {
    * This allows for a granular update where only specific parts of the store (e.g., only variables)
    * are modified if the snapshot contains partial data, or a full reset if parts are missing.
    *
-   * @param {DataStore} store - The target DataStore to update.
+   * @param {CoreStore} store - The target DataStore to update.
    * @param {DataStoreSnapshot} snapshot - The source snapshot.
    */
-  patch(store: DataStore, snapshot: DataStoreSnapshot): void {
+  patch(store: CoreStore, snapshot: DataStoreSnapshot): void {
     if (!snapshot.variables) {
       store.getInternalVariables()?.destroy();
     } else {

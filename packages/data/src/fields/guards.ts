@@ -1,7 +1,7 @@
 import {isNullOrUndefined} from '@axi-engine/utils';
 import {Fields} from './fields';
 import {FieldTree} from './field-tree';
-import {DataStore} from '../store/data-store';
+import {CoreStore} from '../store';
 
 /**
  * Type guard that checks if a value is an instance of the `Fields` class.
@@ -44,6 +44,6 @@ export function isFieldTree(value: unknown): value is FieldTree<any> {
  *   }
  * }
  */
-export function isDataStore(value: unknown): value is DataStore {
-  return !isNullOrUndefined(value) && (value as DataStore).typeName === DataStore.typeName;
+export function isDataStore(value: unknown): value is CoreStore {
+  return !isNullOrUndefined(value) && (value as CoreStore).typeName === CoreStore.typeName;
 }

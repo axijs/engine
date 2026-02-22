@@ -2,10 +2,10 @@ import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-en
 import {Store, StoreCreateFieldOptions} from './store';
 import {
   BooleanFieldResolver,
-  DataStoreFieldResolver,
+  StoreFieldResolver,
   NumericFieldResolver,
   StringFieldResolver
-} from './data-store-field-resolver';
+} from './store-field-resolver';
 
 import {
   CoreBooleanField,
@@ -16,11 +16,11 @@ import {
   CoreFields, FieldTreeFactory, isFieldTree
 } from '../fields';
 
-export class DataStore implements Store {
-  static readonly typeName = 'dataStore';
-  readonly typeName = DataStore.typeName;
+export class CoreStore implements Store {
+  static readonly typeName = 'coreStore';
+  readonly typeName = CoreStore.typeName;
 
-  private readonly resolvers: DataStoreFieldResolver[] = [];
+  private readonly resolvers: StoreFieldResolver[] = [];
   private _variables: CoreFields | undefined;
   private _tree: CoreFieldTree | undefined;
   private readonly _factory: FieldTreeFactory<CoreFields>;
@@ -54,7 +54,7 @@ export class DataStore implements Store {
     this.registerResolver(new StringFieldResolver());
   }
 
-  registerResolver(resolver: DataStoreFieldResolver) {
+  registerResolver(resolver: StoreFieldResolver) {
     this.resolvers.unshift(resolver);
   }
 
@@ -192,10 +192,10 @@ export class DataStore implements Store {
    * as the current one but is completely detached from the existing data hierarchy.
    * This is useful for creating local scopes, stack frames, or temporary data contexts.
    *
-   * @returns {DataStore} A new, isolated DataStore instance.
+   * @returns {CoreStore} A new, isolated DataStore instance.
    */
-  createIsolated(): DataStore {
-    return new DataStore(this._factory);
+  createIsolated(): CoreStore {
+    return new CoreStore(this._factory);
   }
 
   /** code below -> implementation of the DataStore from utils */
