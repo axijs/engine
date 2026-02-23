@@ -25,106 +25,54 @@ export class CoreScope implements Scope {
     return new CoreScope({data: this.data.createIsolated(), parent: this, name: childName});
   }
 
-  get<T extends unknown>(name: PathType): T {
+  get<T = any>(name: PathType): T {
     try {
-      const path = ensurePathArray(name);
-      if (path.length === 1) {
-        return this.data.get(path) as T;
-      }
-      const [root, ...pathPart] = path;
-      console.log('test:', root, pathPart);
+      const pathAndScope = this.tracePath(name);
+      return pathAndScope.scope.data.getValue<T>(pathAndScope.path);
     } catch (e) {
       throw new ScopeError(`Can't get variable by path: ${ensurePathString(name)}`, {cause: e});
     }
-
-    return undefined as T;
-    // const {path, keys} = this.normalizeKeysAndPath(name);
-    // let res: unknown | undefined;
-    // for (let key of keys) {
-    //   res = this.layers.get(key)!.find(path);
-    //   if (!isUndefined(res)) {
-    //     break;
-    //   }
-    // }
-    // throwIf(isUndefined(res), `Can't find variable '${ensurePathString(name)}'`);
-    // return res as unknown;
   }
 
-  set<T extends unknown>(name: PathType, value: T) {
-    // console.log('scope: set', name, value);
-    //
-    // const path = ensurePathArray(name);
-    // if (path.length === 1) {
-    //   if (this.data.has(path)) {
-    //     return this.data.set(path, value);
-    //   } else {
-    //     return this.parent?.set(name, value);
-    //   }
-    // }
-
-    // const {path, keys} = this.normalizeKeysAndPath(name);
-    // for (let key of keys) {
-    //   if (this.layers.get(key)!.modify(path, value)) {
-    //     return;
-    //   }
-    // }
-    // throwError(`Can't modify field '${ensurePathString(name)}', field does not exists`);
-  }
-
-  upset<T extends unknown>(name: PathType, value: T) {
-    console.log('scope: upset: ', ensurePathString(name), JSON.stringify(value));
-    const path = ensurePathArray(name);
-    /**
-     * if path has only one segment - store data in current layer fields store
-     *
-     */
-    if (path.length === 1) {
-      this.data?.upset(path, value);
-      console.log('one segment: after upset data: ', this.data);
-    } else {
-
-    }
-    // const {path, keys} = this.normalizeKeysAndPath(name);
-  }
-
-  create<T extends unknown>(name: PathType, value: T) {
-    console.log('scope: create variable: ', ensurePathString(name), value);
-    const pathAndScope = this.tracePath(name);
+  set<T>(name: PathType, value: T) {
     try {
-      // if (path.length === 1) {
-      //   this.data.create(path, value);
-      // } else {
-      //
-      // }
+      const pathAndScope = this.tracePath(name);
+      pathAndScope.scope.data.set(pathAndScope.path, value);
+    } catch (e) {
+      throw new ScopeError(`Can't set variable by path: ${ensurePathString(name)}`, {cause: e});
+    }
+  }
+
+  upset<T>(name: PathType, value: T) {
+    try {
+      const pathAndScope = this.tracePath(name);
+      pathAndScope.scope.data.upset(pathAndScope.path, value);
+    } catch (e) {
+      throw new ScopeError(`Can't create or update variable by path: ${ensurePathString(name)}`, {cause: e});
+    }
+  }
+
+  create<T>(name: PathType, value: T) {
+    try {
+      const pathAndScope = this.tracePath(name);
+      pathAndScope.scope.data.create(pathAndScope.path, value);
     } catch (e) {
       throw new ScopeError(`Can't create variable by path: ${ensurePathString(name)}`, {cause: e});
     }
-
-    // const {path, keys} = this.normalizeKeysAndPath(name);
-    // console.log('create: ', name, value, path, keys);
-    // for (let key of keys) {
-    //   if (this.layers.get(key)!.create(path, value)) {
-    //     return;
-    //   }
-    // }
-    // throwError(`Can't create field '${ensurePathString(name)}', check scope configuration`);
   }
 
   delete(name: PathType) {
-    // todo: logic
+    try {
+      const pathAndScope = this.tracePath(name);
+      pathAndScope.scope.data.delete(pathAndScope.path);
+    } catch (e) {
+      throw new ScopeError(`Can't delete variable by path: ${ensurePathString(name)}`, {cause: e});
+    }
   }
 
   has(name: PathType) {
-    console.log('scope: has:', ensurePathString(name));
-
-    return false;
-    // const {path, keys} = this.normalizeKeysAndPath(name);
-    // for (let key of keys) {
-    //   if (this.layers.get(key)!.has(path)) {
-    //     return true;
-    //   }
-    // }
-    // return false;
+    const pathAndScope = this.tracePath(name);
+    return pathAndScope.scope.data.has(pathAndScope.path);
   }
 
   /**
@@ -142,48 +90,45 @@ export class CoreScope implements Scope {
    * @param path The full path to the variable.
    * @returns An object containing the target scope (`node`) and the adjusted path (`path`) relative to that node.
    */
-  tracePath(path: PathType): { node: CoreScope, path: PathType } {
+  tracePath(path: PathType): { scope: CoreScope, path: PathType } {
     const pathArr = ensurePathArray(path);
     if (pathArr.length === 1) {
       return {
-        node: this,
+        scope: this,
         path: pathArr,
       }
     }
-    const [root, ...pathSegments] = pathArr;
-    if (root === SCOPE_SYSTEM_CONFIG.currentScopeKeyword) {
+    const [rootKey, ...pathSegments] = pathArr;
+    if (rootKey === SCOPE_SYSTEM_CONFIG.currentScopeKeyword) {
       return {
-        node: this,
+        scope: this,
         path: pathSegments
       }
     }
-    const targetParent = this.findParentScopeByName(root);
+    const targetParent = this.findScopeByName(rootKey);
     if (targetParent) {
       return {
-        node: targetParent,
+        scope: targetParent,
         path: pathSegments
       }
     }
     return {
-      node: this,
+      scope: this,
       path: pathArr
     }
   }
 
   /**
-   * Recursively searches for the nearest parent scope with the specified name,
+   * Recursively searches for the nearest scope with the specified name,
    * traversing up the hierarchy chain.
    *
    * @param name The name of the scope to find.
    * @returns The matching scope, or `undefined` if the root is reached without a match.
    */
-  findParentScopeByName(name: string): CoreScope | undefined {
-    if (!this.parent) {
-      return undefined;
+  findScopeByName(name: string): CoreScope | undefined {
+    if (this.name === name) {
+      return this;
     }
-    if (this.parent.name === name) {
-      return this.parent;
-    }
-    return this.parent.findParentScopeByName(name);
+    return this.parent?.findScopeByName(name);
   }
 }

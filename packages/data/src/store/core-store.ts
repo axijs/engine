@@ -271,7 +271,7 @@ export class CoreStore implements Store {
       return {fields: this.variables, leafName: pathArr[0]};
     }
     const leafName = pathArr.pop()!;
-    return {fields: this.tree.getOrCreateFields(path), leafName};
+    return {fields: this.tree.getOrCreateFields(pathArr), leafName};
   }
 
 }

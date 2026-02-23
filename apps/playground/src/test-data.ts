@@ -37,7 +37,7 @@ export async function testOneStringField() {
   const tree = treeNodeFactory.tree();
 
   const heroFields = tree.createFields('hero');
-  const health = heroFields.createNumeric('health', 10, { min: 10, max: 100 });
+  const health = heroFields.createNumeric('health', 10, {min: 10, max: 100});
   const paramsTree = tree.createFieldTree('paramsTree');
   const params1 = paramsTree.createFields('params1');
   params1.createString('name', 'hero');
@@ -62,7 +62,7 @@ export async function testOneStringField() {
   console.log('restored tree: ', restoredFieldTree);
 
   const fields = new Fields(fieldRegistry);
-  fields.onAdd.subscribe((event)=> {
+  fields.onAdd.subscribe((event) => {
     console.log('add event:', event);
   });
 
@@ -73,7 +73,9 @@ export async function testOneStringField() {
 
   testField.value = 'hello 2';
   console.log(testField.value);
-  testField.onChange.subscribe((name) => { console.log('onChange:', name) });
+  testField.onChange.subscribe((name) => {
+    console.log('onChange:', name)
+  });
 
   testField.value = 'hello 3';
   console.log(testField.value);
@@ -87,10 +89,10 @@ export async function testScopeSystem() {
   const data = new CoreStore(system.factory);
   console.log(data.typeName);
 
-  const scope: CoreScope = new CoreScope({data, name: 'root'});
-  console.log('scope.name:', scope.name);
+  const rootScope: CoreScope = new CoreScope({data, name: 'root'});
+  console.log('scope.name:', rootScope.name);
 
-  const scriptScope: Scope = scope.extend('script');
+  const scriptScope: Scope = rootScope.extend('script');
   console.log('script scope name:', scriptScope.name);
 
   const unnamedScope: Scope = scriptScope.extend();
@@ -100,20 +102,34 @@ export async function testScopeSystem() {
   console.log('unnamed script scope name:', unnamedScriptScope.name);
 
   /** check scope variables creation logic */
-  scope.create(['counter'], 0);
-  scope.create(['this', 'counterMin'], 0);
-  scope.create(['root', 'counterMax'], 100);
-  scope.create(['params','soundVolume'], 10);
+  rootScope.create(['counter'], 0);
+  rootScope.create(['this', 'counterMin'], 0);
+  rootScope.create(['root', 'counterMax'], 100);
+  rootScope.create(['params', 'soundVolume'], 10);
 
-  unnamedScope.set('greetings', 'hello');
-  unnamedScope.set(['herro', 'hp'], 100);
+  console.log('-----> begin snap')
+  console.log(system.snapshotter.fieldsSnapshotter.snapshot(rootScope.data.getOrCreateInternalVariables()));
+  console.log(system.snapshotter.snapshot(rootScope.data.getOrCreateInternalTree()));
+  console.log(rootScope.data.getOrCreateInternalTree());
+  console.log('-----> end snap')
 
-  console.log(unnamedScope.get(['root', 'params','soundVolume']));
+  try {
+    unnamedScope.set('greetings', 'hello');
+  } catch (e) {
+    console.log(e);
+  }
 
-  // todo: need to test
-  // set / get / upset / delete methods on simple and complex path
-  // hierarchical assess to data, path resolving threes,
-  //
-  // unnamedScope.set('greetings', 'hello');
+  try {
+    unnamedScope.set(['herro', 'hp'], 100);
+  } catch (e) {
+    console.log(e);
+  }
 
+  console.log(`unnamedScope.get(['root', 'params', 'soundVolume']): `, unnamedScope.get(['root', 'params', 'soundVolume']));
+
+  try {
+    console.log(`unnamedScope.get(['params', 'soundVolume'])`, unnamedScope.get(['params', 'soundVolume']));
+  } catch (e) {
+    console.log(e);
+  }
 }
