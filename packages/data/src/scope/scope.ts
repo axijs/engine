@@ -4,11 +4,15 @@ export interface Scope extends DataStorage {
   readonly name?: string;
 
   /**
-   *
+   * create child Scope with optional name
    */
   extend(name?: string): Scope;
 
-  /** hierarchically read value from context */
+  /**
+   * hierarchically read value from context
+   * if name has only one segment - will return value from this Scope or throw error
+   * if name has several segments - will split path to segments and check parents
+   */
   get<T = any>(name: PathType): T;
 
   /**

@@ -1,6 +1,6 @@
 import './style.css'
 
-import {testOneStringField, testScopeSystem} from './test-field.ts';
+import {testOneStringField, testScopeSystem} from './test-data.ts';
 import {testTasks} from './test-tasks.ts';
 
 

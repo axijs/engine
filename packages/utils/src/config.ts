@@ -1,3 +1,4 @@
+/** todo: rename to 'utils config' */
 export interface AxiEngineConfig {
   pathSeparator: string;
 

@@ -99,6 +99,17 @@ export async function testScopeSystem() {
   const unnamedScriptScope: Scope = scriptScope.extend();
   console.log('unnamed script scope name:', unnamedScriptScope.name);
 
+  /** check scope variables creation logic */
+  scope.create(['counter'], 0);
+  scope.create(['this', 'counterMin'], 0);
+  scope.create(['root', 'counterMax'], 100);
+  scope.create(['params','soundVolume'], 10);
+
+  unnamedScope.set('greetings', 'hello');
+  unnamedScope.set(['herro', 'hp'], 100);
+
+  console.log(unnamedScope.get(['root', 'params','soundVolume']));
+
   // todo: need to test
   // set / get / upset / delete methods on simple and complex path
   // hierarchical assess to data, path resolving threes,
