@@ -2,18 +2,25 @@ import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-en
 import {Store, StoreCreateFieldOptions} from './store';
 import {
   BooleanFieldResolver,
-  StoreFieldResolver,
   NumericFieldResolver,
+  StoreFieldResolver,
   StringFieldResolver
 } from './store-field-resolver';
 
 import {
   CoreBooleanField,
-  CoreBooleanFieldOptions, CoreField,
+  CoreBooleanFieldOptions,
+  CoreField,
+  CoreFields,
+  CoreFieldTree,
   CoreNumericField,
-  CoreNumericFieldOptions, CoreStringField, CoreStringFieldOptions,
-  Field, FieldOptions, CoreFieldTree,
-  CoreFields, FieldTreeFactory, isFieldTree
+  CoreNumericFieldOptions,
+  CoreStringField,
+  CoreStringFieldOptions,
+  Field,
+  FieldOptions,
+  FieldTreeFactory,
+  isFieldTree
 } from '../fields';
 
 export class CoreStore implements Store {

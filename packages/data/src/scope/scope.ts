@@ -35,5 +35,8 @@ export interface Scope extends DataStorage {
    * */
   delete(name: PathType): void
 
+  /**
+   * hierarchically check is variable with name exists
+   */
   has(name: PathType): boolean
 }

@@ -1,4 +1,4 @@
-import {PathType} from '@axi-engine/utils';
+// import {PathType} from '@axi-engine/utils';
 
 export class ScopeError extends Error {
   // path: PathType;

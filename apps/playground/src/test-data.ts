@@ -107,20 +107,23 @@ export async function testScopeSystem() {
   rootScope.create(['root', 'counterMax'], 100);
   rootScope.create(['params', 'soundVolume'], 10);
 
-  console.log('-----> begin snap')
-  console.log(system.snapshotter.fieldsSnapshotter.snapshot(rootScope.data.getOrCreateInternalVariables()));
-  console.log(system.snapshotter.snapshot(rootScope.data.getOrCreateInternalTree()));
-  console.log(rootScope.data.getOrCreateInternalTree());
-  console.log('-----> end snap')
+  scriptScope.create(['herro', 'hp'], 0);
 
-  try {
-    unnamedScope.set('greetings', 'hello');
-  } catch (e) {
-    console.log(e);
-  }
+  // console.log('-----> begin snap');
+  // console.log(system.snapshotter.fieldsSnapshotter.snapshot(rootScope.data.getOrCreateInternalVariables()));
+  // console.log(system.snapshotter.snapshot(rootScope.data.getOrCreateInternalTree()));
+  // console.log(rootScope.data.getOrCreateInternalTree());
+  // console.log('-----> end snap');
 
-  try {
-    unnamedScope.set(['herro', 'hp'], 100);
+  // should be error because 'greetings' variable didn't exist in scope chain
+  // try {
+  //   unnamedScope.set('greetings', 'hello');
+  // } catch (e) {
+  //   console.log(e);
+  // }
+
+  try { // should be success
+    console.log('herro hp:', unnamedScope.set(['herro', 'hp'], 100));
   } catch (e) {
     console.log(e);
   }
@@ -132,4 +135,7 @@ export async function testScopeSystem() {
   } catch (e) {
     console.log(e);
   }
+
+  console.log(unnamedScope.get<number>('counter'));
+  console.log(unnamedScriptScope.get<number>('counter'));
 }

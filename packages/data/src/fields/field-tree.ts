@@ -102,6 +102,7 @@ export class FieldTree<TFields extends Fields> {
    * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
    */
   hasPath(path: PathType): boolean {
+    // @todo: !important! need to fix case when tree didn't exists
     const traversedPath = this.traversePath(path);
     return traversedPath.branch.has(traversedPath.leafName);
   }

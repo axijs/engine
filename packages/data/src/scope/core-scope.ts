@@ -1,6 +1,6 @@
 import {Scope} from './scope';
 import {CoreStore} from '../store'
-import {ensurePathArray, ensurePathString, PathType} from '@axi-engine/utils';
+import {ensurePathArray, ensurePathString, PathType, throwError} from '@axi-engine/utils';
 import {ScopeError} from './errors';
 import {SCOPE_SYSTEM_CONFIG} from './config';
 
@@ -28,21 +28,51 @@ export class CoreScope implements Scope {
   get<T = any>(name: PathType): T {
     try {
       const pathAndScope = this.tracePath(name);
-      return pathAndScope.scope.data.getValue<T>(pathAndScope.path);
+      if (pathAndScope.scope !== this) {
+        return pathAndScope.scope.data.getValue<T>(pathAndScope.path);
+      }
+      if (this.data.has(pathAndScope.path)) {
+        return this.data.getValue<T>(pathAndScope.path);
+      }
+      if (this.parent) {
+        return this.parent.get<T>(pathAndScope.path);
+      }
+      throwError(`Variable not found in scope chain`);
     } catch (e) {
       throw new ScopeError(`Can't get variable by path: ${ensurePathString(name)}`, {cause: e});
     }
   }
 
-  set<T>(name: PathType, value: T) {
+  set<T>(name: PathType, value: T): T {
+    console.log('asdasdasd');
     try {
       const pathAndScope = this.tracePath(name);
-      pathAndScope.scope.data.set(pathAndScope.path, value);
+      console.log('asdasdasdss: ', pathAndScope, pathAndScope.scope === this, !!this.parent);
+      console.log('0');
+      if (pathAndScope.scope !== this) {
+        console.log('pathAndScope.scope !== this');
+        return pathAndScope.scope.data.setValue<T>(pathAndScope.path, value);
+      }
+      console.log('1');
+      if (this.data.has(pathAndScope.path)) {
+        console.log('this.data.has(pathAndScope.path)', this.data.has(pathAndScope.path));
+        return this.data.setValue<T>(pathAndScope.path, value);
+      }
+      console.log('2');
+      if (this.parent) {
+        console.log('bla bla', pathAndScope.path, value);
+        return this.parent.set<T>(pathAndScope.path, value);
+      }
+      console.log('3');
+      throwError(`Variable not found in scope chain`);
     } catch (e) {
       throw new ScopeError(`Can't set variable by path: ${ensurePathString(name)}`, {cause: e});
     }
   }
 
+  /**
+   * working only for clearly resolved path to variable
+   */
   upset<T>(name: PathType, value: T) {
     try {
       const pathAndScope = this.tracePath(name);
@@ -52,6 +82,9 @@ export class CoreScope implements Scope {
     }
   }
 
+  /**
+   * working only for clearly resolved path to variable
+   */
   create<T>(name: PathType, value: T) {
     try {
       const pathAndScope = this.tracePath(name);
@@ -61,6 +94,9 @@ export class CoreScope implements Scope {
     }
   }
 
+  /**
+   * working only for clearly resolved path to variable
+   */
   delete(name: PathType) {
     try {
       const pathAndScope = this.tracePath(name);
@@ -70,9 +106,15 @@ export class CoreScope implements Scope {
     }
   }
 
-  has(name: PathType) {
+  has(name: PathType): boolean {
     const pathAndScope = this.tracePath(name);
-    return pathAndScope.scope.data.has(pathAndScope.path);
+    if (pathAndScope.scope !== this) {
+      return pathAndScope.scope.data.has(pathAndScope.path);
+    }
+    if (this.data.has(pathAndScope.path)) {
+      return true;
+    }
+    return !!this.parent?.has(name);
   }
 
   /**
