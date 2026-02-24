@@ -6,7 +6,7 @@
 
 # Class: FieldTreeSnapshotter
 
-Defined in: data/src/serializers/field-tree-snapshotter.ts:10
+Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:10
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: data/src/serializers/field-tree-snapshotter.ts:10
 
 > **new FieldTreeSnapshotter**(`fieldsSnapshotter`): `FieldTreeSnapshotter`
 
-Defined in: data/src/serializers/field-tree-snapshotter.ts:12
+Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:12
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: data/src/serializers/field-tree-snapshotter.ts:12
 
 > `readonly` **fieldsSnapshotter**: [`FieldsSnapshotter`](FieldsSnapshotter.md)
 
-Defined in: data/src/serializers/field-tree-snapshotter.ts:12
+Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:12
 
 ## Methods
 
@@ -40,7 +40,7 @@ Defined in: data/src/serializers/field-tree-snapshotter.ts:12
 
 > **snapshot**(`tree`): [`FieldTreeSnapshot`](../interfaces/FieldTreeSnapshot.md)
 
-Defined in: data/src/serializers/field-tree-snapshotter.ts:19
+Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:19
 
 Creates a serializable snapshot of the entire tree and its contained fields.
 

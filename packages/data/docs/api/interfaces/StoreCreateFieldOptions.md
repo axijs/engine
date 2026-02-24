@@ -6,7 +6,7 @@
 
 # Interface: StoreCreateFieldOptions
 
-Defined in: data/src/store.ts:12
+Defined in: packages/data/src/store/store.ts:12
 
 ## Properties
 
@@ -14,6 +14,6 @@ Defined in: data/src/store.ts:12
 
 > `optional` **fieldType**: `string`
 
-Defined in: data/src/store.ts:14
+Defined in: packages/data/src/store/store.ts:14
 
 Allows to explicitly specify the field type, overriding the automatic type detection.

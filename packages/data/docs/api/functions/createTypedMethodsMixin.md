@@ -8,7 +8,7 @@
 
 > **createTypedMethodsMixin**\<`TCtor`, `TBaseName`\>(`typeName`, `baseMethodName`): \<`TBase`\>(`Base`) => `Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upset${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
 
-Defined in: data/src/mixins/mixin-factory.ts:33
+Defined in: packages/data/src/fields/mixins/mixin-factory.ts:33
 
 A higher-order function that generates a mixin for a specific Field type.
 This factory removes the need to write boilerplate mixin code for every new field type.

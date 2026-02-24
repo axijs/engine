@@ -6,6 +6,7 @@
 
 ## Classes
 
+- [BooleanFieldResolver](classes/BooleanFieldResolver.md)
 - [ClampMaxPolicy](classes/ClampMaxPolicy.md)
 - [ClampMaxPolicySerializerHandler](classes/ClampMaxPolicySerializerHandler.md)
 - [ClampMinPolicy](classes/ClampMinPolicy.md)
@@ -18,9 +19,10 @@
 - [CoreFieldsFactory](classes/CoreFieldsFactory.md)
 - [CoreFieldTree](classes/CoreFieldTree.md)
 - [CoreNumericField](classes/CoreNumericField.md)
+- [CoreScope](classes/CoreScope.md)
+- [CoreStore](classes/CoreStore.md)
 - [CoreStringField](classes/CoreStringField.md)
 - [CoreTreeNodeFactory](classes/CoreTreeNodeFactory.md)
-- [DataStore](classes/DataStore.md)
 - [DataStoreHydrator](classes/DataStoreHydrator.md)
 - [DataStoreSnapshotter](classes/DataStoreSnapshotter.md)
 - [FieldHydrator](classes/FieldHydrator.md)
@@ -32,8 +34,11 @@
 - [FieldTree](classes/FieldTree.md)
 - [FieldTreeHydrator](classes/FieldTreeHydrator.md)
 - [FieldTreeSnapshotter](classes/FieldTreeSnapshotter.md)
+- [NumericFieldResolver](classes/NumericFieldResolver.md)
 - [Policies](classes/Policies.md)
 - [PolicySerializer](classes/PolicySerializer.md)
+- [ScopeError](classes/ScopeError.md)
+- [StringFieldResolver](classes/StringFieldResolver.md)
 
 ## Interfaces
 
@@ -53,8 +58,11 @@
 - [NumericField](interfaces/NumericField.md)
 - [Policy](interfaces/Policy.md)
 - [PolicySerializerHandler](interfaces/PolicySerializerHandler.md)
+- [Scope](interfaces/Scope.md)
+- [ScopeOptions](interfaces/ScopeOptions.md)
 - [Store](interfaces/Store.md)
 - [StoreCreateFieldOptions](interfaces/StoreCreateFieldOptions.md)
+- [StoreFieldResolver](interfaces/StoreFieldResolver.md)
 - [StringField](interfaces/StringField.md)
 
 ## Type Aliases
@@ -69,8 +77,9 @@
 - [createCoreFieldRegistry](functions/createCoreFieldRegistry.md)
 - [createCoreFieldSystem](functions/createCoreFieldSystem.md)
 - [createCorePolicySerializer](functions/createCorePolicySerializer.md)
+- [createCoreTreeHydrator](functions/createCoreTreeHydrator.md)
 - [createCoreTreeNodeFactory](functions/createCoreTreeNodeFactory.md)
-- [createCoreTreeSerializer](functions/createCoreTreeSerializer.md)
+- [createCoreTreeSnapshotter](functions/createCoreTreeSnapshotter.md)
 - [createTypedMethodsMixin](functions/createTypedMethodsMixin.md)
 - [isDataStore](functions/isDataStore.md)
 - [isFields](functions/isFields.md)

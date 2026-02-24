@@ -6,7 +6,7 @@
 
 # Interface: CoreStringFieldOptions
 
-Defined in: data/src/field-definitions/core-string-field.ts:4
+Defined in: packages/data/src/fields/field-definitions/core-string-field.ts:4
 
 Configuration options for creating a new Field instance.
 
@@ -20,7 +20,7 @@ Configuration options for creating a new Field instance.
 
 > `optional` **policies**: [`Policy`](Policy.md)\<`string`\>[]
 
-Defined in: data/src/field.ts:13
+Defined in: packages/data/src/fields/field.ts:13
 
 An optional array of policies to apply to this field.
 Policies can enforce validation rules, transform values, or handle constraints.

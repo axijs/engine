@@ -6,7 +6,7 @@
 
 # Class: FieldTreeHydrator\<TFields\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:22
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:22
 
 Orchestrates the recursive deserialization of `FieldTree` instances.
 
@@ -34,7 +34,7 @@ Refactoring: The current implementation uses `if/else` logic in `snapshot` and `
 
 > **new FieldTreeHydrator**\<`TFields`\>(`fieldTreeNodeFactory`, `fieldsHydrator`): `FieldTreeHydrator`\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:35
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:35
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: data/src/serializers/field-tree-hydrator.ts:35
 
 > **\_factory**: [`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:24
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:24
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: data/src/serializers/field-tree-hydrator.ts:24
 
 > **\_fieldsHydrator**: [`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:25
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:25
 
 ## Accessors
 
@@ -74,7 +74,7 @@ Defined in: data/src/serializers/field-tree-hydrator.ts:25
 
 > **get** **factory**(): [`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:27
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:27
 
 ##### Returns
 
@@ -88,7 +88,7 @@ Defined in: data/src/serializers/field-tree-hydrator.ts:27
 
 > **get** **fieldsHydrator**(): [`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:31
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:31
 
 ##### Returns
 
@@ -100,7 +100,7 @@ Defined in: data/src/serializers/field-tree-hydrator.ts:31
 
 > **hydrate**(`snapshot`): [`FieldTree`](FieldTree.md)\<`TFields`\>
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:45
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:45
 
 Restores the state of the tree from a snapshot.
 It intelligently creates missing nodes based on `__type` metadata and delegates hydration to child nodes.
@@ -123,7 +123,7 @@ The snapshot object to load.
 
 > **patch**(`tree`, `snapshot`): `void`
 
-Defined in: data/src/serializers/field-tree-hydrator.ts:71
+Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:71
 
 Synchronizes an existing `FieldTree` branch with a snapshot.
 

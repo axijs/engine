@@ -6,7 +6,7 @@
 
 # Class: CoreBooleanField
 
-Defined in: data/src/field-definitions/core-boolean-field.ts:6
+Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:6
 
 A specialized Field for handling boolean values.
 Provides toggle functionality.
@@ -25,7 +25,7 @@ Provides toggle functionality.
 
 > **new CoreBooleanField**(`name`, `initialVal`, `options?`): `CoreBooleanField`
 
-Defined in: data/src/field-definitions/core-boolean-field.ts:10
+Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:10
 
 #### Parameters
 
@@ -55,7 +55,7 @@ Defined in: data/src/field-definitions/core-boolean-field.ts:10
 
 > `readonly` **onChange**: `Subscribable`\<\[`boolean`, `boolean`\]\>
 
-Defined in: data/src/field-definitions/core-field.ts:23
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
 
 An observable stream that emits an event whenever the value changes.
 The payload contains the new value and the old value.
@@ -74,7 +74,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`boolean`\>
 
-Defined in: data/src/field-definitions/core-field.ts:24
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 
 The collection of policies applied to this field.
 
@@ -92,7 +92,7 @@ The collection of policies applied to this field.
 
 > `readonly` **typeName**: `string` = `CoreBooleanField.typeName`
 
-Defined in: data/src/field-definitions/core-boolean-field.ts:8
+Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:8
 
 A unique string identifier for the field type (e.g., 'numeric', 'boolean').
 Used for serialization and type guards.
@@ -111,7 +111,7 @@ Used for serialization and type guards.
 
 > `readonly` `static` **typeName**: `string` = `'boolean'`
 
-Defined in: data/src/field-definitions/core-boolean-field.ts:7
+Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:7
 
 A type keyword of the field
 
@@ -127,7 +127,7 @@ A type keyword of the field
 
 > **get** **name**(): `string`
 
-Defined in: data/src/field-definitions/core-field.ts:27
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:27
 
 The name or key of this field within its parent container.
 
@@ -153,7 +153,7 @@ The name or key of this field within its parent container.
 
 > **get** **value**(): `T`
 
-Defined in: data/src/field-definitions/core-field.ts:35
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:35
 
 Gets the current raw value of the field.
 For reactive updates, it's recommended to use the `.signal` property instead.
@@ -166,7 +166,7 @@ For reactive updates, it's recommended to use the `.signal` property instead.
 
 > **set** **value**(`val`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:44
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:44
 
 Sets a new value for the field.
 The provided value will be processed by all registered policies before the underlying signal is updated.
@@ -201,7 +201,7 @@ if the value is different from the current one.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:77
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:77
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -232,7 +232,7 @@ A function that transforms the current value into a new one.
 
 > **destroy**(): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:85
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:85
 
 Cleans up resources used by the field and its policies.
 This should be called when the field is no longer needed to prevent memory leaks from reactive policies.
@@ -255,7 +255,7 @@ This should be called when the field is no longer needed to prevent memory leaks
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:73
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:73
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.
@@ -286,7 +286,7 @@ The new value to set.
 
 > **toggle**(): `boolean`
 
-Defined in: data/src/field-definitions/core-boolean-field.ts:14
+Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:14
 
 Inverts the current boolean value (true -> false, false -> true).
 

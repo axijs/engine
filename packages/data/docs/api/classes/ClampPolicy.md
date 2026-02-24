@@ -6,7 +6,7 @@
 
 # Class: ClampPolicy
 
-Defined in: data/src/policies/clamp-policy.ts:3
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:3
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: data/src/policies/clamp-policy.ts:3
 
 > **new ClampPolicy**(`min`, `max`): `ClampPolicy`
 
-Defined in: data/src/policies/clamp-policy.ts:7
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:7
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: data/src/policies/clamp-policy.ts:7
 
 > `readonly` **id**: `"clamp"` = `ClampPolicy.id`
 
-Defined in: data/src/policies/clamp-policy.ts:5
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:5
 
 #### Implementation of
 
@@ -52,7 +52,7 @@ Defined in: data/src/policies/clamp-policy.ts:5
 
 > **max**: `number`
 
-Defined in: data/src/policies/clamp-policy.ts:7
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:7
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: data/src/policies/clamp-policy.ts:7
 
 > **min**: `number`
 
-Defined in: data/src/policies/clamp-policy.ts:7
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:7
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: data/src/policies/clamp-policy.ts:7
 
 > `readonly` `static` **id**: `"clamp"` = `'clamp'`
 
-Defined in: data/src/policies/clamp-policy.ts:4
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:4
 
 ## Methods
 
@@ -76,7 +76,7 @@ Defined in: data/src/policies/clamp-policy.ts:4
 
 > **apply**(`val`): `number`
 
-Defined in: data/src/policies/clamp-policy.ts:10
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:10
 
 #### Parameters
 
@@ -98,7 +98,7 @@ Defined in: data/src/policies/clamp-policy.ts:10
 
 > **updateBounds**(`min`, `max`): `void`
 
-Defined in: data/src/policies/clamp-policy.ts:14
+Defined in: packages/data/src/fields/policies/clamp-policy.ts:14
 
 #### Parameters
 

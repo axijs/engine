@@ -1,6 +1,7 @@
 import {Emitter, ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
 import {Fields} from './fields';
 import {FieldTreeFactory} from './field-tree-factory';
+import {isFields, isFieldTree} from './guards';
 
 /** A type alias for any container that can be a child node in a FieldTree */
 export type TreeNode<F extends Fields> = FieldTree<F> | F;
@@ -102,9 +103,37 @@ export class FieldTree<TFields extends Fields> {
    * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
    */
   hasPath(path: PathType): boolean {
-    // @todo: !important! need to fix case when tree didn't exists
-    const traversedPath = this.traversePath(path);
-    return traversedPath.branch.has(traversedPath.leafName);
+    const pathArr = ensurePathArray(path);
+    if (!pathArr.length) {
+      return false;
+    }
+    let currentNode: TreeNode<TFields> = this;
+    for (let i = 0; i < pathArr.length; i++) {
+      const pathSegment = pathArr[i];
+      const onFinish = i === pathArr.length - 1;
+
+      if (!currentNode.has(pathSegment)) {
+        return false;
+      }
+      if (onFinish) {
+        return true;
+      }
+      const nextNode = currentNode.getNode(pathSegment);
+      if (isFieldTree(nextNode)) {
+        currentNode = nextNode;
+      } else if (isFields(nextNode)) {
+        const remainingSegments = pathArr.length - 1 - i;
+        if (remainingSegments === 1) {
+          const fieldName = pathArr[i + 1];
+          return nextNode.has(fieldName);
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    return false;
   }
 
   /**

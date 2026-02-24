@@ -6,7 +6,7 @@
 
 # Class: FieldSnapshotter
 
-Defined in: data/src/serializers/field-snapshotter.ts:5
+Defined in: packages/data/src/fields/serializers/field-snapshotter.ts:5
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: data/src/serializers/field-snapshotter.ts:5
 
 > **new FieldSnapshotter**(`policySerializer`): `FieldSnapshotter`
 
-Defined in: data/src/serializers/field-snapshotter.ts:6
+Defined in: packages/data/src/fields/serializers/field-snapshotter.ts:6
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: data/src/serializers/field-snapshotter.ts:6
 
 > `readonly` **policySerializer**: [`PolicySerializer`](PolicySerializer.md)
 
-Defined in: data/src/serializers/field-snapshotter.ts:6
+Defined in: packages/data/src/fields/serializers/field-snapshotter.ts:6
 
 ## Methods
 
@@ -40,7 +40,7 @@ Defined in: data/src/serializers/field-snapshotter.ts:6
 
 > **snapshot**(`field`): [`FieldSnapshot`](../interfaces/FieldSnapshot.md)
 
-Defined in: data/src/serializers/field-snapshotter.ts:15
+Defined in: packages/data/src/fields/serializers/field-snapshotter.ts:15
 
 Creates a serializable snapshot of a Field instance.
 The snapshot includes the field's type, name, current value, and the state of all its policies.

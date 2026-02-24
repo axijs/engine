@@ -6,7 +6,7 @@
 
 # Class: CoreTreeNodeFactory
 
-Defined in: data/src/core-field-tree-factory.ts:10
+Defined in: packages/data/src/fields/core-field-tree-factory.ts:10
 
 The default factory implementation that creates standard DefaultFields and FieldTree instances.
 
@@ -24,7 +24,7 @@ The default factory implementation that creates standard DefaultFields and Field
 
 > **new CoreTreeNodeFactory**(`fieldRegistry`): `CoreTreeNodeFactory`
 
-Defined in: data/src/core-field-tree-factory.ts:11
+Defined in: packages/data/src/fields/core-field-tree-factory.ts:11
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Defined in: data/src/core-field-tree-factory.ts:11
 
 > `protected` `readonly` **\_fieldRegistry**: [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: data/src/core-fields-factory.ts:7
+Defined in: packages/data/src/fields/core-fields-factory.ts:7
 
 #### Inherited from
 
@@ -60,7 +60,7 @@ Defined in: data/src/core-fields-factory.ts:7
 
 > **get** **fieldRegistry**(): [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: data/src/core-fields-factory.ts:9
+Defined in: packages/data/src/fields/core-fields-factory.ts:9
 
 ##### Returns
 
@@ -76,7 +76,7 @@ Defined in: data/src/core-fields-factory.ts:9
 
 > **fields**(): [`CoreFields`](CoreFields.md)
 
-Defined in: data/src/core-fields-factory.ts:17
+Defined in: packages/data/src/fields/core-fields-factory.ts:17
 
 #### Returns
 
@@ -96,7 +96,7 @@ Defined in: data/src/core-fields-factory.ts:17
 
 > **tree**(): [`CoreFieldTree`](CoreFieldTree.md)
 
-Defined in: data/src/core-field-tree-factory.ts:15
+Defined in: packages/data/src/fields/core-field-tree-factory.ts:15
 
 #### Returns
 

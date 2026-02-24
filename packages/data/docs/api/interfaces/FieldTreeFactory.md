@@ -6,7 +6,7 @@
 
 # Interface: FieldTreeFactory\<TFields\>
 
-Defined in: data/src/field-tree-factory.ts:10
+Defined in: packages/data/src/fields/field-tree-factory.ts:10
 
 Defines the contract for a factory that creates nodes for a FieldTree.
 This allows for custom implementations of Fields and FieldTree to be used.
@@ -27,7 +27,7 @@ This allows for custom implementations of Fields and FieldTree to be used.
 
 > **fields**(): `TFields`
 
-Defined in: data/src/field-tree-factory.ts:11
+Defined in: packages/data/src/fields/field-tree-factory.ts:11
 
 #### Returns
 
@@ -43,7 +43,7 @@ Defined in: data/src/field-tree-factory.ts:11
 
 > **tree**(): [`FieldTree`](../classes/FieldTree.md)\<`TFields`\>
 
-Defined in: data/src/field-tree-factory.ts:12
+Defined in: packages/data/src/fields/field-tree-factory.ts:12
 
 #### Returns
 

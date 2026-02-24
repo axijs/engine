@@ -8,7 +8,7 @@
 
 > **isFieldTree**(`value`): `value is FieldTree<any>`
 
-Defined in: data/src/guards.ts:24
+Defined in: packages/data/src/fields/guards.ts:24
 
 Type guard that checks if a value is an instance of the `FieldTree` class.
 It verifies this by checking the static `typeName` property on the instance.

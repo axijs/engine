@@ -8,7 +8,7 @@
 
 > **clampMinPolicy**(`min`): [`ClampMinPolicy`](../classes/ClampMinPolicy.md)
 
-Defined in: data/src/policies/clamp-min-policy.ts:19
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:19
 
 ## Parameters
 

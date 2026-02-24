@@ -6,7 +6,7 @@
 
 # Interface: CoreNumericFieldOptions
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:14
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:14
 
 Configuration options for creating a new Field instance.
 
@@ -20,7 +20,7 @@ Configuration options for creating a new Field instance.
 
 > `optional` **max**: `number`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:16
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:16
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: data/src/field-definitions/core-numeric-field.ts:16
 
 > `optional` **min**: `number`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:15
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:15
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: data/src/field-definitions/core-numeric-field.ts:15
 
 > `optional` **policies**: [`Policy`](Policy.md)\<`number`\>[]
 
-Defined in: data/src/field.ts:13
+Defined in: packages/data/src/fields/field.ts:13
 
 An optional array of policies to apply to this field.
 Policies can enforce validation rules, transform values, or handle constraints.

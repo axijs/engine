@@ -6,7 +6,7 @@
 
 # Class: CoreFields
 
-Defined in: data/src/core-fields.ts:7
+Defined in: packages/data/src/fields/core-fields.ts:7
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: data/src/core-fields.ts:7
 
 > **new CoreFields**(...`args`): `CoreFields`
 
-Defined in: utils/dist/index.d.ts:39
+Defined in: packages/utils/dist/index.d.ts:39
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: utils/dist/index.d.ts:39
 
 > `readonly` **\_fieldRegistry**: [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: data/src/fields.ts:17
+Defined in: packages/data/src/fields/fields.ts:17
 
 #### Inherited from
 
@@ -52,7 +52,7 @@ Defined in: data/src/fields.ts:17
 
 > `readonly` **\_fields**: `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: data/src/fields.ts:16
+Defined in: packages/data/src/fields/fields.ts:16
 
 #### Inherited from
 
@@ -208,7 +208,7 @@ Defined in: data/src/fields.ts:16
 
 > `readonly` **typeName**: `"fields"` = `Fields.typeName`
 
-Defined in: data/src/fields.ts:14
+Defined in: packages/data/src/fields/fields.ts:14
 
 #### Inherited from
 
@@ -306,7 +306,7 @@ Defined in: data/src/fields.ts:14
 
 > **get** **fields**(): `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: data/src/fields.ts:48
+Defined in: packages/data/src/fields/fields.ts:48
 
 **`Internal`**
 
@@ -328,7 +328,7 @@ The collection of fields.
 
 > **add**\<`T`\>(`field`): `T`
 
-Defined in: data/src/fields.ts:76
+Defined in: packages/data/src/fields/fields.ts:76
 
 Adds a pre-existing `Field` instance to the collection and fires the `onAdd` event.
 
@@ -368,7 +368,7 @@ If a field with the same name already exists.
 
 > **clear**(): `void`
 
-Defined in: data/src/fields.ts:175
+Defined in: packages/data/src/fields/fields.ts:175
 
 Removes all fields from the collection, ensuring each is properly destroyed.
 
@@ -386,7 +386,7 @@ Removes all fields from the collection, ensuring each is properly destroyed.
 
 > **create**\<`T`\>(`typeName`, `name`, `initialValue`, `options?`): `T`
 
-Defined in: data/src/fields.ts:99
+Defined in: packages/data/src/fields/fields.ts:99
 
 Creates a new `Field` instance of a specified type, adds it to the collection, and returns it.
 This is the primary factory method for creating fields within this container.
@@ -441,7 +441,7 @@ The newly created `Field` instance.
 
 > **createGeneric**\<`T`\>(`name`, `initialValue`, `options?`): [`CoreField`](CoreField.md)\<`T`\>
 
-Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:10
+Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts:10
 
 #### Type Parameters
 
@@ -477,7 +477,7 @@ Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:10
 
 > **destroy**(): `void`
 
-Defined in: data/src/fields.ts:179
+Defined in: packages/data/src/fields/fields.ts:179
 
 #### Returns
 
@@ -493,7 +493,7 @@ Defined in: data/src/fields.ts:179
 
 > **get**\<`TField`\>(`name`): `TField`
 
-Defined in: data/src/fields.ts:141
+Defined in: packages/data/src/fields/fields.ts:141
 
 Retrieves a field by its name.
 
@@ -533,7 +533,7 @@ If the field does not exist.
 
 > **getGeneric**\<`T`\>(`name`): [`CoreField`](CoreField.md)\<`T`\>
 
-Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:18
+Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts:18
 
 #### Type Parameters
 
@@ -561,7 +561,7 @@ Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:18
 
 > **has**(`name`): `boolean`
 
-Defined in: data/src/fields.ts:65
+Defined in: packages/data/src/fields/fields.ts:65
 
 Checks if a field with the given name exists in the collection.
 
@@ -589,7 +589,7 @@ The name of the field to check.
 
 > **remove**(`names`): `void`
 
-Defined in: data/src/fields.ts:151
+Defined in: packages/data/src/fields/fields.ts:151
 
 Removes one or more fields from the collection.
 This method ensures that the `destroy` method of each removed field is called to clean up its resources.
@@ -616,7 +616,7 @@ A single name or an array of names to remove.
 
 > **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
-Defined in: data/src/fields.ts:120
+Defined in: packages/data/src/fields/fields.ts:120
 
 Updates an existing field's value or creates a new one if it doesn't exist.
 
@@ -670,7 +670,7 @@ The existing or newly created `Field` instance.
 
 > **upsetGeneric**\<`T`\>(`name`, `value`, `options?`): [`CoreField`](CoreField.md)\<`T`\>
 
-Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:14
+Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts:14
 
 #### Type Parameters
 
@@ -706,7 +706,7 @@ Defined in: data/src/mixins/with-default-generic-fields.mixin.ts:14
 
 > **onAdd**: `Emitter`\<\[`object`\]\>
 
-Defined in: data/src/fields.ts:26
+Defined in: packages/data/src/fields/fields.ts:26
 
 An event emitter that fires when a new field is added to the collection.
 
@@ -732,7 +732,7 @@ The `Field` instance that was added.
 
 > **onRemove**: `Emitter`\<\[`object`\]\>
 
-Defined in: data/src/fields.ts:37
+Defined in: packages/data/src/fields/fields.ts:37
 
 An event emitter that fires after one or more fields have been removed.
 

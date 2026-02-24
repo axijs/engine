@@ -8,7 +8,7 @@
 
 > **createCorePolicySerializer**(): [`PolicySerializer`](../classes/PolicySerializer.md)
 
-Defined in: data/src/setup.ts:31
+Defined in: packages/data/src/setup.ts:32
 
 Creates and configures a PolicySerializer with handlers for core policies.
 

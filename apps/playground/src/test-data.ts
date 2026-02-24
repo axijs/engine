@@ -87,19 +87,11 @@ export async function testOneStringField() {
 export async function testScopeSystem() {
   const system = createCoreFieldSystem();
   const data = new CoreStore(system.factory);
-  console.log(data.typeName);
 
   const rootScope: CoreScope = new CoreScope({data, name: 'root'});
-  console.log('scope.name:', rootScope.name);
-
-  const scriptScope: Scope = rootScope.extend('script');
-  console.log('script scope name:', scriptScope.name);
-
+  const scriptScope: CoreScope = rootScope.extend('script') as CoreScope;
   const unnamedScope: Scope = scriptScope.extend();
-  console.log('unnamed scope name:', unnamedScope.name);
-
   const unnamedScriptScope: Scope = scriptScope.extend();
-  console.log('unnamed script scope name:', unnamedScriptScope.name);
 
   /** check scope variables creation logic */
   rootScope.create(['counter'], 0);
@@ -108,6 +100,7 @@ export async function testScopeSystem() {
   rootScope.create(['params', 'soundVolume'], 10);
 
   scriptScope.create(['herro', 'hp'], 0);
+  console.log('has:', scriptScope.has(['herro', 'hp']));
 
   // console.log('-----> begin snap');
   // console.log(system.snapshotter.fieldsSnapshotter.snapshot(rootScope.data.getOrCreateInternalVariables()));
@@ -115,12 +108,11 @@ export async function testScopeSystem() {
   // console.log(rootScope.data.getOrCreateInternalTree());
   // console.log('-----> end snap');
 
-  // should be error because 'greetings' variable didn't exist in scope chain
-  // try {
-  //   unnamedScope.set('greetings', 'hello');
-  // } catch (e) {
-  //   console.log(e);
-  // }
+  try {  // should be error because 'greetings' variable didn't exist in scope chain
+    unnamedScope.set('greetings', 'hello');
+  } catch (e) {
+    console.log(e);
+  }
 
   try { // should be success
     console.log('herro hp:', unnamedScope.set(['herro', 'hp'], 100));

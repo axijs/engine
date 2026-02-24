@@ -8,7 +8,7 @@
 
 > **createCoreFieldSystem**(`config?`): `object`
 
-Defined in: data/src/setup.ts:77
+Defined in: packages/data/src/setup.ts:86
 
 Creates a complete core setup for the field system.
 
@@ -26,6 +26,10 @@ Creates a complete core setup for the field system.
 
 > **factory**: [`CoreTreeNodeFactory`](../classes/CoreTreeNodeFactory.md)
 
-### serializer
+### hydrator
 
-> **serializer**: [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+> **hydrator**: [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+
+### snapshotter
+
+> **snapshotter**: [`FieldTreeSnapshotter`](../classes/FieldTreeSnapshotter.md)

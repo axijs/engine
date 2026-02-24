@@ -44,26 +44,17 @@ export class CoreScope implements Scope {
   }
 
   set<T>(name: PathType, value: T): T {
-    console.log('asdasdasd');
     try {
       const pathAndScope = this.tracePath(name);
-      console.log('asdasdasdss: ', pathAndScope, pathAndScope.scope === this, !!this.parent);
-      console.log('0');
       if (pathAndScope.scope !== this) {
-        console.log('pathAndScope.scope !== this');
         return pathAndScope.scope.data.setValue<T>(pathAndScope.path, value);
       }
-      console.log('1');
       if (this.data.has(pathAndScope.path)) {
-        console.log('this.data.has(pathAndScope.path)', this.data.has(pathAndScope.path));
         return this.data.setValue<T>(pathAndScope.path, value);
       }
-      console.log('2');
       if (this.parent) {
-        console.log('bla bla', pathAndScope.path, value);
         return this.parent.set<T>(pathAndScope.path, value);
       }
-      console.log('3');
       throwError(`Variable not found in scope chain`);
     } catch (e) {
       throw new ScopeError(`Can't set variable by path: ${ensurePathString(name)}`, {cause: e});

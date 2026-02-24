@@ -2,13 +2,13 @@
 
 ***
 
-[@axi-engine/data](../README.md) / createCoreTreeSerializer
+[@axi-engine/data](../README.md) / createCoreTreeHydrator
 
-# Function: createCoreTreeSerializer()
+# Function: createCoreTreeHydrator()
 
-> **createCoreTreeSerializer**(`fieldTreeNodeFactory`, `policySerializer?`): [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
+> **createCoreTreeHydrator**(`fieldTreeNodeFactory`, `policySerializer?`): [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
 
-Defined in: data/src/setup.ts:55
+Defined in: packages/data/src/setup.ts:56
 
 Creates a fully configured serializer for a FieldTree.
 This function composes all necessary serializers (FieldTree, Fields, Field) for a complete setup.

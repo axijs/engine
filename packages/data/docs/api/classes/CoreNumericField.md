@@ -6,7 +6,7 @@
 
 # Class: CoreNumericField
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:19
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:19
 
 A specialized Field for handling numeric values.
 Provides capabilities for range clamping (min/max) and arithmetic operations.
@@ -25,7 +25,7 @@ Provides capabilities for range clamping (min/max) and arithmetic operations.
 
 > **new CoreNumericField**(`name`, `initialVal`, `options?`): `CoreNumericField`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:37
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:37
 
 #### Parameters
 
@@ -55,7 +55,7 @@ Defined in: data/src/field-definitions/core-numeric-field.ts:37
 
 > `readonly` **onChange**: `Subscribable`\<\[`number`, `number`\]\>
 
-Defined in: data/src/field-definitions/core-field.ts:23
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
 
 An observable stream that emits an event whenever the value changes.
 The payload contains the new value and the old value.
@@ -74,7 +74,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`number`\>
 
-Defined in: data/src/field-definitions/core-field.ts:24
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 
 The collection of policies applied to this field.
 
@@ -92,7 +92,7 @@ The collection of policies applied to this field.
 
 > `readonly` **typeName**: `string` = `CoreNumericField.typeName`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:21
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:21
 
 A unique string identifier for the field type (e.g., 'numeric', 'boolean').
 Used for serialization and type guards.
@@ -111,7 +111,7 @@ Used for serialization and type guards.
 
 > `readonly` `static` **typeName**: `string` = `'numeric'`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:20
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:20
 
 A type keyword of the field
 
@@ -127,7 +127,7 @@ A type keyword of the field
 
 > **get** **max**(): `number` \| `undefined`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:30
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:30
 
 The maximum allowed value for this field, or undefined if no upper bound exists.
 
@@ -149,7 +149,7 @@ The maximum allowed value for this field, or undefined if no upper bound exists.
 
 > **get** **min**(): `number` \| `undefined`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:23
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:23
 
 The minimum allowed value for this field, or undefined if no lower bound exists.
 
@@ -171,7 +171,7 @@ The minimum allowed value for this field, or undefined if no lower bound exists.
 
 > **get** **name**(): `string`
 
-Defined in: data/src/field-definitions/core-field.ts:27
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:27
 
 The name or key of this field within its parent container.
 
@@ -197,7 +197,7 @@ The name or key of this field within its parent container.
 
 > **get** **value**(): `T`
 
-Defined in: data/src/field-definitions/core-field.ts:35
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:35
 
 Gets the current raw value of the field.
 For reactive updates, it's recommended to use the `.signal` property instead.
@@ -210,7 +210,7 @@ For reactive updates, it's recommended to use the `.signal` property instead.
 
 > **set** **value**(`val`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:44
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:44
 
 Sets a new value for the field.
 The provided value will be processed by all registered policies before the underlying signal is updated.
@@ -245,7 +245,7 @@ if the value is different from the current one.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:77
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:77
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -274,15 +274,15 @@ A function that transforms the current value into a new one.
 
 ### dec()
 
-> **dec**(`amount`): `void`
+> **dec**(`amount?`): `void`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:63
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:63
 
 Decrements the current value by the specified amount.
 
 #### Parameters
 
-##### amount
+##### amount?
 
 `number` = `1`
 
@@ -300,7 +300,7 @@ Decrements the current value by the specified amount.
 
 > **destroy**(): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:85
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:85
 
 Cleans up resources used by the field and its policies.
 This should be called when the field is no longer needed to prevent memory leaks from reactive policies.
@@ -321,15 +321,15 @@ This should be called when the field is no longer needed to prevent memory leaks
 
 ### inc()
 
-> **inc**(`amount`): `void`
+> **inc**(`amount?`): `void`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:59
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:59
 
 Increments the current value by the specified amount.
 
 #### Parameters
 
-##### amount
+##### amount?
 
 `number` = `1`
 
@@ -347,7 +347,7 @@ Increments the current value by the specified amount.
 
 > **isMax**(): `boolean`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:54
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:54
 
 Checks if the current value is equal to or greater than the maximum limit.
 
@@ -365,7 +365,7 @@ Checks if the current value is equal to or greater than the maximum limit.
 
 > **isMin**(): `boolean`
 
-Defined in: data/src/field-definitions/core-numeric-field.ts:49
+Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:49
 
 Checks if the current value is equal to or less than the minimum limit.
 
@@ -383,7 +383,7 @@ Checks if the current value is equal to or less than the minimum limit.
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: data/src/field-definitions/core-field.ts:73
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:73
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.

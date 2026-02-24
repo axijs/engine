@@ -6,7 +6,7 @@
 
 # Class: CoreFieldsFactory
 
-Defined in: data/src/core-fields-factory.ts:6
+Defined in: packages/data/src/fields/core-fields-factory.ts:6
 
 ## Extended by
 
@@ -22,7 +22,7 @@ Defined in: data/src/core-fields-factory.ts:6
 
 > **new CoreFieldsFactory**(`fieldRegistry`): `CoreFieldsFactory`
 
-Defined in: data/src/core-fields-factory.ts:13
+Defined in: packages/data/src/fields/core-fields-factory.ts:13
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: data/src/core-fields-factory.ts:13
 
 > `protected` `readonly` **\_fieldRegistry**: [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: data/src/core-fields-factory.ts:7
+Defined in: packages/data/src/fields/core-fields-factory.ts:7
 
 ## Accessors
 
@@ -50,7 +50,7 @@ Defined in: data/src/core-fields-factory.ts:7
 
 > **get** **fieldRegistry**(): [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: data/src/core-fields-factory.ts:9
+Defined in: packages/data/src/fields/core-fields-factory.ts:9
 
 ##### Returns
 
@@ -62,7 +62,7 @@ Defined in: data/src/core-fields-factory.ts:9
 
 > **fields**(): [`CoreFields`](CoreFields.md)
 
-Defined in: data/src/core-fields-factory.ts:17
+Defined in: packages/data/src/fields/core-fields-factory.ts:17
 
 #### Returns
 

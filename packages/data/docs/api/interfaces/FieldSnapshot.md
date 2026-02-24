@@ -6,7 +6,7 @@
 
 # Interface: FieldSnapshot
 
-Defined in: data/src/serializers/field-snapshot.ts:4
+Defined in: packages/data/src/fields/serializers/field-snapshot.ts:4
 
 A plain object representation of a Field's state for serialization.
 
@@ -16,7 +16,7 @@ A plain object representation of a Field's state for serialization.
 
 > **\_\_type**: `string`
 
-Defined in: data/src/serializers/field-snapshot.ts:5
+Defined in: packages/data/src/fields/serializers/field-snapshot.ts:5
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: data/src/serializers/field-snapshot.ts:5
 
 > **name**: `string`
 
-Defined in: data/src/serializers/field-snapshot.ts:6
+Defined in: packages/data/src/fields/serializers/field-snapshot.ts:6
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: data/src/serializers/field-snapshot.ts:6
 
 > `optional` **policies**: `object`[]
 
-Defined in: data/src/serializers/field-snapshot.ts:8
+Defined in: packages/data/src/fields/serializers/field-snapshot.ts:8
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: data/src/serializers/field-snapshot.ts:8
 
 > **value**: `any`
 
-Defined in: data/src/serializers/field-snapshot.ts:7
+Defined in: packages/data/src/fields/serializers/field-snapshot.ts:7

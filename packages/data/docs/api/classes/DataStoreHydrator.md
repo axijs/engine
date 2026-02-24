@@ -6,7 +6,7 @@
 
 # Class: DataStoreHydrator
 
-Defined in: data/src/serializers/data-store-hydrator.ts:11
+Defined in: packages/data/src/fields/serializers/data-store-hydrator.ts:11
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: data/src/serializers/data-store-hydrator.ts:11
 
 > **new DataStoreHydrator**(`fieldsFieldTreeHydrator`): `DataStoreHydrator`
 
-Defined in: data/src/serializers/data-store-hydrator.ts:16
+Defined in: packages/data/src/fields/serializers/data-store-hydrator.ts:16
 
 Creates an instance of DataStoreSerializer.
 
@@ -34,9 +34,9 @@ The serializer used for the underlying tree and fields.
 
 ### hydrate()
 
-> **hydrate**(`snapshot`): [`DataStore`](DataStore.md)
+> **hydrate**(`snapshot`): [`CoreStore`](CoreStore.md)
 
-Defined in: data/src/serializers/data-store-hydrator.ts:29
+Defined in: packages/data/src/fields/serializers/data-store-hydrator.ts:29
 
 Reconstructs a DataStore instance from a snapshot.
 
@@ -54,7 +54,7 @@ The snapshot to hydrate.
 
 #### Returns
 
-[`DataStore`](DataStore.md)
+[`CoreStore`](CoreStore.md)
 
 A new, fully restored DataStore instance.
 
@@ -64,7 +64,7 @@ A new, fully restored DataStore instance.
 
 > **patch**(`store`, `snapshot`): `void`
 
-Defined in: data/src/serializers/data-store-hydrator.ts:54
+Defined in: packages/data/src/fields/serializers/data-store-hydrator.ts:54
 
 Synchronizes a DataStore instance with a snapshot.
 
@@ -79,7 +79,7 @@ are modified if the snapshot contains partial data, or a full reset if parts are
 
 ##### store
 
-[`DataStore`](DataStore.md)
+[`CoreStore`](CoreStore.md)
 
 The target DataStore to update.
 

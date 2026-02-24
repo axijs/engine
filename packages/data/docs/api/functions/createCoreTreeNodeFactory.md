@@ -8,7 +8,7 @@
 
 > **createCoreTreeNodeFactory**(`fieldRegistry`): [`CoreTreeNodeFactory`](../classes/CoreTreeNodeFactory.md)
 
-Defined in: data/src/setup.ts:44
+Defined in: packages/data/src/setup.ts:45
 
 Creates a factory for CoreFieldTree and CoreFields nodes.
 

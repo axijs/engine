@@ -6,7 +6,7 @@
 
 # Interface: PolicySerializerHandler\<T, S\>
 
-Defined in: data/src/serializers/policy-serializer.ts:9
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:9
 
 Defines the contract for a handler that can serialize and deserialize a specific type of Policy.
 
@@ -30,7 +30,7 @@ The shape of the plain object this handler produces/consumes.
 
 > **hydrate**(`snapshotData`): `T`
 
-Defined in: data/src/serializers/policy-serializer.ts:22
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:22
 
 Creates a new Policy instance from a plain object.
 
@@ -54,7 +54,7 @@ A new instance of the Policy.
 
 > **snapshot**(`policy`): `S`
 
-Defined in: data/src/serializers/policy-serializer.ts:15
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:15
 
 Converts a Policy instance into a serializable plain object.
 

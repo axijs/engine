@@ -6,7 +6,7 @@
 
 # Interface: Policy\<T\>
 
-Defined in: data/src/policies/policy.ts:1
+Defined in: packages/data/src/fields/policies/policy.ts:1
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@ Defined in: data/src/policies/policy.ts:1
 
 > **apply**: (`val`) => `T`
 
-Defined in: data/src/policies/policy.ts:3
+Defined in: packages/data/src/fields/policies/policy.ts:3
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: data/src/policies/policy.ts:3
 
 > `optional` **destroy**: () => `void`
 
-Defined in: data/src/policies/policy.ts:4
+Defined in: packages/data/src/fields/policies/policy.ts:4
 
 #### Returns
 
@@ -50,4 +50,4 @@ Defined in: data/src/policies/policy.ts:4
 
 > `readonly` **id**: `string`
 
-Defined in: data/src/policies/policy.ts:2
+Defined in: packages/data/src/fields/policies/policy.ts:2

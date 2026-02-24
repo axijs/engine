@@ -6,7 +6,7 @@
 
 # Class: Policies\<T\>
 
-Defined in: data/src/policies/policies.ts:4
+Defined in: packages/data/src/fields/policies/policies.ts:4
 
 ## Type Parameters
 
@@ -32,7 +32,7 @@ Defined in: data/src/policies/policies.ts:4
 
 > **get** **items**(): `Map`\<`string`, [`Policy`](../interfaces/Policy.md)\<`T`\>\>
 
-Defined in: data/src/policies/policies.ts:7
+Defined in: packages/data/src/fields/policies/policies.ts:7
 
 ##### Returns
 
@@ -44,7 +44,7 @@ Defined in: data/src/policies/policies.ts:7
 
 > **add**(`policy`): `Policies`\<`T`\>
 
-Defined in: data/src/policies/policies.ts:28
+Defined in: packages/data/src/fields/policies/policies.ts:28
 
 Adds a new policy to the field or replaces an existing one with the same ID.
 The new policy will be applied on the next `set()` operation.
@@ -68,7 +68,7 @@ The policy instance to add.
 
 > **apply**(`val`): `T`
 
-Defined in: data/src/policies/policies.ts:67
+Defined in: packages/data/src/fields/policies/policies.ts:67
 
 Forces the current value to be re-processed by all policies.
 Useful if a policy's logic has changed and you need to re-evaluate the current state.
@@ -89,7 +89,7 @@ Useful if a policy's logic has changed and you need to re-evaluate the current s
 
 > **clear**(): `void`
 
-Defined in: data/src/policies/policies.ts:58
+Defined in: packages/data/src/fields/policies/policies.ts:58
 
 Removes all policies from the field.
 After this, `set()` will no longer apply any transformations to the value until new policies are added.
@@ -104,7 +104,7 @@ After this, `set()` will no longer apply any transformations to the value until 
 
 > **get**\<`P`\>(`id`): `P` \| `undefined`
 
-Defined in: data/src/policies/policies.ts:18
+Defined in: packages/data/src/fields/policies/policies.ts:18
 
 Retrieves a specific policy instance by its ID.
 Useful for accessing a policy's internal state or methods.
@@ -137,7 +137,7 @@ The policy instance, or `undefined` if not found.
 
 > **isEmpty**(): `boolean`
 
-Defined in: data/src/policies/policies.ts:50
+Defined in: packages/data/src/fields/policies/policies.ts:50
 
 #### Returns
 
@@ -149,7 +149,7 @@ Defined in: data/src/policies/policies.ts:50
 
 > **remove**(`policyId`): `boolean`
 
-Defined in: data/src/policies/policies.ts:41
+Defined in: packages/data/src/fields/policies/policies.ts:41
 
 Removes a policy from the field by its ID and call `destroy` method.
 

@@ -6,7 +6,7 @@
 
 # Interface: FieldTreeSnapshot
 
-Defined in: data/src/serializers/field-tree-snapshot.ts:12
+Defined in: packages/data/src/fields/serializers/field-tree-snapshot.ts:12
 
 Represents the serializable state of a `FieldTree` container.
 
@@ -26,4 +26,4 @@ This type describes a plain object that has:
 
 > **\_\_type**: `string`
 
-Defined in: data/src/serializers/field-tree-snapshot.ts:13
+Defined in: packages/data/src/fields/serializers/field-tree-snapshot.ts:13

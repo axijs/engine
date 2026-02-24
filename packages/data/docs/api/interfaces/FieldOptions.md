@@ -6,7 +6,7 @@
 
 # Interface: FieldOptions\<T\>
 
-Defined in: data/src/field.ts:8
+Defined in: packages/data/src/fields/field.ts:8
 
 Configuration options for creating a new Field instance.
 
@@ -30,7 +30,7 @@ The type of the value stored in the field.
 
 > `optional` **policies**: [`Policy`](Policy.md)\<`T`\>[]
 
-Defined in: data/src/field.ts:13
+Defined in: packages/data/src/fields/field.ts:13
 
 An optional array of policies to apply to this field.
 Policies can enforce validation rules, transform values, or handle constraints.

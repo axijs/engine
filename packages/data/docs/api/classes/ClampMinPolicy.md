@@ -6,7 +6,7 @@
 
 # Class: ClampMinPolicy
 
-Defined in: data/src/policies/clamp-min-policy.ts:3
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:3
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:3
 
 > **new ClampMinPolicy**(`min`): `ClampMinPolicy`
 
-Defined in: data/src/policies/clamp-min-policy.ts:7
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:7
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:7
 
 > `readonly` **id**: `"clampMin"` = `ClampMinPolicy.id`
 
-Defined in: data/src/policies/clamp-min-policy.ts:5
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:5
 
 #### Implementation of
 
@@ -48,7 +48,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:5
 
 > **min**: `number`
 
-Defined in: data/src/policies/clamp-min-policy.ts:7
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:7
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:7
 
 > `readonly` `static` **id**: `"clampMin"` = `'clampMin'`
 
-Defined in: data/src/policies/clamp-min-policy.ts:4
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:4
 
 ## Methods
 
@@ -64,7 +64,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:4
 
 > **apply**(`val`): `number`
 
-Defined in: data/src/policies/clamp-min-policy.ts:10
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:10
 
 #### Parameters
 
@@ -86,7 +86,7 @@ Defined in: data/src/policies/clamp-min-policy.ts:10
 
 > **updateBounds**(`min`): `void`
 
-Defined in: data/src/policies/clamp-min-policy.ts:14
+Defined in: packages/data/src/fields/policies/clamp-min-policy.ts:14
 
 #### Parameters
 

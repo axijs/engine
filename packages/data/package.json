@@ -26,8 +26,9 @@
   },
   "scripts": {
     "build": "tsup",
-    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json",
-    "test": "echo 'No tests yet for @axi-engine/data'"
+    "prebuild": "npm test",
+    "test": "vitest run",
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
   },
   "files": [
     "dist"

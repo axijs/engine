@@ -6,7 +6,7 @@
 
 # Class: FieldHydrator
 
-Defined in: data/src/serializers/field-hydrator.ts:17
+Defined in: packages/data/src/fields/serializers/field-hydrator.ts:17
 
 Orchestrates the serialization and deserialization of Field instances.
 
@@ -21,7 +21,7 @@ of any attached policies.
 
 > **new FieldHydrator**(`fieldRegistry`, `policySerializer`): `FieldHydrator`
 
-Defined in: data/src/serializers/field-hydrator.ts:24
+Defined in: packages/data/src/fields/serializers/field-hydrator.ts:24
 
 Creates an instance of FieldSerializer.
 
@@ -49,7 +49,7 @@ A serializer dedicated to handling Policy instances.
 
 > **hydrate**(`snapshot`): [`Field`](../interfaces/Field.md)\<`any`\>
 
-Defined in: data/src/serializers/field-hydrator.ts:38
+Defined in: packages/data/src/fields/serializers/field-hydrator.ts:38
 
 Restores a Field instance from its snapshot representation.
 It uses the `__type` property to find the correct constructor and hydrates
@@ -79,7 +79,7 @@ If the snapshot is invalid, missing a `__type`, or if the type is not registered
 
 > **patch**(`field`, `snapshot`): `void`
 
-Defined in: data/src/serializers/field-hydrator.ts:57
+Defined in: packages/data/src/fields/serializers/field-hydrator.ts:57
 
 Updates an existing Field instance with data from a snapshot.
 

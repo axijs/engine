@@ -6,7 +6,7 @@
 
 # Interface: FieldsFactory\<TFields\>
 
-Defined in: data/src/fields-factory.ts:3
+Defined in: packages/data/src/fields/fields-factory.ts:3
 
 ## Extended by
 
@@ -24,7 +24,7 @@ Defined in: data/src/fields-factory.ts:3
 
 > **fields**(): `TFields`
 
-Defined in: data/src/fields-factory.ts:4
+Defined in: packages/data/src/fields/fields-factory.ts:4
 
 #### Returns
 

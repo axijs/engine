@@ -6,9 +6,9 @@
 
 # Function: isDataStore()
 
-> **isDataStore**(`value`): `value is DataStore`
+> **isDataStore**(`value`): `value is CoreStore`
 
-Defined in: data/src/guards.ts:47
+Defined in: packages/data/src/fields/guards.ts:47
 
 Type guard that checks if a value is an instance of the `DataStore` class.
 It verifies this by checking the static `typeName` property on the instance.
@@ -23,7 +23,7 @@ The `unknown` value to check.
 
 ## Returns
 
-`value is DataStore`
+`value is CoreStore`
 
 `true` if the value is a `DataStore` instance, otherwise `false`.
 

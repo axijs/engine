@@ -6,7 +6,7 @@
 
 # Class: FieldsSnapshotter
 
-Defined in: data/src/serializers/fields-snapshotter.ts:11
+Defined in: packages/data/src/fields/serializers/fields-snapshotter.ts:11
 
 The serialization of `Fields` container instances.
 
@@ -19,7 +19,7 @@ into a storable snapshot.
 
 > **new FieldsSnapshotter**(`fieldSnapshotter`): `FieldsSnapshotter`
 
-Defined in: data/src/serializers/fields-snapshotter.ts:16
+Defined in: packages/data/src/fields/serializers/fields-snapshotter.ts:16
 
 Creates an instance of FieldsSnapshotter.
 
@@ -41,7 +41,7 @@ A serializer of field instances.
 
 > **snapshot**(`fields`): [`FieldsSnapshot`](../interfaces/FieldsSnapshot.md)
 
-Defined in: data/src/serializers/fields-snapshotter.ts:26
+Defined in: packages/data/src/fields/serializers/fields-snapshotter.ts:26
 
 Creates a serializable snapshot of a `Fields` container.
 

@@ -6,7 +6,7 @@
 
 # Class: PolicySerializer
 
-Defined in: data/src/serializers/policy-serializer.ts:25
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:25
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: data/src/serializers/policy-serializer.ts:25
 
 > **handlers**: `Registry`\<`string`, [`PolicySerializerHandler`](../interfaces/PolicySerializerHandler.md)\<`any`, `any`\>\>
 
-Defined in: data/src/serializers/policy-serializer.ts:26
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:26
 
 ## Methods
 
@@ -32,7 +32,7 @@ Defined in: data/src/serializers/policy-serializer.ts:26
 
 > **hydrate**(`snapshot`): [`Policy`](../interfaces/Policy.md)\<`any`\>
 
-Defined in: data/src/serializers/policy-serializer.ts:55
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:55
 
 Restores a policy instance from its snapshot representation.
 
@@ -60,7 +60,7 @@ If the snapshot is invalid or no handler is registered for its `__type`.
 
 > **register**(`policyId`, `handler`): `void`
 
-Defined in: data/src/serializers/policy-serializer.ts:28
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:28
 
 #### Parameters
 
@@ -82,7 +82,7 @@ Defined in: data/src/serializers/policy-serializer.ts:28
 
 > **snapshot**(`policy`): `object`
 
-Defined in: data/src/serializers/policy-serializer.ts:39
+Defined in: packages/data/src/fields/serializers/policy-serializer.ts:39
 
 Creates a serializable snapshot of a policy instance.
 The snapshot includes the policy's state and a `__type` identifier.

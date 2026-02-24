@@ -6,7 +6,7 @@
 
 # Class: FieldsHydrator\<TFields\>
 
-Defined in: data/src/serializers/fields-hydrator.ts:11
+Defined in: packages/data/src/fields/serializers/fields-hydrator.ts:11
 
 Deserialization of `Fields` container instances.
 Responsible for converting snapshot of `Fields` object into a `Fields` instance.
@@ -23,7 +23,7 @@ Responsible for converting snapshot of `Fields` object into a `Fields` instance.
 
 > **new FieldsHydrator**\<`TFields`\>(`fieldsFactory`, `fieldHydrator`): `FieldsHydrator`\<`TFields`\>
 
-Defined in: data/src/serializers/fields-hydrator.ts:17
+Defined in: packages/data/src/fields/serializers/fields-hydrator.ts:17
 
 Creates an instance of FieldsSerializer.
 
@@ -51,7 +51,7 @@ A hydrator of field instances.
 
 > **hydrate**(`snapshot`): `TFields`
 
-Defined in: data/src/serializers/fields-hydrator.ts:30
+Defined in: packages/data/src/fields/serializers/fields-hydrator.ts:30
 
 Restores a `Fields` container instance from its snapshot representation.
 
@@ -77,7 +77,7 @@ A new `DefaultFields` instance populated with the restored fields.
 
 > **patch**(`fields`, `snapshot`): `void`
 
-Defined in: data/src/serializers/fields-hydrator.ts:54
+Defined in: packages/data/src/fields/serializers/fields-hydrator.ts:54
 
 Synchronizes an existing `Fields` container with a snapshot.
 
