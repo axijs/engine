@@ -15,7 +15,3 @@ export * from './fields-snapshotter'
 export * from './field-tree-hydrator'
 export * from './field-tree-snapshot'
 export * from './field-tree-snapshotter'
-
-export * from '../../store/serializers/data-store-hydrator'
-export * from '../../store/serializers/data-store-snapshot'
-export * from '../../store/serializers/data-store-snapshotter'
