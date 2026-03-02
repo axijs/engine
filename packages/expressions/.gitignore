@@ -1,6 +1,9 @@
+/node_modules
+
 # Compiled output
 /dist
 /tmp
 
 # TypeScript cache
 *.tsbuildinfo
+

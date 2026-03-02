@@ -6,11 +6,11 @@ import {DataSource, ensurePathString, PathType} from '@axi-engine/utils';
  */
 export function createMockDataSource(): DataSource {
   const data = new Map<string, any>([
-    ['player/hp', 100],
-    ['player/name', 'Alex'],
-    ['player/isAlive', true],
-    ['config/difficulty', 2],
-    ['inventory/etc', {bottles: 10, garbage: 20}]
+    [ensurePathString(['player', 'hp']), 100],
+    [ensurePathString(['player', 'name']), 'Alex'],
+    [ensurePathString(['player', 'isAlive']), true],
+    [ensurePathString(['config', 'difficulty']), 2],
+    [ensurePathString(['inventory', 'etc']), {bottles: 10, garbage: 20}]
   ]);
 
   return {

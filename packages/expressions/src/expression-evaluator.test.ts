@@ -36,7 +36,7 @@ describe('CoreExpressionEvaluator Integration', () => {
 
     const nameCheckExpression: ComparisonExpression = {
       comparison: {
-        left: {path: 'player/name'},
+        left: {path: ['player', 'name']},
         op: '!=',
         right: {value: 'Alex'}
       }
@@ -45,7 +45,7 @@ describe('CoreExpressionEvaluator Integration', () => {
 
     const isAliveCheckExpression: ComparisonExpression = {
       comparison: {
-        left: {path: 'player/isAlive'},
+        left: {path: ['player', 'isAlive']},
         op: '==',
         right: {value: false}
       }
@@ -54,10 +54,10 @@ describe('CoreExpressionEvaluator Integration', () => {
   });
 
   it('should resolve exists check', async () => {
-    const existsExpression: ExistsExpression = { exists: ['player', 'hp']};
+    const existsExpression: ExistsExpression = {exists: ['player', 'hp']};
     await expect(evaluator.resolve(existsExpression, mockDataSource)).resolves.toBe(true);
 
-    const notExistsExpression: ExistsExpression = { exists: ['player', 'house']};
+    const notExistsExpression: ExistsExpression = {exists: ['player', 'house']};
     await expect(evaluator.resolve(notExistsExpression, mockDataSource)).resolves.toBe(false);
   });
 
@@ -65,8 +65,8 @@ describe('CoreExpressionEvaluator Integration', () => {
     // (hp > 0) AND (isAlive == true)
     const andExpr: AndExpression = {
       and: [
-        { comparison: { left: { path: 'player/hp' }, op: '>', right: { value: 0 } } },
-        { comparison: { left: { path: 'player/isAlive' }, op: '==', right: { value: true } } }
+        {comparison: {left: {path: ['player', 'hp']}, op: '>', right: {value: 0}}},
+        {comparison: {left: {path: ['player', 'isAlive']}, op: '==', right: {value: true}}}
       ]
     };
     await expect(evaluator.resolve(andExpr, mockDataSource)).resolves.toBe(true);
@@ -74,7 +74,7 @@ describe('CoreExpressionEvaluator Integration', () => {
     // NOT (hp < 0) -> NOT false -> true
     const notExpr: NotExpression = {
       not: {
-        comparison: { left: { path: 'player/hp' }, op: '<', right: { value: 0 } }
+        comparison: {left: {path: ['player', 'hp']}, op: '<', right: {value: 0}}
       }
     };
     await expect(evaluator.resolve(notExpr, mockDataSource)).resolves.toBe(true);
