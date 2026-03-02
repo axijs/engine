@@ -5,11 +5,11 @@ import {DataStorage, ensurePathString, PathType, throwIf} from '@axi-engine/util
  */
 export function createMockDataStore(): DataStorage {
   const data = new Map<string, any>([
-    ['player/hp', 100],
-    ['player/name', 'Alex'],
-    ['player/isAlive', true],
-    ['config/difficulty', 'hard'],
-    ['inventory/etc', {bottles: 10, garbage: 20}]
+    [ensurePathString(['player', 'hp']), 100],
+    [ensurePathString(['player', 'name']), 'Alex'],
+    [ensurePathString(['player', 'isAlive']), true],
+    [ensurePathString(['config', 'difficulty']), 'hard'],
+    [ensurePathString(['inventory', 'etc']), {bottles: 10, garbage: 20}]
   ]);
 
   return {
@@ -30,6 +30,10 @@ export function createMockDataStore(): DataStorage {
     },
     delete: (path: PathType) => {
       data.delete(ensurePathString(path));
+    },
+    clear() {
+    },
+    destroy() {
     }
   };
 }

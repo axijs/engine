@@ -23,7 +23,9 @@
       "@axi-engine/utils": ["../../packages/utils/src"],
       "@axi-engine/data": ["../../packages/fields/src"],
       "@axi-engine/states": ["../../packages/states/src"],
-      "@axi-engine/tasks": ["../../packages/tasks/src"]
+      "@axi-engine/tasks": ["../../packages/tasks/src"],
+      "@axi-engine/expressions": ["../../packages/expressions/src"],
+      "@axi-engine/instructions": ["../../packages/instructions/src"]
     }
   },
   "include": ["src"],
@@ -31,6 +33,8 @@
     { "path": "../../packages/utils" },
     { "path": "../../packages/data"},
     { "path": "../../packages/states" },
-    { "path": "../../packages/tasks" }
+    { "path": "../../packages/tasks" },
+    { "path": "../../packages/expressions" },
+    { "path": "../../packages/instructions" }
   ]
 }

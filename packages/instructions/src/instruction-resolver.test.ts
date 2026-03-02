@@ -34,35 +34,35 @@ describe('CoreInstructionResolver Integration', () => {
     await resolver.execute({create: {field: ['inventory', 'gold'], var: {value: 500}}}, context);
     expect(mockStore.get(['inventory', 'gold'])).toBe(500);
 
-    await resolver.execute({set: {field: 'player/hp', var: {value: 90}}}, context);
-    expect(mockStore.get('player/hp')).toBe(90);
+    await resolver.execute({set: {field: 'player.hp', var: {value: 90}}}, context);
+    expect(mockStore.get('player.hp')).toBe(90);
   });
 
   it('Should throw error on invalid data operations', async () => {
     // Try to create existing
-    await expect(resolver.execute({create: {field: 'player/hp', var: {value: 999}}}, context))
+    await expect(resolver.execute({create: {field: 'player.hp', var: {value: 999}}}, context))
       .rejects
       .toThrow();
 
     // Try to set non-existing
-    await expect(resolver.execute({set: {field: 'ghost/var', var: {value: 0}}}, context))
+    await expect(resolver.execute({set: {field: 'ghost.var', var: {value: 0}}}, context))
       .rejects
       .toThrow();
   });
 
   it('Should handle upset (update or insert)', async () => {
     // Update existing
-    await resolver.execute({upset: {field: 'player/hp', var: {value: 50}}}, context);
-    expect(mockStore.get('player/hp')).toBe(50);
+    await resolver.execute({upset: {field: 'player.hp', var: {value: 50}}}, context);
+    expect(mockStore.get('player.hp')).toBe(50);
 
     // Insert new
-    await resolver.execute({upset: {field: 'new/stat', var: {value: 10}}}, context);
-    expect(mockStore.get('new/stat')).toBe(10);
+    await resolver.execute({upset: {field: 'new.stat', var: {value: 10}}}, context);
+    expect(mockStore.get('new.stat')).toBe(10);
   });
 
   it('Should delete variables', async () => {
-    await resolver.execute({delete: 'player/name'}, context);
-    expect(mockStore.has('player/name')).toBe(false);
+    await resolver.execute({delete: 'player.name'}, context);
+    expect(mockStore.has('player.name')).toBe(false);
   });
 
 
@@ -73,11 +73,11 @@ describe('CoreInstructionResolver Integration', () => {
     await resolver.execute({
       if: {
         condition: {literal: true},
-        then: [{set: {field: 'player/isAlive', var: {value: false}}}]
+        then: [{set: {field: 'player.isAlive', var: {value: false}}}]
       }
     }, context);
 
-    expect(mockStore.get('player/isAlive')).toBe(false);
+    expect(mockStore.get('player.isAlive')).toBe(false);
 
     // Case 2: False -> execute ELSE (if present)
     mockEvaluatorResolveFn.mockResolvedValueOnce(false);
@@ -86,25 +86,25 @@ describe('CoreInstructionResolver Integration', () => {
       if: {
         condition: {literal: false},
         then: [],
-        else: [{set: {field: 'player/hp', var: {value: 1}}}]
+        else: [{set: {field: 'player.hp', var: {value: 1}}}]
       }
     }, context);
 
-    expect(mockStore.get('player/hp')).toBe(1);
+    expect(mockStore.get('player.hp')).toBe(1);
   });
 
 
   it('Should execute "switch" statement', async () => {
     await resolver.execute({
       switch: {
-        check: {path: 'config/difficulty'},
+        check: {path: 'config.difficulty'},
         cases: [
-          {case: {value: 'easy'}, do: [{set: {field: 'player/hp', var: {value: 200}}}]},
-          {case: {value: 'hard'}, do: [{set: {field: 'player/hp', var: {value: 50}}}]}
+          {case: {value: 'easy'}, do: [{set: {field: 'player.hp', var: {value: 200}}}]},
+          {case: {value: 'hard'}, do: [{set: {field: 'player.hp', var: {value: 50}}}]}
         ]
       }
     }, context);
 
-    expect(mockStore.get('player/hp')).toBe(50);
+    expect(mockStore.get('player.hp')).toBe(50);
   });
 });
