@@ -6,22 +6,40 @@
 
 # Interface: DataStorage
 
-Defined in: data-source.ts:69
+Defined in: data.ts:74
 
 A full CRUD contract for systems that provide complete data management.
 Combines both reading and writing capabilities.
 
 ## Extends
 
-- [`DataSource`](DataSource.md).[`DataSink`](DataSink.md)
+- [`DataSource`](DataSource.md).[`DataSink`](DataSink.md).[`Destroyable`](Destroyable.md)
 
 ## Methods
+
+### clear()
+
+> **clear**(): `void`
+
+Defined in: data.ts:67
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`DataSink`](DataSink.md).[`clear`](DataSink.md#clear)
+
+***
 
 ### create()
 
 > **create**(`path`, `value`): `void`
 
-Defined in: data-source.ts:46
+Defined in: data.ts:46
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
@@ -55,7 +73,7 @@ The initial value to create.
 
 > **delete**(`path`): `void`
 
-Defined in: data-source.ts:62
+Defined in: data.ts:62
 
 Deletes the value at the specified path.
 
@@ -77,11 +95,30 @@ The path to the value to be deleted.
 
 ***
 
+### destroy()
+
+> **destroy**(): `void`
+
+Defined in: types.ts:52
+
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[`Destroyable`](Destroyable.md).[`destroy`](Destroyable.md#destroy)
+
+***
+
 ### get()
 
 > **get**(`path`): `unknown`
 
-Defined in: data-source.ts:8
+Defined in: data.ts:8
 
 #### Parameters
 
@@ -103,7 +140,7 @@ Defined in: data-source.ts:8
 
 > **has**(`path`): `boolean`
 
-Defined in: data-source.ts:15
+Defined in: data.ts:15
 
 Checks if a path valid.
 
@@ -131,7 +168,7 @@ The path to the node.
 
 > **set**(`path`, `value`): `void`
 
-Defined in: data-source.ts:36
+Defined in: data.ts:36
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
@@ -164,7 +201,7 @@ The new value to set.
 
 > **upset**(`path`, `value`): `void`
 
-Defined in: data-source.ts:55
+Defined in: data.ts:55
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.

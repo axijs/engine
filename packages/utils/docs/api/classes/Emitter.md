@@ -6,7 +6,7 @@
 
 # Class: Emitter\<T\>
 
-Defined in: emitter.ts:10
+Defined in: emitters/emitter.ts:9
 
 A minimal, type-safe event emitter for a single event.
 It does not manage state, it only manages subscribers and event dispatching.
@@ -45,7 +45,7 @@ A tuple representing the types of the event arguments.
 
 > **get** **listenerCount**(): `number`
 
-Defined in: emitter.ts:16
+Defined in: emitters/emitter.ts:15
 
 Returns the number of listeners.
 
@@ -63,7 +63,7 @@ Returns the number of listeners.
 
 > **clear**(): `void`
 
-Defined in: emitter.ts:60
+Defined in: emitters/emitter.ts:59
 
 Clears all listeners.
 
@@ -81,7 +81,7 @@ Clears all listeners.
 
 > **emit**(...`args`): `void`
 
-Defined in: emitter.ts:53
+Defined in: emitters/emitter.ts:52
 
 Dispatches the event to all subscribed listeners.
 
@@ -101,7 +101,7 @@ Dispatches the event to all subscribed listeners.
 
 > **once**(`listener`): [`Subscription`](Subscription.md)
 
-Defined in: emitter.ts:34
+Defined in: emitters/emitter.ts:33
 
 Subscribes a listener that triggers only once and then automatically unsubscribes.
 
@@ -125,7 +125,7 @@ A Subscription object (can be used to cancel before the event fires).
 
 > **subscribe**(`listener`): [`Subscription`](Subscription.md)
 
-Defined in: emitter.ts:24
+Defined in: emitters/emitter.ts:23
 
 Subscribes a listener to this event.
 
@@ -151,7 +151,7 @@ A Subscription object to manage the unsubscription.
 
 > **unsubscribe**(`listener`): `boolean`
 
-Defined in: emitter.ts:46
+Defined in: emitters/emitter.ts:45
 
 Manually unsubscribe by listener
 

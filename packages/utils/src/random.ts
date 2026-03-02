@@ -17,6 +17,6 @@ export function randInt(min: number, max: number): number {
  * Generates a unique identifier using uuidv4.
  * @returns A unique string ID.
  */
-export function randId() {
+export function uid() {
   return uuidv4();
 }

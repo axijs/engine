@@ -6,9 +6,10 @@
 
 # Class: Subscription
 
-Defined in: subscription.ts:4
+Defined in: subscription.ts:9
 
-Describes an object that can be unsubscribed from.
+Represents a disposable resource, such as the execution of an Observable or an Event Listener.
+Allows grouping multiple teardown logic into a single unit (Composite Subscription).
 
 ## Implements
 
@@ -20,13 +21,15 @@ Describes an object that can be unsubscribed from.
 
 > **new Subscription**(`teardown?`): `Subscription`
 
-Defined in: subscription.ts:12
+Defined in: subscription.ts:23
 
 #### Parameters
 
 ##### teardown?
 
 () => `void`
+
+Optional initial teardown logic to execute when unsubscribed.
 
 #### Returns
 
@@ -40,7 +43,9 @@ Defined in: subscription.ts:12
 
 > **get** **closed**(): `boolean`
 
-Defined in: subscription.ts:8
+Defined in: subscription.ts:16
+
+Indicates whether this subscription has already been unsubscribed.
 
 ##### Returns
 
@@ -52,14 +57,16 @@ Defined in: subscription.ts:8
 
 > **add**(`teardown`): `void`
 
-Defined in: subscription.ts:22
+Defined in: subscription.ts:34
 
 Adds a teardown logic to this subscription.
-Accepts a function or another Unsubscribable object.
+If the subscription is already closed, the teardown is executed immediately.
 
 #### Parameters
 
 ##### teardown
+
+A function or another Unsubscribable object to be managed.
 
 [`Unsubscribable`](../interfaces/Unsubscribable.md) | () => `void`
 
@@ -73,7 +80,10 @@ Accepts a function or another Unsubscribable object.
 
 > **unsubscribe**(): `void`
 
-Defined in: subscription.ts:30
+Defined in: subscription.ts:46
+
+Disposes the resources held by the subscription.
+Executes all attached teardown logic and clears the list.
 
 #### Returns
 

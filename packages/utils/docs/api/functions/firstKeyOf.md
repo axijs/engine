@@ -8,7 +8,7 @@
 
 > **firstKeyOf**(`obj`): `string`
 
-Defined in: misc.ts:6
+Defined in: misc.ts:10
 
 Returns the first key of an object.
 
@@ -25,3 +25,7 @@ The object from which to get the key.
 `string`
 
 The first key of the object as a string.
+
+## Throws
+
+If the argument is not a valid object.

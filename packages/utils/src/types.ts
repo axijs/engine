@@ -42,6 +42,17 @@ export type PathType = string | string[];
 export type Constructor<T = {}> = new (...args: any[]) => T;
 
 /**
+ * Represents an object that has a lifecycle and requires explicit destruction.
+ */
+export interface Destroyable {
+  /**
+   * Destroys the object, releasing all held resources.
+   * After calling this, the object should be considered unusable.
+   */
+  destroy(): void;
+}
+
+/**
  * Describes an object that can be unsubscribed from.
  */
 export interface Unsubscribable {

@@ -6,7 +6,7 @@
 
 # Interface: DataSink
 
-Defined in: data-source.ts:28
+Defined in: data.ts:28
 
 A write-only contract for any system that can accept or mutate data by path.
 
@@ -21,11 +21,25 @@ implementation details.
 
 ## Methods
 
+### clear()
+
+> **clear**(): `void`
+
+Defined in: data.ts:67
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+***
+
 ### create()
 
 > **create**(`path`, `value`): `void`
 
-Defined in: data-source.ts:46
+Defined in: data.ts:46
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
@@ -55,7 +69,7 @@ The initial value to create.
 
 > **delete**(`path`): `void`
 
-Defined in: data-source.ts:62
+Defined in: data.ts:62
 
 Deletes the value at the specified path.
 
@@ -77,7 +91,7 @@ The path to the value to be deleted.
 
 > **set**(`path`, `value`): `void`
 
-Defined in: data-source.ts:36
+Defined in: data.ts:36
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
@@ -106,7 +120,7 @@ The new value to set.
 
 > **upset**(`path`, `value`): `void`
 
-Defined in: data-source.ts:55
+Defined in: data.ts:55
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.

@@ -8,7 +8,7 @@
 
 > **throwError**(`message`): `never`
 
-Defined in: assertion.ts:52
+Defined in: assertion.ts:51
 
 Throws an error unconditionally.
 

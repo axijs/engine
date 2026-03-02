@@ -38,11 +38,10 @@ export function throwIfEmpty<T>(
   value: T,
   exceptionMessage: string
 ): asserts value is NonNullable<T> {
-  const isArrayAndEmpty = Array.isArray(value) && value.length === 0;
-
-  if (isNullOrUndefined(value) || isArrayAndEmpty) {
-    throw new Error(exceptionMessage);
-  }
+  throwIf(
+    isNullOrUndefined(value) || (Array.isArray(value) && !value.length),
+    exceptionMessage
+  );
 }
 
 /**

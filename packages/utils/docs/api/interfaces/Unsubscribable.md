@@ -6,7 +6,7 @@
 
 # Interface: Unsubscribable
 
-Defined in: types.ts:47
+Defined in: types.ts:58
 
 Describes an object that can be unsubscribed from.
 
@@ -16,7 +16,7 @@ Describes an object that can be unsubscribed from.
 
 > **unsubscribe**(): `void`
 
-Defined in: types.ts:48
+Defined in: types.ts:59
 
 #### Returns
 

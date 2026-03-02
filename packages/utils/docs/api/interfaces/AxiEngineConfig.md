@@ -6,7 +6,9 @@
 
 # Interface: AxiEngineConfig
 
-Defined in: config.ts:1
+Defined in: config.ts:2
+
+todo: rename to 'utils config'
 
 ## Properties
 
@@ -14,4 +16,4 @@ Defined in: config.ts:1
 
 > **pathSeparator**: `string`
 
-Defined in: config.ts:2
+Defined in: config.ts:3

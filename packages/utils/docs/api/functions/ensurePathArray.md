@@ -6,7 +6,7 @@
 
 # Function: ensurePathArray()
 
-> **ensurePathArray**(`path`, `separator`): `string`[]
+> **ensurePathArray**(`path`, `separator?`): `string`[]
 
 Defined in: path.ts:7
 
@@ -18,7 +18,7 @@ Ensures that the given path is returned as an array of segments.
 
 [`PathType`](../type-aliases/PathType.md)
 
-### separator
+### separator?
 
 `string` = `axiSettings.pathSeparator`
 

@@ -6,9 +6,9 @@
 
 # Function: getPercentOf()
 
-> **getPercentOf**(`val`, `percents`): `number`
+> **getPercentOf**(`val`, `percents`, `precision?`): `number`
 
-Defined in: math.ts:24
+Defined in: math.ts:26
 
 Calculates a percentage of a given value.
 
@@ -26,14 +26,24 @@ The base value.
 
 The percentage to get.
 
+### precision?
+
+`number`
+
+Optional number of decimal places to round the result to.
+
 ## Returns
 
 `number`
 
 The calculated percentage of the value.
 
-## Example
+## Examples
 
 ```ts
-getPercentOf(200, 10); // returns 20
+getPercentOf(200, 12.5); // returns 25
+```
+
+```ts
+getPercentOf(100, 33.333, 2); // returns 33.33
 ```

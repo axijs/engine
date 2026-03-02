@@ -2,11 +2,11 @@
 
 ***
 
-[@axi-engine/utils](../README.md) / randId
+[@axi-engine/utils](../README.md) / uid
 
-# Function: randId()
+# Function: uid()
 
-> **randId**(): `string`
+> **uid**(): `string`
 
 Defined in: random.ts:20
 

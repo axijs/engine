@@ -1,4 +1,4 @@
-import { PathType } from './types';
+import {Destroyable, PathType} from './types';
 
 /**
  * A read-only contract for any system that can provide data by path.
@@ -60,11 +60,16 @@ export interface DataSink {
    * @param path The path to the value to be deleted.
    */
   delete(path: PathType): void;
+
+  /**
+   * Deletes all values
+   */
+  clear(): void
 }
 
 /**
  * A full CRUD contract for systems that provide complete data management.
  * Combines both reading and writing capabilities.
  */
-export interface DataStorage extends DataSource, DataSink {
+export interface DataStorage extends DataSource, DataSink, Destroyable {
 }

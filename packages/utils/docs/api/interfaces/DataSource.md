@@ -6,7 +6,7 @@
 
 # Interface: DataSource
 
-Defined in: data-source.ts:6
+Defined in: data.ts:6
 
 A read-only contract for any system that can provide data by path.
 
@@ -20,7 +20,7 @@ A read-only contract for any system that can provide data by path.
 
 > **get**(`path`): `unknown`
 
-Defined in: data-source.ts:8
+Defined in: data.ts:8
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: data-source.ts:8
 
 > **has**(`path`): `boolean`
 
-Defined in: data-source.ts:15
+Defined in: data.ts:15
 
 Checks if a path valid.
 

@@ -1,4 +1,4 @@
-import {isNullOrUndefined} from './guards';
+import {isNullOrUndefined, isUndefined} from './guards';
 
 
 /**
@@ -18,9 +18,15 @@ export function clampNumber(val: number, min?: number | null, max?: number | nul
  * Calculates a percentage of a given value.
  * @param val The base value.
  * @param percents The percentage to get.
+ * @param precision Optional number of decimal places to round the result to.
  * @returns The calculated percentage of the value.
- * @example getPercentOf(200, 10); // returns 20
+ * @example getPercentOf(200, 12.5); // returns 25
+ * @example getPercentOf(100, 33.333, 2); // returns 33.33
  */
-export function getPercentOf(val: number, percents: number) {
-  return (percents / 100) * val;
+export function getPercentOf(val: number, percents: number, precision?: number) {
+  const result = (percents / 100) * val;
+  if (!isUndefined(precision)) {
+    return Number(result.toFixed(precision));
+  }
+  return result;
 }

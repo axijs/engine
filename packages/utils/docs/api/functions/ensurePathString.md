@@ -6,7 +6,7 @@
 
 # Function: ensurePathString()
 
-> **ensurePathString**(`path`, `separator`): `string`
+> **ensurePathString**(`path`, `separator?`): `string`
 
 Defined in: path.ts:14
 
@@ -18,7 +18,7 @@ Ensures that the given path is returned as a single string.
 
 [`PathType`](../type-aliases/PathType.md)
 
-### separator
+### separator?
 
 `string` = `axiSettings.pathSeparator`
 

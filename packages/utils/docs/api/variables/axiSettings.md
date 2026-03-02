@@ -8,4 +8,4 @@
 
 > `const` **axiSettings**: [`AxiEngineConfig`](../interfaces/AxiEngineConfig.md)
 
-Defined in: config.ts:13
+Defined in: config.ts:14

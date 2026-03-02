@@ -6,7 +6,7 @@
 
 # Class: StateEmitter\<T\>
 
-Defined in: emitter.ts:69
+Defined in: emitters/state-emitter.ts:9
 
 An Emitter that stores the last emitted value.
 New subscribers immediately receive the last value upon subscription.
@@ -27,7 +27,7 @@ New subscribers immediately receive the last value upon subscription.
 
 > **new StateEmitter**\<`T`\>(`initialValue?`): `StateEmitter`\<`T`\>
 
-Defined in: emitter.ts:75
+Defined in: emitters/state-emitter.ts:15
 
 #### Parameters
 
@@ -53,7 +53,7 @@ Optional initial value to set.
 
 > **get** **listenerCount**(): `number`
 
-Defined in: emitter.ts:16
+Defined in: emitters/emitter.ts:15
 
 Returns the number of listeners.
 
@@ -73,7 +73,7 @@ Returns the number of listeners.
 
 > **get** **value**(): `T` \| `undefined`
 
-Defined in: emitter.ts:83
+Defined in: emitters/state-emitter.ts:23
 
 Gets the current value synchronously without subscribing.
 
@@ -87,7 +87,7 @@ Gets the current value synchronously without subscribing.
 
 > **clear**(): `void`
 
-Defined in: emitter.ts:111
+Defined in: emitters/state-emitter.ts:51
 
 Clears all listeners.
 
@@ -105,7 +105,7 @@ Clears all listeners.
 
 > **emit**(...`args`): `void`
 
-Defined in: emitter.ts:91
+Defined in: emitters/state-emitter.ts:31
 
 Updates the state and notifies all listeners.
 
@@ -131,7 +131,7 @@ The new value(s).
 
 > **once**(`listener`): [`Subscription`](Subscription.md)
 
-Defined in: emitter.ts:34
+Defined in: emitters/emitter.ts:33
 
 Subscribes a listener that triggers only once and then automatically unsubscribes.
 
@@ -159,7 +159,7 @@ A Subscription object (can be used to cancel before the event fires).
 
 > **subscribe**(`listener`): [`Subscription`](Subscription.md)
 
-Defined in: emitter.ts:101
+Defined in: emitters/state-emitter.ts:41
 
 Subscribes to the event. If a value exists, the listener is called immediately.
 
@@ -187,7 +187,7 @@ A Subscription object.
 
 > **unsubscribe**(`listener`): `boolean`
 
-Defined in: emitter.ts:46
+Defined in: emitters/emitter.ts:45
 
 Manually unsubscribe by listener
 

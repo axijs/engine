@@ -8,7 +8,7 @@ export interface AxiEngineConfig {
 }
 
 const defaultConfig: AxiEngineConfig = {
-  pathSeparator: '/'
+  pathSeparator: '.'
 };
 
 export const axiSettings: AxiEngineConfig = { ...defaultConfig };

@@ -8,7 +8,7 @@
 
 > **configure**(`newConfig`): `void`
 
-Defined in: config.ts:19
+Defined in: config.ts:20
 
 set up global configuration for axi-engine.
 

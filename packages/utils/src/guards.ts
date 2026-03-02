@@ -101,5 +101,5 @@ export function isPromise(value: unknown): value is Promise<unknown> {
  * @returns `true` if the value is a percentage string.
  */
 export function isPercentageString(val: unknown): val is string {
-  return typeof val === "string" && val.endsWith("%");
+  return isString(val) && val.endsWith("%");
 }

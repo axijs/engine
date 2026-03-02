@@ -17,6 +17,7 @@
 - [DataSink](interfaces/DataSink.md)
 - [DataSource](interfaces/DataSource.md)
 - [DataStorage](interfaces/DataStorage.md)
+- [Destroyable](interfaces/Destroyable.md)
 - [Unsubscribable](interfaces/Unsubscribable.md)
 
 ## Type Aliases
@@ -55,10 +56,10 @@
 - [isString](functions/isString.md)
 - [isUndefined](functions/isUndefined.md)
 - [last](functions/last.md)
-- [randId](functions/randId.md)
 - [randInt](functions/randInt.md)
 - [shuffleArray](functions/shuffleArray.md)
 - [throwError](functions/throwError.md)
 - [throwIf](functions/throwIf.md)
 - [throwIfEmpty](functions/throwIfEmpty.md)
+- [uid](functions/uid.md)
 - [unique](functions/unique.md)
