@@ -1,28 +1,35 @@
 import {Scope} from './scope';
 import {CoreStore} from '../store'
-import {ensurePathArray, ensurePathString, PathType, throwError} from '@axi-engine/utils';
+import {ensurePathArray, ensurePathString, PathType, throwError, uid} from '@axi-engine/utils';
 import {ScopeError} from './errors';
 import {SCOPE_SYSTEM_CONFIG} from './config';
 
 export interface ScopeOptions {
   data: CoreStore,
+  uid?: string,
   name?: string,
   parent?: CoreScope
 }
 
 export class CoreScope implements Scope {
+  readonly uid: string;
   data: CoreStore;
   name?: string;
   parent?: CoreScope;
 
   constructor(options: ScopeOptions) {
+    this.uid = options.uid ?? uid();
     this.data = options.data;
     this.name = options.name;
     this.parent = options.parent;
   }
 
   extend(childName?: string): Scope {
-    return new CoreScope({data: this.data.createIsolated(), parent: this, name: childName});
+    return new CoreScope({
+      data: this.data.createIsolated(),
+      parent: this,
+      name: childName
+    });
   }
 
   get<T = any>(name: PathType): T {
@@ -43,17 +50,20 @@ export class CoreScope implements Scope {
     }
   }
 
-  set<T>(name: PathType, value: T): T {
+  set<T>(name: PathType, value: T): void {
     try {
       const pathAndScope = this.tracePath(name);
       if (pathAndScope.scope !== this) {
-        return pathAndScope.scope.data.setValue<T>(pathAndScope.path, value);
+        pathAndScope.scope.data.setValue<T>(pathAndScope.path, value);
+        return;
       }
       if (this.data.has(pathAndScope.path)) {
-        return this.data.setValue<T>(pathAndScope.path, value);
+        this.data.setValue<T>(pathAndScope.path, value);
+        return;
       }
       if (this.parent) {
-        return this.parent.set<T>(pathAndScope.path, value);
+        this.parent.set<T>(pathAndScope.path, value);
+        return;
       }
       throwError(`Variable not found in scope chain`);
     } catch (e) {
@@ -95,6 +105,15 @@ export class CoreScope implements Scope {
     } catch (e) {
       throw new ScopeError(`Can't delete variable by path: ${ensurePathString(name)}`, {cause: e});
     }
+  }
+
+  clear() {
+    this.data.clear();
+  }
+
+  destroy() {
+    this.data.destroy();
+    this.parent = undefined;
   }
 
   has(name: PathType): boolean {

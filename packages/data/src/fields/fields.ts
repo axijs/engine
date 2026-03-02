@@ -1,4 +1,4 @@
-import {Emitter, throwIf} from '@axi-engine/utils';
+import {Destroyable, Emitter, throwIf} from '@axi-engine/utils';
 import {FieldRegistry} from './field-registry';
 import {Field} from './field';
 
@@ -9,7 +9,7 @@ import {Field} from './field';
  * key-value store of reactive data points. It uses a `FieldRegistry` to dynamically
  * create `Field` instances of different types.
  */
-export class Fields {
+export class Fields implements Destroyable {
   static readonly typeName = 'fields';
   readonly typeName = Fields.typeName;
 

@@ -234,6 +234,16 @@ export class CoreStore implements Store {
     this.remove(path);
   }
 
+  clear() {
+    this._variables?.clear();
+    this._tree?.clear();
+  }
+
+  destroy() {
+    this._variables?.destroy();
+    this._tree?.destroy();
+  }
+
   /**
    * @internal Used for serialization
    */

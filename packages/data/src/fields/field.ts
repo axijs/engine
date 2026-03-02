@@ -1,4 +1,4 @@
-import {Subscribable} from '@axi-engine/utils';
+import {Destroyable, Subscribable} from '@axi-engine/utils';
 import {Policies, Policy} from './policies';
 
 /**
@@ -21,7 +21,7 @@ export interface FieldOptions<T> {
  *
  * @template T The type of the value stored in the field.
  */
-export interface Field<T> {
+export interface Field<T> extends Destroyable {
   /**
    * A unique string identifier for the field type (e.g., 'numeric', 'boolean').
    * Used for serialization and type guards.
@@ -64,12 +64,6 @@ export interface Field<T> {
    * The payload contains the new value and the old value.
    */
   onChange: Subscribable<[newValue: T, oldValue:T]>;
-
-  /**
-   * Cleans up the field, removing all listeners and releasing resources.
-   * Should be called when the field is no longer needed.
-   */
-  destroy(): void;
 }
 
 /**

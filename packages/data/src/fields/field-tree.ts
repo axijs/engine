@@ -1,4 +1,12 @@
-import {Emitter, ensurePathArray, ensurePathString, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {
+  Destroyable,
+  Emitter,
+  ensurePathArray,
+  ensurePathString,
+  PathType,
+  throwIf,
+  throwIfEmpty
+} from '@axi-engine/utils';
 import {Fields} from './fields';
 import {FieldTreeFactory} from './field-tree-factory';
 import {isFields, isFieldTree} from './guards';
@@ -15,7 +23,7 @@ export type TreeNode<F extends Fields> = FieldTree<F> | F;
  * manipulating nested data, similar to a file system.
  *
  */
-export class FieldTree<TFields extends Fields> {
+export class FieldTree<TFields extends Fields> implements Destroyable {
   static readonly typeName = 'fieldTree';
   readonly typeName = FieldTree.typeName;
 

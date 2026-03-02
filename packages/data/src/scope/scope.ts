@@ -1,6 +1,7 @@
 import {DataStorage, PathType} from '@axi-engine/utils';
 
 export interface Scope extends DataStorage {
+  readonly uid?: string;
   readonly name?: string;
 
   /**
@@ -19,7 +20,7 @@ export interface Scope extends DataStorage {
    * hierarchically set value to field with name
    * searching target variable from top frame or context to bottom
    */
-  set<T = any>(name: PathType, value: T): void
+  set<T = any>(name: PathType, value: T): void;
 
   upset<T = any>(name: PathType, value: T): void;
 

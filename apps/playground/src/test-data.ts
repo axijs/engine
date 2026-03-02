@@ -115,7 +115,8 @@ export async function testScopeSystem() {
   }
 
   try { // should be success
-    console.log('herro hp:', unnamedScope.set(['herro', 'hp'], 100));
+    unnamedScope.set(['herro', 'hp'], 100);
+    console.log('herro hp:', unnamedScope.get(['herro', 'hp']));
   } catch (e) {
     console.log(e);
   }
