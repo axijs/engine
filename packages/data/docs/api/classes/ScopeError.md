@@ -6,7 +6,7 @@
 
 # Class: ScopeError
 
-Defined in: packages/data/src/scope/errors.ts:3
+Defined in: packages/data/src/scope/errors.ts:1
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: packages/data/src/scope/errors.ts:3
 
 > **new ScopeError**(`message`, `options?`): `ScopeError`
 
-Defined in: packages/data/src/scope/errors.ts:10
+Defined in: packages/data/src/scope/errors.ts:6
 
 #### Parameters
 

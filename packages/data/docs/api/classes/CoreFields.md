@@ -479,6 +479,9 @@ Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts
 
 Defined in: packages/data/src/fields/fields.ts:179
 
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
 #### Returns
 
 `void`

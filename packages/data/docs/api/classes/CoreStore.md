@@ -60,6 +60,24 @@ Defined in: packages/data/src/store/core-store.ts:27
 
 ## Methods
 
+### clear()
+
+> **clear**(): `void`
+
+Defined in: packages/data/src/store/core-store.ts:237
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[`Store`](../interfaces/Store.md).[`clear`](../interfaces/Store.md#clear)
+
+***
+
 ### clearResolvers()
 
 > **clearResolvers**(): `void`
@@ -425,6 +443,25 @@ The path to the value to be deleted.
 
 ***
 
+### destroy()
+
+> **destroy**(): `void`
+
+Defined in: packages/data/src/store/core-store.ts:242
+
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[`Store`](../interfaces/Store.md).[`destroy`](../interfaces/Store.md#destroy)
+
+***
+
 ### get()
 
 > **get**(`path`): `unknown`
@@ -581,7 +618,7 @@ An error if the path is invalid.
 
 > **getInternalTree**(): [`CoreFieldTree`](CoreFieldTree.md) \| `undefined`
 
-Defined in: packages/data/src/store/core-store.ts:247
+Defined in: packages/data/src/store/core-store.ts:257
 
 **`Internal`**
 
@@ -597,7 +634,7 @@ Used for serialization
 
 > **getInternalVariables**(): [`CoreFields`](CoreFields.md) \| `undefined`
 
-Defined in: packages/data/src/store/core-store.ts:240
+Defined in: packages/data/src/store/core-store.ts:250
 
 **`Internal`**
 
@@ -641,7 +678,7 @@ An error if the path is invalid or the field is not of the expected type.
 
 > **getOrCreateInternalTree**(): [`CoreFieldTree`](CoreFieldTree.md)
 
-Defined in: packages/data/src/store/core-store.ts:261
+Defined in: packages/data/src/store/core-store.ts:271
 
 **`Internal`**
 
@@ -657,7 +694,7 @@ Used for serialization
 
 > **getOrCreateInternalVariables**(): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/store/core-store.ts:254
+Defined in: packages/data/src/store/core-store.ts:264
 
 **`Internal`**
 

@@ -26,11 +26,29 @@ Defined in: packages/data/src/store/store.ts:25
 
 ## Methods
 
+### clear()
+
+> **clear**(): `void`
+
+Defined in: packages/utils/dist/index.d.ts:248
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+`DataStorage.clear`
+
+***
+
 ### create()
 
 > **create**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:220
+Defined in: packages/utils/dist/index.d.ts:230
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
@@ -325,7 +343,7 @@ An error if a node already exists at the path or if the parent path is invalid.
 
 > **delete**(`path`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:234
+Defined in: packages/utils/dist/index.d.ts:244
 
 Deletes the value at the specified path.
 
@@ -347,11 +365,30 @@ The path to the value to be deleted.
 
 ***
 
+### destroy()
+
+> **destroy**(): `void`
+
+Defined in: packages/utils/dist/index.d.ts:48
+
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+`DataStorage.destroy`
+
+***
+
 ### get()
 
 > **get**(`path`): `unknown`
 
-Defined in: packages/utils/dist/index.d.ts:185
+Defined in: packages/utils/dist/index.d.ts:195
 
 #### Parameters
 
@@ -599,7 +636,7 @@ An error if the path is invalid or no field exists at the path.
 
 > **has**(`path`): `boolean`
 
-Defined in: packages/utils/dist/index.d.ts:191
+Defined in: packages/utils/dist/index.d.ts:201
 
 Checks if a path valid.
 
@@ -650,7 +687,7 @@ The path to the node to remove.
 
 > **set**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:211
+Defined in: packages/utils/dist/index.d.ts:221
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
@@ -725,7 +762,7 @@ An error if no field exists at the specified path.
 
 > **upset**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:228
+Defined in: packages/utils/dist/index.d.ts:238
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.

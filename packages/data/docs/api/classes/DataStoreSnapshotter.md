@@ -6,7 +6,7 @@
 
 # Class: DataStoreSnapshotter
 
-Defined in: packages/data/src/fields/serializers/data-store-snapshotter.ts:7
+Defined in: packages/data/src/store/serializers/data-store-snapshotter.ts:7
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: packages/data/src/fields/serializers/data-store-snapshotter.ts:7
 
 > **new DataStoreSnapshotter**(`treeSnapshotter`): `DataStoreSnapshotter`
 
-Defined in: packages/data/src/fields/serializers/data-store-snapshotter.ts:12
+Defined in: packages/data/src/store/serializers/data-store-snapshotter.ts:12
 
 Creates an instance of DataStoreSnapshotter.
 
@@ -36,7 +36,7 @@ The serializer used for the underlying tree and fields.
 
 > **snapshot**(`store`): [`DataStoreSnapshot`](../interfaces/DataStoreSnapshot.md)
 
-Defined in: packages/data/src/fields/serializers/data-store-snapshotter.ts:24
+Defined in: packages/data/src/store/serializers/data-store-snapshotter.ts:24
 
 Captures the current state of a DataStore into a serializable snapshot.
 

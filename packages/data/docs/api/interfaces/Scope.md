@@ -18,15 +18,41 @@ Defined in: packages/data/src/scope/scope.ts:3
 
 > `readonly` `optional` **name**: `string`
 
+Defined in: packages/data/src/scope/scope.ts:5
+
+***
+
+### uid?
+
+> `readonly` `optional` **uid**: `string`
+
 Defined in: packages/data/src/scope/scope.ts:4
 
 ## Methods
+
+### clear()
+
+> **clear**(): `void`
+
+Defined in: packages/utils/dist/index.d.ts:248
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+`DataStorage.clear`
+
+***
 
 ### create()
 
 > **create**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/scope.ts:30
+Defined in: packages/data/src/scope/scope.ts:31
 
 hierarchically create variable with name and value
 will create variable in the top context block or frame
@@ -61,7 +87,7 @@ will create variable in the top context block or frame
 
 > **delete**(`name`): `void`
 
-Defined in: packages/data/src/scope/scope.ts:36
+Defined in: packages/data/src/scope/scope.ts:37
 
 hierarchically delete variable with name, manual deleting can be dangerous!
 deleting works only with variables in local scope
@@ -82,11 +108,30 @@ deleting works only with variables in local scope
 
 ***
 
+### destroy()
+
+> **destroy**(): `void`
+
+Defined in: packages/utils/dist/index.d.ts:48
+
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+`DataStorage.destroy`
+
+***
+
 ### extend()
 
 > **extend**(`name?`): `Scope`
 
-Defined in: packages/data/src/scope/scope.ts:9
+Defined in: packages/data/src/scope/scope.ts:10
 
 create child Scope with optional name
 
@@ -106,7 +151,7 @@ create child Scope with optional name
 
 > **get**\<`T`\>(`name`): `T`
 
-Defined in: packages/data/src/scope/scope.ts:16
+Defined in: packages/data/src/scope/scope.ts:17
 
 hierarchically read value from context
 if name has only one segment - will return value from this Scope or throw error
@@ -138,7 +183,7 @@ if name has several segments - will split path to segments and check parents
 
 > **has**(`name`): `boolean`
 
-Defined in: packages/data/src/scope/scope.ts:41
+Defined in: packages/data/src/scope/scope.ts:42
 
 hierarchically check is variable with name exists
 
@@ -162,7 +207,7 @@ hierarchically check is variable with name exists
 
 > **set**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/scope.ts:22
+Defined in: packages/data/src/scope/scope.ts:23
 
 hierarchically set value to field with name
 searching target variable from top frame or context to bottom
@@ -197,7 +242,7 @@ searching target variable from top frame or context to bottom
 
 > **upset**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/scope.ts:24
+Defined in: packages/data/src/scope/scope.ts:25
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.

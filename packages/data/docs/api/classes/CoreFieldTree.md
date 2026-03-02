@@ -25,7 +25,7 @@ manipulating nested data, similar to a file system.
 
 > **new CoreFieldTree**(`factory`): `CoreFieldTree`
 
-Defined in: packages/data/src/fields/field-tree.ts:87
+Defined in: packages/data/src/fields/field-tree.ts:95
 
 Creates an instance of FieldTree.
 
@@ -51,7 +51,7 @@ A factory responsible for creating new nodes within the tree.
 
 > `readonly` **typeName**: `"fieldTree"` = `FieldTree.typeName`
 
-Defined in: packages/data/src/fields/field-tree.ts:20
+Defined in: packages/data/src/fields/field-tree.ts:28
 
 #### Inherited from
 
@@ -63,7 +63,7 @@ Defined in: packages/data/src/fields/field-tree.ts:20
 
 > `readonly` `static` **typeName**: `"fieldTree"` = `'fieldTree'`
 
-Defined in: packages/data/src/fields/field-tree.ts:19
+Defined in: packages/data/src/fields/field-tree.ts:27
 
 #### Inherited from
 
@@ -77,7 +77,7 @@ Defined in: packages/data/src/fields/field-tree.ts:19
 
 > **get** **factory**(): [`FieldTreeFactory`](../interfaces/FieldTreeFactory.md)\<`TFields`\>
 
-Defined in: packages/data/src/fields/field-tree.ts:79
+Defined in: packages/data/src/fields/field-tree.ts:87
 
 Exposes the internal factory instance used by this tree.
 
@@ -104,7 +104,7 @@ The factory instance.
 
 > **get** **nodes**(): `Map`\<`string`, [`TreeNode`](../type-aliases/TreeNode.md)\<`TFields`\>\>
 
-Defined in: packages/data/src/fields/field-tree.ts:66
+Defined in: packages/data/src/fields/field-tree.ts:74
 
 **`Internal`**
 
@@ -129,7 +129,7 @@ Avoid modifying this map directly to maintain internal consistency; use [addNode
 
 > **addNode**(`name`, `node`): [`TreeNode`](../type-aliases/TreeNode.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:146
+Defined in: packages/data/src/fields/field-tree.ts:154
 
 Adds a pre-existing node as a direct child of this tree branch.
 
@@ -167,7 +167,7 @@ If a node with the same name already exists.
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/fields/field-tree.ts:285
+Defined in: packages/data/src/fields/field-tree.ts:293
 
 Removes all child nodes from this tree branch.
 This method ensures that `destroy()` is called on each child node, allowing for
@@ -187,7 +187,7 @@ a full, recursive cleanup of the entire subtree.
 
 > **createDetachedFields**(): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/fields/field-tree.ts:317
+Defined in: packages/data/src/fields/field-tree.ts:325
 
 Creates a new, detached Fields container using the same factory.
 
@@ -205,7 +205,7 @@ Creates a new, detached Fields container using the same factory.
 
 > **createDetachedTree**(): [`FieldTree`](FieldTree.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:308
+Defined in: packages/data/src/fields/field-tree.ts:316
 
 Creates a new, detached FieldTree instance using the same factory as this tree.
 This new tree has no parent and is completely isolated.
@@ -226,7 +226,7 @@ A new instance of the same tree type.
 
 > **createFields**(`path`, `createPath?`): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/fields/field-tree.ts:208
+Defined in: packages/data/src/fields/field-tree.ts:216
 
 Creates a new `Fields` (leaf) container at the specified path.
 
@@ -264,7 +264,7 @@ If the path is invalid or a node already exists at the target location.
 
 > **createFieldTree**\<`T`\>(`path`, `createPath?`): `T`
 
-Defined in: packages/data/src/fields/field-tree.ts:196
+Defined in: packages/data/src/fields/field-tree.ts:204
 
 Creates a new `FieldTree` (branch) node at the specified path.
 
@@ -308,7 +308,7 @@ If the path is invalid or a node already exists at the target location.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field-tree.ts:296
+Defined in: packages/data/src/fields/field-tree.ts:304
 
 Performs a complete cleanup of this node and its entire subtree.
 
@@ -330,7 +330,7 @@ This method should be called when a node is no longer needed.
 
 > **findParentNode**(`path`): [`CoreFields`](CoreFields.md) \| [`FieldTree`](FieldTree.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:275
+Defined in: packages/data/src/fields/field-tree.ts:283
 
 Finds the parent node for a given path.
 
@@ -362,7 +362,7 @@ An error if the path is invalid or any intermediate node is not a FieldTree.
 
 > **getFields**(`path`): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/fields/field-tree.ts:235
+Defined in: packages/data/src/fields/field-tree.ts:243
 
 Retrieves a `Fields` (leaf) container from a specified path.
 
@@ -394,7 +394,7 @@ If the path is invalid or the node at the path is not a `Fields` container.
 
 > **getFieldTree**(`path`): [`FieldTree`](FieldTree.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:219
+Defined in: packages/data/src/fields/field-tree.ts:227
 
 Retrieves a `FieldTree` (branch) node from a specified path.
 
@@ -426,7 +426,7 @@ If the path is invalid or the node at the path is not a `FieldTree`.
 
 > **getNode**(`name`): [`TreeNode`](../type-aliases/TreeNode.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:159
+Defined in: packages/data/src/fields/field-tree.ts:167
 
 Retrieves a direct child node by its name.
 
@@ -458,7 +458,7 @@ If a node with the given name cannot be found.
 
 > **getOrCreateFields**(`path`): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/fields/field-tree.ts:262
+Defined in: packages/data/src/fields/field-tree.ts:270
 
 Retrieves a `Fields` container at the specified path. If it or any part of the path doesn't exist, it will be created.
 
@@ -486,7 +486,7 @@ The existing or newly created `Fields` instance.
 
 > **getOrCreateFieldTree**(`path`): [`FieldTree`](FieldTree.md)\<[`CoreFields`](CoreFields.md)\>
 
-Defined in: packages/data/src/fields/field-tree.ts:250
+Defined in: packages/data/src/fields/field-tree.ts:258
 
 Retrieves a `FieldTree` at the specified path. If it or any part of the path doesn't exist, it will be created.
 
@@ -514,7 +514,7 @@ The existing or newly created `FieldTree` instance.
 
 > **has**(`name`): `boolean`
 
-Defined in: packages/data/src/fields/field-tree.ts:96
+Defined in: packages/data/src/fields/field-tree.ts:104
 
 Checks if a direct child node with the given name exists.
 
@@ -542,7 +542,7 @@ The name of the direct child node.
 
 > **hasPath**(`path`): `boolean`
 
-Defined in: packages/data/src/fields/field-tree.ts:105
+Defined in: packages/data/src/fields/field-tree.ts:113
 
 Checks if a node exists at a given path, traversing the tree.
 
@@ -570,7 +570,7 @@ The path to check (e.g., 'player/stats' or ['player', 'stats']).
 
 > **removeNode**(`names`): `void`
 
-Defined in: packages/data/src/fields/field-tree.ts:175
+Defined in: packages/data/src/fields/field-tree.ts:183
 
 Removes one or more nodes from this tree branch.
 
@@ -604,7 +604,7 @@ If any of the specified names do not correspond to an existing node.
 
 > **onAdd**: `Emitter`\<\[`object`\]\>
 
-Defined in: packages/data/src/fields/field-tree.ts:39
+Defined in: packages/data/src/fields/field-tree.ts:47
 
 An event emitter that fires immediately after a new node is added to this tree branch.
 
@@ -638,7 +638,7 @@ myTree.onAdd.subscribe(({ name, node }) => {
 
 > **onRemove**: `Emitter`\<\[`object`\]\>
 
-Defined in: packages/data/src/fields/field-tree.ts:54
+Defined in: packages/data/src/fields/field-tree.ts:62
 
 An event emitter that fires once after one or more nodes have been successfully removed.
 

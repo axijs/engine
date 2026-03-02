@@ -6,7 +6,7 @@
 
 # Class: CoreScope
 
-Defined in: packages/data/src/scope/core-scope.ts:13
+Defined in: packages/data/src/scope/core-scope.ts:14
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: packages/data/src/scope/core-scope.ts:13
 
 > **new CoreScope**(`options`): `CoreScope`
 
-Defined in: packages/data/src/scope/core-scope.ts:18
+Defined in: packages/data/src/scope/core-scope.ts:20
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: packages/data/src/scope/core-scope.ts:18
 
 > **data**: [`CoreStore`](CoreStore.md)
 
-Defined in: packages/data/src/scope/core-scope.ts:14
+Defined in: packages/data/src/scope/core-scope.ts:16
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: packages/data/src/scope/core-scope.ts:14
 
 > `optional` **name**: `string`
 
-Defined in: packages/data/src/scope/core-scope.ts:15
+Defined in: packages/data/src/scope/core-scope.ts:17
 
 #### Implementation of
 
@@ -56,15 +56,45 @@ Defined in: packages/data/src/scope/core-scope.ts:15
 
 > `optional` **parent**: `CoreScope`
 
-Defined in: packages/data/src/scope/core-scope.ts:16
+Defined in: packages/data/src/scope/core-scope.ts:18
+
+***
+
+### uid
+
+> `readonly` **uid**: `string`
+
+Defined in: packages/data/src/scope/core-scope.ts:15
+
+#### Implementation of
+
+[`Scope`](../interfaces/Scope.md).[`uid`](../interfaces/Scope.md#uid)
 
 ## Methods
+
+### clear()
+
+> **clear**(): `void`
+
+Defined in: packages/data/src/scope/core-scope.ts:110
+
+Deletes all values
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[`Scope`](../interfaces/Scope.md).[`clear`](../interfaces/Scope.md#clear)
+
+***
 
 ### create()
 
 > **create**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/core-scope.ts:79
+Defined in: packages/data/src/scope/core-scope.ts:89
 
 working only for clearly resolved path to variable
 
@@ -98,7 +128,7 @@ working only for clearly resolved path to variable
 
 > **delete**(`name`): `void`
 
-Defined in: packages/data/src/scope/core-scope.ts:91
+Defined in: packages/data/src/scope/core-scope.ts:101
 
 working only for clearly resolved path to variable
 
@@ -118,11 +148,30 @@ working only for clearly resolved path to variable
 
 ***
 
+### destroy()
+
+> **destroy**(): `void`
+
+Defined in: packages/data/src/scope/core-scope.ts:114
+
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+[`Scope`](../interfaces/Scope.md).[`destroy`](../interfaces/Scope.md#destroy)
+
+***
+
 ### extend()
 
 > **extend**(`childName?`): [`Scope`](../interfaces/Scope.md)
 
-Defined in: packages/data/src/scope/core-scope.ts:24
+Defined in: packages/data/src/scope/core-scope.ts:27
 
 create child Scope with optional name
 
@@ -146,7 +195,7 @@ create child Scope with optional name
 
 > **findScopeByName**(`name`): `CoreScope` \| `undefined`
 
-Defined in: packages/data/src/scope/core-scope.ts:161
+Defined in: packages/data/src/scope/core-scope.ts:180
 
 Recursively searches for the nearest scope with the specified name,
 traversing up the hierarchy chain.
@@ -171,7 +220,7 @@ The matching scope, or `undefined` if the root is reached without a match.
 
 > **get**\<`T`\>(`name`): `T`
 
-Defined in: packages/data/src/scope/core-scope.ts:28
+Defined in: packages/data/src/scope/core-scope.ts:35
 
 hierarchically read value from context
 if name has only one segment - will return value from this Scope or throw error
@@ -203,7 +252,7 @@ if name has several segments - will split path to segments and check parents
 
 > **has**(`name`): `boolean`
 
-Defined in: packages/data/src/scope/core-scope.ts:100
+Defined in: packages/data/src/scope/core-scope.ts:119
 
 hierarchically check is variable with name exists
 
@@ -225,9 +274,9 @@ hierarchically check is variable with name exists
 
 ### set()
 
-> **set**\<`T`\>(`name`, `value`): `T`
+> **set**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/core-scope.ts:46
+Defined in: packages/data/src/scope/core-scope.ts:53
 
 hierarchically set value to field with name
 searching target variable from top frame or context to bottom
@@ -250,7 +299,7 @@ searching target variable from top frame or context to bottom
 
 #### Returns
 
-`T`
+`void`
 
 #### Implementation of
 
@@ -262,7 +311,7 @@ searching target variable from top frame or context to bottom
 
 > **tracePath**(`path`): `object`
 
-Defined in: packages/data/src/scope/core-scope.ts:126
+Defined in: packages/data/src/scope/core-scope.ts:145
 
 Resolves the target scope node and the relative path for a variable operation.
 
@@ -303,7 +352,7 @@ An object containing the target scope (`node`) and the adjusted path (`path`) re
 
 > **upset**\<`T`\>(`name`, `value`): `void`
 
-Defined in: packages/data/src/scope/core-scope.ts:67
+Defined in: packages/data/src/scope/core-scope.ts:77
 
 working only for clearly resolved path to variable
 

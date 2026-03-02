@@ -6,7 +6,7 @@
 
 # Interface: BooleanField
 
-Defined in: packages/data/src/fields/field.ts:113
+Defined in: packages/data/src/fields/field.ts:107
 
 A specialized Field for handling boolean values.
 Provides toggle functionality.
@@ -122,10 +122,10 @@ A function that transforms the current value into a new one.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:72
+Defined in: packages/utils/dist/index.d.ts:48
 
-Cleans up the field, removing all listeners and releasing resources.
-Should be called when the field is no longer needed.
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
 
 #### Returns
 
@@ -168,7 +168,7 @@ The new value to set.
 
 > **toggle**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:118
+Defined in: packages/data/src/fields/field.ts:112
 
 Inverts the current boolean value (true -> false, false -> true).
 

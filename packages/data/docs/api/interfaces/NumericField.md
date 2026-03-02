@@ -6,7 +6,7 @@
 
 # Interface: NumericField
 
-Defined in: packages/data/src/fields/field.ts:79
+Defined in: packages/data/src/fields/field.ts:73
 
 A specialized Field for handling numeric values.
 Provides capabilities for range clamping (min/max) and arithmetic operations.
@@ -21,7 +21,7 @@ Provides capabilities for range clamping (min/max) and arithmetic operations.
 
 > `readonly` **max**: `number` \| `undefined`
 
-Defined in: packages/data/src/fields/field.ts:84
+Defined in: packages/data/src/fields/field.ts:78
 
 The maximum allowed value for this field, or undefined if no upper bound exists.
 
@@ -31,7 +31,7 @@ The maximum allowed value for this field, or undefined if no upper bound exists.
 
 > `readonly` **min**: `number` \| `undefined`
 
-Defined in: packages/data/src/fields/field.ts:81
+Defined in: packages/data/src/fields/field.ts:75
 
 The minimum allowed value for this field, or undefined if no lower bound exists.
 
@@ -142,7 +142,7 @@ A function that transforms the current value into a new one.
 
 > **dec**(`val`): `void`
 
-Defined in: packages/data/src/fields/field.ts:106
+Defined in: packages/data/src/fields/field.ts:100
 
 Decrements the current value by the specified amount.
 
@@ -164,10 +164,10 @@ The amount to subtract.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:72
+Defined in: packages/utils/dist/index.d.ts:48
 
-Cleans up the field, removing all listeners and releasing resources.
-Should be called when the field is no longer needed.
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
 
 #### Returns
 
@@ -183,7 +183,7 @@ Should be called when the field is no longer needed.
 
 > **inc**(`val`): `void`
 
-Defined in: packages/data/src/fields/field.ts:100
+Defined in: packages/data/src/fields/field.ts:94
 
 Increments the current value by the specified amount.
 
@@ -205,7 +205,7 @@ The amount to add.
 
 > **isMax**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:94
+Defined in: packages/data/src/fields/field.ts:88
 
 Checks if the current value is equal to or greater than the maximum limit.
 
@@ -219,7 +219,7 @@ Checks if the current value is equal to or greater than the maximum limit.
 
 > **isMin**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:89
+Defined in: packages/data/src/fields/field.ts:83
 
 Checks if the current value is equal to or less than the minimum limit.
 

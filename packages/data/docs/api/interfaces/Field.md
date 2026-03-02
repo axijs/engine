@@ -13,6 +13,10 @@ Represents a reactive data holder for a specific value type.
 A Field wraps a raw value, providing features like change observation (`onChange`),
 policy enforcement (validation/transformation), and metadata management (`name`, `typeName`).
 
+## Extends
+
+- `Destroyable`
+
 ## Extended by
 
 - [`NumericField`](NumericField.md)
@@ -110,14 +114,18 @@ A function that transforms the current value into a new one.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:72
+Defined in: packages/utils/dist/index.d.ts:48
 
-Cleans up the field, removing all listeners and releasing resources.
-Should be called when the field is no longer needed.
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
 
 #### Returns
 
 `void`
+
+#### Inherited from
+
+`Destroyable.destroy`
 
 ***
 

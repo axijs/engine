@@ -22,7 +22,7 @@ Defined in: packages/data/src/scope/core-scope.ts:8
 
 > `optional` **name**: `string`
 
-Defined in: packages/data/src/scope/core-scope.ts:9
+Defined in: packages/data/src/scope/core-scope.ts:10
 
 ***
 
@@ -30,4 +30,12 @@ Defined in: packages/data/src/scope/core-scope.ts:9
 
 > `optional` **parent**: [`CoreScope`](../classes/CoreScope.md)
 
-Defined in: packages/data/src/scope/core-scope.ts:10
+Defined in: packages/data/src/scope/core-scope.ts:11
+
+***
+
+### uid?
+
+> `optional` **uid**: `string`
+
+Defined in: packages/data/src/scope/core-scope.ts:9

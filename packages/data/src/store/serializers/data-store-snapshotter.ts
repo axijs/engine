@@ -1,6 +1,6 @@
 import {DataStoreSnapshot} from './data-store-snapshot';
-import {CoreStore} from '../../store';
-import {FieldTreeSnapshotter} from './field-tree-snapshotter';
+import {CoreStore} from '../index';
+import {FieldTreeSnapshotter} from '../../fields';
 
 /**
  */

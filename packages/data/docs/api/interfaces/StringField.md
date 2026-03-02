@@ -6,7 +6,7 @@
 
 # Interface: StringField
 
-Defined in: packages/data/src/fields/field.ts:125
+Defined in: packages/data/src/fields/field.ts:119
 
 A specialized Field for handling string values.
 Provides chainable methods for common string manipulations.
@@ -95,7 +95,7 @@ if the value is different from the current one.
 
 > **append**(`str`): `this`
 
-Defined in: packages/data/src/fields/field.ts:131
+Defined in: packages/data/src/fields/field.ts:125
 
 Appends a string or number to the end of the current value.
 
@@ -146,7 +146,7 @@ A function that transforms the current value into a new one.
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:155
+Defined in: packages/data/src/fields/field.ts:149
 
 Sets the value to an empty string.
 
@@ -160,10 +160,10 @@ Sets the value to an empty string.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:72
+Defined in: packages/utils/dist/index.d.ts:48
 
-Cleans up the field, removing all listeners and releasing resources.
-Should be called when the field is no longer needed.
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
 
 #### Returns
 
@@ -179,7 +179,7 @@ Should be called when the field is no longer needed.
 
 > **isEmpty**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:150
+Defined in: packages/data/src/fields/field.ts:144
 
 Checks if the current string is empty (length is 0).
 
@@ -195,7 +195,7 @@ Checks if the current string is empty (length is 0).
 
 > **prepend**(`str`): `this`
 
-Defined in: packages/data/src/fields/field.ts:138
+Defined in: packages/data/src/fields/field.ts:132
 
 Prepends a string or number to the beginning of the current value.
 
@@ -246,7 +246,7 @@ The new value to set.
 
 > **trim**(): `this`
 
-Defined in: packages/data/src/fields/field.ts:144
+Defined in: packages/data/src/fields/field.ts:138
 
 Removes whitespace from both ends of the current string value.
 

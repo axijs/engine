@@ -14,6 +14,10 @@ This class acts as a "leaf" node in the `FieldTree` hierarchy, managing a flat
 key-value store of reactive data points. It uses a `FieldRegistry` to dynamically
 create `Field` instances of different types.
 
+## Implements
+
+- `Destroyable`
+
 ## Constructors
 
 ### Constructor
@@ -197,9 +201,16 @@ The newly created `Field` instance.
 
 Defined in: packages/data/src/fields/fields.ts:179
 
+Destroys the object, releasing all held resources.
+After calling this, the object should be considered unusable.
+
 #### Returns
 
 `void`
+
+#### Implementation of
+
+`Destroyable.destroy`
 
 ***
 

@@ -1,5 +1,4 @@
-import {FieldsSnapshot} from './fields-snapshot';
-import {FieldTreeSnapshot} from './field-tree-snapshot';
+import {FieldsSnapshot, FieldTreeSnapshot} from '../../fields';
 
 /**
  * A plain object representation of a DataStore's state, used for serialization.
