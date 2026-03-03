@@ -5,7 +5,8 @@ import {
   CoreBooleanField, FieldRegistry, PolicySerializer, ClampPolicy,
   ClampPolicySerializerHandler, ClampMinPolicy, ClampMaxPolicySerializerHandler, ClampMinPolicySerializerHandler,
   ClampMaxPolicy, CoreStringField, FieldTreeHydrator, FieldHydrator, FieldsHydrator, CoreTreeNodeFactory,
-  createCoreFieldSystem, FieldSnapshotter, FieldsSnapshotter, FieldTreeSnapshotter, CoreStore, CoreScope, type Scope
+  createCoreFieldSystem, FieldSnapshotter, FieldsSnapshotter, FieldTreeSnapshotter, CoreScope, type Scope,
+  createCoreStoreSystem, CoreStore
 } from '@axi-engine/data';
 
 
@@ -86,7 +87,8 @@ export async function testOneStringField() {
 
 export async function testScopeSystem() {
   const system = createCoreFieldSystem();
-  const data = new CoreStore(system.factory);
+  const storeSystem = createCoreStoreSystem(system);
+  const data: CoreStore = storeSystem.factory.create();
 
   const rootScope: CoreScope = new CoreScope({data, name: 'root'});
   const scriptScope: CoreScope = rootScope.extend('script') as CoreScope;

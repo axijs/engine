@@ -10,6 +10,7 @@ import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './fields';
 import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './fields';
 import {CoreFields} from './fields';
 import {CoreTreeNodeFactory} from './fields';
+import {CoreStoreFactory, DataStoreHydrator, DataStoreSnapshotter} from './store';
 
 
 /**
@@ -74,21 +75,26 @@ export function createCoreTreeSnapshotter(policySerializer?: PolicySerializer) {
   )
 }
 
+export type CoreFieldSystem = {
+  factory: CoreTreeNodeFactory,
+  hydrator: FieldTreeHydrator<CoreFields>,
+  snapshotter: FieldTreeSnapshotter
+};
+
 export interface CoreFieldSystemConfig {
   registry?: FieldRegistry,
   policySerializer?: PolicySerializer
 }
 
 /**
- * Creates a complete core setup for the field system.
- * @returns {{factory: CoreTreeNodeFactory, serializer: FieldTreeHydrator<CoreFields>}}
+ * Initializes the low-level field infrastructure.
+ * Wires together the factory, hydrator (loader), and snapshotter (saver)
+ * using default or provided configurations.
+ *
+ * @param config Configuration for the field system.
+ * @returns {CoreFieldSystem} A bundle of services for managing FieldTrees.
  */
-export function createCoreFieldSystem(config?: CoreFieldSystemConfig):
-  { factory: CoreTreeNodeFactory,
-    hydrator: FieldTreeHydrator<CoreFields>,
-    snapshotter: FieldTreeSnapshotter
-  }
-{
+export function createCoreFieldSystem(config?: CoreFieldSystemConfig): CoreFieldSystem {
   const registry = config?.registry ?? createCoreFieldRegistry();
   const factory = createCoreTreeNodeFactory(registry);
   const policySerializer = config?.policySerializer ?? createCorePolicySerializer();
@@ -98,4 +104,25 @@ export function createCoreFieldSystem(config?: CoreFieldSystemConfig):
     hydrator: createCoreTreeHydrator(factory, policySerializer),
     snapshotter: createCoreTreeSnapshotter(policySerializer),
   };
+}
+
+export type CoreStoreSystem = {
+  factory: CoreStoreFactory,
+  hydrator: DataStoreHydrator,
+  snapshotter: DataStoreSnapshotter
+}
+
+/**
+ * Initializes the high-level DataStore infrastructure.
+ * Creates the store factory and serialization services based on the provided field system.
+ *
+ * @param fieldsSystem The initialized low-level field system.
+ * @returns {CoreStoreSystem} A bundle of services for creating and managing DataStores.
+ */
+export function createCoreStoreSystem(fieldsSystem: CoreFieldSystem): CoreStoreSystem {
+  return {
+    factory: new CoreStoreFactory(fieldsSystem.factory),
+    hydrator: new DataStoreHydrator(fieldsSystem.hydrator),
+    snapshotter: new DataStoreSnapshotter(fieldsSystem.snapshotter)
+  }
 }

@@ -1,4 +1,5 @@
 export * from './store'
 export * from './core-store'
+export * from './core-store-factory'
 export * from './store-field-resolver'
 export * from './serializers'
