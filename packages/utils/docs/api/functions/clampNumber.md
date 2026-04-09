@@ -8,7 +8,7 @@
 
 > **clampNumber**(`val`, `min?`, `max?`): `number`
 
-Defined in: math.ts:11
+Defined in: math.ts:10
 
 Clamps a number between an optional minimum and maximum value.
 

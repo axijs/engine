@@ -8,7 +8,7 @@
 
 > **getPercentOf**(`val`, `percents`, `precision?`): `number`
 
-Defined in: math.ts:26
+Defined in: math.ts:25
 
 Calculates a percentage of a given value.
 

@@ -1,5 +1,4 @@
-import {isNullOrUndefined, isUndefined} from './guards';
-
+import {isNullOrUndefined, isUndefined} from '@axijs/ensure';
 
 /**
  * Clamps a number between an optional minimum and maximum value.

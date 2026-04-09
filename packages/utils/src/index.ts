@@ -3,7 +3,6 @@ export type * from './types';
 
 //
 export * from './arrays';
-export * from './assertion';
 export * from './config';
 export * from './data';
 export * from './emitters';

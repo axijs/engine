@@ -1,6 +1,5 @@
 import {Unsubscribable} from './types';
-import {isFunction} from './guards';
-
+import {isFunction} from '@axijs/ensure';
 
 /**
  * Represents a disposable resource, such as the execution of an Observable or an Event Listener.

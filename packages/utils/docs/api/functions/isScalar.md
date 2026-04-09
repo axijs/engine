@@ -8,7 +8,7 @@
 
 > **isScalar**(`value`): `value is ScalarType`
 
-Defined in: guards.ts:8
+Defined in: guards.ts:9
 
 Type guard that checks if a value is a valid ScalarType.
 

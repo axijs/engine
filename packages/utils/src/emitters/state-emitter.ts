@@ -1,6 +1,6 @@
 import {Emitter} from './emitter';
-import {isUndefined} from '../guards';
 import {Subscription} from '../subscription';
+import {isUndefined} from '@axijs/ensure';
 
 /**
  * An Emitter that stores the last emitted value.

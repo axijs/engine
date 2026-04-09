@@ -1,5 +1,4 @@
-import {throwIf} from './assertion';
-import {isObject} from './guards';
+import {isEmpty, isObject, throwIf} from '@axijs/ensure';
 
 /**
  * Returns the first key of an object.
@@ -8,6 +7,6 @@ import {isObject} from './guards';
  * @throws {Error} If the argument is not a valid object.
  */
 export function firstKeyOf(obj: any) {
-  throwIf(!isObject(obj), `firstKeyOf: Expected an object, got ${typeof obj}`);
+  throwIf(!isObject(obj) || isEmpty(obj), `firstKeyOf: Expected an object, got ${typeof obj}`);
   return Object.keys(obj)[0];
 }

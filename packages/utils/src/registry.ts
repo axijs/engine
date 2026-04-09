@@ -1,4 +1,4 @@
-import {throwIf, throwIfEmpty} from './assertion';
+import {throwIf, throwIfEmpty} from '@axijs/ensure';
 
 /**
  * A generic, type-safe wrapper around a Map for managing collections of items by key.
