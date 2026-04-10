@@ -2,7 +2,8 @@ import {ExpressionHandler} from '../expression-handler';
 import {ChanceExpression, ExpressionName} from '../expressions';
 import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 import {resolveOperandAsScalar} from '../resolve-operand';
-import {isNumber, isString, randInt, throwError, throwIf} from '@axi-engine/utils';
+import {randInt} from '@axi-engine/utils';
+import {isString, isNumber, throwIf, throwError} from '@axijs/ensure';
 
 /**
  * An expression handler for the `chance` expression.

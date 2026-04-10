@@ -1,5 +1,5 @@
 import {MathOperationType} from './types';
-import {isNumber, throwError, throwIf} from '@axi-engine/utils';
+import {isNumber, throwError, throwIf} from '@axijs/ensure';
 
 /**
  * A safe utility function that performs a basic mathematical operation on two operands.

@@ -74,7 +74,7 @@ export const Tasks = {
       }
     };
 
-    const executor = (async (): Promise<T> => {
+    const executor = async (): Promise<T> => {
       let finalResult: T;
       for (let i = 0; i < allTasks.length; i++) {
         currentIndex = i;
@@ -90,7 +90,7 @@ export const Tasks = {
         }
       }
       return finalResult!;
-    })
+    };
 
     return {
       promise: executor(),

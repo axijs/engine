@@ -1,5 +1,6 @@
 import {StateHandlerConfig, StateHandlerRegistration} from "./state-handler";
-import {Emitter, isNullOrUndefined, isUndefined, throwIf, throwIfEmpty} from '@axi-engine/utils';
+import {isFunction, isNullOrUndefined, isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
+import {Emitter} from '@axijs/emitter';
 
 
 /**
@@ -71,7 +72,9 @@ export class StateMachine<T, P = void> {
    * });
    */
   register(state: T, handler?: StateHandlerRegistration<T, P>): void {
-    if (isUndefined(handler) || typeof handler === 'function') {
+    if (isUndefined(handler)) {
+      this.states.set(state, {});
+    } else if (isFunction(handler)) {
       this.states.set(state, {onEnter: handler});
     } else {
       this.states.set(state, handler);

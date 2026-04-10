@@ -1,7 +1,7 @@
 import {InstructionHandler} from '../instruction-handler';
 import {Instruction, InstructionName, SwitchInstruction} from '../instructions';
 import {InstructionResolverContext} from '../instruction-resolver-context';
-import {isUndefined} from '@axi-engine/utils';
+import {isUndefined} from '@axijs/ensure';
 import {resolveOperand} from '@axi-engine/expressions';
 
 export class SwitchInstructionHandler implements InstructionHandler<SwitchInstruction> {

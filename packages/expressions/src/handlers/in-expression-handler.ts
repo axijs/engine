@@ -2,8 +2,9 @@ import {ExpressionHandler} from '../expression-handler';
 import {ExpressionName, InExpression} from '../expressions';
 import {ExpressionEvaluatorContext} from '../expression-evaluator-context';
 import {resolveOperand, resolveOperandAsScalar} from '../resolve-operand';
-import {isScalar, ScalarType, throwIf} from '@axi-engine/utils';
+import {isScalar, ScalarType} from '@axi-engine/utils';
 import {Operand} from '../types';
+import {throwIf} from '@axijs/ensure';
 
 
 /**

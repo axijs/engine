@@ -1,4 +1,4 @@
-import {isString} from '@axi-engine/utils';
+import {isString} from '@axijs/ensure';
 import {resolveOperand} from '@axi-engine/expressions';
 import {InstructionHandler} from '../instruction-handler';
 import {LogInstruction, InstructionName} from '../instructions';

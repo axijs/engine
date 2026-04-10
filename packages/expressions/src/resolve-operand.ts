@@ -1,5 +1,6 @@
 import {Operand} from './types';
-import {DataSource, isScalar, ScalarType, throwError, throwIf} from '@axi-engine/utils';
+import {DataSource, isScalar, ScalarType} from '@axi-engine/utils';
+import {throwError, throwIf} from '@axijs/ensure';
 import {isArithmeticOperand, isReferenceOperand, isValueOperand} from './guards';
 import {resolveMath} from './resolve-math';
 

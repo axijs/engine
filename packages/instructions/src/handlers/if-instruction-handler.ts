@@ -1,8 +1,7 @@
-import {isNullOrUndefined} from '@axi-engine/utils';
 import {InstructionHandler} from '../instruction-handler';
 import {IfInstruction, InstructionName} from '../instructions';
 import {InstructionResolverContext} from '../instruction-resolver-context';
-
+import {isNullOrUndefined} from '@axijs/ensure'
 
 export class IfInstructionHandler implements InstructionHandler<IfInstruction> {
   name: InstructionName = 'if';

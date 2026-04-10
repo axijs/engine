@@ -1,5 +1,5 @@
 import {Expression} from './expressions';
-import {DataSource,} from '@axi-engine/utils';
+import {DataSource} from '@axi-engine/utils';
 
 
 /**

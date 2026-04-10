@@ -1,5 +1,6 @@
 import {RegisteredInstructions, Instruction, InstructionName} from './instructions';
-import {firstKeyOf, isNullOrUndefined} from '@axi-engine/utils';
+import {isNullOrUndefined} from '@axijs/ensure';
+import {firstKeyOf} from '@axi-engine/utils';
 import {isRegisteredInstructionName} from './config';
 
 /**

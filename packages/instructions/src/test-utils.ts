@@ -1,4 +1,5 @@
-import {DataStorage, ensurePathString, PathType, throwIf} from '@axi-engine/utils';
+import {DataStorage, ensurePathString, PathType} from '@axi-engine/utils';
+import {throwIf} from '@axijs/ensure'
 
 /**
  * simple mocked data store

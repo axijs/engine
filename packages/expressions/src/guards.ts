@@ -1,5 +1,5 @@
-import {isNullOrUndefined} from '@axi-engine/utils';
 import {ArithmeticOperand, Operand, ReferenceOperand, ValueOperand} from './types';
+import {isNullOrUndefined} from '@axijs/ensure';
 
 /**
  * Type guard that checks if a value is a `ValueOperand`.
