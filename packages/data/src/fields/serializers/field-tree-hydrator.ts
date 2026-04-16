@@ -1,5 +1,5 @@
+import {isString, throwError} from '@axijs/ensure';
 import {FieldsHydrator} from './fields-hydrator';
-import {isString, throwError} from '@axi-engine/utils';
 import {Fields} from '../fields';
 import {FieldTreeFactory} from '../field-tree-factory';
 import {FieldTree} from '../field-tree';

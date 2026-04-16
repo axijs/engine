@@ -1,5 +1,5 @@
 import {CoreBooleanField, CoreNumericField, CoreStringField} from '../fields';
-import {isBoolean, isNumber, isString} from '@axi-engine/utils';
+import {isBoolean, isNumber, isString} from '@axijs/ensure';
 
 export interface StoreFieldResolver {
   /**

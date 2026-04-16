@@ -6,7 +6,7 @@
 
 # Class: CoreStore
 
-Defined in: packages/data/src/store/core-store.ts:26
+Defined in: packages/data/src/store/core-store.ts:27
 
 Defines the primary high-level API for interacting with the state management system.
 It acts as a facade, simplifying access to the underlying FieldTree and providing
@@ -22,7 +22,7 @@ both type-safe and dynamic methods for manipulating data.
 
 > **new CoreStore**(`treeOrFactory`, `variables?`): `CoreStore`
 
-Defined in: packages/data/src/store/core-store.ts:49
+Defined in: packages/data/src/store/core-store.ts:50
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: packages/data/src/store/core-store.ts:49
 
 > `readonly` **typeName**: `"coreStore"` = `CoreStore.typeName`
 
-Defined in: packages/data/src/store/core-store.ts:28
+Defined in: packages/data/src/store/core-store.ts:29
 
 #### Implementation of
 
@@ -56,7 +56,7 @@ Defined in: packages/data/src/store/core-store.ts:28
 
 > `readonly` `static` **typeName**: `"coreStore"` = `'coreStore'`
 
-Defined in: packages/data/src/store/core-store.ts:27
+Defined in: packages/data/src/store/core-store.ts:28
 
 ## Methods
 
@@ -64,7 +64,7 @@ Defined in: packages/data/src/store/core-store.ts:27
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/store/core-store.ts:237
+Defined in: packages/data/src/store/core-store.ts:238
 
 Deletes all values
 
@@ -82,7 +82,7 @@ Deletes all values
 
 > **clearResolvers**(): `void`
 
-Defined in: packages/data/src/store/core-store.ts:68
+Defined in: packages/data/src/store/core-store.ts:69
 
 #### Returns
 
@@ -94,7 +94,7 @@ Defined in: packages/data/src/store/core-store.ts:68
 
 > **create**(`path`, `value`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:225
+Defined in: packages/data/src/store/core-store.ts:226
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
@@ -128,7 +128,7 @@ The initial value to create.
 
 > **createBoolean**(`path`, `initialValue`, `options?`): [`CoreBooleanField`](CoreBooleanField.md)
 
-Defined in: packages/data/src/store/core-store.ts:110
+Defined in: packages/data/src/store/core-store.ts:111
 
 Creates a new, strongly-typed CoreBooleanField.
 
@@ -164,7 +164,7 @@ An error if a node already exists at the path.
 
 > **createFields**(`path`): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/store/core-store.ts:158
+Defined in: packages/data/src/store/core-store.ts:159
 
 Strictly creates a new CoreFields container.
 Any missing parent nodes in the path will be created automatically.
@@ -197,7 +197,7 @@ An error if a node already exists at the target path.
 
 > **createGeneric**\<`T`\>(`path`, `initialValue`, `options?`): [`CoreField`](CoreField.md)\<`T`\>
 
-Defined in: packages/data/src/store/core-store.ts:125
+Defined in: packages/data/src/store/core-store.ts:126
 
 Creates a new, generic CoreField instance for any data type.
 
@@ -239,7 +239,7 @@ An error if a node already exists at the path.
 
 > **createIsolated**(): `CoreStore`
 
-Defined in: packages/data/src/store/core-store.ts:204
+Defined in: packages/data/src/store/core-store.ts:205
 
 Creates a new, independent instance of the Store with a fresh, empty data state (FieldsTree).
 
@@ -263,7 +263,7 @@ A new, isolated DataStore instance.
 
 > **createNumeric**(`path`, `initialValue`, `options?`): [`CoreNumericField`](CoreNumericField.md)
 
-Defined in: packages/data/src/store/core-store.ts:115
+Defined in: packages/data/src/store/core-store.ts:116
 
 Creates a new, strongly-typed CoreNumericField.
 
@@ -299,7 +299,7 @@ An error if a node already exists at the path.
 
 > **createString**(`path`, `initialValue`, `options?`): [`CoreStringField`](CoreStringField.md)
 
-Defined in: packages/data/src/store/core-store.ts:120
+Defined in: packages/data/src/store/core-store.ts:121
 
 Creates a new, strongly-typed CoreStringField.
 
@@ -335,7 +335,7 @@ An error if a node already exists at the path.
 
 > **createTree**(`path`): [`CoreFieldTree`](CoreFieldTree.md)
 
-Defined in: packages/data/src/store/core-store.ts:162
+Defined in: packages/data/src/store/core-store.ts:163
 
 Strictly creates a new CoreFieldTree node.
 Any missing parent nodes in the path will be created automatically.
@@ -368,7 +368,7 @@ An error if a node already exists at the target path.
 
 > **createValue**\<`T`\>(`path`, `val`, `options?`): `T`
 
-Defined in: packages/data/src/store/core-store.ts:84
+Defined in: packages/data/src/store/core-store.ts:85
 
 Creates a new Field at a specified path, inferring its type from the provided value.
 This is a strict operation and will fail if a node already exists at the target path.
@@ -421,7 +421,7 @@ An error if a node already exists at the path or if the parent path is invalid.
 
 > **delete**(`path`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:233
+Defined in: packages/data/src/store/core-store.ts:234
 
 Deletes the value at the specified path.
 
@@ -447,7 +447,7 @@ The path to the value to be deleted.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/store/core-store.ts:242
+Defined in: packages/data/src/store/core-store.ts:243
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -466,7 +466,7 @@ After calling this, the object should be considered unusable.
 
 > **get**(`path`): `unknown`
 
-Defined in: packages/data/src/store/core-store.ts:217
+Defined in: packages/data/src/store/core-store.ts:218
 
 #### Parameters
 
@@ -488,7 +488,7 @@ Defined in: packages/data/src/store/core-store.ts:217
 
 > **getBoolean**(`path`): [`CoreBooleanField`](CoreBooleanField.md)
 
-Defined in: packages/data/src/store/core-store.ts:130
+Defined in: packages/data/src/store/core-store.ts:131
 
 Retrieves a strongly-typed CoreBooleanField instance.
 
@@ -516,7 +516,7 @@ An error if the path is invalid or the field is not of the expected type.
 
 > **getField**\<`TField`\>(`path`): `TField`
 
-Defined in: packages/data/src/store/core-store.ts:146
+Defined in: packages/data/src/store/core-store.ts:147
 
 A generic method to retrieve a Field instance with a specific asserted type.
 
@@ -552,7 +552,7 @@ An error if the path is invalid or the field cannot be cast to the specified typ
 
 > **getFields**(`path`): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/store/core-store.ts:166
+Defined in: packages/data/src/store/core-store.ts:167
 
 Retrieves an existing CoreFields container.
 
@@ -584,7 +584,7 @@ An error if the path is invalid or the node at the path is not a Fields containe
 
 > **getGeneric**\<`T`\>(`path`): [`CoreField`](CoreField.md)\<`T`\>
 
-Defined in: packages/data/src/store/core-store.ts:142
+Defined in: packages/data/src/store/core-store.ts:143
 
 Retrieves a generic CoreField instance.
 
@@ -618,7 +618,7 @@ An error if the path is invalid.
 
 > **getInternalTree**(): [`CoreFieldTree`](CoreFieldTree.md) \| `undefined`
 
-Defined in: packages/data/src/store/core-store.ts:257
+Defined in: packages/data/src/store/core-store.ts:258
 
 **`Internal`**
 
@@ -634,7 +634,7 @@ Used for serialization
 
 > **getInternalVariables**(): [`CoreFields`](CoreFields.md) \| `undefined`
 
-Defined in: packages/data/src/store/core-store.ts:250
+Defined in: packages/data/src/store/core-store.ts:251
 
 **`Internal`**
 
@@ -650,7 +650,7 @@ Used for serialization
 
 > **getNumeric**(`path`): [`CoreNumericField`](CoreNumericField.md)
 
-Defined in: packages/data/src/store/core-store.ts:134
+Defined in: packages/data/src/store/core-store.ts:135
 
 Retrieves a strongly-typed CoreNumericField instance.
 
@@ -678,7 +678,7 @@ An error if the path is invalid or the field is not of the expected type.
 
 > **getOrCreateInternalTree**(): [`CoreFieldTree`](CoreFieldTree.md)
 
-Defined in: packages/data/src/store/core-store.ts:271
+Defined in: packages/data/src/store/core-store.ts:272
 
 **`Internal`**
 
@@ -694,7 +694,7 @@ Used for serialization
 
 > **getOrCreateInternalVariables**(): [`CoreFields`](CoreFields.md)
 
-Defined in: packages/data/src/store/core-store.ts:264
+Defined in: packages/data/src/store/core-store.ts:265
 
 **`Internal`**
 
@@ -710,7 +710,7 @@ Used for serialization
 
 > **getString**(`path`): [`CoreStringField`](CoreStringField.md)
 
-Defined in: packages/data/src/store/core-store.ts:138
+Defined in: packages/data/src/store/core-store.ts:139
 
 Retrieves a strongly-typed CoreStringField instance.
 
@@ -738,7 +738,7 @@ An error if the path is invalid or the field is not of the expected type.
 
 > **getTree**(`path`): [`CoreFieldTree`](CoreFieldTree.md)
 
-Defined in: packages/data/src/store/core-store.ts:170
+Defined in: packages/data/src/store/core-store.ts:171
 
 Retrieves an existing CoreFieldTree node.
 
@@ -770,7 +770,7 @@ An error if the path is invalid or the node at the path is not a FieldTree.
 
 > **getValue**\<`T`\>(`path`): `T`
 
-Defined in: packages/data/src/store/core-store.ts:73
+Defined in: packages/data/src/store/core-store.ts:74
 
 Retrieves the raw value of a Field at a specific path.
 
@@ -810,7 +810,7 @@ An error if the path is invalid or no field exists at the path.
 
 > **has**(`path`): `boolean`
 
-Defined in: packages/data/src/store/core-store.ts:209
+Defined in: packages/data/src/store/core-store.ts:210
 
 code below -> implementation of the DataStore from utils
 
@@ -834,7 +834,7 @@ code below -> implementation of the DataStore from utils
 
 > **registerResolver**(`resolver`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:64
+Defined in: packages/data/src/store/core-store.ts:65
 
 #### Parameters
 
@@ -852,7 +852,7 @@ Defined in: packages/data/src/store/core-store.ts:64
 
 > **remove**(`path`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:174
+Defined in: packages/data/src/store/core-store.ts:175
 
 Removes the node (Field, Fields, or FieldTree) at the end of the specified path.
 This method does not remove parent nodes if they become empty.
@@ -879,7 +879,7 @@ The path to the node to remove.
 
 > **set**(`path`, `value`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:221
+Defined in: packages/data/src/store/core-store.ts:222
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
@@ -912,7 +912,7 @@ The new value to set.
 
 > **setValue**\<`T`\>(`path`, `val`): `T`
 
-Defined in: packages/data/src/store/core-store.ts:77
+Defined in: packages/data/src/store/core-store.ts:78
 
 Strictly sets the value of an *existing* Field at a specific path.
 
@@ -958,7 +958,7 @@ An error if no field exists at the specified path.
 
 > **upset**(`path`, `value`): `void`
 
-Defined in: packages/data/src/store/core-store.ts:229
+Defined in: packages/data/src/store/core-store.ts:230
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.
@@ -991,7 +991,7 @@ The value to set.
 
 > **upsetValue**\<`T`\>(`path`, `val`, `options?`): `T`
 
-Defined in: packages/data/src/store/core-store.ts:97
+Defined in: packages/data/src/store/core-store.ts:98
 
 Creates new or update a Field at a specified path, inferring its type from the provided value.
 

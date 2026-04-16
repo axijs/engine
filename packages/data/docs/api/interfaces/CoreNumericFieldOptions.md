@@ -36,7 +36,7 @@ Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:15
 
 > `optional` **policies**: [`Policy`](Policy.md)\<`number`\>[]
 
-Defined in: packages/data/src/fields/field.ts:13
+Defined in: packages/data/src/fields/field.ts:14
 
 An optional array of policies to apply to this field.
 Policies can enforce validation rules, transform values, or handle constraints.

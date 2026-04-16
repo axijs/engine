@@ -6,7 +6,7 @@
 
 # Interface: BooleanField
 
-Defined in: packages/data/src/fields/field.ts:107
+Defined in: packages/data/src/fields/field.ts:108
 
 A specialized Field for handling boolean values.
 Provides toggle functionality.
@@ -21,7 +21,7 @@ Provides toggle functionality.
 
 > `readonly` **name**: `string`
 
-Defined in: packages/data/src/fields/field.ts:34
+Defined in: packages/data/src/fields/field.ts:35
 
 The name or key of this field within its parent container.
 
@@ -35,7 +35,7 @@ The name or key of this field within its parent container.
 
 > **onChange**: `Subscribable`\<\[`boolean`, `boolean`\]\>
 
-Defined in: packages/data/src/fields/field.ts:66
+Defined in: packages/data/src/fields/field.ts:67
 
 An observable stream that emits an event whenever the value changes.
 The payload contains the new value and the old value.
@@ -50,7 +50,7 @@ The payload contains the new value and the old value.
 
 > **policies**: [`Policies`](../classes/Policies.md)\<`boolean`\>
 
-Defined in: packages/data/src/fields/field.ts:46
+Defined in: packages/data/src/fields/field.ts:47
 
 The collection of policies applied to this field.
 
@@ -64,7 +64,7 @@ The collection of policies applied to this field.
 
 > `readonly` **typeName**: `string`
 
-Defined in: packages/data/src/fields/field.ts:29
+Defined in: packages/data/src/fields/field.ts:30
 
 A unique string identifier for the field type (e.g., 'numeric', 'boolean').
 Used for serialization and type guards.
@@ -79,7 +79,7 @@ Used for serialization and type guards.
 
 > **value**: `boolean`
 
-Defined in: packages/data/src/fields/field.ts:41
+Defined in: packages/data/src/fields/field.ts:42
 
 The current value of the field.
 Assigning a new value triggers policies and emits the `onChange` event
@@ -95,7 +95,7 @@ if the value is different from the current one.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: packages/data/src/fields/field.ts:60
+Defined in: packages/data/src/fields/field.ts:61
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -141,7 +141,7 @@ After calling this, the object should be considered unusable.
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: packages/data/src/fields/field.ts:53
+Defined in: packages/data/src/fields/field.ts:54
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.
@@ -168,7 +168,7 @@ The new value to set.
 
 > **toggle**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:112
+Defined in: packages/data/src/fields/field.ts:113
 
 Inverts the current boolean value (true -> false, false -> true).
 

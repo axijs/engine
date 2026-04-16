@@ -8,7 +8,7 @@
 
 > **isInstructionOfKind**\<`T`\>(`instruction`, `type`): `instruction is RegisteredInstructions[T]`
 
-Defined in: packages/instructions/src/guards.ts:35
+Defined in: packages/instructions/src/guards.ts:36
 
 A generic type guard that checks if a instruction is of a specific type.
 

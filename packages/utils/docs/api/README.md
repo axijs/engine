@@ -6,10 +6,7 @@
 
 ## Classes
 
-- [Emitter](classes/Emitter.md)
 - [Registry](classes/Registry.md)
-- [StateEmitter](classes/StateEmitter.md)
-- [Subscription](classes/Subscription.md)
 
 ## Interfaces
 
@@ -18,14 +15,12 @@
 - [DataSource](interfaces/DataSource.md)
 - [DataStorage](interfaces/DataStorage.md)
 - [Destroyable](interfaces/Destroyable.md)
-- [Unsubscribable](interfaces/Unsubscribable.md)
 
 ## Type Aliases
 
 - [Constructor](type-aliases/Constructor.md)
 - [PathType](type-aliases/PathType.md)
 - [ScalarType](type-aliases/ScalarType.md)
-- [Subscribable](type-aliases/Subscribable.md)
 
 ## Variables
 

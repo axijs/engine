@@ -1,6 +1,8 @@
+import {throwIf, throwIfEmpty} from '@axijs/ensure';
+import {axiSettings, ensurePathArray, PathType} from '@axi-engine/utils';
 import {deepmerge} from "deepmerge-ts";
 import {ConfigTree, ConfigVariant, isConfigVariant} from './config-resolver.types';
-import {axiSettings, ensurePathArray, PathType, throwIf, throwIfEmpty} from '@axi-engine/utils';
+
 
 /**
  * Resolves hierarchical configurations with inheritance and caching.

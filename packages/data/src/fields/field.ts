@@ -1,4 +1,5 @@
-import {Destroyable, Subscribable} from '@axi-engine/utils';
+import {Subscribable} from '@axijs/emitter';
+import {Destroyable} from '@axi-engine/utils';
 import {Policies, Policy} from './policies';
 
 /**

@@ -17,7 +17,6 @@
   "devDependencies": {
     "@types/node": "latest",
     "dts-bundle-generator": "^9.5.1",
-    "tsdown": "^0.20.0-beta.3",
     "tsup": "^8.5.1",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.9.0",
@@ -66,6 +65,7 @@
     "docs:tasks": "npm run docs --workspace=@axi-engine/tasks",
     "docs:utils": "npm run docs --workspace=@axi-engine/utils",
     "// --- ETC ---": "",
-    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:data && npm run build:expressions && npm run build:instructions"
+    "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:data && npm run build:expressions && npm run build:instructions",
+    "docs:libs": "npm run docs:expressions && npm run docs:data && npm run docs:instructions && npm run docs:tasks && npm run docs:utils"
   }
 }

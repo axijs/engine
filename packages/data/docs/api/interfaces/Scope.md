@@ -34,7 +34,7 @@ Defined in: packages/data/src/scope/scope.ts:4
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:248
+Defined in: packages/utils/dist/index.d.ts:191
 
 Deletes all values
 

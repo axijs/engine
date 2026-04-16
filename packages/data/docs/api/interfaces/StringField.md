@@ -6,7 +6,7 @@
 
 # Interface: StringField
 
-Defined in: packages/data/src/fields/field.ts:119
+Defined in: packages/data/src/fields/field.ts:120
 
 A specialized Field for handling string values.
 Provides chainable methods for common string manipulations.
@@ -21,7 +21,7 @@ Provides chainable methods for common string manipulations.
 
 > `readonly` **name**: `string`
 
-Defined in: packages/data/src/fields/field.ts:34
+Defined in: packages/data/src/fields/field.ts:35
 
 The name or key of this field within its parent container.
 
@@ -35,7 +35,7 @@ The name or key of this field within its parent container.
 
 > **onChange**: `Subscribable`\<\[`string`, `string`\]\>
 
-Defined in: packages/data/src/fields/field.ts:66
+Defined in: packages/data/src/fields/field.ts:67
 
 An observable stream that emits an event whenever the value changes.
 The payload contains the new value and the old value.
@@ -50,7 +50,7 @@ The payload contains the new value and the old value.
 
 > **policies**: [`Policies`](../classes/Policies.md)\<`string`\>
 
-Defined in: packages/data/src/fields/field.ts:46
+Defined in: packages/data/src/fields/field.ts:47
 
 The collection of policies applied to this field.
 
@@ -64,7 +64,7 @@ The collection of policies applied to this field.
 
 > `readonly` **typeName**: `string`
 
-Defined in: packages/data/src/fields/field.ts:29
+Defined in: packages/data/src/fields/field.ts:30
 
 A unique string identifier for the field type (e.g., 'numeric', 'boolean').
 Used for serialization and type guards.
@@ -79,7 +79,7 @@ Used for serialization and type guards.
 
 > **value**: `string`
 
-Defined in: packages/data/src/fields/field.ts:41
+Defined in: packages/data/src/fields/field.ts:42
 
 The current value of the field.
 Assigning a new value triggers policies and emits the `onChange` event
@@ -95,7 +95,7 @@ if the value is different from the current one.
 
 > **append**(`str`): `this`
 
-Defined in: packages/data/src/fields/field.ts:125
+Defined in: packages/data/src/fields/field.ts:126
 
 Appends a string or number to the end of the current value.
 
@@ -119,7 +119,7 @@ The field instance for chaining.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: packages/data/src/fields/field.ts:60
+Defined in: packages/data/src/fields/field.ts:61
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -146,7 +146,7 @@ A function that transforms the current value into a new one.
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/fields/field.ts:149
+Defined in: packages/data/src/fields/field.ts:150
 
 Sets the value to an empty string.
 
@@ -179,7 +179,7 @@ After calling this, the object should be considered unusable.
 
 > **isEmpty**(): `boolean`
 
-Defined in: packages/data/src/fields/field.ts:144
+Defined in: packages/data/src/fields/field.ts:145
 
 Checks if the current string is empty (length is 0).
 
@@ -195,7 +195,7 @@ Checks if the current string is empty (length is 0).
 
 > **prepend**(`str`): `this`
 
-Defined in: packages/data/src/fields/field.ts:132
+Defined in: packages/data/src/fields/field.ts:133
 
 Prepends a string or number to the beginning of the current value.
 
@@ -219,7 +219,7 @@ The field instance for chaining.
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: packages/data/src/fields/field.ts:53
+Defined in: packages/data/src/fields/field.ts:54
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.
@@ -246,7 +246,7 @@ The new value to set.
 
 > **trim**(): `this`
 
-Defined in: packages/data/src/fields/field.ts:138
+Defined in: packages/data/src/fields/field.ts:139
 
 Removes whitespace from both ends of the current string value.
 

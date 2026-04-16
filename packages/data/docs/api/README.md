@@ -21,6 +21,7 @@
 - [CoreNumericField](classes/CoreNumericField.md)
 - [CoreScope](classes/CoreScope.md)
 - [CoreStore](classes/CoreStore.md)
+- [CoreStoreFactory](classes/CoreStoreFactory.md)
 - [CoreStringField](classes/CoreStringField.md)
 - [CoreTreeNodeFactory](classes/CoreTreeNodeFactory.md)
 - [DataStoreHydrator](classes/DataStoreHydrator.md)
@@ -67,6 +68,8 @@
 
 ## Type Aliases
 
+- [CoreFieldSystem](type-aliases/CoreFieldSystem.md)
+- [CoreStoreSystem](type-aliases/CoreStoreSystem.md)
 - [TreeNode](type-aliases/TreeNode.md)
 
 ## Functions
@@ -77,6 +80,7 @@
 - [createCoreFieldRegistry](functions/createCoreFieldRegistry.md)
 - [createCoreFieldSystem](functions/createCoreFieldSystem.md)
 - [createCorePolicySerializer](functions/createCorePolicySerializer.md)
+- [createCoreStoreSystem](functions/createCoreStoreSystem.md)
 - [createCoreTreeHydrator](functions/createCoreTreeHydrator.md)
 - [createCoreTreeNodeFactory](functions/createCoreTreeNodeFactory.md)
 - [createCoreTreeSnapshotter](functions/createCoreTreeSnapshotter.md)

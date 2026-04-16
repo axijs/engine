@@ -11,6 +11,7 @@
 - [CancellableTask](interfaces/CancellableTask.md)
 - [Completable](interfaces/Completable.md)
 - [CompletableTask](interfaces/CompletableTask.md)
+- [TaskController](interfaces/TaskController.md)
 
 ## Variables
 

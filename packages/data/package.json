@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/data",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "A compact, reactive state management library based on a tree of observable fields.",
   "license": "MIT",
   "repository": {
@@ -36,10 +36,9 @@
   "dependencies": {
     "dequal": "^2.0.3"
   },
-  "devDependencies": {
-    "@axi-engine/utils": "^0.2.10"
-  },
   "peerDependencies": {
-    "@axi-engine/utils": "^0.2.10"
+    "@axijs/ensure": "^1.0.1",
+    "@axijs/emitter": "^1.0.1",
+    "@axi-engine/utils": "^0.3.0"
   }
 }

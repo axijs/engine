@@ -1,11 +1,10 @@
+import {throwIf, throwIfEmpty} from '@axijs/ensure';
+import {Emitter} from '@axijs/emitter';
 import {
   Destroyable,
-  Emitter,
   ensurePathArray,
   ensurePathString,
-  PathType,
-  throwIf,
-  throwIfEmpty
+  PathType
 } from '@axi-engine/utils';
 import {Fields} from './fields';
 import {FieldTreeFactory} from './field-tree-factory';

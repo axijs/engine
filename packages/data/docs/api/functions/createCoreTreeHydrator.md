@@ -8,7 +8,7 @@
 
 > **createCoreTreeHydrator**(`fieldTreeNodeFactory`, `policySerializer?`): [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
 
-Defined in: packages/data/src/setup.ts:56
+Defined in: packages/data/src/setup.ts:57
 
 Creates a fully configured serializer for a FieldTree.
 This function composes all necessary serializers (FieldTree, Fields, Field) for a complete setup.

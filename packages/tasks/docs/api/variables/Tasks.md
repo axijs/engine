@@ -18,7 +18,7 @@ scripting animations, cutscenes, or any sequential logic that needs to be skippa
 
 ### controllable()
 
-> **controllable**\<`T`\>(): `object`
+> **controllable**\<`T`\>(`defaultValueOnComplete?`): `object`
 
 #### Type Parameters
 
@@ -28,6 +28,12 @@ scripting animations, cutscenes, or any sequential logic that needs to be skippa
 
 The type of the value the promise will resolve with.
 
+#### Parameters
+
+##### defaultValueOnComplete?
+
+`T`
+
 #### Returns
 
 `object`
@@ -36,35 +42,7 @@ An object containing the task and a controller to manage its state.
 
 ##### controller
 
-> **controller**: `object`
-
-###### controller.reject()
-
-> **reject**: (`reason?`) => `void`
-
-###### Parameters
-
-###### reason?
-
-`any`
-
-###### Returns
-
-`void`
-
-###### controller.resolve()
-
-> **resolve**: (`value`) => `void`
-
-###### Parameters
-
-###### value
-
-`T`
-
-###### Returns
-
-`void`
+> **controller**: [`TaskController`](../interfaces/TaskController.md)\<`T`\>
 
 ##### task
 
@@ -108,13 +86,19 @@ The `complete` method is a no-op, as a native promise cannot be externally compl
 
 ### parallel()
 
-> **parallel**(`tasks`): [`CompletableTask`](../interfaces/CompletableTask.md)
+> **parallel**\<`T`\>(`tasks`): [`CompletableTask`](../interfaces/CompletableTask.md)
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`CompletableTask`](../interfaces/CompletableTask.md)\<`any`\>[]
 
 #### Parameters
 
 ##### tasks
 
-[`CompletableTask`](../interfaces/CompletableTask.md)\<`any`\>[]
+\[`...T[]`\]
 
 An array of tasks to run in parallel.
 
@@ -129,6 +113,10 @@ A new task that manages the parallel execution.
 Creates a task that runs multiple tasks concurrently.
 The parent task completes when all child tasks have completed.
 Calling `complete` on the parent task will call `complete` on all its children.
+
+#### Todo
+
+Improve typing to return an array of results from child tasks instead of void.
 
 ### resolved()
 

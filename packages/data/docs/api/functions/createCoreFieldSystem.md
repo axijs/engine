@@ -6,11 +6,13 @@
 
 # Function: createCoreFieldSystem()
 
-> **createCoreFieldSystem**(`config?`): `object`
+> **createCoreFieldSystem**(`config?`): [`CoreFieldSystem`](../type-aliases/CoreFieldSystem.md)
 
-Defined in: packages/data/src/setup.ts:86
+Defined in: packages/data/src/setup.ts:97
 
-Creates a complete core setup for the field system.
+Initializes the low-level field infrastructure.
+Wires together the factory, hydrator (loader), and snapshotter (saver)
+using default or provided configurations.
 
 ## Parameters
 
@@ -18,18 +20,10 @@ Creates a complete core setup for the field system.
 
 [`CoreFieldSystemConfig`](../interfaces/CoreFieldSystemConfig.md)
 
+Configuration for the field system.
+
 ## Returns
 
-`object`
+[`CoreFieldSystem`](../type-aliases/CoreFieldSystem.md)
 
-### factory
-
-> **factory**: [`CoreTreeNodeFactory`](../classes/CoreTreeNodeFactory.md)
-
-### hydrator
-
-> **hydrator**: [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
-
-### snapshotter
-
-> **snapshotter**: [`FieldTreeSnapshotter`](../classes/FieldTreeSnapshotter.md)
+A bundle of services for managing FieldTrees.

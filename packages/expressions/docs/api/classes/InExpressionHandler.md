@@ -6,7 +6,7 @@
 
 # Class: InExpressionHandler
 
-Defined in: handlers/in-expression-handler.ts:16
+Defined in: handlers/in-expression-handler.ts:17
 
 An expression handler for the `in` expression.
 
@@ -34,7 +34,7 @@ resolved from a data source via an operand.
 
 > **type**: keyof [`ExpressionDefinitions`](../interfaces/ExpressionDefinitions.md) = `'in'`
 
-Defined in: handlers/in-expression-handler.ts:17
+Defined in: handlers/in-expression-handler.ts:18
 
 The unique key for the expression type this handler processes.
 This must match one of the keys in the `ExpressionDefinitions` interface.
@@ -49,7 +49,7 @@ This must match one of the keys in the `ExpressionDefinitions` interface.
 
 > **resolve**(`exp`, `context`): `Promise`\<`boolean`\>
 
-Defined in: handlers/in-expression-handler.ts:37
+Defined in: handlers/in-expression-handler.ts:38
 
 Resolves the `in` expression.
 

@@ -1,4 +1,5 @@
-import {ensurePathArray, ensurePathString, PathType, throwIfEmpty} from '@axi-engine/utils';
+import {throwIfEmpty} from '@axijs/ensure';
+import {ensurePathArray, ensurePathString, PathType} from '@axi-engine/utils';
 import {Store, StoreCreateFieldOptions} from './store';
 import {
   BooleanFieldResolver,

@@ -1,5 +1,6 @@
+import {throwIfEmpty} from '@axijs/ensure';
+import {Registry} from '@axi-engine/utils';
 import {Policy} from '../policies';
-import {Registry, throwIfEmpty} from '@axi-engine/utils';
 
 /**
  * Defines the contract for a handler that can serialize and deserialize a specific type of Policy.

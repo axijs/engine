@@ -1,6 +1,7 @@
+import {ensurePathArray, ensurePathString, PathType, uid} from '@axi-engine/utils';
+import {throwError} from '@axijs/ensure';
 import {Scope} from './scope';
 import {CoreStore} from '../store'
-import {ensurePathArray, ensurePathString, PathType, throwError, uid} from '@axi-engine/utils';
 import {ScopeError} from './errors';
 import {SCOPE_SYSTEM_CONFIG} from './config';
 

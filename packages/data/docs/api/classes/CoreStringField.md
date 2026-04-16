@@ -55,7 +55,7 @@ Defined in: packages/data/src/fields/field-definitions/core-string-field.ts:10
 
 > `readonly` **onChange**: `Subscribable`\<\[`string`, `string`\]\>
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 
 An observable stream that emits an event whenever the value changes.
 The payload contains the new value and the old value.
@@ -74,7 +74,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`string`\>
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:25
 
 The collection of policies applied to this field.
 
@@ -127,7 +127,7 @@ A type keyword of the field
 
 > **get** **name**(): `string`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:27
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:28
 
 The name or key of this field within its parent container.
 
@@ -153,7 +153,7 @@ The name or key of this field within its parent container.
 
 > **get** **value**(): `T`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:35
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:36
 
 Gets the current raw value of the field.
 For reactive updates, it's recommended to use the `.signal` property instead.
@@ -166,7 +166,7 @@ For reactive updates, it's recommended to use the `.signal` property instead.
 
 > **set** **value**(`val`): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:44
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:45
 
 Sets a new value for the field.
 The provided value will be processed by all registered policies before the underlying signal is updated.
@@ -229,7 +229,7 @@ The field instance for chaining.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:77
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:78
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -278,7 +278,7 @@ Sets the value to an empty string.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:85
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:86
 
 Cleans up resources used by the field and its policies.
 This should be called when the field is no longer needed to prevent memory leaks from reactive policies.
@@ -349,7 +349,7 @@ The field instance for chaining.
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:73
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:74
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.

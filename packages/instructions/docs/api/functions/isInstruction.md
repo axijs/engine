@@ -8,7 +8,7 @@
 
 > **isInstruction**(`value`): `value is Instruction`
 
-Defined in: packages/instructions/src/guards.ts:11
+Defined in: packages/instructions/src/guards.ts:12
 
 A type guard that checks if an unknown value has the basic structure of a Instruction.
 

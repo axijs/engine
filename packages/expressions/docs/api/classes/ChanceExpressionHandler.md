@@ -6,7 +6,7 @@
 
 # Class: ChanceExpressionHandler
 
-Defined in: handlers/chance-expression-handler.ts:14
+Defined in: handlers/chance-expression-handler.ts:15
 
 An expression handler for the `chance` expression.
 
@@ -34,7 +34,7 @@ a random number roll.
 
 > **type**: keyof [`ExpressionDefinitions`](../interfaces/ExpressionDefinitions.md) = `'chance'`
 
-Defined in: handlers/chance-expression-handler.ts:15
+Defined in: handlers/chance-expression-handler.ts:16
 
 The unique key for the expression type this handler processes.
 This must match one of the keys in the `ExpressionDefinitions` interface.
@@ -49,7 +49,7 @@ This must match one of the keys in the `ExpressionDefinitions` interface.
 
 > **resolve**(`exp`, `context`): `Promise`\<`boolean`\>
 
-Defined in: handlers/chance-expression-handler.ts:32
+Defined in: handlers/chance-expression-handler.ts:33
 
 Resolves the `chance` expression.
 

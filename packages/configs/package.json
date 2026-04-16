@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/configs",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A lightweight, type-safe, and hierarchical configuration resolver",
   "license": "MIT",
   "repository": {
@@ -35,10 +35,8 @@
   "dependencies": {
     "deepmerge-ts": "^7.1.5"
   },
-  "devDependencies": {
-    "@axi-engine/utils": "^0.2.0"
-  },
   "peerDependencies": {
-    "@axi-engine/utils": "^0.2.0"
+    "@axijs/ensure": "^1.0.1",
+    "@axi-engine/utils": "^0.3.0"
   }
 }

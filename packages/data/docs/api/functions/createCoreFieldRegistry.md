@@ -8,7 +8,7 @@
 
 > **createCoreFieldRegistry**(): [`FieldRegistry`](../classes/FieldRegistry.md)
 
-Defined in: packages/data/src/setup.ts:19
+Defined in: packages/data/src/setup.ts:20
 
 Creates and configures a FieldRegistry with all the core field types.
 

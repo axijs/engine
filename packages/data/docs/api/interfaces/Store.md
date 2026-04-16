@@ -30,7 +30,7 @@ Defined in: packages/data/src/store/store.ts:25
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:248
+Defined in: packages/utils/dist/index.d.ts:191
 
 Deletes all values
 
@@ -48,7 +48,7 @@ Deletes all values
 
 > **create**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:230
+Defined in: packages/utils/dist/index.d.ts:173
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
@@ -343,7 +343,7 @@ An error if a node already exists at the path or if the parent path is invalid.
 
 > **delete**(`path`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:244
+Defined in: packages/utils/dist/index.d.ts:187
 
 Deletes the value at the specified path.
 
@@ -388,7 +388,7 @@ After calling this, the object should be considered unusable.
 
 > **get**(`path`): `unknown`
 
-Defined in: packages/utils/dist/index.d.ts:195
+Defined in: packages/utils/dist/index.d.ts:138
 
 #### Parameters
 
@@ -636,7 +636,7 @@ An error if the path is invalid or no field exists at the path.
 
 > **has**(`path`): `boolean`
 
-Defined in: packages/utils/dist/index.d.ts:201
+Defined in: packages/utils/dist/index.d.ts:144
 
 Checks if a path valid.
 
@@ -687,7 +687,7 @@ The path to the node to remove.
 
 > **set**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:221
+Defined in: packages/utils/dist/index.d.ts:164
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
@@ -762,7 +762,7 @@ An error if no field exists at the specified path.
 
 > **upset**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:238
+Defined in: packages/utils/dist/index.d.ts:181
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.

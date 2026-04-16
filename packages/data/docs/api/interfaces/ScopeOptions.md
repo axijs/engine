@@ -6,7 +6,7 @@
 
 # Interface: ScopeOptions
 
-Defined in: packages/data/src/scope/core-scope.ts:7
+Defined in: packages/data/src/scope/core-scope.ts:8
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: packages/data/src/scope/core-scope.ts:7
 
 > **data**: [`CoreStore`](../classes/CoreStore.md)
 
-Defined in: packages/data/src/scope/core-scope.ts:8
+Defined in: packages/data/src/scope/core-scope.ts:9
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: packages/data/src/scope/core-scope.ts:8
 
 > `optional` **name**: `string`
 
-Defined in: packages/data/src/scope/core-scope.ts:10
+Defined in: packages/data/src/scope/core-scope.ts:11
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: packages/data/src/scope/core-scope.ts:10
 
 > `optional` **parent**: [`CoreScope`](../classes/CoreScope.md)
 
-Defined in: packages/data/src/scope/core-scope.ts:11
+Defined in: packages/data/src/scope/core-scope.ts:12
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: packages/data/src/scope/core-scope.ts:11
 
 > `optional` **uid**: `string`
 
-Defined in: packages/data/src/scope/core-scope.ts:9
+Defined in: packages/data/src/scope/core-scope.ts:10

@@ -6,7 +6,7 @@
 
 # Class: IfInstructionHandler
 
-Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:7
+Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:6
 
 Defines the execution logic for a specific instruction type.
 
@@ -30,7 +30,7 @@ Defines the execution logic for a specific instruction type.
 
 > **name**: keyof [`RegisteredInstructions`](../interfaces/RegisteredInstructions.md) = `'if'`
 
-Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:8
+Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:7
 
 #### Implementation of
 
@@ -42,7 +42,7 @@ Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:8
 
 > **process**(`instruction`, `context`): `Promise`\<`void`\>
 
-Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:10
+Defined in: packages/instructions/src/handlers/if-instruction-handler.ts:9
 
 Executes the logic for the given instruction.
 
