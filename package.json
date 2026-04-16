@@ -62,10 +62,11 @@
     "docs:expressions": "npm run docs --workspace=@axi-engine/expressions",
     "docs:data": "npm run docs --workspace=@axi-engine/data",
     "docs:instructions": "npm run docs --workspace=@axi-engine/instructions",
+    "docs:states": "npm run docs --workspace=@axi-engine/states",
     "docs:tasks": "npm run docs --workspace=@axi-engine/tasks",
     "docs:utils": "npm run docs --workspace=@axi-engine/utils",
     "// --- ETC ---": "",
     "build:libs": "npm run build:utils && npm run build:tasks && npm run build:tasks-anime && npm run build:states && npm run build:configs && npm run build:data && npm run build:expressions && npm run build:instructions",
-    "docs:libs": "npm run docs:expressions && npm run docs:data && npm run docs:instructions && npm run docs:tasks && npm run docs:utils"
+    "docs:libs": "npm run docs:expressions && npm run docs:data && npm run docs:instructions && npm run docs:states && npm run docs:tasks && npm run docs:utils"
   }
 }

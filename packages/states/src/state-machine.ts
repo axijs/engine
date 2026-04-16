@@ -72,9 +72,7 @@ export class StateMachine<T, P = void> {
    * });
    */
   register(state: T, handler?: StateHandlerRegistration<T, P>): void {
-    if (isUndefined(handler)) {
-      this.states.set(state, {});
-    } else if (isFunction(handler)) {
+    if (isUndefined(handler) || isFunction(handler)) {
       this.states.set(state, {onEnter: handler});
     } else {
       this.states.set(state, handler);
@@ -100,7 +98,7 @@ export class StateMachine<T, P = void> {
    */
   async call(newState: T, payload?: P): Promise<void> {
     const oldState = this._state;
-    const oldStateConfig = this._state ? this.states.get(this._state) : undefined;
+    const oldStateConfig = isUndefined(this._state) ? undefined : this.states.get(this._state);
     const newStateConfig = this.states.get(newState);
 
     throwIfEmpty(newStateConfig, `State ${String(newState)} is not registered.`);
