@@ -1,7 +1,3 @@
-//
-export type * from './types';
-
-//
 export * from './arrays';
 export * from './config';
 export * from './data';
@@ -11,3 +7,5 @@ export * from './misc';
 export * from './path';
 export * from './random';
 export * from './registry';
+export * from './time';
+export type * from './types';

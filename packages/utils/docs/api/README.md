@@ -15,6 +15,7 @@
 - [DataSource](interfaces/DataSource.md)
 - [DataStorage](interfaces/DataStorage.md)
 - [Destroyable](interfaces/Destroyable.md)
+- [TimeContext](interfaces/TimeContext.md)
 
 ## Type Aliases
 
