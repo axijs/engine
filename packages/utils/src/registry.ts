@@ -12,6 +12,13 @@ export class Registry<K extends PropertyKey, V> {
   protected readonly items = new Map<K, V>();
 
   /**
+   * Gets the number of registered items.
+   */
+  get size(): number {
+    return this.items.size;
+  }
+
+  /**
    * Registers an item with a specific key.
    * Warns if an item with the same key is already registered.
    * @param key The key to associate with the item.
@@ -20,6 +27,22 @@ export class Registry<K extends PropertyKey, V> {
   register(key: K, value: V): void {
     throwIf(this.items.has(key), `An item with the key '${String(key)}' is already registered and will be overwritten.`);
     this.items.set(key, value);
+  }
+
+  /**
+   * Executes a provided function once for each registered item.
+   * @param callback Function to execute for each element.
+   */
+  forEach(callback: (value: V, key: K, map: Map<K, V>) => void): void {
+    this.items.forEach(callback);
+  }
+
+  /**
+   * Returns an iterable iterator of all registered values.
+   * @returns An iterable iterator for the values.
+   */
+  values(): IterableIterator<V> {
+    return this.items.values();
   }
 
   /**
