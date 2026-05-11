@@ -29,11 +29,14 @@ const health = clampNumber(120, 0, 100); // Returns 100
 const isSame = haveSameElements(['a', 'b'], ['b', 'a']); // Returns true
 ```
 
+## Modules
+
+- **Easings**: Type-safe registry of mathematical easing functions. [Read more](https://github.com/axijs/engine/tree/main/packages/utils/docs/easing.md)
+
 
 ## API Reference
 
 [**Browse the API Documentation here**](https://github.com/axijs/engine/tree/main/packages/utils/docs/api)
-
 
 
 

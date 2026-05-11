@@ -20,7 +20,7 @@ Ensures that the given path is returned as an array of segments.
 
 ### separator?
 
-`string` = `axiSettings.pathSeparator`
+`string` = `utilsSettings.pathSeparator`
 
 ## Returns
 

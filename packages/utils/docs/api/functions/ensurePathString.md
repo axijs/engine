@@ -20,7 +20,7 @@ Ensures that the given path is returned as a single string.
 
 ### separator?
 
-`string` = `axiSettings.pathSeparator`
+`string` = `utilsSettings.pathSeparator`
 
 ## Returns
 

@@ -10,22 +10,26 @@
 
 ## Interfaces
 
-- [AxiEngineConfig](interfaces/AxiEngineConfig.md)
 - [DataSink](interfaces/DataSink.md)
 - [DataSource](interfaces/DataSource.md)
 - [DataStorage](interfaces/DataStorage.md)
 - [Destroyable](interfaces/Destroyable.md)
+- [RegisteredEasings](interfaces/RegisteredEasings.md)
 - [TimeContext](interfaces/TimeContext.md)
+- [UtilsConfig](interfaces/UtilsConfig.md)
 
 ## Type Aliases
 
 - [Constructor](type-aliases/Constructor.md)
+- [EasingFunction](type-aliases/EasingFunction.md)
+- [EasingName](type-aliases/EasingName.md)
 - [PathType](type-aliases/PathType.md)
 - [ScalarType](type-aliases/ScalarType.md)
 
 ## Variables
 
-- [axiSettings](variables/axiSettings.md)
+- [easings](variables/easings.md)
+- [utilsSettings](variables/utilsSettings.md)
 
 ## Functions
 

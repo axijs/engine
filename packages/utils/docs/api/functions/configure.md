@@ -8,7 +8,7 @@
 
 > **configure**(`newConfig`): `void`
 
-Defined in: config.ts:20
+Defined in: config.ts:19
 
 set up global configuration for axi-engine.
 
@@ -16,7 +16,7 @@ set up global configuration for axi-engine.
 
 ### newConfig
 
-`Partial`\<[`AxiEngineConfig`](../interfaces/AxiEngineConfig.md)\>
+`Partial`\<[`UtilsConfig`](../interfaces/UtilsConfig.md)\>
 
 configuration object
 

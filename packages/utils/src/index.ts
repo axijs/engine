@@ -1,6 +1,7 @@
 export * from './arrays';
 export * from './config';
 export * from './data';
+export * from './easing';
 export * from './guards';
 export * from './math';
 export * from './misc';

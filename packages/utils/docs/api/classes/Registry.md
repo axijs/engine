@@ -44,13 +44,29 @@ The type of the value being stored.
 
 Defined in: registry.ts:12
 
+## Accessors
+
+### size
+
+#### Get Signature
+
+> **get** **size**(): `number`
+
+Defined in: registry.ts:17
+
+Gets the number of registered items.
+
+##### Returns
+
+`number`
+
 ## Methods
 
 ### clear()
 
 > **clear**(): `void`
 
-Defined in: registry.ts:61
+Defined in: registry.ts:84
 
 Clears all registered items from the registry.
 
@@ -64,7 +80,7 @@ Clears all registered items from the registry.
 
 > **delete**(`key`): `boolean`
 
-Defined in: registry.ts:54
+Defined in: registry.ts:77
 
 #### Parameters
 
@@ -78,11 +94,33 @@ Defined in: registry.ts:54
 
 ***
 
+### forEach()
+
+> **forEach**(`callback`): `void`
+
+Defined in: registry.ts:36
+
+Executes a provided function once for each registered item.
+
+#### Parameters
+
+##### callback
+
+(`value`, `key`, `map`) => `void`
+
+Function to execute for each element.
+
+#### Returns
+
+`void`
+
+***
+
 ### get()
 
 > **get**(`key`): `V` \| `undefined`
 
-Defined in: registry.ts:38
+Defined in: registry.ts:61
 
 Retrieves an item by its key.
 
@@ -106,7 +144,7 @@ The item, or `undefined` if not found.
 
 > **getOrThrow**(`key`): `V`
 
-Defined in: registry.ts:48
+Defined in: registry.ts:71
 
 Retrieves an item by its key, throwing an error if it's not found.
 
@@ -134,7 +172,7 @@ if no item is found for the given key.
 
 > **has**(`key`): `boolean`
 
-Defined in: registry.ts:29
+Defined in: registry.ts:52
 
 Checks if an item with the given key is registered.
 
@@ -156,7 +194,7 @@ The key to check.
 
 > **register**(`key`, `value`): `void`
 
-Defined in: registry.ts:20
+Defined in: registry.ts:27
 
 Registers an item with a specific key.
 Warns if an item with the same key is already registered.
@@ -178,3 +216,19 @@ The item to register.
 #### Returns
 
 `void`
+
+***
+
+### values()
+
+> **values**(): `IterableIterator`\<`V`\>
+
+Defined in: registry.ts:44
+
+Returns an iterable iterator of all registered values.
+
+#### Returns
+
+`IterableIterator`\<`V`\>
+
+An iterable iterator for the values.

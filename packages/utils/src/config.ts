@@ -1,5 +1,4 @@
-/** todo: rename to 'utils config' */
-export interface AxiEngineConfig {
+export interface UtilsConfig {
   pathSeparator: string;
 
   /** logging and debugging logic in future */
@@ -7,16 +6,16 @@ export interface AxiEngineConfig {
   // defaultLocale: string;
 }
 
-const defaultConfig: AxiEngineConfig = {
+const defaultConfig: UtilsConfig = {
   pathSeparator: '.'
 };
 
-export const axiSettings: AxiEngineConfig = { ...defaultConfig };
+export const utilsSettings: UtilsConfig = { ...defaultConfig };
 
 /**
  * set up global configuration for axi-engine.
  * @param newConfig - configuration object
  */
-export function configure(newConfig: Partial<AxiEngineConfig>): void {
-  Object.assign(axiSettings, newConfig);
+export function configure(newConfig: Partial<UtilsConfig>): void {
+  Object.assign(utilsSettings, newConfig);
 }
