@@ -28,9 +28,11 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "vitest",
-    "// --- PLAYGROUND ---": "",
+    "// --- PLAYGROUND & SOUND ---": "",
     "build:playground": "npm run build --workspace=playground",
+    "build:sound": "npm run build --workspace=sound",
     "dev:playground": "npm run dev --workspace=playground",
+    "dev:sound": "npm run dev --workspace=sound",
     "// --- BUILD PACKAGES PROCESS ---": "",
     "build:configs": "npm run build --workspace=@axi-engine/configs",
     "build:expressions": "npm run build --workspace=@axi-engine/expressions",
