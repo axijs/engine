@@ -1,12 +1,43 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sound</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="/src/styles.css" rel="stylesheet">
+  <title>sound</title>
+</head>
+<body>
+<header class="container">
+  <hgroup>
+    <h1>Sound System Playground</h1>
+  </hgroup>
+</header>
+
+<main class="container">
+  <div id="app">
+    <section>
+      <div>
+        <h4>Default</h4>
+        <button data-action="play">Play</button>
+        <button data-action="stop">Stop</button>
+      </div>
+    </section>
+    <section>
+      <div>
+        <h4>Easing</h4>
+        <button data-action="play-easing">Play</button>
+        <button data-action="stop-easing">Stop</button>
+      </div>
+    </section>
+    <section>
+      <div>
+        <h4>Loop</h4>
+        <button data-action="play-loop">Play</button>
+        <button data-action="stop-loop">Stop</button>
+      </div>
+    </section>
+  </div>
+</main>
+<script type="module" src="/src/main.ts"></script>
+</body>
 </html>

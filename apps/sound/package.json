@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@axi-engine/utils": "0.3.5"
+    "@axi-engine/utils": "0.3.5",
+    "@axi-engine/sound": "0.0.1"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1"
   }
 }

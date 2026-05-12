@@ -16,6 +16,9 @@
       "@axi-engine/instructions": [
         "packages/instructions/src"
       ],
+      "@axi-engine/sound": [
+        "packages/sound/src"
+      ],
       "@axi-engine/states": [
         "packages/states/src"
       ],
@@ -51,6 +54,9 @@
     },
     {
       "path": "packages/instructions"
+    },
+    {
+      "path": "packages/sound"
     },
     {
       "path": "packages/states"

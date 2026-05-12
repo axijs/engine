@@ -1,0 +1,41 @@
+{
+  "name": "@axi-engine/sound",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axijs/engine.git",
+    "directory": "packages/sound"
+  },
+  "keywords": [
+    "axi-engine",
+    "typescript",
+    "gamedev",
+    "sound"
+  ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "prebuild": "npm test",
+    "test": "vitest run",
+    "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "@axijs/ensure": "^1.0.1",
+    "@axi-engine/utils": "^0.3.5",
+    "@pixi/sound": "^6.0.1"
+  }
+}
