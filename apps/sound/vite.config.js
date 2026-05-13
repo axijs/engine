@@ -6,6 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@axi-engine/utils': path.resolve(__dirname, '../../packages/utils/src'),
+      '@axi-engine/sound': path.resolve(__dirname, '../../packages/sound/src'),
     },
   },
 
@@ -19,7 +20,8 @@ export default defineConfig({
   // exclude packages catching
   optimizeDeps: {
     exclude: [
-      '@axi-engine/utils'
+      '@axi-engine/utils',
+      '@axi-engine/sound'
     ],
   }
 })

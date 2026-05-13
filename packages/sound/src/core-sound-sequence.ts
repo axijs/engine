@@ -1,11 +1,11 @@
 import {isNullOrUndefined, isPromise, isString, isUndefined, throwIf} from '@axijs/ensure';
-import {IMediaInstance, sound} from '@pixi/sound';
+import {TimeContext} from '@axi-engine/utils';
 import {Emitter} from '@axijs/emitter';
+import {IMediaInstance, sound} from '@pixi/sound';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
 import {SoundSequenceItems} from './types';
-import {TimeContext} from '@axi-engine/utils';
 
 
 export class CoreSoundSequence implements SoundSequence {

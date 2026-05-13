@@ -2,39 +2,74 @@
   "extends": "../../tsconfig.base",
   "compilerOptions": {
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "vite/client"
+    ],
     /* Bundler mode */
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
-
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
     "baseUrl": ".",
     "paths": {
-      "@axi-engine/utils": ["../../packages/utils/src"],
-      "@axi-engine/data": ["../../packages/fields/src"],
-      "@axi-engine/states": ["../../packages/states/src"],
-      "@axi-engine/tasks": ["../../packages/tasks/src"],
-      "@axi-engine/expressions": ["../../packages/expressions/src"],
-      "@axi-engine/instructions": ["../../packages/instructions/src"]
+      "@axi-engine/utils": [
+        "../../packages/utils/src"
+      ],
+      "@axi-engine/data": [
+        "../../packages/fields/src"
+      ],
+      "@axi-engine/states": [
+        "../../packages/states/src"
+      ],
+      "@axi-engine/tasks": [
+        "../../packages/tasks/src"
+      ],
+      "@axi-engine/expressions": [
+        "../../packages/expressions/src"
+      ],
+      "@axi-engine/instructions": [
+        "../../packages/instructions/src"
+      ],
+      "@axi-engine/sound": [
+        "../../packages/sound/src"
+      ]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "references": [
-    { "path": "../../packages/utils" },
-    { "path": "../../packages/data"},
-    { "path": "../../packages/states" },
-    { "path": "../../packages/tasks" },
-    { "path": "../../packages/expressions" },
-    { "path": "../../packages/instructions" }
+    {
+      "path": "../../packages/utils"
+    },
+    {
+      "path": "../../packages/data"
+    },
+    {
+      "path": "../../packages/states"
+    },
+    {
+      "path": "../../packages/tasks"
+    },
+    {
+      "path": "../../packages/expressions"
+    },
+    {
+      "path": "../../packages/instructions"
+    },
+    {
+      "path": "../../packages/sound"
+    }
   ]
 }
