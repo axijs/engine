@@ -34,7 +34,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "@axijs/ensure": "^1.0.1",
+    "@axijs/ensure": "^1.0.2",
     "@axi-engine/utils": "^0.3.5",
     "@pixi/sound": "^6.0.1"
   }

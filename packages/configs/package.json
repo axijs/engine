@@ -36,7 +36,7 @@
     "deepmerge-ts": "^7.1.5"
   },
   "peerDependencies": {
-    "@axijs/ensure": "^1.0.1",
+    "@axijs/ensure": "^1.0.2",
     "@axi-engine/utils": "^0.3.0"
   }
 }

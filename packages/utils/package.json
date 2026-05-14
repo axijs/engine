@@ -33,7 +33,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "@axijs/ensure": "^1.0.1"
+    "@axijs/ensure": "^1.0.2"
   },
   "dependencies": {
     "uuid": "^14.0.0"
