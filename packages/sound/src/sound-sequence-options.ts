@@ -6,17 +6,4 @@ export interface SoundSequenceOptions {
 
   // loop sequence, default false
   loop?: boolean;
-
-  easing?: {
-    // on sequence start
-    enter?:EasingName;
-    // on sequence end
-    leave?:EasingName;
-
-    // on each track start
-    trackEnter?: EasingName;
-
-    // on each track end
-    trackLeave?: EasingName;
-  };
 }

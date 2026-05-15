@@ -5,7 +5,7 @@ import {IMediaInstance, sound} from '@pixi/sound';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
-import {SoundSequenceItems} from './types';
+import {EasingParam, SoundSequenceItems} from './types';
 
 
 export class CoreSoundSequence implements SoundSequence {
@@ -73,7 +73,7 @@ export class CoreSoundSequence implements SoundSequence {
   /**
    *
    */
-  play() {
+  play(easing?: EasingParam) {
     throwIf(this._closed, `Sequence is closed.`);
     if (!this.sequence.length) {
       this.onFinish.emit(true);
@@ -87,21 +87,21 @@ export class CoreSoundSequence implements SoundSequence {
     this.updateActiveInstanceLoop();
   }
 
-  pause() {
+  pause(easing?: EasingParam) {
     this._paused = true;
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = true;
     }
   }
 
-  resume() {
+  resume(easing?: EasingParam) {
     this._paused = false;
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = false;
     }
   }
 
-  stop() {
+  stop(easing?: EasingParam) {
     if (this._closed) {
       return;
     }

@@ -1,6 +1,6 @@
 // state of the track
 import {TimeContext} from '@axi-engine/utils';
-import {SoundSequenceItems} from './types';
+import {EasingParam, SoundSequenceItems} from './types';
 
 
 export interface SoundSequence {
@@ -9,13 +9,13 @@ export interface SoundSequence {
 
   update(time: TimeContext): void;
 
-  play(): void;
+  play(easing?: EasingParam): void;
 
   append(sounds: SoundSequenceItems): void;
 
-  pause(): void;
+  pause(easing?: EasingParam): void;
 
-  resume(): void;
+  resume(easing?: EasingParam): void;
 
-  stop(): void;
+  stop(easing?: EasingParam): void;
 }
