@@ -1,10 +1,20 @@
+import {EasingName} from '@axi-engine/utils';
+
 export interface SoundConfig {
-  /** in ms, default 500 */
-  easingDuration: number;
+  /** in ms, default 250 */
+  fadeInDuration: number;
+  fadeOutDuration: number;
+
+  fadeInEasing: EasingName;
+  fadeOutEasing: EasingName;
 }
 
 const defaultConfig: SoundConfig = {
-  easingDuration: 500
+  fadeInDuration: 250,
+  fadeOutDuration: 250,
+
+  fadeInEasing: 'linear',
+  fadeOutEasing: 'linear'
 };
 
 export const soundSettings: SoundConfig = { ...defaultConfig };

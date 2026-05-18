@@ -6,6 +6,7 @@ import {SoundSequence} from './sound-sequence';
 import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
 import {EasingParam, SoundSequenceItems} from './types';
+import {Tween} from './tween';
 
 
 export class CoreSoundSequence implements SoundSequence {
@@ -21,6 +22,7 @@ export class CoreSoundSequence implements SoundSequence {
   private sequence: TrackConfig[];
 
   private activeInstance: IMediaInstance | undefined;
+  private tween: Tween | undefined;
 
   readonly onFinish = new Emitter();
 
@@ -67,19 +69,7 @@ export class CoreSoundSequence implements SoundSequence {
   }
 
   update(time: TimeContext) {
-
-  }
-
-  /**
-   *
-   */
-  play(easing?: EasingParam) {
-    throwIf(this._closed, `Sequence is closed.`);
-    if (!this.sequence.length) {
-      this.onFinish.emit(true);
-      return;
-    }
-    this.playTrack();
+    this.tween?.update(time);
   }
 
   append(sounds: SoundSequenceItems) {
@@ -87,21 +77,34 @@ export class CoreSoundSequence implements SoundSequence {
     this.updateActiveInstanceLoop();
   }
 
-  pause(easing?: EasingParam) {
+  /**
+   *
+   */
+  play(fadeIn?: EasingParam) {
+    throwIf(this._closed, `Sequence is closed.`);
+    if (!this.sequence.length) {
+      this.onFinish.emit(true);
+      return;
+    }
+    this.fadeIn(fadeIn);
+    this.playTrack();
+  }
+
+  pause(fadeOut?: EasingParam) {
     this._paused = true;
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = true;
     }
   }
 
-  resume(easing?: EasingParam) {
+  resume(fadeIn?: EasingParam) {
     this._paused = false;
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = false;
     }
   }
 
-  stop(easing?: EasingParam) {
+  stop(fadeOut?: EasingParam) {
     if (this._closed) {
       return;
     }
@@ -139,6 +142,17 @@ export class CoreSoundSequence implements SoundSequence {
         }
       });
     }
+  }
+
+  private fadeIn(fadeParam?: EasingParam) {
+    if (isNullOrUndefined(fadeParam)) {
+      return;
+    }
+    if (this.tween) {
+      this.tween.stop();
+      this.tween = undefined;
+    }
+
   }
 
   private trackComplete() {

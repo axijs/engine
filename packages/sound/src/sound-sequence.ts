@@ -9,13 +9,13 @@ export interface SoundSequence {
 
   update(time: TimeContext): void;
 
-  play(easing?: EasingParam): void;
-
   append(sounds: SoundSequenceItems): void;
 
-  pause(easing?: EasingParam): void;
+  play(fadeIn?: EasingParam): void;
 
-  resume(easing?: EasingParam): void;
+  pause(fadeOut?: EasingParam): void;
 
-  stop(easing?: EasingParam): void;
+  resume(fadeIn?: EasingParam): void;
+
+  stop(fadeOut?: EasingParam): void;
 }
