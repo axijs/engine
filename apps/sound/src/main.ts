@@ -15,11 +15,8 @@ function getBtn(id: string): HTMLButtonElement {
   return ctl as HTMLButtonElement;
 }
 
-function getBtns(playName: string, stopName: string) {
-  return {
-    play: getBtn(playName),
-    stop: getBtn(stopName)
-  }
+function getButtons(...names: string[]) {
+  return names.map(name => getBtn(name));
 }
 
 
@@ -35,9 +32,12 @@ let seq: CoreSoundSequence | undefined;
 let seqEasing: CoreSoundSequence | undefined;
 let seqLoop: CoreSoundSequence | undefined;
 
-
+/**
+ *
+ *
+ */
 function initPlay() {
-  const {play, stop} = getBtns('play', 'stop');
+  const [play, stop] = getButtons('play', 'stop');
 
   play.addEventListener('click', () => {
     switchButtons(play, stop, false);
@@ -57,27 +57,58 @@ function initPlay() {
   });
 }
 
+/**
+ *
+ *
+ */
 function initPlayEasing() {
-  const {play, stop} = getBtns('play-easing', 'stop-easing');
+  const [play, pause, resume, stop] = getButtons('play-easing', 'pause-easing', 'resume-easing', 'stop-easing');
+
   play.addEventListener('click', () => {
     switchButtons(play, stop, false);
-    // seqEasing?.stop('easeOutSine');
-    // seqEasing = new CoreSoundSequence('crop');
-    // seqEasing.onFinish.once(() => {
-    //   seqEasing = undefined;
-    //   switchButtons(play, stop, true);
-    // });
-    // seqEasing.play('easeInSine');
+    pause.disabled = false;
+
+    seqEasing?.stop();
+    seqEasing = new CoreSoundSequence('crop', {loop: true});
+    seqEasing.onFinish.once(() => {
+      seqEasing = undefined;
+      switchButtons(play, stop, true);
+      pause.disabled = true;
+      resume.disabled = true;
+    });
+    seqEasing.play({
+      easing: 'easeInSine',
+      duration: 1000
+    });
+  });
+
+  pause.addEventListener('click', () => {
+    seqEasing?.pause(500);
+    pause.disabled = true;
+    resume.disabled = false;
+  });
+
+  resume.addEventListener('click', () => {
+    seqEasing?.resume(500);
+    pause.disabled = false;
+    resume.disabled = true;
   });
 
   stop.addEventListener('click', () => {
-    // seqEasing?.stop();
-    switchButtons(play, stop, true);
+    seqEasing?.stop(1000);
+    stop.disabled = true;
+    pause.disabled = true;
+    resume.disabled = true;
   });
 }
 
+/**
+ *
+ *
+ *
+ */
 function initPlayLoop() {
-  const {play, stop} = getBtns('play-loop', 'stop-loop');
+  const [play, stop] = getButtons('play-loop', 'stop-loop');
 
   play.addEventListener('click', () => {
     switchButtons(play, stop, false);

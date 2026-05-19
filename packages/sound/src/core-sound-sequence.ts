@@ -7,11 +7,14 @@ import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
 import {EasingParam, SoundSequenceItems} from './types';
 import {Tween} from './tween';
+import {parseEasing} from './tween-helpers';
 
 
 export class CoreSoundSequence implements SoundSequence {
 
   private _closed = false; // true when sequence fully finished or has been stopped
+
+  private _initialVolume = 1; // saved volume for restoring after tween animations
   private _volume = 1;
   private _volumeFactor = 1;
   private _paused = false;
@@ -39,8 +42,13 @@ export class CoreSoundSequence implements SoundSequence {
     return this._loop;
   }
 
+  get initialVolume() {
+    return this._initialVolume;
+  }
+
   set volume(val: number) {
-    this._volume = val;
+    this._initialVolume = val;
+    this._volume = this._initialVolume;
     this.updateActiveInstanceVolume();
   }
 
@@ -95,6 +103,7 @@ export class CoreSoundSequence implements SoundSequence {
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = true;
     }
+    this.fadeOut(fadeOut);
   }
 
   resume(fadeIn?: EasingParam) {
@@ -102,6 +111,7 @@ export class CoreSoundSequence implements SoundSequence {
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = false;
     }
+    this.fadeIn(fadeIn);
   }
 
   stop(fadeOut?: EasingParam) {
@@ -109,8 +119,10 @@ export class CoreSoundSequence implements SoundSequence {
       return;
     }
     this._closed = true;
-    this.activeInstance?.stop();
+    // todo: correct logic if sound have fadeOut on stop
+    // this.fadeOut(fadeOut);
 
+    this.activeInstance?.stop();
     this.sequence = [];
     this.onFinish.emit();
   }
@@ -145,14 +157,33 @@ export class CoreSoundSequence implements SoundSequence {
   }
 
   private fadeIn(fadeParam?: EasingParam) {
+    this.fadeVolume(0, this._initialVolume, fadeParam);
+  }
+
+  private fadeOut(fadeParam?: EasingParam) {
+    this.fadeVolume(this.volume, 0, fadeParam);
+  }
+
+  private fadeVolume(from: number, to: number, fadeParam?: EasingParam) {
     if (isNullOrUndefined(fadeParam)) {
       return;
     }
     if (this.tween) {
       this.tween.stop();
-      this.tween = undefined;
     }
-
+    const easingConfig = parseEasing(fadeParam);
+    this.tween = new Tween({
+      easing: easingConfig.easing,
+      duration: easingConfig.duration,
+      from,
+      to,
+      onUpdate: (val: number) => this.volume = val,
+      onStart: (tween: Tween) => this.volume = tween.from,
+      onComplete: (tween: Tween) => {
+        this.volume = tween.to;
+        this.tween = undefined
+      }
+    });
   }
 
   private trackComplete() {

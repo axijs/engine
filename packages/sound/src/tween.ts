@@ -7,8 +7,9 @@ export interface TweenOptions {
   to: number;
   paused?: boolean;
 
-  onUpdate: (value: number) => void;
-  onComplete?: () => void;
+  onUpdate: (value: number, tween: Tween) => void;
+  onStart?: (tween: Tween) => void;
+  onComplete?: (tween: Tween) => void;
 }
 
 export class Tween {
@@ -26,6 +27,14 @@ export class Tween {
     return this._paused;
   }
 
+  get from(): number {
+    return this.options.from;
+  }
+
+  get to(): number {
+    return this.options.to;
+  }
+
   constructor(options: TweenOptions) {
     this.options = options;
     this._paused = options.paused ?? false;
@@ -37,6 +46,7 @@ export class Tween {
   play() {
     if (this._closed) return;
     this._paused = false;
+    this.options.onStart?.(this);
   }
 
   pause() {
@@ -46,7 +56,7 @@ export class Tween {
   stop() {
     if (this._closed) return;
     this._closed = true;
-    this.options.onComplete?.();
+    this.options.onComplete?.(this);
   }
 
   update(time: TimeContext) {
@@ -58,7 +68,7 @@ export class Tween {
     const easedProgress = this.fn(progress);
 
     const currentValue = this.options.from + (this.options.to - this.options.from) * easedProgress;
-    this.options.onUpdate(currentValue);
+    this.options.onUpdate(currentValue, this);
 
     if (progress >= 1.0) {
       this.stop();

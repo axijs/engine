@@ -5,9 +5,14 @@ export type SoundSequenceItem = string | TrackConfig;
 
 export type SoundSequenceItems = SoundSequenceItem | SoundSequenceItem[];
 
+
+export type EasingConfig = { easing: EasingName, duration: number };
+
 /**
+ * if true - use default settings
  * if number - will use default easing function and number time in ms
  * if EasingName - will use easing function with this name and default time
  * if object - will use selected function and selected time
  */
-export type EasingParam = number | EasingName | { easing: EasingName, duration: number }
+export type EasingParam = true | number | EasingName | EasingConfig
+
