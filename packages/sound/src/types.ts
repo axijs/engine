@@ -16,3 +16,12 @@ export type EasingConfig = { easing: EasingName, duration: number };
  */
 export type EasingParam = true | number | EasingName | EasingConfig
 
+/**
+ * ready - only when a sequence created and not played / stopped yet
+ */
+export const enum SoundSequenceState {
+  ready = 'ready',
+  playing = 'playing',
+  paused = 'paused',
+  stopped = 'stopped'
+}

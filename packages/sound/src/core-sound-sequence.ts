@@ -1,23 +1,21 @@
 import {isNullOrUndefined, isPromise, isString, isUndefined, throwIf} from '@axijs/ensure';
+import {Emitter, StateEmitter} from '@axijs/emitter';
 import {TimeContext} from '@axi-engine/utils';
-import {Emitter} from '@axijs/emitter';
 import {IMediaInstance, sound} from '@pixi/sound';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
-import {EasingParam, SoundSequenceItems} from './types';
+import {EasingParam, SoundSequenceItems, SoundSequenceState} from './types';
 import {Tween} from './tween';
 import {parseEasing} from './tween-helpers';
 
-
 export class CoreSoundSequence implements SoundSequence {
 
-  private _closed = false; // true when sequence fully finished or has been stopped
+  _state: SoundSequenceState = SoundSequenceState.ready;
 
   private _initialVolume = 1; // saved volume for restoring after tween animations
   private _volume = 1;
   private _volumeFactor = 1;
-  private _paused = false;
   private _loop = false;
 
   private cursorStart = -1;
@@ -28,36 +26,31 @@ export class CoreSoundSequence implements SoundSequence {
   private tween: Tween | undefined;
 
   readonly onFinish = new Emitter();
-
-  get paused() {
-    return this._paused;
-  }
+  readonly onState: StateEmitter<[SoundSequenceState]> = new StateEmitter([this._state]);
 
   set loop(val: boolean) {
     this._loop = val;
     this.updateActiveInstanceLoop();
   }
 
-  get loop() {
+  get loop(): boolean {
     return this._loop;
   }
 
-  get initialVolume() {
+  get initialVolume(): number {
     return this._initialVolume;
   }
 
   set volume(val: number) {
     this._initialVolume = val;
-    this._volume = this._initialVolume;
-    this.updateActiveInstanceVolume();
+    this.setInternalVolume(val);
   }
 
+  /**
+   * return current volume
+   */
   get volume() {
     return this._volume;
-  }
-
-  get closed() {
-    return this._closed;
   }
 
   set volumeFactor(val: number) {
@@ -68,6 +61,17 @@ export class CoreSoundSequence implements SoundSequence {
     return this._volumeFactor;
   }
 
+  get state() {
+    return this._state;
+  }
+
+  get paused() {
+    return this._state === SoundSequenceState.paused;
+  }
+
+  get stopped() {
+    return this._state === SoundSequenceState.stopped;
+  }
 
   constructor(sounds: SoundSequenceItems, options?: SoundSequenceOptions) {
     this.sequence = this.normaliseSoundConfigs(sounds);
@@ -89,42 +93,44 @@ export class CoreSoundSequence implements SoundSequence {
    *
    */
   play(fadeIn?: EasingParam) {
-    throwIf(this._closed, `Sequence is closed.`);
+    throwIf(this._state !== SoundSequenceState.ready, `Sequence is closed.`);
+    this.changeState(SoundSequenceState.playing);
     if (!this.sequence.length) {
-      this.onFinish.emit(true);
-      return;
+      return this.finish();
     }
     this.fadeIn(fadeIn);
     this.playTrack();
   }
 
   pause(fadeOut?: EasingParam) {
-    this._paused = true;
-    if (!isUndefined(this.activeInstance)) {
-      this.activeInstance.paused = true;
+    if (this._state !== SoundSequenceState.playing) {
+      return;
     }
-    this.fadeOut(fadeOut);
+    this.changeState(SoundSequenceState.paused);
+    this.fadeOut(fadeOut, () => {
+      if (!isUndefined(this.activeInstance)) {
+        this.activeInstance.paused = true;
+      }
+    });
   }
 
   resume(fadeIn?: EasingParam) {
-    this._paused = false;
+    if (this._state !== SoundSequenceState.paused) {
+      return;
+    }
+    this.changeState(SoundSequenceState.playing);
+    this.fadeIn(fadeIn);
     if (!isUndefined(this.activeInstance)) {
       this.activeInstance.paused = false;
     }
-    this.fadeIn(fadeIn);
   }
 
   stop(fadeOut?: EasingParam) {
-    if (this._closed) {
+    if (this._state === SoundSequenceState.stopped) {
       return;
     }
-    this._closed = true;
-    // todo: correct logic if sound have fadeOut on stop
-    // this.fadeOut(fadeOut);
-
-    this.activeInstance?.stop();
-    this.sequence = [];
-    this.onFinish.emit();
+    this.changeState(SoundSequenceState.stopped);
+    this.fadeOut(fadeOut, () => this.finish());
   }
 
   private playTrack() {
@@ -147,25 +153,43 @@ export class CoreSoundSequence implements SoundSequence {
       instanceOrPromise.then(instance => {
         this.activeInstance = instance;
         /** in case when pause or stop has been called before sound loaded */
-        if (this._paused) {
-          this.activeInstance.paused = this._paused;
-        } else if (this._closed) {
-          this.activeInstance.stop();
+        if (this.paused) {
+          this.activeInstance.paused = this.paused;
+        } else if (this.stopped) {
+          if (isNullOrUndefined(this.tween)) {
+            this.activeInstance.stop();
+          }
         }
       });
     }
   }
 
-  private fadeIn(fadeParam?: EasingParam) {
-    this.fadeVolume(0, this._initialVolume, fadeParam);
+  private trackComplete() {
+    this.activeInstance = undefined;
+    if (this.stopped && isNullOrUndefined(this.tween)) {
+      return;
+    }
+    if (this.cursor + 1 >= this.sequence.length) {
+      if (this.loop) {
+        this.cursor = this.cursorStart;
+      } else {
+        return this.stop();
+      }
+    }
+    this.playTrack();
   }
 
-  private fadeOut(fadeParam?: EasingParam) {
-    this.fadeVolume(this.volume, 0, fadeParam);
+  private fadeIn(fadeParam?: EasingParam, doneCallback?: () => void) {
+    this.fadeVolume(this._volume, this._initialVolume, fadeParam, doneCallback);
   }
 
-  private fadeVolume(from: number, to: number, fadeParam?: EasingParam) {
+  private fadeOut(fadeParam?: EasingParam, doneCallback?: () => void) {
+    this.fadeVolume(this.volume, 0, fadeParam, doneCallback);
+  }
+
+  private fadeVolume(from: number, to: number, fadeParam?: EasingParam, doneCallback?: () => void) {
     if (isNullOrUndefined(fadeParam)) {
+      doneCallback?.();
       return;
     }
     if (this.tween) {
@@ -177,40 +201,53 @@ export class CoreSoundSequence implements SoundSequence {
       duration: easingConfig.duration,
       from,
       to,
-      onUpdate: (val: number) => this.volume = val,
+      onUpdate: (val: number) => this.setInternalVolume(val),
       onStart: (tween: Tween) => this.volume = tween.from,
       onComplete: (tween: Tween) => {
         this.volume = tween.to;
-        this.tween = undefined
+        this.tween = undefined;
+        doneCallback?.();
       }
     });
   }
 
-  private trackComplete() {
-    this.activeInstance = undefined;
-    if (this._closed) {
-      return;
-    }
-    if (this.cursor + 1 >= this.sequence.length) {
-      if (this.loop) {
-        this.cursor = this.cursorStart;
-      } else {
-        this.stop();
-        return;
-      }
-    }
-    this.playTrack();
+  private setInternalVolume(val: number) {
+    this._volume = val;
+    this.updateActiveInstanceVolume();
   }
 
   private updateActiveInstanceVolume() {
-    if (!isUndefined(this.activeInstance) && !!this.sequence.length) {
-      this.activeInstance.volume = this.countTrackVolume(this.sequence[this.cursor]);
+    if (isUndefined(this.activeInstance) || !this.sequence.length) {
+      return;
     }
+    this.activeInstance.volume = this.countTrackVolume(this.sequence[this.cursor]);
   }
 
   private countTrackVolume(track: TrackConfig): number {
     return +(this.volumeFactor * this.volume * (isNullOrUndefined(track.volume) ? 1 : track.volume))
       .toFixed(2);
+  }
+
+  private isLoopTrack() {
+    return this.sequence.length === 1 && this.loop;
+  }
+
+  private updateActiveInstanceLoop() {
+    if (isUndefined(this.activeInstance)) {
+      return;
+    }
+    this.activeInstance.loop = this.isLoopTrack();
+  }
+
+  private changeState(newState: SoundSequenceState) {
+    this._state = newState;
+    this.onState.emit(this._state);
+  }
+
+  private finish() {
+    this.activeInstance?.stop();
+    this.sequence = [];
+    this.onFinish.emit();
   }
 
   /**
@@ -231,16 +268,5 @@ export class CoreSoundSequence implements SoundSequence {
           volume: isUndefined(rawConf.volume) ? 1 : rawConf.volume
         }
       });
-  }
-
-  private isLoopTrack() {
-    return this.sequence.length === 1 && this.loop;
-  }
-
-  private updateActiveInstanceLoop() {
-    if (isUndefined(this.activeInstance)) {
-      return;
-    }
-    this.activeInstance.loop = this.isLoopTrack();
   }
 }
