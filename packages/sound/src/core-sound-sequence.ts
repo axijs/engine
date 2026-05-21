@@ -173,7 +173,9 @@ export class CoreSoundSequence implements SoundSequence {
       if (this.loop) {
         this.cursor = this.cursorStart;
       } else {
-        return this.stop();
+        this.tween?.stop();
+        this.stop();
+        return;
       }
     }
     this.playTrack();
@@ -192,9 +194,7 @@ export class CoreSoundSequence implements SoundSequence {
       doneCallback?.();
       return;
     }
-    if (this.tween) {
-      this.tween.stop();
-    }
+    this.tween?.stop();
     const easingConfig = parseEasing(fadeParam);
     this.tween = new Tween({
       easing: easingConfig.easing,
@@ -204,7 +204,7 @@ export class CoreSoundSequence implements SoundSequence {
       onUpdate: (val: number) => this.setInternalVolume(val),
       onStart: (tween: Tween) => this.volume = tween.from,
       onComplete: (tween: Tween) => {
-        this.volume = tween.to;
+        this._volume = tween.to;
         this.tween = undefined;
         doneCallback?.();
       }
