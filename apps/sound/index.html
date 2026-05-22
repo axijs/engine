@@ -15,30 +15,45 @@
 
 <main class="container">
   <div id="app">
+    <h2>Sequences</h2>
     <section>
-      <h2>Sequences</h2>
       <section>
-        <div>
-          <h4>Default</h4>
-          <button id="play">Play</button>
-          <button id="stop" disabled>Stop</button>
+        <div class="grid">
+          <div>
+            <h4>Default</h4>
+            <button id="play">Play</button>
+            <button id="stop" disabled>Stop</button>
+          </div>
+          <div>
+            <h4>Default Loop</h4>
+            <button id="play-loop">Play</button>
+            <button id="stop-loop" disabled>Stop</button>
+          </div>
         </div>
       </section>
+
       <section>
-        <div>
-          <h4>Easing</h4>
-          <button id="play-easing" >Play</button>
-          <button id="pause-easing" disabled>Pause</button>
-          <button id="resume-easing" disabled>Resume</button>
-          <button id="stop-easing" disabled>Stop</button>
+        <div class="grid">
+          <div>
+            <h4>Queue</h4>
+            <button id="play-queue">Play</button>
+            <button id="stop-queue" disabled>Stop</button>
+          </div>
+          <div>
+            <h4>Queue Loop</h4>
+            <button id="play-queue-loop">Play</button>
+            <button id="stop-queue-loop" disabled>Stop</button>
+          </div>
         </div>
       </section>
 
       <section>
         <div>
-          <h4>Loop</h4>
-          <button id="play-loop">Play</button>
-          <button id="stop-loop" disabled>Stop</button>
+          <h4>Easing</h4>
+          <button id="play-easing">Play</button>
+          <button id="pause-easing" disabled>Pause</button>
+          <button id="resume-easing" disabled>Resume</button>
+          <button id="stop-easing" disabled>Stop</button>
         </div>
       </section>
     </section>

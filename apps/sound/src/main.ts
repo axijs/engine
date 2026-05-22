@@ -6,6 +6,8 @@ import type {TimeContext} from '@axi-engine/utils';
 
 sound.add('crop', 'sound/metronome_crop.ogg');
 sound.add('full', 'sound/metronome_full.ogg');
+sound.add('bip', 'sound/bip.ogg');
+sound.add('drop', 'sound/water_drop.ogg');
 
 function getBtn(id: string): HTMLButtonElement {
   const ctl = document.getElementById(id);
@@ -28,9 +30,12 @@ function switchButtons(play: HTMLButtonElement, stop: HTMLButtonElement, isPlayE
 const soundSystem = createSoundSystem();
 soundSystem.register({name: 'core'});
 
-let seq: CoreSoundSequence | undefined;
-let seqEasing: CoreSoundSequence | undefined;
-let seqLoop: CoreSoundSequence | undefined;
+let simple: CoreSoundSequence | undefined;
+let simpleLoop: CoreSoundSequence | undefined;
+let queue: CoreSoundSequence | undefined;
+let queueLoop: CoreSoundSequence | undefined;
+let easing: CoreSoundSequence | undefined;
+
 
 /**
  *
@@ -42,17 +47,94 @@ function initPlay() {
   play.addEventListener('click', () => {
     switchButtons(play, stop, false);
 
-    seq?.stop();
-    seq = new CoreSoundSequence('crop');
-    seq.onFinish.once(() => {
-      seq = undefined;
+    simple?.stop();
+    simple = new CoreSoundSequence('crop');
+    simple.onFinish.once(() => {
+      simple = undefined;
       switchButtons(play, stop, true);
     });
-    seq.play();
+    simple.play();
   });
 
   stop.addEventListener('click', () => {
-    seq?.stop();
+    simple?.stop();
+    switchButtons(play, stop, true);
+  });
+}
+
+/**
+ *
+ *
+ *
+ */
+function initPlayLoop() {
+  const [play, stop] = getButtons('play-loop', 'stop-loop');
+
+  play.addEventListener('click', () => {
+    switchButtons(play, stop, false);
+
+    simpleLoop?.stop();
+    simpleLoop = new CoreSoundSequence('crop', {loop: true});
+    simpleLoop.onFinish.once(() => {
+      simpleLoop = undefined;
+      switchButtons(play, stop, true);
+    });
+    simpleLoop.play();
+  });
+
+  stop.addEventListener('click', () => {
+    simpleLoop?.stop();
+    switchButtons(play, stop, true);
+  });
+}
+
+/**
+ *
+ *
+ *
+ */
+function initPlayQueue() {
+  const [play, stop] = getButtons('play-queue', 'stop-queue');
+
+  play.addEventListener('click', () => {
+    switchButtons(play, stop, false);
+
+    queue?.stop();
+    queue = new CoreSoundSequence(['bip', 'bip', 'crop', 'drop', 'drop', 'drop']);
+    queue.onFinish.once(() => {
+      queue = undefined;
+      switchButtons(play, stop, true);
+    });
+    queue.play();
+  });
+
+  stop.addEventListener('click', () => {
+    queue?.stop();
+    switchButtons(play, stop, true);
+  });
+}
+
+/**
+ *
+ *
+ */
+function initPlayQueueLoop() {
+  const [play, stop] = getButtons('play-queue-loop', 'stop-queue-loop');
+
+  play.addEventListener('click', () => {
+    switchButtons(play, stop, false);
+
+    queueLoop?.stop();
+    queueLoop = new CoreSoundSequence(['bip', 'bip', 'drop', 'drop'], {loop: true});
+    queueLoop.onFinish.once(() => {
+      queueLoop = undefined;
+      switchButtons(play, stop, true);
+    });
+    queueLoop.play();
+  });
+
+  stop.addEventListener('click', () => {
+    queueLoop?.stop();
     switchButtons(play, stop, true);
   });
 }
@@ -68,73 +150,51 @@ function initPlayEasing() {
     switchButtons(play, stop, false);
     pause.disabled = false;
 
-    seqEasing?.stop();
-    seqEasing = new CoreSoundSequence('crop', {loop: true});
-    seqEasing.onFinish.once(() => {
-      seqEasing = undefined;
+    easing?.stop();
+    easing = new CoreSoundSequence('crop', {loop: true});
+    easing.onFinish.once(() => {
+      easing = undefined;
       switchButtons(play, stop, true);
       pause.disabled = true;
       resume.disabled = true;
     });
-    seqEasing.play({
+    easing.play({
       easing: 'easeInSine',
       duration: 1000
     });
   });
 
   pause.addEventListener('click', () => {
-    seqEasing?.pause(500);
+    easing?.pause(500);
     pause.disabled = true;
     resume.disabled = false;
   });
 
   resume.addEventListener('click', () => {
-    seqEasing?.resume(500);
+    easing?.resume(500);
     pause.disabled = false;
     resume.disabled = true;
   });
 
   stop.addEventListener('click', () => {
-    seqEasing?.stop(1000);
+    easing?.stop(1000);
     stop.disabled = true;
     pause.disabled = true;
     resume.disabled = true;
   });
 }
 
-/**
- *
- *
- *
- */
-function initPlayLoop() {
-  const [play, stop] = getButtons('play-loop', 'stop-loop');
 
-  play.addEventListener('click', () => {
-    switchButtons(play, stop, false);
-
-    seqLoop?.stop();
-    seqLoop = new CoreSoundSequence('crop', {loop: true});
-    seqLoop.onFinish.once(() => {
-      seqLoop = undefined;
-      switchButtons(play, stop, true);
-    });
-    seqLoop.play();
-  });
-
-  stop.addEventListener('click', () => {
-    seqLoop?.stop();
-    switchButtons(play, stop, true);
-  });
-}
 
 (function main() {
   initPlay();
-  initPlayEasing();
   initPlayLoop();
+  initPlayQueue();
+  initPlayQueueLoop();
+  initPlayEasing();
 
   const ticker = new Ticker((context: TimeContext) => {
-    seqEasing?.update(context);
+    easing?.update(context);
   });
   ticker.start();
 })();
