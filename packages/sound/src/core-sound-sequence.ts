@@ -20,11 +20,12 @@ export class CoreSoundSequence implements SoundSequence {
 
   private cursorStart = -1;
   private cursor = this.cursorStart;
-  private sequence: TrackConfig[];
+  private readonly sequence: TrackConfig[];
 
   private activeInstance: IMediaInstance | undefined;
   private tween: Tween | undefined;
 
+  readonly onPlay = new Emitter();
   readonly onFinish = new Emitter();
   readonly onState: StateEmitter<[SoundSequenceState]> = new StateEmitter([this._state]);
 
@@ -93,11 +94,15 @@ export class CoreSoundSequence implements SoundSequence {
    *
    */
   play(fadeIn?: EasingParam) {
-    throwIf(this._state !== SoundSequenceState.ready, `Sequence is closed.`);
+    if (this.state !== SoundSequenceState.ready) {
+      this.reset();
+    }
     this.changeState(SoundSequenceState.playing);
     if (!this.sequence.length) {
       return this.finish();
     }
+
+    this.onPlay.emit();
     this.fadeIn(fadeIn);
     this.playTrack();
   }
@@ -244,9 +249,17 @@ export class CoreSoundSequence implements SoundSequence {
     this.onState.emit(this._state);
   }
 
+  private reset() {
+    this.tween?.stop();
+    this.activeInstance?.stop();
+    this.cursor = this.cursorStart;
+    this._volume = this._initialVolume;
+    this.changeState(SoundSequenceState.ready);
+  }
+
   private finish() {
     this.activeInstance?.stop();
-    this.sequence = [];
+    this.cursor = this.cursorStart;
     this.onFinish.emit();
   }
 
