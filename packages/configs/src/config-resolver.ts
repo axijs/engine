@@ -1,5 +1,5 @@
 import {throwIf, throwIfEmpty} from '@axijs/ensure';
-import {axiSettings, ensurePathArray, PathType} from '@axi-engine/utils';
+import {utilsSettings, ensurePathArray, PathType} from '@axi-engine/utils';
 import {deepmerge} from "deepmerge-ts";
 import {ConfigTree, ConfigVariant, isConfigVariant} from './config-resolver.types';
 
@@ -21,7 +21,7 @@ export class ConfigResolver<TBase extends object> {
    */
   get<T extends TBase>(path: PathType): T {
     const pathArr = ensurePathArray(path);
-    const fullPathKey = pathArr.join(axiSettings.pathSeparator);
+    const fullPathKey = pathArr.join(utilsSettings.pathSeparator);
 
     if (this.cache.has(fullPathKey)) {
       return this.cache.get(fullPathKey) as T;
@@ -44,7 +44,7 @@ export class ConfigResolver<TBase extends object> {
    */
   private calculateConfig<T extends TBase>(path: string[], visited: string[] = []): T {
     const node = this.getNode(path, this.configs) as ConfigVariant<T>;
-    const pathStr = path.join(axiSettings.pathSeparator);
+    const pathStr = path.join(utilsSettings.pathSeparator);
 
     throwIf(visited.includes(pathStr), `Cyclic dependency detected in ${pathStr}`);
     visited.push(pathStr);
@@ -57,7 +57,7 @@ export class ConfigResolver<TBase extends object> {
    * Traverses the config tree to find the node at the specified path.
    */
   private getNode(path: string[], tree: ConfigTree<TBase>): ConfigVariant<TBase> {
-    const pathStr = path.join(axiSettings.pathSeparator);
+    const pathStr = path.join(utilsSettings.pathSeparator);
     const [current, ...rest] = path;
     const node = tree[current];
     throwIfEmpty(node, `Can't find node with path: ${pathStr}`);
