@@ -4,6 +4,7 @@ import {SoundChannel} from './sound-channel';
 import {CoreSoundSequence} from './core-sound-sequence';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceItem} from './types';
+import {TimeContext} from '@axi-engine/utils';
 
 export class CoreSoundChannel implements SoundChannel {
   // channel volume, from 0 to 1
@@ -19,7 +20,7 @@ export class CoreSoundChannel implements SoundChannel {
 
   set volume(value: number) {
     this._volume = value;
-    this.sequences.forEach(i => i.volume = this._volume);
+    this.sequences.forEach(s => s.volumeFactor = this._volume);
   }
 
   get volume(): number {
@@ -32,15 +33,18 @@ export class CoreSoundChannel implements SoundChannel {
     this.maxInstances = config.maxInstances;
   }
 
+  update(time: TimeContext) {
+    this.sequences.forEach(s => s.update(time));
+  }
+
   play(sounds: SoundSequenceItem | SoundSequenceItem[], options?: any) {
     const seq = new CoreSoundSequence(sounds);
     this.sequences.add(seq);
     console.log('play:', sounds);
 
-    const sub = seq.onFinish.subscribe(() => {
+    seq.onFinish.once(() => {
       console.log('unsub and delete: ', this.sequences.size);
       this.sequences.delete(seq);
-      sub.unsubscribe();
       console.log('after unsub and delete: ', this.sequences.size);
     });
 
@@ -48,14 +52,14 @@ export class CoreSoundChannel implements SoundChannel {
   }
 
   pause() {
-    this.sequences.forEach(i => i.pause());
+    this.sequences.forEach(s => s.pause());
   }
 
   resume() {
-    this.sequences.forEach(i => i.resume());
+    this.sequences.forEach(s => s.resume());
   }
 
   stop() {
-    this.sequences.forEach(i => i.stop());
+    this.sequences.forEach(s => s.stop());
   }
 }

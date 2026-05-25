@@ -134,13 +134,20 @@ export class CoreSoundSequence implements SoundSequence {
     if (this._state === SoundSequenceState.stopped) {
       return;
     }
+    if (this._state === SoundSequenceState.paused) {
+      this.finish();
+    } else {
+      this.fadeOut(fadeOut, () => this.finish());
+    }
     this.changeState(SoundSequenceState.stopped);
-    this.fadeOut(fadeOut, () => this.finish());
   }
 
   private playTrack() {
     this.cursor++;
-    /** note: probably, this validation never throw error cos of previous validations */
+    /**
+     * note: probably, this validation never throw error cos of previous validations
+     * but let the validation remain
+     */
     throwIf(this.cursor >= this.sequence.length, `The cursor can't be greater than sequence length`);
 
     const toPlay = this.sequence[this.cursor];
@@ -207,7 +214,7 @@ export class CoreSoundSequence implements SoundSequence {
       from,
       to,
       onUpdate: (val: number) => this.setInternalVolume(val),
-      onStart: (tween: Tween) => this.volume = tween.from,
+      onStart: (tween: Tween) => this._volume = tween.from,
       onComplete: (tween: Tween) => {
         this._volume = tween.to;
         this.tween = undefined;
@@ -250,17 +257,21 @@ export class CoreSoundSequence implements SoundSequence {
   }
 
   private reset() {
-    this.tween?.stop();
-    this.activeInstance?.stop();
+    this.tween?.stop(); // will call onComplete where will be: this.tween = undefined
+    this.clearActiveInstance();
     this.cursor = this.cursorStart;
     this._volume = this._initialVolume;
     this.changeState(SoundSequenceState.ready);
   }
 
   private finish() {
-    this.activeInstance?.stop();
-    this.cursor = this.cursorStart;
+    this.clearActiveInstance();
     this.onFinish.emit();
+  }
+
+  private clearActiveInstance() {
+    this.activeInstance?.stop();
+    this.activeInstance = undefined;
   }
 
   /**

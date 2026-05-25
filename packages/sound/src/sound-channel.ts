@@ -1,4 +1,5 @@
 import {SoundSequenceItem} from './types';
+import {TimeContext} from '@axi-engine/utils';
 
 export interface SoundChannel {
   /**
@@ -15,6 +16,8 @@ export interface SoundChannel {
    * @default undefined
    */
   maxInstances: number | undefined;
+
+  update(time: TimeContext): void;
 
   play(sounds: SoundSequenceItem | SoundSequenceItem[], options?: any): void;
 

@@ -54,7 +54,7 @@ const queue: CoreSoundSequence = new CoreSoundSequence(['bip', 'bip', 'crop', 'd
 const queueLoop: CoreSoundSequence = new CoreSoundSequence(['bip', 'bip', 'drop', 'drop'], {loop: true});
 
 const restart: CoreSoundSequence = new CoreSoundSequence(['bip', 'drop', 'bip', 'drop']);
-let easing: CoreSoundSequence | undefined;
+const easing: CoreSoundSequence = new CoreSoundSequence('crop', {loop: true});
 
 function initPlay() {
   bindSequenceEvents(simple, 'play', 'stop');
@@ -81,44 +81,48 @@ function initPlayWithRestart() {
  *
  */
 function initPlayEasing() {
-  // const [play, pause, resume, stop] = getButtons('play-easing', 'pause-easing', 'resume-easing', 'stop-easing');
-  //
-  // play.addEventListener('click', () => {
-  //   switchButtons(play, stop, false);
-  //   pause.disabled = false;
-  //
-  //   easing?.stop();
-  //   easing = new CoreSoundSequence('crop', {loop: true});
-  //   easing.onFinish.once(() => {
-  //     easing = undefined;
-  //     switchButtons(play, stop, true);
-  //     pause.disabled = true;
-  //     resume.disabled = true;
-  //   });
-  //   easing.play({
-  //     easing: 'easeInSine',
-  //     duration: 1000
-  //   });
-  // });
-  //
-  // pause.addEventListener('click', () => {
-  //   easing?.pause(500);
-  //   pause.disabled = true;
-  //   resume.disabled = false;
-  // });
-  //
-  // resume.addEventListener('click', () => {
-  //   easing?.resume(500);
-  //   pause.disabled = false;
-  //   resume.disabled = true;
-  // });
-  //
-  // stop.addEventListener('click', () => {
-  //   easing?.stop(1000);
-  //   stop.disabled = true;
-  //   pause.disabled = true;
-  //   resume.disabled = true;
-  // });
+  const [play, pause, resume, stop] = getButtons('play-easing', 'pause-easing', 'resume-easing', 'stop-easing');
+
+  easing.onFinish.subscribe(() => {
+    play.disabled = false;
+    stop.disabled = true;
+    pause.disabled = true;
+    resume.disabled = true;
+  });
+
+  play.addEventListener('click', () => {
+    play.disabled = true;
+    stop.disabled = false;
+    pause.disabled = false;
+
+    easing.play({
+      easing: 'easeInSine',
+      duration: 1000
+    });
+  });
+
+  pause.addEventListener('click', () => {
+    easing.pause(500);
+    pause.disabled = true;
+    resume.disabled = false;
+  });
+
+  resume.addEventListener('click', () => {
+    easing.resume(500);
+    pause.disabled = false;
+    resume.disabled = true;
+  });
+
+  stop.addEventListener('click', () => {
+    easing.stop({
+      easing: 'easeOutSine',
+      duration: 1000
+    });
+
+    stop.disabled = true;
+    pause.disabled = true;
+    resume.disabled = true;
+  });
 }
 
 (function main() {
