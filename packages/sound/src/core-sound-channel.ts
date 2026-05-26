@@ -1,10 +1,11 @@
 import {isNullOrUndefined} from '@axijs/ensure';
+import {TimeContext} from '@axi-engine/utils';
 import {SoundChannelConfig} from './sound-channel-config';
 import {SoundChannel} from './sound-channel';
 import {CoreSoundSequence} from './core-sound-sequence';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceItem} from './types';
-import {TimeContext} from '@axi-engine/utils';
+
 
 export class CoreSoundChannel implements SoundChannel {
   // channel volume, from 0 to 1
