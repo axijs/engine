@@ -47,11 +47,11 @@
         </div>
       </section>
       <section>
-      <div>
-        <h4>Restart On Play</h4>
-        <button id="play-restart">Play</button>
-        <button id="stop-restart" disabled>Stop</button>
-      </div>
+        <div>
+          <h4>Restart On Play</h4>
+          <button id="play-restart">Play</button>
+          <button id="stop-restart" disabled>Stop</button>
+        </div>
       </section>
 
       <section>
@@ -67,10 +67,21 @@
       <section>
         <div>
           <h4>Channel</h4>
-          <button id="cnl-play">Play</button>
-          <button id="cnl-pause" disabled>Pause</button>
-          <button id="cnl-resume" disabled>Resume</button>
-          <button id="cnl-stop" disabled>Stop</button>
+          <div class="grid">
+            <div> Queue: <span id="cnl-queue">0</span></div>
+            <div> Volume: <span id="cnl-volume">1</span></div>
+          </div>
+          <hr>
+          <div>
+            <button id="cnl-play">Play</button>
+            <button id="cnl-play-long">Play Long</button>
+
+            <button id="cnl-pause">Pause</button>
+            <button id="cnl-resume">Resume</button>
+            <button id="cnl-stop">Stop</button>
+            <button id="cnl-volume-05">Volume 0.5</button>
+            <button id="cnl-volume-1">Volume 1.0</button>
+          </div>
         </div>
       </section>
     </section>

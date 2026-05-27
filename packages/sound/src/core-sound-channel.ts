@@ -5,6 +5,7 @@ import {SoundChannel} from './sound-channel';
 import {CoreSoundSequence} from './core-sound-sequence';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceItem} from './types';
+import {StateEmitter} from '@axijs/emitter';
 
 
 export class CoreSoundChannel implements SoundChannel {
@@ -19,9 +20,13 @@ export class CoreSoundChannel implements SoundChannel {
 
   sequences: Set<SoundSequence> = new Set<SoundSequence>();
 
+  onSizeChanged = new StateEmitter<[number]>([0]);
+  onVolumeChanged  = new StateEmitter<[number]>([this._volume]);
+
   set volume(value: number) {
     this._volume = value;
     this.sequences.forEach(s => s.volumeFactor = this._volume);
+    this.onVolumeChanged.emit(this._volume);
   }
 
   get volume(): number {
@@ -39,13 +44,17 @@ export class CoreSoundChannel implements SoundChannel {
   }
 
   play(sounds: SoundSequenceItem | SoundSequenceItem[], options?: any) {
+    console.log('play: ', sounds);
     const seq = new CoreSoundSequence(sounds);
     this.sequences.add(seq);
+    this.onSizeChanged.emit(this.sequences.size);
+
     console.log('play:', sounds);
 
     seq.onFinish.once(() => {
       console.log('unsub and delete: ', this.sequences.size);
       this.sequences.delete(seq);
+      this.onSizeChanged.emit(this.sequences.size);
       console.log('after unsub and delete: ', this.sequences.size);
     });
 
