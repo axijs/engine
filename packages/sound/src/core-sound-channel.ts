@@ -4,8 +4,9 @@ import {SoundChannelConfig} from './sound-channel-config';
 import {SoundChannel} from './sound-channel';
 import {CoreSoundSequence} from './core-sound-sequence';
 import {SoundSequence} from './sound-sequence';
-import {SoundSequenceItem} from './types';
+import {EasingParam, SoundSequenceItem} from './types';
 import {StateEmitter} from '@axijs/emitter';
+import {SoundSequenceOptions} from './sound-sequence-options';
 
 
 export class CoreSoundChannel implements SoundChannel {
@@ -21,7 +22,7 @@ export class CoreSoundChannel implements SoundChannel {
   sequences: Set<SoundSequence> = new Set<SoundSequence>();
 
   onSizeChanged = new StateEmitter<[number]>([0]);
-  onVolumeChanged  = new StateEmitter<[number]>([this._volume]);
+  onVolumeChanged = new StateEmitter<[number]>([this._volume]);
 
   set volume(value: number) {
     this._volume = value;
@@ -43,9 +44,12 @@ export class CoreSoundChannel implements SoundChannel {
     this.sequences.forEach(s => s.update(time));
   }
 
-  play(sounds: SoundSequenceItem | SoundSequenceItem[], options?: any) {
+  play(
+    sounds: SoundSequenceItem | SoundSequenceItem[],
+    options?: { sequence?: SoundSequenceOptions, easing?: EasingParam }
+  ) {
     console.log('play: ', sounds);
-    const seq = new CoreSoundSequence(sounds);
+    const seq = new CoreSoundSequence(sounds, {...options?.sequence, volumeFactor: this._volume});
     this.sequences.add(seq);
     this.onSizeChanged.emit(this.sequences.size);
 
@@ -58,18 +62,18 @@ export class CoreSoundChannel implements SoundChannel {
       console.log('after unsub and delete: ', this.sequences.size);
     });
 
-    seq.play();
+    seq.play(options?.easing);
   }
 
-  pause() {
-    this.sequences.forEach(s => s.pause());
+  pause(easing?: EasingParam) {
+    this.sequences.forEach(s => s.pause(easing));
   }
 
-  resume() {
-    this.sequences.forEach(s => s.resume());
+  resume(easing?: EasingParam) {
+    this.sequences.forEach(s => s.resume(easing));
   }
 
-  stop() {
-    this.sequences.forEach(s => s.stop());
+  stop(easing?: EasingParam) {
+    this.sequences.forEach(s => s.stop(easing));
   }
 }

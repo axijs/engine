@@ -56,6 +56,7 @@ export class CoreSoundSequence implements SoundSequence {
 
   set volumeFactor(val: number) {
     this._volumeFactor = val;
+    this.updateActiveInstanceVolume();
   }
 
   get volumeFactor() {
@@ -77,7 +78,7 @@ export class CoreSoundSequence implements SoundSequence {
   constructor(sounds: SoundSequenceItems, options?: SoundSequenceOptions) {
     this.sequence = this.normaliseSoundConfigs(sounds);
     this.volume = isUndefined(options?.volume) ? 1 : options?.volume;
-    this.volumeFactor = 1;
+    this.volumeFactor = isUndefined(options?.volumeFactor) ? 1 : options?.volumeFactor;
     this.loop = isUndefined(options?.loop) ? false : options?.loop;
   }
 
@@ -236,7 +237,7 @@ export class CoreSoundSequence implements SoundSequence {
   }
 
   private countTrackVolume(track: TrackConfig): number {
-    return +(this.volumeFactor * this.volume * (isNullOrUndefined(track.volume) ? 1 : track.volume))
+    return +(this._volumeFactor * this._volume * (isNullOrUndefined(track.volume) ? 1 : track.volume))
       .toFixed(2);
   }
 

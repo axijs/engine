@@ -1,5 +1,6 @@
-import {SoundSequenceItem} from './types';
+import {EasingParam, SoundSequenceItem} from './types';
 import {TimeContext} from '@axi-engine/utils';
+import {SoundSequenceOptions} from './sound-sequence-options';
 
 export interface SoundChannel {
   /**
@@ -19,11 +20,14 @@ export interface SoundChannel {
 
   update(time: TimeContext): void;
 
-  play(sounds: SoundSequenceItem | SoundSequenceItem[], options?: any): void;
+  play(
+    sounds: SoundSequenceItem | SoundSequenceItem[],
+    options?: { sequence?: SoundSequenceOptions, easing?: EasingParam}
+  ): void;
 
-  pause(): void;
+  pause(easing?: EasingParam): void;
 
-  resume(): void;
+  resume(easing?: EasingParam): void;
 
-  stop(): void;
+  stop(easing?: EasingParam): void;
 }
