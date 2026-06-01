@@ -1,5 +1,6 @@
 import {TrackConfig} from './track-config';
 import {EasingName} from '@axi-engine/utils';
+import {SoundSequenceOptions} from './sound-sequence-options';
 
 export type SoundSequenceItem = string | TrackConfig;
 
@@ -24,4 +25,9 @@ export const enum SoundSequenceState {
   playing = 'playing',
   paused = 'paused',
   stopped = 'stopped'
+}
+
+
+export interface SoundChannelPlayOptions extends SoundSequenceOptions {
+  fadeIn?: EasingParam
 }

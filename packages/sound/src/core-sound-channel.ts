@@ -1,23 +1,23 @@
 import {isNullOrUndefined} from '@axijs/ensure';
+import {StateEmitter} from '@axijs/emitter';
 import {TimeContext} from '@axi-engine/utils';
 import {SoundChannelConfig} from './sound-channel-config';
 import {SoundChannel} from './sound-channel';
 import {CoreSoundSequence} from './core-sound-sequence';
 import {SoundSequence} from './sound-sequence';
-import {EasingParam, SoundSequenceItem} from './types';
-import {StateEmitter} from '@axijs/emitter';
+import {EasingParam, SoundChannelPlayOptions, SoundSequenceItems} from './types';
 import {SoundSequenceOptions} from './sound-sequence-options';
 
 
 export class CoreSoundChannel implements SoundChannel {
   // channel volume, from 0 to 1
-  _volume: number = 1;
+  private _volume = 1;
 
   // is need to loop play sound // default false
-  loop: boolean;
+  private _loop = false;
 
   //
-  maxInstances: number | undefined;
+  private _maxInstances: number | undefined;
 
   sequences: Set<SoundSequence> = new Set<SoundSequence>();
 
@@ -34,6 +34,22 @@ export class CoreSoundChannel implements SoundChannel {
     return this._volume;
   }
 
+  set loop(val: boolean) {
+    this._loop = val;
+  }
+
+  get loop() {
+    return this._loop;
+  }
+
+  set maxInstances(val: number | undefined) {
+    this._maxInstances = val;
+  }
+
+  get maxInstances() {
+    return this._maxInstances;
+  }
+
   constructor(config: SoundChannelConfig) {
     this.volume = isNullOrUndefined(config.volume) ? 1 : config.volume;
     this.loop = isNullOrUndefined(config.loop) ? false : config.loop;
@@ -45,24 +61,29 @@ export class CoreSoundChannel implements SoundChannel {
   }
 
   play(
-    sounds: SoundSequenceItem | SoundSequenceItem[],
-    options?: { sequence?: SoundSequenceOptions, easing?: EasingParam }
+    sounds: SoundSequenceItems,
+    options?: SoundChannelPlayOptions
   ) {
-    console.log('play: ', sounds);
-    const seq = new CoreSoundSequence(sounds, {...options?.sequence, volumeFactor: this._volume});
+    if (!isNullOrUndefined(this._maxInstances) && this.sequences.size + 1 > this._maxInstances) {
+      this.sequences.values().next().value?.stop();
+    }
+
+    const seqOptions: SoundSequenceOptions = {
+      volumeFactor: this._volume,
+      loop: this._loop,
+      ...options
+    };
+
+    const seq = new CoreSoundSequence(sounds, seqOptions);
     this.sequences.add(seq);
     this.onSizeChanged.emit(this.sequences.size);
 
-    console.log('play:', sounds);
-
     seq.onFinish.once(() => {
-      console.log('unsub and delete: ', this.sequences.size);
       this.sequences.delete(seq);
       this.onSizeChanged.emit(this.sequences.size);
-      console.log('after unsub and delete: ', this.sequences.size);
     });
 
-    seq.play(options?.easing);
+    seq.play(options?.fadeIn);
   }
 
   pause(easing?: EasingParam) {

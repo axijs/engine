@@ -22,7 +22,7 @@ const queueLoop: CoreSoundSequence = new CoreSoundSequence(['bip', 'bip', 'drop'
 const restart: CoreSoundSequence = new CoreSoundSequence(['bip', 'drop', 'bip', 'drop']);
 const easing: CoreSoundSequence = new CoreSoundSequence('crop', {loop: true});
 
-const soundChannel = new CoreSoundChannel({name: 'test'});
+const soundChannel = new CoreSoundChannel({name: 'test', maxInstances: 5});
 
 function initPlay() {
   bindSequenceEvents(simple, 'play', 'stop');
@@ -103,32 +103,14 @@ function initPlayChannel() {
     'cnl-play', 'cnl-play-long', 'cnl-pause', 'cnl-resume', 'cnl-stop', 'cnl-volume-05', 'cnl-volume-1'
   );
 
-  soundChannel.onSizeChanged.subscribe(num => {
-    queueLabel.textContent = num.toString();
-    // pause.disabled = !num;
-    // stop.disabled = !num;
-  });
+  soundChannel.onSizeChanged.subscribe(num => queueLabel.textContent = num.toString());
   soundChannel.onVolumeChanged.subscribe(volume => volumeLabel.textContent = volume.toString());
 
-  play.addEventListener('click', () => {
-    soundChannel.play('drop')
-  });
-
-  playLong.addEventListener('click', () => {
-    soundChannel.play('crop')
-  });
-
-  pause.addEventListener('click', () => {
-    soundChannel.pause();
-  });
-
-  resume.addEventListener('click', () => {
-    soundChannel.resume();
-  });
-
-  stop.addEventListener('click', () => {
-    soundChannel.stop();
-  });
+  play.addEventListener('click', () => soundChannel.play('drop'));
+  playLong.addEventListener('click', () => soundChannel.play('crop'));
+  pause.addEventListener('click', () => soundChannel.pause());
+  resume.addEventListener('click', () => soundChannel.resume());
+  stop.addEventListener('click', () => soundChannel.stop());
 
   volume05.addEventListener('click', () => soundChannel.volume = 0.5);
   volume1.addEventListener('click', () => soundChannel.volume = 1.0);

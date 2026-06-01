@@ -1,10 +1,11 @@
-import {PathType, Registry, TimeContext} from '@axi-engine/utils';
+import {Registry, TimeContext} from '@axi-engine/utils';
 import {SoundChannelConfig} from './sound-channel-config';
-import {isNullOrUndefined, throwIfEmpty} from '@axijs/ensure';
 import {CoreSoundChannel} from './core-sound-channel';
 import {sound} from '@pixi/sound';
 import {SoundSystem} from './sound-system';
 import {SoundChannel} from './sound-channel';
+import {SoundSequenceItems} from './types';
+import {SoundSequenceOptions} from './sound-sequence-options';
 
 export class CoreSoundSystem implements SoundSystem {
   _channels = new Registry<string, SoundChannel>();
@@ -33,21 +34,12 @@ export class CoreSoundSystem implements SoundSystem {
     return this._channels.getOrThrow(name);
   }
 
-
   /**
    *
    */
   // play sound named in channel
-  play(
-    channelName: string,
-    soundPath: PathType,
-    options?: {
-      volume?: number,
-      loop?: boolean,
-      singleInstance?: boolean
-    }
-  ) {
-    this.channel(channelName).play(soundPath, options);
+  play(channelName: string, sounds: SoundSequenceItems, options?: SoundSequenceOptions) {
+    this.channel(channelName).play(sounds, options);
   }
 
   pause(names: string | string[]) {
@@ -78,7 +70,7 @@ export class CoreSoundSystem implements SoundSystem {
   }
 
   update(time: TimeContext) {
-    // this.channels.forEach(c => c.update(time));
+    this.channels.forEach(c => c.update(time));
   }
 
   /**
