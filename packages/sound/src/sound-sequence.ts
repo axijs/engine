@@ -14,6 +14,8 @@ export interface SoundSequence {
   /** Volume multiplier applied by parent systems (e.g., channels). */
   volumeFactor: number;
 
+  readonly cursor: number;
+
   /** The base volume before any tween animations are applied. */
   readonly initialVolume: number;
 

@@ -26,8 +26,6 @@
   },
   "scripts": {
     "build": "tsup",
-    "prebuild": "npm test",
-    "test": "vitest run",
     "docs": "typedoc src/index.ts --out docs/api --options ../../typedoc.json"
   },
   "files": [

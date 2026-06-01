@@ -19,7 +19,7 @@ export class CoreSoundSequence implements SoundSequence {
   private _loop = false;
 
   private cursorStart = -1;
-  private cursor = this.cursorStart;
+  private _cursor = this.cursorStart;
   private readonly sequence: TrackConfig[];
 
   private activeInstance: IMediaInstance | undefined;
@@ -36,6 +36,10 @@ export class CoreSoundSequence implements SoundSequence {
 
   get loop(): boolean {
     return this._loop;
+  }
+
+  get cursor(): number {
+    return this._cursor;
   }
 
   get initialVolume(): number {
@@ -144,14 +148,14 @@ export class CoreSoundSequence implements SoundSequence {
   }
 
   private playTrack() {
-    this.cursor++;
+    this._cursor++;
     /**
      * note: probably, this validation never throw error cos of previous validations
      * but let the validation remain
      */
-    throwIf(this.cursor >= this.sequence.length, `The cursor can't be greater than sequence length`);
+    throwIf(this._cursor >= this.sequence.length, `The cursor can't be greater than sequence length`);
 
-    const toPlay = this.sequence[this.cursor];
+    const toPlay = this.sequence[this._cursor];
     const volume = this.countTrackVolume(toPlay);
 
     const instanceOrPromise = sound.play(toPlay.name, {
@@ -182,9 +186,9 @@ export class CoreSoundSequence implements SoundSequence {
     if (this.stopped && isNullOrUndefined(this.tween)) {
       return;
     }
-    if (this.cursor + 1 >= this.sequence.length) {
+    if (this._cursor + 1 >= this.sequence.length) {
       if (this.loop) {
-        this.cursor = this.cursorStart;
+        this._cursor = this.cursorStart;
       } else {
         this.tween?.stop();
         this.stop();
@@ -233,7 +237,7 @@ export class CoreSoundSequence implements SoundSequence {
     if (isUndefined(this.activeInstance) || !this.sequence.length) {
       return;
     }
-    this.activeInstance.volume = this.countTrackVolume(this.sequence[this.cursor]);
+    this.activeInstance.volume = this.countTrackVolume(this.sequence[this._cursor]);
   }
 
   private countTrackVolume(track: TrackConfig): number {
@@ -260,7 +264,7 @@ export class CoreSoundSequence implements SoundSequence {
   private reset() {
     this.tween?.stop(); // will call onComplete where will be: this.tween = undefined
     this.clearActiveInstance();
-    this.cursor = this.cursorStart;
+    this._cursor = this.cursorStart;
     this._volume = this._initialVolume;
     this.changeState(SoundSequenceState.ready);
   }
