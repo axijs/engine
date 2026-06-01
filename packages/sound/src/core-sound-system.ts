@@ -6,6 +6,7 @@ import {SoundSystem} from './sound-system';
 import {SoundChannel} from './sound-channel';
 import {SoundSequenceItems} from './types';
 import {SoundSequenceOptions} from './sound-sequence-options';
+import {channel} from 'node:diagnostics_channel';
 
 export class CoreSoundSystem implements SoundSystem {
   _channels = new Registry<string, SoundChannel>();
@@ -26,8 +27,9 @@ export class CoreSoundSystem implements SoundSystem {
   constructor() {
   }
 
-  register(channel: SoundChannelConfig) {
-    this._channels.register(channel.name, new CoreSoundChannel(channel));
+  register(channelOrChannels: SoundChannelConfig | SoundChannelConfig[]) {
+    (!Array.isArray(channelOrChannels) ? [channelOrChannels] : channelOrChannels)
+      .forEach(channel => this._channels.register(channel.name, new CoreSoundChannel(channel)));
   }
 
   channel(name: string): SoundChannel {
