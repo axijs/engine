@@ -2,6 +2,7 @@
 import {TimeContext} from '@axi-engine/utils';
 import {EasingParam, SoundSequenceItems, SoundSequenceState} from './types';
 import {Emitter, StateEmitter} from '@axijs/emitter';
+import {TrackConfig} from './track-config';
 
 /**
  * Atomic, base representation of a single sound or a sequence of sounds.
@@ -15,6 +16,10 @@ export interface SoundSequence {
   volumeFactor: number;
 
   readonly cursor: number;
+
+  readonly tracks: TrackConfig[];
+
+  readonly trackProgress: number | undefined;
 
   /** The base volume before any tween animations are applied. */
   readonly initialVolume: number;

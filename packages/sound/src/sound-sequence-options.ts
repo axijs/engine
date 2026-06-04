@@ -1,3 +1,5 @@
+import {SoundSequenceState} from './types';
+
 export interface SoundSequenceOptions {
   // from 0 to 1, default 1
   volume?: number;
@@ -7,4 +9,11 @@ export interface SoundSequenceOptions {
 
   // loop sequence, default false
   loop?: boolean;
+
+  state?: SoundSequenceState;
+
+  cursor?: number;
+
+  // work with cursor, value from 0 to 1;
+  progress?: number;
 }

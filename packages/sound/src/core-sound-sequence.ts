@@ -42,6 +42,14 @@ export class CoreSoundSequence implements SoundSequence {
     return this._cursor;
   }
 
+  get tracks(): TrackConfig[] {
+    return this.sequence;
+  }
+
+  get trackProgress(): number | undefined {
+    return this.activeInstance?.progress;
+  }
+
   get initialVolume(): number {
     return this._initialVolume;
   }
@@ -81,9 +89,21 @@ export class CoreSoundSequence implements SoundSequence {
 
   constructor(sounds: SoundSequenceItems, options?: SoundSequenceOptions) {
     this.sequence = this.normaliseSoundConfigs(sounds);
+
     this.volume = isUndefined(options?.volume) ? 1 : options?.volume;
     this.volumeFactor = isUndefined(options?.volumeFactor) ? 1 : options?.volumeFactor;
     this.loop = isUndefined(options?.loop) ? false : options?.loop;
+    this._state = options?.state ?? SoundSequenceState.ready;
+    this._cursor = options?.cursor ?? this.cursorStart;
+
+    if (this._cursor > this.cursorStart && !isUndefined(options?.progress)) {
+      this.playCurrentTrack(options?.progress);
+      if (this._state === SoundSequenceState.paused) {
+        this.pause();
+      } else if (this._state === SoundSequenceState.stopped) {
+        this.stop();
+      }
+    }
   }
 
   update(time: TimeContext) {
@@ -109,7 +129,7 @@ export class CoreSoundSequence implements SoundSequence {
 
     this.onPlay.emit();
     this.fadeIn(fadeIn);
-    this.playTrack();
+    this.playNextTrack();
   }
 
   pause(fadeOut?: EasingParam) {
@@ -147,8 +167,12 @@ export class CoreSoundSequence implements SoundSequence {
     this.changeState(SoundSequenceState.stopped);
   }
 
-  private playTrack() {
+  private playNextTrack() {
     this._cursor++;
+    this.playCurrentTrack();
+  }
+
+  private playCurrentTrack(progress?: number) {
     /**
      * note: probably, this validation never throw error cos of previous validations
      * but let the validation remain
@@ -157,11 +181,18 @@ export class CoreSoundSequence implements SoundSequence {
 
     const toPlay = this.sequence[this._cursor];
     const volume = this.countTrackVolume(toPlay);
+    let startFrom: number | undefined;
+
+    if (!isUndefined(progress)) {
+      const trackDuration = sound.find(toPlay.name).duration;
+      startFrom = trackDuration * progress;
+    }
 
     const instanceOrPromise = sound.play(toPlay.name, {
       volume,
       complete: () => this.trackComplete(),
-      loop: this.isLoopTrack()
+      loop: this.isLoopTrack(),
+      start: startFrom
     });
 
     if (!isPromise(instanceOrPromise)) {
@@ -195,7 +226,7 @@ export class CoreSoundSequence implements SoundSequence {
         return;
       }
     }
-    this.playTrack();
+    this.playNextTrack();
   }
 
   private fadeIn(fadeParam?: EasingParam, doneCallback?: () => void) {
