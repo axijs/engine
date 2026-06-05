@@ -1,7 +1,7 @@
 import {isNullOrUndefined, isPromise, isString, isUndefined, throwIf} from '@axijs/ensure';
 import {Emitter, StateEmitter} from '@axijs/emitter';
 import {TimeContext} from '@axi-engine/utils';
-import {IMediaInstance, sound} from '@pixi/sound';
+import {IMediaInstance, PlayOptions, sound} from '@pixi/sound';
 import {SoundSequence} from './sound-sequence';
 import {SoundSequenceOptions} from './sound-sequence-options';
 import {TrackConfig} from './track-config';
@@ -181,35 +181,45 @@ export class CoreSoundSequence implements SoundSequence {
 
     const toPlay = this.sequence[this._cursor];
     const volume = this.countTrackVolume(toPlay);
-    let startFrom: number | undefined;
 
-    if (!isUndefined(progress)) {
-      const trackDuration = sound.find(toPlay.name).duration;
-      startFrom = trackDuration * progress;
-    }
-
-    const instanceOrPromise = sound.play(toPlay.name, {
+    const playOptions: PlayOptions = {
       volume,
       complete: () => this.trackComplete(),
       loop: this.isLoopTrack(),
-      start: startFrom
-    });
+    };
+
+    /**
+     * Why I'm setting up options like this:
+     * 'start' property must not be present in options if it's undefined.
+     * Passing 'start: undefined' explicitly breaks @pixi/sound internal math,
+     * resulting in NaN for instance.progress and instance.elapsed.
+     */
+    if (!isUndefined(progress)) {
+      const trackDuration = sound.find(toPlay.name).duration;
+      playOptions.start = trackDuration * progress;
+    }
+
+    const instanceOrPromise = sound.play(toPlay.name, playOptions);
 
     if (!isPromise(instanceOrPromise)) {
-      this.activeInstance = instanceOrPromise;
+      this.setActiveInstance(instanceOrPromise);
     } else {
-      instanceOrPromise.then(instance => {
-        this.activeInstance = instance;
-        /** in case when pause or stop has been called before sound loaded */
-        if (this.paused) {
-          this.activeInstance.paused = this.paused;
-        } else if (this.stopped) {
-          if (isNullOrUndefined(this.tween)) {
-            this.activeInstance.stop();
-          }
-        }
-      });
+      instanceOrPromise.then(instance => this.setActiveInstance(instance));
     }
+  }
+
+  setActiveInstance(instance: IMediaInstance) {
+    this.activeInstance = instance;
+    // this.activeInstance.on('progress', (progress: number, duration: number) => console.log(progress, duration));
+    /** in case when pause or stop has been called before sound loaded */
+    if (this.paused) {
+      this.activeInstance.paused = this.paused;
+    } else if (this.stopped) {
+      if (isNullOrUndefined(this.tween)) {
+        this.activeInstance.stop();
+      }
+    }
+
   }
 
   private trackComplete() {

@@ -1,14 +1,20 @@
 import {sound} from '@pixi/sound';
-import {CoreSoundChannel, CoreSoundSequence, createSoundSystem} from '@axi-engine/sound';
+import {
+  CoreSoundChannel,
+  CoreSoundSequence,
+  createSoundSystem, SoundSequenceHydrator,
+  type SoundSequenceSnapshot,
+  SoundSequenceSnapshotter
+} from '@axi-engine/sound';
 import {Ticker} from './ticker.ts';
 import type {TimeContext} from '@axi-engine/utils';
 import {bindSequenceEvents, getButtons, getSpans} from './main-tools.ts';
+
 
 sound.add('crop', 'sound/metronome_crop.ogg');
 sound.add('full', 'sound/metronome_full.ogg');
 sound.add('bip', 'sound/bip.ogg');
 sound.add('drop', 'sound/water_drop.ogg');
-
 
 const soundSystem = createSoundSystem();
 soundSystem.register({name: 'core'});
@@ -23,6 +29,9 @@ const restart: CoreSoundSequence = new CoreSoundSequence(['bip', 'drop', 'bip', 
 const easing: CoreSoundSequence = new CoreSoundSequence('crop', {loop: true});
 
 const soundChannel = new CoreSoundChannel({name: 'test', maxInstances: 5});
+
+let saveAndRestore: CoreSoundSequence = new CoreSoundSequence('full');
+let saveAndRestoreSnapshot: SoundSequenceSnapshot | undefined;
 
 function initPlay() {
   bindSequenceEvents(simple, 'play', 'stop');
@@ -116,7 +125,31 @@ function initPlayChannel() {
   volume1.addEventListener('click', () => soundChannel.volume = 1.0);
 }
 
-(function main() {
+function initSaveAndRestore() {
+  const [play, save, restore] = getButtons('save-test-play', 'save', 'restore');
+
+  play.addEventListener('click', () => {
+    saveAndRestore.play();
+    save.disabled = false;
+  });
+
+  save.addEventListener('click', () => {
+    if (saveAndRestore) {
+      saveAndRestoreSnapshot = (new SoundSequenceSnapshotter()).snapshot(saveAndRestore);
+      console.log('Snapshot: -->', saveAndRestoreSnapshot);
+    }
+    restore.disabled = false;
+  });
+
+  restore.addEventListener('click', () => {
+    if (saveAndRestoreSnapshot) {
+      saveAndRestore?.stop();
+      saveAndRestore = (new SoundSequenceHydrator()).hydrate(saveAndRestoreSnapshot);
+    }
+  });
+}
+
+(async function main() {
   initPlay();
   initPlayLoop();
   initPlayQueue();
@@ -124,10 +157,12 @@ function initPlayChannel() {
   initPlayWithRestart();
   initPlayEasing();
   initPlayChannel();
+  initSaveAndRestore();
 
   const ticker = new Ticker((context: TimeContext) => {
     easing?.update(context);
     soundChannel?.update(context);
+
   });
   ticker.start();
 })();

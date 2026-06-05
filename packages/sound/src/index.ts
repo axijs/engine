@@ -13,3 +13,4 @@ export * from './core-sound-system';
 
 export * from './setup';
 
+export * from './serializers';
