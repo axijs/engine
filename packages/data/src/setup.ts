@@ -1,4 +1,4 @@
-import {FieldRegistry} from './fields';
+import {createCoreFieldRegistry, FieldRegistry} from './fields';
 import {
   ClampMaxPolicySerializerHandler,
   ClampMinPolicySerializerHandler,
@@ -7,24 +7,10 @@ import {
   PolicySerializer
 } from './fields';
 import {ClampMaxPolicy, ClampMinPolicy, ClampPolicy} from './fields';
-import {CoreBooleanField, CoreField, CoreNumericField, CoreStringField} from './fields';
 import {CoreFields} from './fields';
 import {CoreTreeNodeFactory} from './fields';
 import {CoreStoreFactory, DataStoreHydrator, DataStoreSnapshotter} from './store';
 
-
-/**
- * Creates and configures a FieldRegistry with all the core field types.
- * @returns {FieldRegistry} A pre-configured FieldRegistry instance.
- */
-export function createCoreFieldRegistry(): FieldRegistry {
-  const fieldRegistry = new FieldRegistry();
-  fieldRegistry.register(CoreField.typeName, CoreField);
-  fieldRegistry.register(CoreNumericField.typeName, CoreNumericField);
-  fieldRegistry.register(CoreStringField.typeName, CoreStringField);
-  fieldRegistry.register(CoreBooleanField.typeName, CoreBooleanField);
-  return fieldRegistry;
-}
 
 /**
  * Creates and configures a PolicySerializer with handlers for core policies.

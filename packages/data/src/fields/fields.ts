@@ -3,6 +3,7 @@ import {throwIf} from '@axijs/ensure';
 import {Destroyable} from '@axi-engine/utils';
 import {FieldRegistry} from './field-registry';
 import {Field} from './field';
+import {FieldPredicate} from './types';
 
 /**
  * A container for a collection of named `Field` instances.
@@ -135,14 +136,14 @@ export class Fields implements Destroyable {
 
   /**
    * Retrieves a field by its name.
-   * @template TField - The expected `Field` type to be returned.
+   * @template T - The expected `Field` type to be returned.
    * @param {string} name - The name of the field to retrieve.
-   * @returns {TField} The `Field` instance.
+   * @returns {T} The `Field` instance.
    * @throws If the field does not exist.
    */
-  get<TField extends Field<any>>(name: string): TField {
+  get<T extends Field<any>>(name: string): T {
     throwIf(!this._fields.has(name), `Field with name '${name}' not exists`);
-    return this._fields.get(name)! as TField;
+    return this._fields.get(name)! as T;
   }
 
   /**
@@ -169,6 +170,39 @@ export class Fields implements Destroyable {
     }
 
     this.onRemove.emit({names: reallyRemoved});
+  }
+
+  /**
+   * Finds the first field that satisfies the provided condition.
+   * Since the container can hold various types of fields, the predicate accepts a base Field<any>.
+   *
+   * @param predicate The condition function to test the field.
+   * @returns The found field cast to type T, or undefined.
+   */
+  findFirst<T extends Field<any> = Field<any>>(predicate: FieldPredicate): T | undefined {
+    for (const field of this._fields.values()) {
+      if (predicate(field)) {
+        return field as T;
+      }
+    }
+    return undefined;
+  }
+
+  /**
+   * Finds all fields that satisfy the provided condition.
+   * Since the container can hold various types of fields, the predicate accepts a base Field<any>.
+   *
+   * @param predicate The condition function to test the field.
+   * @returns An array of found fields cast to type T.
+   */
+  findAll<T extends Field<any> = Field<any>>(predicate: FieldPredicate): T[] {
+    const result: T[] = [];
+    for (const field of this._fields.values()) {
+      if (predicate(field)) {
+        result.push(field as T);
+      }
+    }
+    return result;
   }
 
   /**
