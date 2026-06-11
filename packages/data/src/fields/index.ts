@@ -1,3 +1,4 @@
+export * from './types'
 export * from './policies/index'
 
 export * from './mixins/mixin-factory'
@@ -17,3 +18,5 @@ export * from './core-field-tree-factory'
 
 export * from './serializers'
 export * from './guards'
+
+export * from './setup'
