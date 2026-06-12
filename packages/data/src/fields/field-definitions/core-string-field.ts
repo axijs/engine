@@ -4,8 +4,8 @@ import {FieldOptions, StringField} from '../field';
 export interface CoreStringFieldOptions extends FieldOptions<string> { }
 
 export class CoreStringField extends CoreField<string> implements StringField {
-  static readonly typeName: string = 'string';
-  readonly typeName = CoreStringField.typeName;
+  static override readonly typeName: string = 'string';
+  override readonly typeName = CoreStringField.typeName;
 
   constructor(name: string, initialVal: string, options?: CoreStringFieldOptions) {
     super(name, initialVal, options);

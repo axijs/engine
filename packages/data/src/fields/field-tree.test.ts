@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {createCoreFieldSystem} from '../setup';
+import {createCoreFieldSystem} from './index';
 
 describe('checkHasPathFieldTree', () => {
   const system = createCoreFieldSystem();

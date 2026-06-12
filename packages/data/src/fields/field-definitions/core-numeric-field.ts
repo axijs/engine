@@ -17,8 +17,8 @@ export interface CoreNumericFieldOptions extends FieldOptions<number> {
 }
 
 export class CoreNumericField extends CoreField<number> implements NumericField {
-  static readonly typeName: string = 'numeric';
-  readonly typeName = CoreNumericField.typeName;
+  static override readonly typeName: string = 'numeric';
+  override readonly typeName = CoreNumericField.typeName;
 
   get min(): number | undefined {
     const policy =
