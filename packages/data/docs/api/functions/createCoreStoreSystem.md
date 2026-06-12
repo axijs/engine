@@ -8,7 +8,7 @@
 
 > **createCoreStoreSystem**(`fieldsSystem`): [`CoreStoreSystem`](../type-aliases/CoreStoreSystem.md)
 
-Defined in: packages/data/src/setup.ts:122
+Defined in: packages/data/src/store/setup.ts:17
 
 Initializes the high-level DataStore infrastructure.
 Creates the store factory and serialization services based on the provided field system.

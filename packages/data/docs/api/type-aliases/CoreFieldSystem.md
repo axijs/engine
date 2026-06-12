@@ -8,7 +8,7 @@
 
 > **CoreFieldSystem** = `object`
 
-Defined in: packages/data/src/setup.ts:78
+Defined in: packages/data/src/fields/setup.ts:76
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: packages/data/src/setup.ts:78
 
 > **factory**: [`CoreTreeNodeFactory`](../classes/CoreTreeNodeFactory.md)
 
-Defined in: packages/data/src/setup.ts:79
+Defined in: packages/data/src/fields/setup.ts:77
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: packages/data/src/setup.ts:79
 
 > **hydrator**: [`FieldTreeHydrator`](../classes/FieldTreeHydrator.md)\<[`CoreFields`](../classes/CoreFields.md)\>
 
-Defined in: packages/data/src/setup.ts:80
+Defined in: packages/data/src/fields/setup.ts:78
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: packages/data/src/setup.ts:80
 
 > **snapshotter**: [`FieldTreeSnapshotter`](../classes/FieldTreeSnapshotter.md)
 
-Defined in: packages/data/src/setup.ts:81
+Defined in: packages/data/src/fields/setup.ts:79

@@ -70,6 +70,7 @@
 
 - [CoreFieldSystem](type-aliases/CoreFieldSystem.md)
 - [CoreStoreSystem](type-aliases/CoreStoreSystem.md)
+- [FieldPredicate](type-aliases/FieldPredicate.md)
 - [TreeNode](type-aliases/TreeNode.md)
 
 ## Functions

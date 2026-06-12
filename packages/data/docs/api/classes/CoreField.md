@@ -65,6 +65,32 @@ Optional configuration for the field.
 
 ## Properties
 
+### \_name
+
+> `protected` `readonly` **\_name**: `string`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:21
+
+A unique identifier for the field.
+
+***
+
+### \_onChange
+
+> `protected` `readonly` **\_onChange**: `Emitter`\<\[`T`, `T`\]\>
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
+
+***
+
+### \_value
+
+> `protected` **\_value**: `T`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
+
+***
+
 ### onChange
 
 > `readonly` **onChange**: `Subscribable`\<\[`T`, `T`\]\>
@@ -84,7 +110,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`T`\>
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:25
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:26
 
 The collection of policies applied to this field.
 

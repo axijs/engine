@@ -8,7 +8,7 @@
 
 > **createCoreFieldSystem**(`config?`): [`CoreFieldSystem`](../type-aliases/CoreFieldSystem.md)
 
-Defined in: packages/data/src/setup.ts:97
+Defined in: packages/data/src/fields/setup.ts:95
 
 Initializes the low-level field infrastructure.
 Wires together the factory, hydrator (loader), and snapshotter (saver)

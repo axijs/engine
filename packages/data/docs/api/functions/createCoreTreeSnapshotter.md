@@ -8,7 +8,7 @@
 
 > **createCoreTreeSnapshotter**(`policySerializer?`): [`FieldTreeSnapshotter`](../classes/FieldTreeSnapshotter.md)
 
-Defined in: packages/data/src/setup.ts:70
+Defined in: packages/data/src/fields/setup.ts:68
 
 ## Parameters
 

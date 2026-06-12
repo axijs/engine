@@ -6,7 +6,7 @@
 
 # Class: Fields
 
-Defined in: packages/data/src/fields/fields.ts:14
+Defined in: packages/data/src/fields/fields.ts:15
 
 A container for a collection of named `Field` instances.
 
@@ -24,7 +24,7 @@ create `Field` instances of different types.
 
 > **new Fields**(`fieldRegistry`): `Fields`
 
-Defined in: packages/data/src/fields/fields.ts:58
+Defined in: packages/data/src/fields/fields.ts:59
 
 Creates an instance of Fields.
 
@@ -46,7 +46,7 @@ The registry used to create new `Field` instances.
 
 > `readonly` **\_fieldRegistry**: [`FieldRegistry`](FieldRegistry.md)
 
-Defined in: packages/data/src/fields/fields.ts:19
+Defined in: packages/data/src/fields/fields.ts:20
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: packages/data/src/fields/fields.ts:19
 
 > `readonly` **\_fields**: `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: packages/data/src/fields/fields.ts:18
+Defined in: packages/data/src/fields/fields.ts:19
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: packages/data/src/fields/fields.ts:18
 
 > `readonly` **typeName**: `"fields"` = `Fields.typeName`
 
-Defined in: packages/data/src/fields/fields.ts:16
+Defined in: packages/data/src/fields/fields.ts:17
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: packages/data/src/fields/fields.ts:16
 
 > `readonly` `static` **typeName**: `"fields"` = `'fields'`
 
-Defined in: packages/data/src/fields/fields.ts:15
+Defined in: packages/data/src/fields/fields.ts:16
 
 ## Accessors
 
@@ -80,7 +80,7 @@ Defined in: packages/data/src/fields/fields.ts:15
 
 > **get** **fields**(): `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: packages/data/src/fields/fields.ts:50
+Defined in: packages/data/src/fields/fields.ts:51
 
 **`Internal`**
 
@@ -98,7 +98,7 @@ The collection of fields.
 
 > **add**\<`T`\>(`field`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:78
+Defined in: packages/data/src/fields/fields.ts:79
 
 Adds a pre-existing `Field` instance to the collection and fires the `onAdd` event.
 
@@ -134,7 +134,7 @@ If a field with the same name already exists.
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/fields/fields.ts:177
+Defined in: packages/data/src/fields/fields.ts:211
 
 Removes all fields from the collection, ensuring each is properly destroyed.
 
@@ -148,7 +148,7 @@ Removes all fields from the collection, ensuring each is properly destroyed.
 
 > **create**\<`T`\>(`typeName`, `name`, `initialValue`, `options?`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:101
+Defined in: packages/data/src/fields/fields.ts:102
 
 Creates a new `Field` instance of a specified type, adds it to the collection, and returns it.
 This is the primary factory method for creating fields within this container.
@@ -199,7 +199,7 @@ The newly created `Field` instance.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/fields.ts:181
+Defined in: packages/data/src/fields/fields.ts:215
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -214,19 +214,81 @@ After calling this, the object should be considered unusable.
 
 ***
 
+### findAll()
+
+> **findAll**\<`T`\>(`predicate`): `T`[]
+
+Defined in: packages/data/src/fields/fields.ts:198
+
+Finds all fields that satisfy the provided condition.
+Since the container can hold various types of fields, the predicate accepts a base Field<any>.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\> = [`Field`](../interfaces/Field.md)\<`any`\>
+
+#### Parameters
+
+##### predicate
+
+[`FieldPredicate`](../type-aliases/FieldPredicate.md)
+
+The condition function to test the field.
+
+#### Returns
+
+`T`[]
+
+An array of found fields cast to type T.
+
+***
+
+### findFirst()
+
+> **findFirst**\<`T`\>(`predicate`): `T` \| `undefined`
+
+Defined in: packages/data/src/fields/fields.ts:182
+
+Finds the first field that satisfies the provided condition.
+Since the container can hold various types of fields, the predicate accepts a base Field<any>.
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\> = [`Field`](../interfaces/Field.md)\<`any`\>
+
+#### Parameters
+
+##### predicate
+
+[`FieldPredicate`](../type-aliases/FieldPredicate.md)
+
+The condition function to test the field.
+
+#### Returns
+
+`T` \| `undefined`
+
+The found field cast to type T, or undefined.
+
+***
+
 ### get()
 
-> **get**\<`TField`\>(`name`): `TField`
+> **get**\<`T`\>(`name`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:143
+Defined in: packages/data/src/fields/fields.ts:144
 
 Retrieves a field by its name.
 
 #### Type Parameters
 
-##### TField
+##### T
 
-`TField` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
+`T` *extends* [`Field`](../interfaces/Field.md)\<`any`\>
 
 The expected `Field` type to be returned.
 
@@ -240,7 +302,7 @@ The name of the field to retrieve.
 
 #### Returns
 
-`TField`
+`T`
 
 The `Field` instance.
 
@@ -254,7 +316,7 @@ If the field does not exist.
 
 > **has**(`name`): `boolean`
 
-Defined in: packages/data/src/fields/fields.ts:67
+Defined in: packages/data/src/fields/fields.ts:68
 
 Checks if a field with the given name exists in the collection.
 
@@ -278,7 +340,7 @@ The name of the field to check.
 
 > **remove**(`names`): `void`
 
-Defined in: packages/data/src/fields/fields.ts:153
+Defined in: packages/data/src/fields/fields.ts:154
 
 Removes one or more fields from the collection.
 This method ensures that the `destroy` method of each removed field is called to clean up its resources.
@@ -301,7 +363,7 @@ A single name or an array of names to remove.
 
 > **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:122
+Defined in: packages/data/src/fields/fields.ts:123
 
 Updates an existing field's value or creates a new one if it doesn't exist.
 
@@ -351,7 +413,7 @@ The existing or newly created `Field` instance.
 
 > **onAdd**: `Emitter`\<\[`object`\]\>
 
-Defined in: packages/data/src/fields/fields.ts:28
+Defined in: packages/data/src/fields/fields.ts:29
 
 An event emitter that fires when a new field is added to the collection.
 
@@ -373,7 +435,7 @@ The `Field` instance that was added.
 
 > **onRemove**: `Emitter`\<\[`object`\]\>
 
-Defined in: packages/data/src/fields/fields.ts:39
+Defined in: packages/data/src/fields/fields.ts:40
 
 An event emitter that fires after one or more fields have been removed.
 

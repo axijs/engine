@@ -8,7 +8,7 @@
 
 > **CoreStoreSystem** = `object`
 
-Defined in: packages/data/src/setup.ts:109
+Defined in: packages/data/src/store/setup.ts:4
 
 ## Properties
 
@@ -16,7 +16,7 @@ Defined in: packages/data/src/setup.ts:109
 
 > **factory**: [`CoreStoreFactory`](../classes/CoreStoreFactory.md)
 
-Defined in: packages/data/src/setup.ts:110
+Defined in: packages/data/src/store/setup.ts:5
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: packages/data/src/setup.ts:110
 
 > **hydrator**: [`DataStoreHydrator`](../classes/DataStoreHydrator.md)
 
-Defined in: packages/data/src/setup.ts:111
+Defined in: packages/data/src/store/setup.ts:6
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: packages/data/src/setup.ts:111
 
 > **snapshotter**: [`DataStoreSnapshotter`](../classes/DataStoreSnapshotter.md)
 
-Defined in: packages/data/src/setup.ts:112
+Defined in: packages/data/src/store/setup.ts:7

@@ -1,7 +1,5 @@
 import {beforeEach, describe, expect, it} from 'vitest';
-import {createCoreFieldRegistry} from './setup';
-import {CoreFields} from './core-fields';
-import {CoreField} from './field-definitions';
+import {CoreFields, CoreField, createCoreFieldRegistry} from './index';
 
 describe('checkSearchFunctions', () => {
   const registry = createCoreFieldRegistry();

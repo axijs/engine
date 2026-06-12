@@ -51,6 +51,44 @@ Defined in: packages/data/src/fields/field-definitions/core-boolean-field.ts:10
 
 ## Properties
 
+### \_name
+
+> `protected` `readonly` **\_name**: `string`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:21
+
+A unique identifier for the field.
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_name`](CoreField.md#_name)
+
+***
+
+### \_onChange
+
+> `protected` `readonly` **\_onChange**: `Emitter`\<\[`boolean`, `boolean`\]\>
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_onChange`](CoreField.md#_onchange)
+
+***
+
+### \_value
+
+> `protected` **\_value**: `boolean`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_value`](CoreField.md#_value)
+
+***
+
 ### onChange
 
 > `readonly` **onChange**: `Subscribable`\<\[`boolean`, `boolean`\]\>
@@ -74,7 +112,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`boolean`\>
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:25
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:26
 
 The collection of policies applied to this field.
 

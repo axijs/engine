@@ -18,12 +18,12 @@ export class CoreField<T> implements Field<T> {
   readonly typeName: string = CoreField.typeName;
 
   /** A unique identifier for the field. */
-  private readonly _name: string;
-  private _value!: T;
-  private readonly _onChange: Emitter<[newValue: T, oldvalue: T]> = new Emitter();
+  protected readonly _name: string;
+  protected  _value!: T;
+  protected readonly _onChange: Emitter<[newValue: T, oldvalue: T]> = new Emitter();
   readonly onChange: Subscribable<[newValue: T, oldvalue: T]>;
-  readonly policies: Policies<T> = new Policies();
 
+  readonly policies: Policies<T> = new Policies();
 
   get name() {
     return this._name;

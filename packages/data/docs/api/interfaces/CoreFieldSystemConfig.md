@@ -6,7 +6,7 @@
 
 # Interface: CoreFieldSystemConfig
 
-Defined in: packages/data/src/setup.ts:84
+Defined in: packages/data/src/fields/setup.ts:82
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: packages/data/src/setup.ts:84
 
 > `optional` **policySerializer**: [`PolicySerializer`](../classes/PolicySerializer.md)
 
-Defined in: packages/data/src/setup.ts:86
+Defined in: packages/data/src/fields/setup.ts:84
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: packages/data/src/setup.ts:86
 
 > `optional` **registry**: [`FieldRegistry`](../classes/FieldRegistry.md)
 
-Defined in: packages/data/src/setup.ts:85
+Defined in: packages/data/src/fields/setup.ts:83
