@@ -51,6 +51,44 @@ Defined in: packages/data/src/fields/field-definitions/core-numeric-field.ts:37
 
 ## Properties
 
+### \_name
+
+> `protected` `readonly` **\_name**: `string`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:21
+
+A unique identifier for the field.
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_name`](CoreField.md#_name)
+
+***
+
+### \_onChange
+
+> `protected` `readonly` **\_onChange**: `Emitter`\<\[`number`, `number`\]\>
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_onChange`](CoreField.md#_onchange)
+
+***
+
+### \_value
+
+> `protected` **\_value**: `number`
+
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
+
+#### Inherited from
+
+[`CoreField`](CoreField.md).[`_value`](CoreField.md#_value)
+
+***
+
 ### onChange
 
 > `readonly` **onChange**: `Subscribable`\<\[`number`, `number`\]\>
@@ -74,7 +112,7 @@ The payload contains the new value and the old value.
 
 > `readonly` **policies**: [`Policies`](Policies.md)\<`number`\>
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:25
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:26
 
 The collection of policies applied to this field.
 
