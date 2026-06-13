@@ -758,9 +758,9 @@ An error if no field exists at the specified path.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**(`path`, `value`): `void`
+> **upsert**(`path`, `value`): `void`
 
 Defined in: packages/utils/dist/index.d.ts:180
 
@@ -787,13 +787,13 @@ The value to set.
 
 #### Inherited from
 
-`DataStorage.upset`
+`DataStorage.upsert`
 
 ***
 
-### upsetValue()
+### upsertValue()
 
-> **upsetValue**\<`T`\>(`path`, `val`, `options?`): `T`
+> **upsertValue**\<`T`\>(`path`, `val`, `options?`): `T`
 
 Defined in: packages/data/src/store/store.ts:67
 

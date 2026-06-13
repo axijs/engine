@@ -52,7 +52,7 @@ export interface DataSink {
    * @param path The path to the value to be created or updated.
    * @param value The value to set.
    */
-  upset(path: PathType, value: unknown): void;
+  upsert(path: PathType, value: unknown): void;
 
   /**
    * Deletes the value at the specified path.

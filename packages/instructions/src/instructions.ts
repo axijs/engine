@@ -35,8 +35,8 @@ export interface SetVariableInstruction {
  * Updates an existing variable or creates a new one if it doesn't exist.
  * Acts as an "Upsert" operation.
  */
-export interface UpSetVariableInstruction {
-  upset: {
+export interface UpSertVariableInstruction {
+  upsert: {
     field: PathType,
     var: Operand
   }
@@ -97,7 +97,7 @@ export interface RegisteredInstructions {
   log: LogInstruction;
   create: CreateVariableInstruction;
   set: SetVariableInstruction;
-  upset: UpSetVariableInstruction;
+  upsert: UpSertVariableInstruction;
   delete: DeleteVariableInstruction;
   if: IfInstruction;
   switch: SwitchInstruction;

@@ -50,13 +50,13 @@ describe('CoreInstructionResolver Integration', () => {
       .toThrow();
   });
 
-  it('Should handle upset (update or insert)', async () => {
+  it('Should handle upsert (update or insert)', async () => {
     // Update existing
-    await resolver.execute({upset: {field: 'player.hp', var: {value: 50}}}, context);
+    await resolver.execute({upsert: {field: 'player.hp', var: {value: 50}}}, context);
     expect(mockStore.get('player.hp')).toBe(50);
 
     // Insert new
-    await resolver.execute({upset: {field: 'new.stat', var: {value: 10}}}, context);
+    await resolver.execute({upsert: {field: 'new.stat', var: {value: 10}}}, context);
     expect(mockStore.get('new.stat')).toBe(10);
   });
 

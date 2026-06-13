@@ -2,9 +2,9 @@
 
 ***
 
-[@axi-engine/instructions](../README.md) / UpSetVariableInstructionHandler
+[@axi-engine/instructions](../README.md) / UpSertVariableInstructionHandler
 
-# Class: UpSetVariableInstructionHandler
+# Class: UpSertVariableInstructionHandler
 
 Defined in: packages/instructions/src/handlers/up-set-variable-instruction-handler.ts:6
 
@@ -12,23 +12,23 @@ Defines the execution logic for a specific instruction type.
 
 ## Implements
 
-- [`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`UpSetVariableInstruction`](../interfaces/UpSetVariableInstruction.md)\>
+- [`InstructionHandler`](../interfaces/InstructionHandler.md)\<[`UpSertVariableInstruction`](../interfaces/UpSertVariableInstruction.md)\>
 
 ## Constructors
 
 ### Constructor
 
-> **new UpSetVariableInstructionHandler**(): `UpSetVariableInstructionHandler`
+> **new UpSertVariableInstructionHandler**(): `UpSertVariableInstructionHandler`
 
 #### Returns
 
-`UpSetVariableInstructionHandler`
+`UpSertVariableInstructionHandler`
 
 ## Properties
 
 ### name
 
-> **name**: keyof [`RegisteredInstructions`](../interfaces/RegisteredInstructions.md) = `'upset'`
+> **name**: keyof [`RegisteredInstructions`](../interfaces/RegisteredInstructions.md) = `'upsert'`
 
 Defined in: packages/instructions/src/handlers/up-set-variable-instruction-handler.ts:7
 
@@ -50,7 +50,7 @@ Executes the logic for the given instruction.
 
 ##### instruction
 
-[`UpSetVariableInstruction`](../interfaces/UpSetVariableInstruction.md)
+[`UpSertVariableInstruction`](../interfaces/UpSertVariableInstruction.md)
 
 The instruction data object.
 

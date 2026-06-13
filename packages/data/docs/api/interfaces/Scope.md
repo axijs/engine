@@ -238,9 +238,9 @@ searching target variable from top frame or context to bottom
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`name`, `value`): `void`
+> **upsert**\<`T`\>(`name`, `value`): `void`
 
 Defined in: packages/data/src/scope/scope.ts:25
 
@@ -271,4 +271,4 @@ The value to set.
 
 #### Overrides
 
-`DataStorage.upset`
+`DataStorage.upsert`

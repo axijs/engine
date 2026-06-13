@@ -216,9 +216,9 @@ Defined in: packages/data/src/fields/fields.ts:17
 
 ***
 
-### upsetBoolean()
+### upsertBoolean()
 
-> **upsetBoolean**: (`name`, `value`, `options?`) => [`CoreBooleanField`](CoreBooleanField.md)
+> **upsertBoolean**: (`name`, `value`, `options?`) => [`CoreBooleanField`](CoreBooleanField.md)
 
 #### Parameters
 
@@ -240,13 +240,13 @@ Defined in: packages/data/src/fields/fields.ts:17
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsetBoolean`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsertBoolean`
 
 ***
 
-### upsetNumeric()
+### upsertNumeric()
 
-> **upsetNumeric**: (`name`, `value`, `options?`) => [`CoreNumericField`](CoreNumericField.md)
+> **upsertNumeric**: (`name`, `value`, `options?`) => [`CoreNumericField`](CoreNumericField.md)
 
 #### Parameters
 
@@ -268,13 +268,13 @@ Defined in: packages/data/src/fields/fields.ts:17
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsetNumeric`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsertNumeric`
 
 ***
 
-### upsetString()
+### upsertString()
 
-> **upsetString**: (`name`, `value`, `options?`) => [`CoreStringField`](CoreStringField.md)
+> **upsertString**: (`name`, `value`, `options?`) => [`CoreStringField`](CoreStringField.md)
 
 #### Parameters
 
@@ -296,7 +296,7 @@ Defined in: packages/data/src/fields/fields.ts:17
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsetString`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsertString`
 
 ## Accessors
 
@@ -685,9 +685,9 @@ A single name or an array of names to remove.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
+> **upsert**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
 Defined in: packages/data/src/fields/fields.ts:123
 
@@ -735,13 +735,13 @@ The existing or newly created `Field` instance.
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upset`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsert`
 
 ***
 
-### upsetGeneric()
+### upsertGeneric()
 
-> **upsetGeneric**\<`T`\>(`name`, `value`, `options?`): [`CoreField`](CoreField.md)\<`T`\>
+> **upsertGeneric**\<`T`\>(`name`, `value`, `options?`): [`CoreField`](CoreField.md)\<`T`\>
 
 Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts:14
 
@@ -771,7 +771,7 @@ Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsetGeneric`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsertGeneric`
 
 ## Events
 

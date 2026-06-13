@@ -61,7 +61,7 @@ rootScope.create('player.score', 2500);
 const score = rootScope.get<number>('player.score');
 
 const childScope = rootScope.extend('battle');
-childScope.upset('player.health', 80);
+childScope.upsert('player.health', 80);
 ```
 
 ## Package overview
@@ -166,7 +166,7 @@ The field system’s serializers and hydrators are configured from the same regi
 The `scope` layer provides hierarchical variable resolution.
 `CoreScope` allows:
 - named parent and child scopes,
-- hierarchical `get`, `set`, `create`, `upset`, and `delete` operations,
+- hierarchical `get`, `set`, `create`, `upsert`, and `delete` operations,
 - scope-relative and parent-scope access via path resolution.
 
 ## Key features

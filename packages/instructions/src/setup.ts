@@ -4,7 +4,7 @@ import {
   DeleteVariableInstructionHandler,
   IfInstructionHandler, LogInstructionHandler,
   SetVariableInstructionHandler, SwitchInstructionHandler,
-  UpSetVariableInstructionHandler
+  UpSertVariableInstructionHandler
 } from './handlers';
 import {CoreInstructionResolver} from './core-instruction-resolver';
 
@@ -19,7 +19,7 @@ export function createDataInstructionHandlers(): InstructionHandler[] {
     new CreateVariableInstructionHandler(),
     new DeleteVariableInstructionHandler(),
     new SetVariableInstructionHandler(),
-    new UpSetVariableInstructionHandler(),
+    new UpSertVariableInstructionHandler(),
   ];
 }
 

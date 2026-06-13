@@ -1,16 +1,13 @@
 import './style.css'
 
-import {testOneStringField, testScopeSystem} from './test-data.ts';
+import {testNewScopeSystem} from './test-data.ts';
 import {testTasks} from './test-tasks.ts';
 
 
 testTasks().then(() => {
-  console.log('---> done testTasks');
-  return testOneStringField();
-}).then(() => {
   console.log('---> done testOneStringField');
   console.log('---> start testScopeSystem');
-  return testScopeSystem();
+  return testNewScopeSystem();
 }).then(() => {
   console.log('---> done testScopeSystem');
 });
