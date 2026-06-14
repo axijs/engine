@@ -1,14 +1,13 @@
 import {CoreField} from './core-field';
-import {FieldOptions, StringField} from '../field';
+import {StringField} from '../field';
 
-export interface CoreStringFieldOptions extends FieldOptions<string> { }
 
 export class CoreStringField extends CoreField<string> implements StringField {
   static override readonly typeName: string = 'string';
   override readonly typeName = CoreStringField.typeName;
 
-  constructor(name: string, initialVal: string, options?: CoreStringFieldOptions) {
-    super(name, initialVal, options);
+  constructor(name: string, initialVal: string) {
+    super(name, initialVal);
   }
 
   append(str: string | number) {

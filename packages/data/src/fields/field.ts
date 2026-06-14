@@ -1,18 +1,5 @@
 import {Subscribable} from '@axijs/emitter';
 import {Destroyable} from '@axi-engine/utils';
-import {Policies, Policy} from './policies';
-
-/**
- * Configuration options for creating a new Field instance.
- * @template T The type of the value stored in the field.
- */
-export interface FieldOptions<T> {
-  /**
-   * An optional array of policies to apply to this field.
-   * Policies can enforce validation rules, transform values, or handle constraints.
-   */
-  policies?: Policy<T>[]
-}
 
 /**
  * Represents a reactive data holder for a specific value type.
@@ -42,11 +29,6 @@ export interface Field<T> extends Destroyable {
   value: T;
 
   /**
-   * The collection of policies applied to this field.
-   */
-  policies: Policies<T>;
-
-  /**
    * Updates the field's value without triggering the `onChange` event.
    * Useful for internal synchronization or restoring state where side effects are undesirable.
    * @param val The new value to set.
@@ -72,22 +54,6 @@ export interface Field<T> extends Destroyable {
  * Provides capabilities for range clamping (min/max) and arithmetic operations.
  */
 export interface NumericField extends Field<number> {
-  /** The minimum allowed value for this field, or undefined if no lower bound exists. */
-  readonly min: number | undefined;
-
-  /** The maximum allowed value for this field, or undefined if no upper bound exists. */
-  readonly max: number | undefined;
-
-  /**
-   * Checks if the current value is equal to or less than the minimum limit.
-   */
-  isMin(): boolean;
-
-  /**
-   * Checks if the current value is equal to or greater than the maximum limit.
-   */
-  isMax(): boolean;
-
   /**
    * Increments the current value by the specified amount.
    * @param val The amount to add.

@@ -1,59 +1,13 @@
-import {isNullOrUndefined} from '@axijs/ensure';
-import {
-  clampPolicy,
-  clampMaxPolicy,
-  clampMinPolicy,
-  ClampPolicy,
-  ClampMinPolicy,
-  ClampMaxPolicy
-} from '../policies';
 import {CoreField} from './core-field';
-import {FieldOptions, NumericField} from '../field';
+import {NumericField} from '../field';
 
-
-export interface CoreNumericFieldOptions extends FieldOptions<number> {
-  min?: number;
-  max?: number;
-}
 
 export class CoreNumericField extends CoreField<number> implements NumericField {
   static override readonly typeName: string = 'numeric';
   override readonly typeName = CoreNumericField.typeName;
 
-  get min(): number | undefined {
-    const policy =
-      this.policies.get<ClampPolicy>(ClampPolicy.id) ??
-      this.policies.get<ClampMinPolicy>(ClampMinPolicy.id);
-    return policy?.min;
-  }
-
-  get max(): number | undefined {
-    const policy =
-      this.policies.get<ClampPolicy>(ClampPolicy.id) ??
-      this.policies.get<ClampMaxPolicy>(ClampMaxPolicy.id);
-    return policy?.max;
-  }
-
-  constructor(name: string, initialVal: number, options?: CoreNumericFieldOptions) {
-    const policies = options?.policies ?? [];
-    if (!isNullOrUndefined(options?.min) && !isNullOrUndefined(options?.max)) {
-      policies.unshift(clampPolicy(options!.min!, options!.max!));
-    } else if (!isNullOrUndefined(options?.min)) {
-      policies.unshift(clampMinPolicy(options!.min!));
-    } else if (!isNullOrUndefined(options?.max)) {
-      policies.unshift(clampMaxPolicy(options!.max!));
-    }
-    super(name, initialVal, {policies});
-  }
-
-  isMin(): boolean {
-    const min = this.min;
-    return isNullOrUndefined(min) ? false : this.value <= min!;
-  }
-
-  isMax(): boolean {
-    const max = this.max;
-    return isNullOrUndefined(max) ? false : this.value >= max!;
+  constructor(name: string, initialVal: number) {
+    super(name, initialVal);
   }
 
   inc(amount = 1) {

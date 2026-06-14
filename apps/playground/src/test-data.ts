@@ -1,21 +1,43 @@
-import type {FieldsData} from './data2/types.ts';
+import {type FieldGroup} from './data2/types.ts';
+import {FieldFactory as f, traversePath} from './data2/tools.ts';
 
 export async function testNewScopeSystem() {
 
-  const catTest: FieldsData = {
-    type: 'fields',
-    data: {
+  const catTest: FieldGroup = {
+    type: 'group',
+    items: {
       head: {type: 'number', value: 1},
-      paws: {
-        type: 'number', value: 4, policies: []
-      },
+      paws: {type: 'number', value: 4},
       tail: {type: 'number', value: 1},
       stats: {
-        type: 'fields',
-        data: {}
+        type: 'group',
+        items: {}
       }
     }
   }
 
   console.log('test: ', catTest);
+
+  const test2 = f.group({
+    name: f.str('Little Jo'),
+    head: f.num(1),
+    paws: f.num(4),
+    tail: f.num(1),
+    hungry: f.bool(false),
+    stats: f.group({
+      hp: f.num(10),
+      age: f.num(2)
+    })
+  });
+
+  console.log('test2: ', test2);
+
+
+  console.log('traverse test: ',
+    traversePath(test2, 'name'),
+    traversePath(test2, 'head'),
+    traversePath(test2, ['stats', 'hp'])
+  );
+
+  console.log(test2.items['boo']);
 }
