@@ -10,16 +10,12 @@ import {
 
 import {
   CoreBooleanField,
-  CoreBooleanFieldOptions,
   CoreField,
   CoreFields,
   CoreFieldTree,
   CoreNumericField,
-  CoreNumericFieldOptions,
   CoreStringField,
-  CoreStringFieldOptions,
   Field,
-  FieldOptions,
   FieldTreeFactory,
   isFieldTree
 } from '../fields';
@@ -82,7 +78,7 @@ export class CoreStore implements Store {
     return field.value;
   }
 
-  createValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
+  createValue<T>(path: PathType, val: T, options?: StoreCreateFieldOptions): T {
     const dest = this.getDestinationFields(path);
     if (options?.fieldType) {
       return dest.fields.create(options.fieldType, dest.leafName, val, options).value;
@@ -95,7 +91,7 @@ export class CoreStore implements Store {
     return dest.fields.createGeneric<T>(dest.leafName, val, options).value;
   }
 
-  upsertValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
+  upsertValue<T>(path: PathType, val: T, options?:StoreCreateFieldOptions): T {
     const dest = this.getDestinationFields(path);
     if (options?.fieldType) {
       return dest.fields.upsert(options.fieldType, dest.leafName, val, options).value;
@@ -108,24 +104,24 @@ export class CoreStore implements Store {
     return dest.fields.upsertGeneric<T>(dest.leafName, val, options).value;
   }
 
-  createBoolean(path: PathType, initialValue: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField {
+  createBoolean(path: PathType, initialValue: boolean): CoreBooleanField {
     const dest = this.getDestinationFields(path);
-    return dest.fields.createBoolean(dest.leafName, initialValue, options);
+    return dest.fields.createBoolean(dest.leafName, initialValue);
   }
 
-  createNumeric(path: PathType, initialValue: number, options?: CoreNumericFieldOptions): CoreNumericField {
+  createNumeric(path: PathType, initialValue: number): CoreNumericField {
     const dest = this.getDestinationFields(path);
-    return dest.fields.createNumeric(dest.leafName, initialValue, options);
+    return dest.fields.createNumeric(dest.leafName, initialValue);
   }
 
-  createString(path: PathType, initialValue: string, options?: CoreStringFieldOptions): CoreStringField {
+  createString(path: PathType, initialValue: string): CoreStringField {
     const dest = this.getDestinationFields(path);
-    return dest.fields.createString(dest.leafName, initialValue, options);
+    return dest.fields.createString(dest.leafName, initialValue);
   }
 
-  createGeneric<T>(path: PathType, initialValue: T, options?: FieldOptions<T>): CoreField<T> {
+  createGeneric<T>(path: PathType, initialValue: T): CoreField<T> {
     const dest = this.getDestinationFields(path);
-    return dest.fields.createGeneric<T>(dest.leafName, initialValue, options);
+    return dest.fields.createGeneric<T>(dest.leafName, initialValue);
   }
 
   getBoolean(path: PathType): CoreBooleanField {
@@ -286,10 +282,10 @@ export class CoreStore implements Store {
   private getDestinationFields(path: PathType): { fields: CoreFields, leafName: string } {
     const pathArr = ensurePathArray(path);
     if (this.isPathToVariables(pathArr)) {
-      return {fields: this.variables, leafName: pathArr[0]};
+      return {group: this.variables, leafName: pathArr[0]};
     }
     const leafName = pathArr.pop()!;
-    return {fields: this.tree.getOrCreateFields(pathArr), leafName};
+    return {group: this.tree.getOrCreateFields(pathArr), leafName};
   }
 
 }

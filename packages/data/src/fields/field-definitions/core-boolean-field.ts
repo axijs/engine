@@ -1,14 +1,12 @@
 import {CoreField} from './core-field';
-import {BooleanField, FieldOptions} from '../field';
-
-export interface CoreBooleanFieldOptions extends FieldOptions<boolean> { }
+import {BooleanField, } from '../field';
 
 export class CoreBooleanField extends CoreField<boolean> implements BooleanField {
   static override readonly typeName: string = 'boolean';
   override readonly typeName = CoreBooleanField.typeName;
 
-  constructor(name: string, initialVal: boolean, options?: CoreBooleanFieldOptions) {
-    super(name, initialVal, options);
+  constructor(name: string, initialVal: boolean) {
+    super(name, initialVal);
   }
 
   toggle(): boolean {

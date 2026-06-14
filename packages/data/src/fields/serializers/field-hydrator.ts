@@ -1,8 +1,6 @@
-import {isNullOrUndefined, throwIfEmpty} from '@axijs/ensure';
-import {PolicySerializer} from './policy-serializer';
+import {throwIfEmpty} from '@axijs/ensure';
 import {FieldRegistry} from '../field-registry';
 import {Field} from '../field';
-import {Policy} from '../policies';
 import {FieldSnapshot} from './field-snapshot';
 
 
@@ -19,13 +17,8 @@ export class FieldHydrator {
   /**
    * Creates an instance of FieldSerializer.
    * @param {FieldRegistry} fieldRegistry - A registry that maps string type names to Field constructors.
-   * @param {PolicySerializer} policySerializer - A serializer dedicated to handling Policy instances.
    */
-  constructor(
-    private readonly fieldRegistry: FieldRegistry,
-    private readonly policySerializer: PolicySerializer
-  ) {
-  }
+  constructor(private readonly fieldRegistry: FieldRegistry) { }
 
   /**
    * Restores a Field instance from its snapshot representation.
@@ -39,9 +32,7 @@ export class FieldHydrator {
     const fieldType = snapshot.__type;
     throwIfEmpty(fieldType, 'Invalid field snapshot: missing "__type" identifier.');
     const Ctor = this.fieldRegistry.getOrThrow(fieldType);
-    let policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
-
-    return new Ctor(snapshot.name, snapshot.value, {policies}) as Field<any>;
+    return new Ctor(snapshot.name, snapshot.value) as Field<any>;
   }
 
   /**
@@ -55,15 +46,6 @@ export class FieldHydrator {
    * @param {FieldSnapshot} snapshot - The snapshot containing the new state.
    */
   patch(field: Field<any>, snapshot: FieldSnapshot) {
-    field.policies.clear();
-    const policies: Policy<any>[] | undefined = this.hydratePolicies(snapshot);
-    policies?.forEach(p => field.policies.add(p));
     field.value = snapshot.value;
-  }
-
-  private hydratePolicies(snapshot: FieldSnapshot) {
-    return isNullOrUndefined(snapshot.policies) ?
-      undefined :
-      snapshot.policies.map((p: any) => this.policySerializer.hydrate(p));
   }
 }

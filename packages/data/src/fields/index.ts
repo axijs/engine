@@ -1,5 +1,4 @@
 export * from './types'
-export * from './policies/index'
 
 export * from './mixins/mixin-factory'
 export * from './field'

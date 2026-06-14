@@ -5,5 +5,4 @@ export interface FieldSnapshot {
   __type: string;
   name: string;
   value: any;
-  policies?: object[];
 }

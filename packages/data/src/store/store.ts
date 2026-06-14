@@ -1,10 +1,9 @@
 import {DataStorage, Destroyable, PathType} from '@axi-engine/utils';
 import {
-  Field, FieldOptions,
+  Field,
   CoreBooleanField,
-  CoreBooleanFieldOptions, CoreField, CoreNumericField,
-  CoreNumericFieldOptions, CoreStringField,
-  CoreStringFieldOptions,
+  CoreField, CoreNumericField,
+  CoreStringField,
   CoreFields,
   CoreFieldTree
 } from '../fields';
@@ -53,7 +52,7 @@ export interface Store extends DataStorage, Destroyable {
    * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  createValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
+  createValue<T>(path: PathType, val: T, options?: StoreCreateFieldOptions): T
 
   /**
    * Creates new or update a Field at a specified path, inferring its type from the provided value.
@@ -64,31 +63,31 @@ export interface Store extends DataStorage, Destroyable {
    * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  upsertValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
+  upsertValue<T>(path: PathType, val: T, options?: StoreCreateFieldOptions): T
 
   /**
    * Creates a new, strongly-typed CoreBooleanField.
    * @throws An error if a node already exists at the path.
    */
-  createBoolean(path: PathType, initialValue: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField
+  createBoolean(path: PathType, initialValue: boolean): CoreBooleanField
 
   /**
    * Creates a new, strongly-typed CoreNumericField.
    * @throws An error if a node already exists at the path.
    */
-  createNumeric(path: PathType, initialValue: number, options?: CoreNumericFieldOptions): CoreNumericField
+  createNumeric(path: PathType, initialValue: number): CoreNumericField
 
   /**
    * Creates a new, strongly-typed CoreStringField.
    * @throws An error if a node already exists at the path.
    */
-  createString(path: PathType, initialValue: string, options?: CoreStringFieldOptions): CoreStringField
+  createString(path: PathType, initialValue: string): CoreStringField
 
   /**
    * Creates a new, generic CoreField instance for any data type.
    * @throws An error if a node already exists at the path.
    */
-  createGeneric<T>(path: PathType, initialValue: T, options?: FieldOptions<T>): CoreField<T>
+  createGeneric<T>(path: PathType, initialValue: T): CoreField<T>
 
   /**
    * Retrieves a strongly-typed CoreBooleanField instance.
