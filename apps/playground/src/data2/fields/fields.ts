@@ -18,9 +18,11 @@ export interface StringField extends Field<string> {
   type: 'string'
 }
 
-export type FieldNode = Field<any> | FieldGroup;
-
-export interface FieldGroup extends BaseNode {
-  type: 'group';
-  items: Record<string, FieldNode>;
+export interface Fields {
+  generic: Field<any>,
+  numeric: NumericField,
+  boolean: BooleanField,
+  string: StringField
 }
+
+export type FieldName = keyof Fields;
