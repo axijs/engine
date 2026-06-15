@@ -1,5 +1,5 @@
 import {type FieldGroup} from './data2/types.ts';
-import {FieldFactory as f, traversePath} from './data2/tools.ts';
+import {FieldFactory as f, TreeOps} from './data2/tools.ts';
 
 export async function testNewScopeSystem() {
 
@@ -34,9 +34,9 @@ export async function testNewScopeSystem() {
 
 
   console.log('traverse test: ',
-    traversePath(test2, 'name'),
-    traversePath(test2, 'head'),
-    traversePath(test2, ['stats', 'hp'])
+    TreeOps.traversePath(test2, 'name'),
+    TreeOps.traversePath(test2, 'head'),
+    TreeOps.traversePath(test2, ['stats', 'hp'])
   );
 
   console.log(test2.items['boo']);
