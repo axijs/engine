@@ -1,6 +1,6 @@
 import {isUndefined} from '@axijs/ensure';
 import {ensurePathArray, type PathType} from '@axi-engine/utils';
-import type {BooleanField, Field, FieldGroup, FieldNode, NumericField, StringField} from './types.ts';
+import type {BooleanField, Field, FieldGroup, FieldNode, NumericField, StringField} from './fields.ts';
 import {isGroup} from './guards.ts';
 
 
