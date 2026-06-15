@@ -196,7 +196,7 @@ export class CoreStore implements Store {
    * as the current one but is completely detached from the existing data hierarchy.
    * This is useful for creating local scopes, stack frames, or temporary data contexts.
    *
-   * @returns {CoreStore} A new, isolated DataStore instance.
+   * @returns {Store} A new, isolated DataStore instance.
    */
   createIsolated(): CoreStore {
     return new CoreStore(this._factory);
@@ -282,10 +282,10 @@ export class CoreStore implements Store {
   private getDestinationFields(path: PathType): { fields: CoreFields, leafName: string } {
     const pathArr = ensurePathArray(path);
     if (this.isPathToVariables(pathArr)) {
-      return {group: this.variables, leafName: pathArr[0]};
+      return {fields: this.variables, leafName: pathArr[0]};
     }
     const leafName = pathArr.pop()!;
-    return {group: this.tree.getOrCreateFields(pathArr), leafName};
+    return {fields: this.tree.getOrCreateFields(pathArr), leafName};
   }
 
 }

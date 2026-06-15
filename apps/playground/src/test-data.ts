@@ -1,4 +1,4 @@
-import {type FieldGroup, type StringField} from './data2/types.ts';
+import {type FieldGroup, type StringField} from './data2/fields.ts';
 import {FieldFactory as f, TreeOps} from './data2/tools.ts';
 
 interface StringRef {

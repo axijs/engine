@@ -1,6 +1,5 @@
-import type {BaseNode, BooleanField, Field, FieldGroup, NumericField, StringField} from './types.ts';
+import type {BaseNode, BooleanField, Field, FieldGroup, NumericField, StringField} from './fields.ts';
 import {isObject} from '@axijs/ensure';
-
 
 export function isNode(node: unknown): node is BaseNode {
   return isObject(node) && Object.hasOwn(node, 'type');
