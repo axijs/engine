@@ -1,5 +1,10 @@
-import {type FieldGroup} from './data2/types.ts';
+import {type FieldGroup, type StringField} from './data2/types.ts';
 import {FieldFactory as f, TreeOps} from './data2/tools.ts';
+
+interface StringRef {
+  value: string;
+}
+
 
 export async function testNewScopeSystem() {
 
@@ -39,5 +44,17 @@ export async function testNewScopeSystem() {
     TreeOps.traversePath(test2, ['stats', 'hp'])
   );
 
-  console.log(test2.items['boo']);
+  const proxy = new Proxy<StringField>(test2.items.name as StringField, {
+    set: (obj, prop, value) => {
+      if (prop === 'value') {
+        console.log('target prop is value: ', value);
+      }
+      return Reflect.set(obj, prop, value);
+    }
+  }) as StringRef;
+
+  console.log('proxy: ', proxy.value);
+  proxy.value = 'Little Jo Big';
+  console.log('proxy: ', proxy.value);
+
 }
