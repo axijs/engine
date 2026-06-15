@@ -39,10 +39,11 @@ export class Store implements DataStorage {
   }
 
   clear(): void {
-
+    this.group = NodeFactory.group();
   }
 
   destroy() {
+    // remove all subscribers and all data
   }
 
 
