@@ -1,75 +1,22 @@
 import {isUndefined} from '@axijs/ensure';
 import {ensurePathArray, type PathType} from '@axi-engine/utils';
-import type {BooleanField, Field, FieldGroup, FieldNode, NumericField, StringField} from './fields.ts';
-import {isGroup} from './guards.ts';
+import {isGroup} from './node-guards.ts';
+import type {FieldGroup, FieldNode} from './field-group.ts';
+import {NodeOps} from './node-ops.ts';
+import {NodeFactory} from './node-factory.ts';
 
 
 /**
  * creation factory helper
  */
-export const FieldFactory = {
-  generic: <T>(type: string, value: T): Field<T> => ({type, value}),
-  num: (value: number): NumericField => ({type: 'numeric', value}),
-  bool: (value: boolean): BooleanField => ({type: 'boolean', value}),
-  str: (value: string): StringField => ({type: 'string', value}),
-  group: (data: Record<string, FieldNode> = {}): FieldGroup => ({type: 'group', items: data})
-}
 
-export const NodeOps = {
-  /** nodes manipulations */
-  has: (node: FieldNode, childName: string): boolean => isGroup(node) && Object.hasOwn(node.items, childName),
-
-  get: (node: FieldNode, childName: string): FieldNode | undefined => {
-    return !isGroup(node) ? undefined : node.items[childName];
-  },
-
-  set: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
-    if (!isGroup(node)) {
-      return false;
-    }
-    node.items[childName] = childNode;
-    return true;
-  },
-
-  /**
-   * adds the childNode if didn't exist
-   * @return boolean
-   */
-  add: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
-    if (!isGroup(node) || NodeOps.has(node, childName)) {
-      return false;
-    }
-    node.items[childName] = childNode;
-    return true;
-  },
-
-  /**
-   * replaces the childNode if exist
-   * @return boolean
-   */
-  replace: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
-    if (!isGroup(node) || !NodeOps.has(node, childName)) {
-      return false;
-    }
-    node.items[childName] = childNode;
-    return true;
-  },
-
-  remove: (node: FieldNode, childName: string): boolean => {
-    if (NodeOps.has(node, childName)) {
-      delete (node as FieldGroup).items[childName];
-      return true;
-    }
-    return false;
-  }
-}
 
 /**
  * Navigates the tree to the parent of a target node.
  * This is the core traversal logic for all path-based operations.
  */
 
-export const TreeOps = {
+export const GroupOps = {
   traversePath: (group: FieldGroup, path: PathType, options?: { createPath?: boolean })
     : { branch: FieldGroup, leafName: string } | undefined =>
   {
@@ -82,7 +29,7 @@ export const TreeOps = {
     for (const pathSegment of pathArr) {
       let node: FieldNode | undefined = NodeOps.get(currentNode, pathSegment);
       if (isUndefined(node) && options?.createPath) {
-        NodeOps.add(currentNode, pathSegment, FieldFactory.group());
+        NodeOps.add(currentNode, pathSegment, NodeFactory.group());
         node = NodeOps.get(currentNode, pathSegment);
       }
       if (!isGroup(node)) {
@@ -100,12 +47,12 @@ export const TreeOps = {
    * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
    */
   has: (group: FieldGroup, path: PathType): boolean => {
-    const res = TreeOps.traversePath(group, path);
+    const res = GroupOps.traversePath(group, path);
     return isUndefined(res) ? false : NodeOps.has(res.branch, res.leafName);
   },
 
   get: (group: FieldGroup, path: PathType): FieldNode | undefined => {
-    const traverse = TreeOps.traversePath(group, path);
+    const traverse = GroupOps.traversePath(group, path);
     return isUndefined(traverse) ? undefined : NodeOps.get(traverse.branch, traverse.leafName);
   },
 
@@ -113,7 +60,7 @@ export const TreeOps = {
    * @return true
    */
   set(group: FieldGroup, path: PathType, childNode: FieldNode): boolean {
-    const traverse = TreeOps.traversePath(group, path, {createPath: true});
+    const traverse = GroupOps.traversePath(group, path, {createPath: true});
     return isUndefined(traverse) ? false : NodeOps.set(traverse.branch, traverse.leafName, childNode);
   },
 
@@ -121,7 +68,7 @@ export const TreeOps = {
    * @return boolean
    */
   add: (group: FieldGroup, path: PathType, childNode: FieldNode): boolean => {
-    const traverse = TreeOps.traversePath(group, path);
+    const traverse = GroupOps.traversePath(group, path);
     return isUndefined(traverse) ? false : NodeOps.add(traverse.branch, traverse.leafName, childNode);
   },
 
@@ -129,12 +76,12 @@ export const TreeOps = {
    * @return boolean
    */
   replace: (group: FieldGroup, path: PathType, childNode: FieldNode): boolean => {
-    const traverse = TreeOps.traversePath(group, path);
+    const traverse = GroupOps.traversePath(group, path);
     return isUndefined(traverse) ? false : NodeOps.replace(traverse.branch, traverse.leafName, childNode);
   },
 
   remove: (group: FieldGroup, path: PathType): boolean => {
-    const traverse = TreeOps.traversePath(group, path);
+    const traverse = GroupOps.traversePath(group, path);
     return isUndefined(traverse) ? false : NodeOps.remove(traverse.branch, traverse.leafName);
   }
 }
