@@ -5,7 +5,7 @@ import {Destroyable, PathType} from './types';
  */
 export interface DataSource {
 
-  get(path: PathType): unknown;
+  get<T = unknown>(path: PathType): T;
 
   /**
    * Checks if a path valid.
@@ -33,7 +33,7 @@ export interface DataSink {
    * @param path The path to the value to be updated.
    * @param value The new value to set.
    */
-  set(path: PathType, value: unknown): void;
+  set<T = unknown>(path: PathType, value: T): void;
 
   /**
    * Strictly creates a new value at the specified path.
@@ -43,7 +43,7 @@ export interface DataSink {
    * @param path The full path where the new value will be created.
    * @param value The initial value to create.
    */
-  create(path: PathType, value: unknown): void;
+  create<T = unknown>(path: PathType, value: T): void;
 
   /**
    * Updates a value at a specified path if it exists, or creates it if it does not.
@@ -52,7 +52,7 @@ export interface DataSink {
    * @param path The path to the value to be created or updated.
    * @param value The value to set.
    */
-  upsert(path: PathType, value: unknown): void;
+  upsert<T = unknown>(path: PathType, value: T): void;
 
   /**
    * Deletes the value at the specified path.
