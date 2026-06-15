@@ -1,6 +1,6 @@
-import type {BaseNode, Field} from './fields.ts';
+import type {BaseNode, FieldType} from './fields.ts';
 
-export type FieldNode = Field<any> | FieldGroup;
+export type FieldNode = FieldType | FieldGroup;
 
 export interface FieldGroup extends BaseNode {
   type: 'group';

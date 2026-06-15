@@ -6,6 +6,10 @@ export interface Field<T> extends BaseNode {
   value: T;
 }
 
+export interface GenericField extends Field<any> {
+  type: 'generic';
+}
+
 export interface NumericField extends Field<number> {
   type: 'numeric'
 }
@@ -19,10 +23,12 @@ export interface StringField extends Field<string> {
 }
 
 export interface Fields {
-  generic: Field<any>,
+  generic: GenericField,
   numeric: NumericField,
   boolean: BooleanField,
   string: StringField
 }
+
+export type FieldType = Fields[keyof Fields];
 
 export type FieldName = keyof Fields;
