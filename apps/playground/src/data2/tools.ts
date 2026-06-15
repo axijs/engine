@@ -1,7 +1,8 @@
+import {isUndefined} from '@axijs/ensure';
 import {ensurePathArray, type PathType} from '@axi-engine/utils';
 import type {BooleanField, Field, FieldGroup, FieldNode, NumericField, StringField} from './types.ts';
 import {isGroup} from './guards.ts';
-import {isUndefined} from '@axijs/ensure';
+
 
 /**
  * creation factory helper
@@ -14,115 +15,127 @@ export const FieldFactory = {
   group: (data: Record<string, FieldNode> = {}): FieldGroup => ({type: 'group', items: data})
 }
 
-/** nodes manipulations */
-export function hasItem(node: FieldNode, childName: string) {
-  return isGroup(node) && Object.hasOwn(node.items, childName);
-}
+export const NodeOps = {
+  /** nodes manipulations */
+  has: (node: FieldNode, childName: string): boolean => isGroup(node) && Object.hasOwn(node.items, childName),
 
-export function getItem(node: FieldNode, childName: string) {
-  return !isGroup(node) ? undefined : node.items[childName];
-}
+  get: (node: FieldNode, childName: string): FieldNode | undefined => {
+    return !isGroup(node) ? undefined : node.items[childName];
+  },
 
-export function removeItem(node: FieldNode, childName: string) {
-  if (hasItem(node, childName)) {
-    delete (node as FieldGroup).items[childName];
+  set: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
+    if (!isGroup(node)) {
+      return false;
+    }
+    node.items[childName] = childNode;
     return true;
-  }
-  return false;
-}
+  },
 
-export function setItem(node: FieldNode, childName: string, childNode: FieldNode) {
-  if (!isGroup(node)) {
+  /**
+   * adds the childNode if didn't exist
+   * @return boolean
+   */
+  add: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
+    if (!isGroup(node) || NodeOps.has(node, childName)) {
+      return false;
+    }
+    node.items[childName] = childNode;
+    return true;
+  },
+
+  /**
+   * replaces the childNode if exist
+   * @return boolean
+   */
+  replace: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
+    if (!isGroup(node) || !NodeOps.has(node, childName)) {
+      return false;
+    }
+    node.items[childName] = childNode;
+    return true;
+  },
+
+  remove: (node: FieldNode, childName: string): boolean => {
+    if (NodeOps.has(node, childName)) {
+      delete (node as FieldGroup).items[childName];
+      return true;
+    }
     return false;
   }
-  node.items[childName] = childNode;
-  return true;
-}
-
-export function addItem(node: FieldNode, childName: string, childNode: FieldNode) {
-  if (!isGroup(node) || hasItem(node, childName)) {
-    return false;
-  }
-  node.items[childName] = childNode;
-  return true;
-}
-
-export function replaceItem(node: FieldNode, childName: string, childNode: FieldNode) {
-  if (!isGroup(node) || !hasItem(node, childName)) {
-    return false;
-  }
-  node.items[childName] = childNode;
-  return true;
 }
 
 /**
  * Navigates the tree to the parent of a target node.
  * This is the core traversal logic for all path-based operations.
  */
-export function traversePath(
-  group: FieldGroup,
-  path: PathType,
-  options?: {createPath?: boolean}
-): {
-  branch: FieldGroup,
-  leafName: string
-} | undefined {
-  const pathArr = ensurePathArray(path);
-  if (!pathArr.length) {
-    return undefined;
-  }
-  const leafName = pathArr.pop()!;
-  let currentNode: FieldGroup = group;
-  for (const pathSegment of pathArr) {
-    let node: FieldNode | undefined = getItem(currentNode, pathSegment);
-    if (isUndefined(node) && options?.createPath) {
-      addItem(currentNode, pathSegment, FieldFactory.group());
-      node = getItem(currentNode, pathSegment);
-    }
-    if (!isGroup(node)) {
+
+export const TreeOps = {
+  traversePath: (group: FieldGroup, path: PathType, options?: { createPath?: boolean })
+    : { branch: FieldGroup, leafName: string } | undefined =>
+  {
+    const pathArr = ensurePathArray(path);
+    if (!pathArr.length) {
       return undefined;
     }
-    currentNode = node as FieldGroup;
+    const leafName = pathArr.pop()!;
+    let currentNode: FieldGroup = group;
+    for (const pathSegment of pathArr) {
+      let node: FieldNode | undefined = NodeOps.get(currentNode, pathSegment);
+      if (isUndefined(node) && options?.createPath) {
+        NodeOps.add(currentNode, pathSegment, FieldFactory.group());
+        node = NodeOps.get(currentNode, pathSegment);
+      }
+      if (!isGroup(node)) {
+        return undefined;
+      }
+      currentNode = node as FieldGroup;
+    }
+    return {branch: currentNode, leafName: leafName};
+  },
+
+  /**
+   * Checks if a node exists at a given path, traversing the tree.
+   * @param group
+   * @param {PathType} path - The path to check (e.g., 'player/stats' or ['player', 'stats']).
+   * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
+   */
+  has: (group: FieldGroup, path: PathType): boolean => {
+    const res = TreeOps.traversePath(group, path);
+    return isUndefined(res) ? false : NodeOps.has(res.branch, res.leafName);
+  },
+
+  get: (group: FieldGroup, path: PathType): FieldNode | undefined => {
+    const traverse = TreeOps.traversePath(group, path);
+    return isUndefined(traverse) ? undefined : NodeOps.get(traverse.branch, traverse.leafName);
+  },
+
+  /**
+   * @return true
+   */
+  set(group: FieldGroup, path: PathType, childNode: FieldNode): boolean {
+    const traverse = TreeOps.traversePath(group, path, {createPath: true});
+    return isUndefined(traverse) ? false : NodeOps.set(traverse.branch, traverse.leafName, childNode);
+  },
+
+  /**
+   * @return boolean
+   */
+  add: (group: FieldGroup, path: PathType, childNode: FieldNode): boolean => {
+    const traverse = TreeOps.traversePath(group, path);
+    return isUndefined(traverse) ? false : NodeOps.add(traverse.branch, traverse.leafName, childNode);
+  },
+
+  /**
+   * @return boolean
+   */
+  replace: (group: FieldGroup, path: PathType, childNode: FieldNode): boolean => {
+    const traverse = TreeOps.traversePath(group, path);
+    return isUndefined(traverse) ? false : NodeOps.replace(traverse.branch, traverse.leafName, childNode);
+  },
+
+  remove: (group: FieldGroup, path: PathType): boolean => {
+    const traverse = TreeOps.traversePath(group, path);
+    return isUndefined(traverse) ? false : NodeOps.remove(traverse.branch, traverse.leafName);
   }
-  return {branch: currentNode, leafName: leafName};
 }
-
-/**
- * Checks if a node exists at a given path, traversing the tree.
- * @param group
- * @param {PathType} path - The path to check (e.g., 'player/stats' or ['player', 'stats']).
- * @returns {boolean} `true` if the entire path resolves to a node, otherwise `false`.
- */
-export function hasNode(group: FieldGroup, path: PathType): boolean {
-  const res = traversePath(group, path);
-  return isUndefined(res) ? false : hasItem(res.branch, res.leafName);
-}
-
-// export function setNode(group: FieldGroup, path: PathType, node: FieldNode, options?: { createPath: boolean }) {
-//   const traverse = traversePath(group, path, options?.createPath);
-//   throwIf(
-//     Object.hasOwn(traverse.branch.items, traverse.leafName),
-//     `Node with name ${traverse.leafName} already exists`
-//   );
-//   traverse.branch.items[traverse.leafName] = node;
-// }
-//
-// export function getNode(group: FieldGroup, path: PathType): FieldNode {
-//   const traverse = traversePath(group, path);
-//   throwIf(
-//     !Object.hasOwn(traverse.branch.items, traverse.leafName),
-//     `Can't find node with name ${traverse.leafName}`
-//   );
-//   return traverse.branch.items[traverse.leafName];
-// }
-//
-// export function removeNode(group: FieldGroup, path: PathType) {
-//   const traverse = traversePath(group, path);
-//   throwIf(
-//     !Object.hasOwn(traverse.branch.items, traverse.leafName),
-//     `Can't find node with name ${traverse.leafName}`
-//   );
-//   delete traverse.branch.items[traverse.leafName];
-// }
-
 
