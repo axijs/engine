@@ -22,13 +22,13 @@ export interface StringField extends Field<string> {
   type: 'string'
 }
 
-export interface Fields {
+export interface RegisteredFields {
   generic: GenericField,
   numeric: NumericField,
   boolean: BooleanField,
   string: StringField
 }
 
-export type FieldType = Fields[keyof Fields];
+export type FieldType = RegisteredFields[keyof RegisteredFields];
 
-export type FieldName = keyof Fields;
+export type FieldName = keyof RegisteredFields;
