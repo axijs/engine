@@ -1,4 +1,4 @@
-import type {BaseNode, BooleanField, Field, NumericField, StringField} from './fields.ts';
+import type {BaseNode, BooleanField, Field, GenericField, NumericField, StringField} from './fields.ts';
 import {isObject} from '@axijs/ensure';
 import type {FieldGroup} from './field-group.ts';
 
@@ -12,6 +12,10 @@ export function isGroup(node: unknown): node is FieldGroup  {
 
 export function isField(node: unknown): node is Field<any>  {
   return isNode(node) && Object.hasOwn(node, 'value');
+}
+
+export function isGeneric(node: unknown): node is GenericField {
+  return isNode(node) && node.type === 'generic';
 }
 
 export function isNumeric(node: unknown): node is NumericField {

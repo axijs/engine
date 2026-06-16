@@ -46,6 +46,19 @@ export class Registry<K extends PropertyKey, V> {
   }
 
   /**
+   *
+   * @returns
+   */
+  find(predicate: (value: V, key: K) => boolean): [K, V] | undefined {
+    for (const [key, value] of this.items.entries()) {
+      if (predicate(value, key)) {
+        return [key, value];
+      }
+    }
+    return undefined;
+  }
+
+  /**
    * Checks if an item with the given key is registered.
    * @param key The key to check.
    */
