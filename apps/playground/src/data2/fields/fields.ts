@@ -29,6 +29,6 @@ export interface RegisteredFields {
   string: StringField
 }
 
-export type FieldType = RegisteredFields[keyof RegisteredFields];
+export type RegisteredField = RegisteredFields[keyof RegisteredFields];
 
 export type FieldName = keyof RegisteredFields;
