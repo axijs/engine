@@ -1,19 +1,18 @@
-import {type FieldGroup, type StringField} from './data2/fields';
+import {type FieldGroup} from './data2';
 import {NodeFactory as f, GroupOps} from './data2/fields';
-
-interface StringRef {
-  value: string;
-}
-
+import {createFieldTypeRegistry} from './data2';
+import {Store} from './data2/store.ts';
 
 export async function testNewScopeSystem() {
+
+  const fieldTypeRegistry = createFieldTypeRegistry();
 
   const catTest: FieldGroup = {
     type: 'group',
     items: {
-      head: {type: 'number', value: 1},
-      paws: {type: 'number', value: 4},
-      tail: {type: 'number', value: 1},
+      head: {type: 'numeric', value: 1},
+      paws: {type: 'numeric', value: 4},
+      tail: {type: 'numeric', value: 1},
       stats: {
         type: 'group',
         items: {}
@@ -37,24 +36,31 @@ export async function testNewScopeSystem() {
 
   console.log('test2: ', test2);
 
+  const store = new Store({
+    group: catTest,
+    typeRegistry: fieldTypeRegistry
+  });
+
+  try {
+    store.set(['stats', 'mood'], '10');
+  } catch (e) {
+    console.log('valid error: ', e);
+  }
+
+  store.upsert(['stats', 'mood'], 10);
+  console.log('mood field: ', store.get<number>(['stats', 'mood']));
+
+
+  console.log('store reading test:',
+    store.get('head'),
+    store.get('tail'),
+  );
+
+
 
   console.log('traverse test: ',
     GroupOps.traversePath(test2, 'name'),
     GroupOps.traversePath(test2, 'head'),
     GroupOps.traversePath(test2, ['stats', 'hp'])
   );
-
-  const proxy = new Proxy<StringField>(test2.items.name as StringField, {
-    set: (obj, prop, value) => {
-      if (prop === 'value') {
-        console.log('target prop is value: ', value);
-      }
-      return Reflect.set(obj, prop, value);
-    }
-  }) as StringRef;
-
-  console.log('proxy: ', proxy.value);
-  proxy.value = 'Little Jo Big';
-  console.log('proxy: ', proxy.value);
-
 }

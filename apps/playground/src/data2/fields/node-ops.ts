@@ -9,6 +9,9 @@ export const NodeOps = {
     return !isGroup(node) ? undefined : node.items[childName];
   },
 
+  /**
+   * set or replace field node
+   */
   set: (node: FieldNode, childName: string, childNode: FieldNode): boolean => {
     if (!isGroup(node)) {
       return false;

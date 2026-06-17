@@ -1,6 +1,6 @@
 import {Registry} from '@axi-engine/utils';
 import {isUndefined} from '@axijs/ensure';
-import {type Field, type FieldName, isGeneric, NodeFactory} from '../fields';
+import {type Field, type FieldName, type RegisteredField, isGeneric, NodeFactory} from '../fields';
 import type {FieldTypeDefinition} from './field-type-definition.ts';
 
 
@@ -23,7 +23,7 @@ export class FieldTypeRegistry {
     this.fallbackItem = config;
   }
 
-  createNode(val: unknown) {
+  createNode(val: unknown): RegisteredField {
     const match = this.registry
       .find((conf) => conf.checkType(val));
 
