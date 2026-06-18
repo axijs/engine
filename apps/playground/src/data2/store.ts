@@ -2,7 +2,7 @@ import {type DataStorage, ensurePathString, type PathType} from '@axi-engine/uti
 import {type Field, type FieldGroup, GroupOps, isField, NodeFactory} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {createFieldTypeRegistry, FieldTypeRegistry} from './field-type-registry';
-import {StoreEventBus} from './store-event-bus.ts';
+import {StoreEventBus} from './event-bus/store-event-bus.ts';
 
 export class Store implements DataStorage {
   group: FieldGroup;
