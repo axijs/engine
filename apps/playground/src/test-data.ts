@@ -57,7 +57,6 @@ export async function testNewScopeSystem() {
   );
 
 
-
   console.log('traverse test: ',
     GroupOps.traversePath(test2, 'name'),
     GroupOps.traversePath(test2, 'head'),
