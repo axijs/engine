@@ -1,16 +1,35 @@
-import { v4 as uuidv4 } from 'uuid';
+import {isNullOrUndefined, throwIf} from '@axijs/ensure';
+import {v4 as uuidv4} from 'uuid';
 
 /**
- * Returns a random integer between min (inclusive) and max (exclusive).
- * @param min The minimum integer (inclusive).
- * @param max The maximum integer (exclusive).
- * @returns A random integer.
- * @example randInt(1, 5); // returns 1, 2, 3, or 4
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * @param max
+ * @return number
  */
-export function randInt(min: number, max: number): number {
+export function randInt(max: number): number;
+/**
+ * @param min
+ * @param max
+ * @return number
+ */
+export function randInt(min: number, max: number): number;
+export function randInt(minOrMax: number, possibleMax?: number): number {
+  let min: number;
+  let max: number;
+
+  if (isNullOrUndefined(possibleMax)) {
+    min = 0;
+    max = minOrMax;
+  } else {
+    min = minOrMax;
+    max = possibleMax;
+  }
+  throwIf(min > max, `min (${min}) greater then max (${max}), please check logic`);
+
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
+
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /**

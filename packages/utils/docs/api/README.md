@@ -41,7 +41,7 @@
 - [firstKeyOf](functions/firstKeyOf.md)
 - [genArray](functions/genArray.md)
 - [getPercentOf](functions/getPercentOf.md)
-- [getRandomElement](functions/getRandomElement.md)
+- [getRandItem](functions/getRandItem.md)
 - [haveSameElements](functions/haveSameElements.md)
 - [isPercentageString](functions/isPercentageString.md)
 - [isScalar](functions/isScalar.md)

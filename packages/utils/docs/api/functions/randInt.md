@@ -6,34 +6,44 @@
 
 # Function: randInt()
 
+## Call Signature
+
+> **randInt**(`max`): `number`
+
+Defined in: random.ts:9
+
+Returns a random integer between min (inclusive) and max (inclusive).
+
+### Parameters
+
+#### max
+
+`number`
+
+### Returns
+
+`number`
+
+number
+
+## Call Signature
+
 > **randInt**(`min`, `max`): `number`
 
-Defined in: random.ts:10
+Defined in: random.ts:15
 
-Returns a random integer between min (inclusive) and max (exclusive).
+### Parameters
 
-## Parameters
-
-### min
+#### min
 
 `number`
 
-The minimum integer (inclusive).
-
-### max
+#### max
 
 `number`
 
-The maximum integer (exclusive).
-
-## Returns
+### Returns
 
 `number`
 
-A random integer.
-
-## Example
-
-```ts
-randInt(1, 5); // returns 1, 2, 3, or 4
-```
+number
