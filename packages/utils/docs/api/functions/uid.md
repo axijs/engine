@@ -8,7 +8,7 @@
 
 > **uid**(): `string`
 
-Defined in: random.ts:20
+Defined in: random.ts:39
 
 Generates a unique identifier using uuidv4.
 

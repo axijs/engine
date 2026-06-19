@@ -2,11 +2,11 @@
 
 ***
 
-[@axi-engine/utils](../README.md) / getRandomElement
+[@axi-engine/utils](../README.md) / getRandItem
 
-# Function: getRandomElement()
+# Function: getRandItem()
 
-> **getRandomElement**\<`T`\>(`array`): `T` \| `undefined`
+> **getRandItem**\<`T`\>(`array`): `T` \| `undefined`
 
 Defined in: arrays.ts:112
 

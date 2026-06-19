@@ -109,7 +109,7 @@ export function unique<T>(array: T[]): T[] {
  * @param array The array to choose from.
  * @returns A random element from the array, or `undefined` if the array is empty.
  */
-export function getRandomElement<T>(array: T[]): T | undefined {
+export function getRandItem<T>(array: T[]): T | undefined {
   if (array.length === 0) {
     return undefined;
   }
