@@ -45,6 +45,10 @@ export class Registry<K extends PropertyKey, V> {
     return this.items.values();
   }
 
+  keys() {
+    return this.items.keys();
+  }
+
   /**
    *
    * @returns
