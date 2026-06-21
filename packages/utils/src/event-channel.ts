@@ -14,12 +14,12 @@ import {ensurePathString} from './path';
  *
  * @template T The type of the payload emitted by this channel.
  */
-export class EventChannel<T> {
+export class EventChannel {
   /**
    * Registry containing active emitters mapped by their stringified paths.
    * @private
    */
-  emitters = new Registry<string, Emitter<[T]>>();
+  emitters = new Registry<string, Emitter<any>>();
 
   /**
    * Subscribes a listener to events emitted at a specific path.
@@ -29,7 +29,7 @@ export class EventChannel<T> {
    * @param {(val: T) => void} listener - The callback function to invoke when an event occurs.
    * @returns {Unsubscribable} An object containing an `unsubscribe` method to remove the listener.
    */
-  subscribe(path: PathType, listener: (val: T) => void): Unsubscribable {
+  subscribe<T>(path: PathType, listener: (val: T) => void): Unsubscribable {
     const strPath = ensurePathString(path);
     if(!this.emitters.has(strPath)) {
       this.emitters.register(strPath, new Emitter<[T]>());
@@ -51,7 +51,7 @@ export class EventChannel<T> {
    * @param {PathType} path - The path to unsubscribe from.
    * @param {(val: T) => void} listener - The callback function to remove.
    */
-  unsubscribe(path: PathType, listener: (val: T) => void) {
+  unsubscribe(path: PathType, listener: (val: any) => void) {
     const strPath = ensurePathString(path);
     if (!this.emitters.has(strPath)) {
       return;
@@ -68,7 +68,7 @@ export class EventChannel<T> {
    * @param {PathType} path - The target path for the event.
    * @param {T} val - The payload to emit.
    */
-  emit(path: PathType, val: T) {
+  emit<T>(path: PathType, val: T) {
     const strPath = ensurePathString(path);
     if (this.emitters.has(strPath)) {
       this.emitters.getOrThrow(strPath).emit(val);
@@ -84,6 +84,14 @@ export class EventChannel<T> {
     for (let key of keys) {
       this.pruneEmitter(key);
     }
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  has(path: PathType): boolean {
+    return this.emitters.has(ensurePathString(path));
   }
 
   /**
