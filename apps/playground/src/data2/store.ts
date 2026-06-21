@@ -2,12 +2,12 @@ import {type DataStorage, ensurePathString, type PathType} from '@axi-engine/uti
 import {type Field, type FieldGroup, GroupOps, isField, NodeFactory} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {createFieldTypeRegistry, FieldTypeRegistry} from './field-type-registry';
-import {StoreEventBus} from './event-bus/store-event-bus.ts';
+import {StoreEventChannel} from './event-bus/store-event-channel.ts';
 
 export class Store implements DataStorage {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
-  events: StoreEventBus;
+  events: StoreEventChannel;
 
   constructor(options?: {
     group?: FieldGroup,
@@ -15,7 +15,7 @@ export class Store implements DataStorage {
   }) {
     this.group = !isUndefined(options?.group) ? options?.group : NodeFactory.group();
     this.typeRegistry = !isUndefined(options?.typeRegistry) ? options?.typeRegistry : createFieldTypeRegistry();
-    this.events = new StoreEventBus();
+    this.events = new StoreEventChannel();
   }
 
   get<T = unknown>(path: PathType): T {
