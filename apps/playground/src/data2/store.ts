@@ -2,12 +2,27 @@ import {type DataStorage, ensurePathString, type PathType} from '@axi-engine/uti
 import {type Field, type FieldGroup, GroupOps, isField, NodeFactory} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {createFieldTypeRegistry, FieldTypeRegistry} from './field-type-registry';
-import {StoreEventChannel} from './event-bus/store-event-channel.ts';
+import {
+  type CreateNodeEvent,
+  type ChangeFieldEvent,
+  StoreEventBus,
+  type DeleteNodeEvent,
+  type EventChannelMode
+} from './event-bus';
 
 export class Store implements DataStorage {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
-  events: StoreEventChannel;
+
+  events: StoreEventBus = new StoreEventBus();
+
+  set eventMode(mode: EventChannelMode) {
+    this.events.mode = mode;
+  }
+
+  get eventMode(): EventChannelMode {
+    return this.events.mode;
+  }
 
   constructor(options?: {
     group?: FieldGroup,
@@ -15,7 +30,54 @@ export class Store implements DataStorage {
   }) {
     this.group = !isUndefined(options?.group) ? options?.group : NodeFactory.group();
     this.typeRegistry = !isUndefined(options?.typeRegistry) ? options?.typeRegistry : createFieldTypeRegistry();
-    this.events = new StoreEventChannel();
+  }
+
+  onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
+    return this.events.createNode.subscribe<CreateNodeEvent<T>>(path, listener);
+  }
+
+  onChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
+    return this.events.changeField.subscribe<ChangeFieldEvent<T>>(path, listener);
+  }
+
+  onDelete<T = unknown>(path: PathType, listener: (event: DeleteNodeEvent<T>) => void) {
+    return this.events.deleteNode.subscribe<DeleteNodeEvent<T>>(path, listener);
+  }
+
+  unsubscribeOnCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
+    return this.events.createNode.unsubscribe(path, listener);
+  }
+
+  unsubscribeOnChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
+    return this.events.changeField.unsubscribe(path, listener);
+  }
+
+  unsubscribeOnDelete<T = unknown>(path: PathType, listener: (event: DeleteNodeEvent<T>) => void) {
+    return this.events.deleteNode.unsubscribe(path, listener);
+  }
+
+  onAnyChange(listener: (path: string) => void) {
+    return this.events.onAnyChange.subscribe(listener);
+  }
+
+  onAnyCreate(listener: (path: string) => void) {
+    return this.events.onAnyCreate.subscribe(listener);
+  }
+
+  onAnyDelete(listener: (path: string) => void) {
+    return this.events.onAnyDelete.subscribe(listener);
+  }
+
+  unsubscribeOnAnyCreate(listener: (path: string) => void) {
+    return this.events.onAnyCreate.unsubscribe(listener);
+  }
+
+  unsubscribeOnAnyChange(listener: (path: string) => void) {
+    return this.events.onAnyChange.unsubscribe(listener);
+  }
+
+  unsubscribeOnAnyDelete(listener: (path: string) => void) {
+    return this.events.onAnyDelete.unsubscribe(listener);
   }
 
   get<T = unknown>(path: PathType): T {
@@ -28,27 +90,38 @@ export class Store implements DataStorage {
   }
 
   set<T = unknown>(path: PathType, value: T): void {
+    const pathStr = ensurePathString(path);
     const field: Field<any> = this.getField(path);
     throwIf(
       !this.typeRegistry.compare(field, value),
-      `Field ${ensurePathString(path)} and variable have different types:` +
+      `Field ${pathStr} and variable have different types:` +
       `field: '${field.type}', variable: '${this.typeRegistry.getNodeNameByVariable(value)}'`
     );
+    const oldValue = field.value;
     field.value = value;
-    this.events.markDirty(ensurePathString(path));
+    this.events.emitOnChange<T>(pathStr, value, oldValue);
   }
 
   create<T = unknown>(path: PathType, value: T): void {
-    throwIf(this.has(path), `Field by path: ${ensurePathString(path)} already exists`);
-    GroupOps.set(this.group, path, this.typeRegistry.createNode(value))
+    const pathStr = ensurePathString(path);
+    throwIf(this.has(path), `Field by path: ${pathStr} already exists`);
+    GroupOps.set(this.group, path, this.typeRegistry.createNode(value));
+    this.events.emitOnCreate<T>(pathStr, value);
   }
 
-  upsert(path: PathType, value: unknown): void {
-    this.has(path) ? this.set(path, value) : this.create(path, value);
+  upsert<T = unknown>(path: PathType, value: T): void {
+    this.has(path) ? this.set<T>(path, value) : this.create<T>(path, value);
   }
 
-  delete(path: PathType): void {
-    throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${ensurePathString(path)}`);
+  delete<T = unknown>(path: PathType): void {
+    const pathStr = ensurePathString(path);
+    let val = undefined;
+    const node = GroupOps.get(this.group, path);
+    if (!isUndefined(node) && isField(node)) {
+      val = node.value;
+    }
+    throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
+    this.events.emitOnDelete<T>(pathStr, val);
   }
 
   clear(): void {
@@ -56,7 +129,12 @@ export class Store implements DataStorage {
   }
 
   destroy() {
-    // remove all subscribers and all data
+    this.clear();
+    this.events.clear();
+  }
+
+  flushEvents() {
+    this.events.flush();
   }
 
   private getField(path: PathType): Field<any> {
