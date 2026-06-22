@@ -1,19 +1,19 @@
-import type {FieldChangeEvent} from './store-event-bus-types.ts';
 import {ensurePathString, EventChannel, type PathType} from '@axi-engine/utils';
+import type {EventChannelMode} from './types.ts';
 
 
 export class StoreEventChannel {
 
-  mode: 'lazy' | 'eager' = 'lazy';
+  mode: EventChannelMode = 'lazy';
 
   channels = new EventChannel();
   pendingChannels = new Map<string, any>();
 
-  subscribe<TEvent>(path: PathType, listener: (value: TEvent) => void) {
+  subscribe<TEvent>(path: PathType, listener: (event: TEvent) => void) {
     return this.channels.subscribe(path, listener);
   }
 
-  unsubscribe<TEvent>(path: PathType, listener: (value: TEvent) => void) {
+  unsubscribe<TEvent>(path: PathType, listener: (event: TEvent) => void) {
     return this.channels.unsubscribe(path, listener);
   }
 
@@ -35,10 +35,14 @@ export class StoreEventChannel {
     if (!this.pendingChannels.size) {
       return;
     }
-    for (const [path, value] of this.pendingChannels) {
-      this.channels.emit<FieldChangeEvent>(path, {path, value});
+    for (const [path, event] of this.pendingChannels) {
+      this.channels.emit(path, event);
     }
     this.pendingChannels.clear();
   }
 
+  clear() {
+    this.channels.clear();
+    this.pendingChannels.clear();
+  }
 }

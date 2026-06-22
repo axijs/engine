@@ -41,6 +41,18 @@ export async function testNewScopeSystem() {
     typeRegistry: fieldTypeRegistry
   });
 
+  store.onChange<number>(['stats', 'mood'], (event) => {
+    console.log(`Field 'mood' changed:`, event);
+  });
+
+  store.onCreate<number>(['stats', 'mood'], (event) => {
+    console.log(`Field 'mood' created:`, event);
+  });
+
+  store.onDelete<number>(['stats', 'mood'], (event) => {
+    console.log(`Field 'mood' deleted:`, event);
+  });
+
   try {
     store.set(['stats', 'mood'], '10');
   } catch (e) {
@@ -50,16 +62,26 @@ export async function testNewScopeSystem() {
   store.upsert(['stats', 'mood'], 10);
   console.log('mood field: ', store.get<number>(['stats', 'mood']));
 
-
   console.log('store reading test:',
     store.get('head'),
     store.get('tail'),
   );
-
 
   console.log('traverse test: ',
     GroupOps.traversePath(test2, 'name'),
     GroupOps.traversePath(test2, 'head'),
     GroupOps.traversePath(test2, ['stats', 'hp'])
   );
+
+  store.upsert(['stats', 'mood'], 15);
+  store.set(['stats', 'mood'], 20);
+  store.delete(['stats', 'mood']);
+
+  store.flushEvents();
+
+  try {
+    store.set(['stats', 'mood'], '10');
+  } catch (e) {
+    console.log('valid error: ', e);
+  }
 }

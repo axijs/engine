@@ -94,6 +94,11 @@ export class EventChannel {
     return this.emitters.has(ensurePathString(path));
   }
 
+  clear() {
+    this.emitters.forEach(e => e.clear());
+    this.emitters.clear();
+  }
+
   /**
    * Safely checks if an emitter at the given path has no listeners
    * and removes it from the registry to free up memory.
