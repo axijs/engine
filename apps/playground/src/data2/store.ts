@@ -32,6 +32,10 @@ export class Store implements DataStorage {
     this.typeRegistry = !isUndefined(options?.typeRegistry) ? options?.typeRegistry : createFieldTypeRegistry();
   }
 
+  replaceGroup(newGroup: FieldGroup) {
+    this.group = newGroup;
+  }
+
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
     return this.events.createNode.subscribe<CreateNodeEvent<T>>(path, listener);
   }
@@ -124,12 +128,19 @@ export class Store implements DataStorage {
     this.events.emitOnDelete<T>(pathStr, val);
   }
 
+  /**
+   *
+   */
   clear(): void {
     this.group = NodeFactory.group();
+    // todo: remove data and generate propper events
   }
 
+  /**
+   * clear data end subscriptions
+   */
   destroy() {
-    this.clear();
+    this.group = NodeFactory.group();
     this.events.clear();
   }
 

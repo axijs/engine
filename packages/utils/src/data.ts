@@ -71,5 +71,5 @@ export interface DataSink {
  * A full CRUD contract for systems that provide complete data management.
  * Combines both reading and writing capabilities.
  */
-export interface DataStorage extends DataSource, DataSink, Destroyable {
+export interface DataStorage extends DataSource, DataSink {
 }
