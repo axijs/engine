@@ -24,23 +24,19 @@ export class StoreEventBus {
     return this._mode;
   }
 
-  emitOnChange<T = unknown>(path: string, value: T, oldValue: T) {
-    this.changeField.emit<ChangeFieldEvent<T>>(path, {path, value, oldValue});
-    this.onAnyChange.emit(path);
+  emitOnCreate<T = unknown>(path: string, value?: T) {
+    if (this.mode === 'eager') { this.onAnyCreate.emit(path); }
+    this.createNode.emit<CreateNodeEvent<T>>(path, {path, value});
   }
 
-  emitOnCreate<T = unknown>(path: string, value?: T) {
-    this.createNode.emit<CreateNodeEvent<T>>(path, {path, value});
-    this.onAnyCreate.emit(path);
+  emitOnChange<T = unknown>(path: string, value: T, oldValue: T) {
+    if (this.mode === 'eager') { this.onAnyChange.emit(path); }
+    this.changeField.emit<ChangeFieldEvent<T>>(path, {path, value, oldValue});
   }
 
   emitOnDelete<T = unknown>(path: string, oldValue?: T) {
+    if (this.mode === 'eager') { this.onAnyDelete.emit(path); }
     this.deleteNode.emit<DeleteNodeEvent<T>>(path, {path, oldValue});
-    this.onAnyDelete.emit(path);
-  }
-
-  subscribeOnChange<T = unknown>(path: string, listener: (value: ChangeFieldEvent<T>) => void) {
-    return this.changeField.subscribe(path, listener);
   }
 
   flush() {
