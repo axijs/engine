@@ -1,5 +1,6 @@
 import {ensurePathString, EventChannel, type PathType} from '@axi-engine/utils';
 import type {EventChannelMode} from './types.ts';
+import {Emitter} from '@axijs/emitter';
 
 
 export class StoreEventChannel {
@@ -8,6 +9,7 @@ export class StoreEventChannel {
 
   channels = new EventChannel();
   pendingChannels = new Map<string, any>();
+  onAny = new Emitter<[string]>();
 
   subscribe<TEvent>(path: PathType, listener: (event: TEvent) => void) {
     return this.channels.subscribe(path, listener);
@@ -26,6 +28,7 @@ export class StoreEventChannel {
 
     if (this.mode === 'eager') {
       this.channels.emit(strPath, event);
+      this.onAny.emit(strPath);
     } else {
       this.pendingChannels.set(strPath, event);
     }
@@ -37,6 +40,7 @@ export class StoreEventChannel {
     }
     for (const [path, event] of this.pendingChannels) {
       this.channels.emit(path, event);
+      this.onAny.emit(path);
     }
     this.pendingChannels.clear();
   }

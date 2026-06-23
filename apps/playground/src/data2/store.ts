@@ -1,5 +1,5 @@
-import {type DataStorage, ensurePathString, type PathType} from '@axi-engine/utils';
-import {type Field, type FieldGroup, GroupOps, isField, NodeFactory} from './fields';
+import {type DataStorage, ensurePathString, type PathType, utilsSettings} from '@axi-engine/utils';
+import {type Field, type FieldGroup, type FieldNode, GroupOps, isField, isGroup, NodeFactory} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {createFieldTypeRegistry, FieldTypeRegistry} from './field-type-registry';
 import {
@@ -32,6 +32,10 @@ export class Store implements DataStorage {
     this.typeRegistry = !isUndefined(options?.typeRegistry) ? options?.typeRegistry : createFieldTypeRegistry();
   }
 
+  getGroup() {
+    return this.group;
+  }
+
   replaceGroup(newGroup: FieldGroup) {
     this.group = newGroup;
   }
@@ -60,28 +64,28 @@ export class Store implements DataStorage {
     return this.events.deleteNode.unsubscribe(path, listener);
   }
 
-  onAnyChange(listener: (path: string) => void) {
-    return this.events.onAnyChange.subscribe(listener);
+  onAnyCreate(listener: (path: string) => void) {
+    return this.events.createNode.onAny.subscribe(listener);
   }
 
-  onAnyCreate(listener: (path: string) => void) {
-    return this.events.onAnyCreate.subscribe(listener);
+  onAnyChange(listener: (path: string) => void) {
+    return this.events.changeField.onAny.subscribe(listener);
   }
 
   onAnyDelete(listener: (path: string) => void) {
-    return this.events.onAnyDelete.subscribe(listener);
+    return this.events.deleteNode.onAny.subscribe(listener);
   }
 
   unsubscribeOnAnyCreate(listener: (path: string) => void) {
-    return this.events.onAnyCreate.unsubscribe(listener);
+    return this.events.createNode.onAny.unsubscribe(listener);
   }
 
   unsubscribeOnAnyChange(listener: (path: string) => void) {
-    return this.events.onAnyChange.unsubscribe(listener);
+    return this.events.changeField.onAny.unsubscribe(listener);
   }
 
   unsubscribeOnAnyDelete(listener: (path: string) => void) {
-    return this.events.onAnyDelete.unsubscribe(listener);
+    return this.events.deleteNode.onAny.unsubscribe(listener);
   }
 
   get<T = unknown>(path: PathType): T {
@@ -121,8 +125,20 @@ export class Store implements DataStorage {
     const pathStr = ensurePathString(path);
     let val = undefined;
     const node = GroupOps.get(this.group, path);
-    if (!isUndefined(node) && isField(node)) {
-      val = node.value;
+    if (!isUndefined(node)) {
+      if (isField(node)) {
+        val = node.value;
+      } else if (isGroup(node)) {
+        const buffer: { path: string, node: FieldNode }[] = [];
+        this.collectNodeChildrenPaths(node, pathStr, buffer);
+
+        for (let i = buffer.length - 1; i >= 0; i--) {
+          const { path: childPathStr, node: childNode } = buffer[i];
+          if (this.events.deleteNode.channels.has(childPathStr)) {
+            this.events.emitOnDelete(childPathStr, isField(childNode) ? childNode.value : undefined);
+          }
+        }
+      }
     }
     throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
     this.events.emitOnDelete<T>(pathStr, val);
@@ -153,5 +169,21 @@ export class Store implements DataStorage {
     throwIfEmpty(node, `Can't find field by path: ${ensurePathString(path)}`);
     throwIf(!isField(node), `Node didn't belong to the 'field' type, has type: ${node.type}`);
     return node as Field<any>;
+  }
+
+  private collectNodeChildrenPaths(
+    node: FieldGroup,
+    nodePath: string,
+    buffer: { path: string, node: FieldNode }[]
+  ) {
+    const keys = Object.keys(node.items);
+    for (let key of keys) {
+      const nodeChild = node.items[key];
+      const nodeChildPath = nodePath + utilsSettings.pathSeparator + key;
+      buffer.push({path: nodeChildPath, node: nodeChild});
+      if (isGroup(nodeChild)) {
+        this.collectNodeChildrenPaths(nodeChild, nodeChildPath, buffer);
+      }
+    }
   }
 }
