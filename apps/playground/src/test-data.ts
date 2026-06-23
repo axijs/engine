@@ -1,5 +1,4 @@
-import {type FieldGroup} from './data2';
-import {NodeFactory as f, GroupOps} from './data2/fields';
+import {NodeFactory as f} from './data2/fields';
 import {createFieldTypeRegistry} from './data2';
 import {Store} from './data2/store.ts';
 
@@ -7,34 +6,30 @@ export async function testNewScopeSystem() {
 
   const fieldTypeRegistry = createFieldTypeRegistry();
 
-  const catTest: FieldGroup = {
-    type: 'group',
-    items: {
-      head: {type: 'numeric', value: 1},
-      paws: {type: 'numeric', value: 4},
-      tail: {type: 'numeric', value: 1},
-      stats: {
-        type: 'group',
-        items: {}
-      }
-    }
-  }
-
-  console.log('test: ', catTest);
-
-  const test2 = f.group({
+  const catTest = f.group({
     name: f.str('Little Jo'),
     head: f.num(1),
     paws: f.num(4),
     tail: f.num(1),
     hungry: f.bool(false),
+
     stats: f.group({
       hp: f.num(10),
       age: f.num(2)
+    }),
+
+    forDelete: f.group({
+      field1: f.num(10),
+      group1: f.group({
+        group2: f.group({
+          g2f1: f.num(10),
+          g2f2: f.str('abra')
+        })
+      })
     })
   });
 
-  console.log('test2: ', test2);
+  console.log('test: ', catTest);
 
   const store = new Store({
     group: catTest,
@@ -53,11 +48,13 @@ export async function testNewScopeSystem() {
     console.log(`Field 'mood' deleted:`, event);
   });
 
-  try {
-    store.set(['stats', 'mood'], '10');
-  } catch (e) {
-    console.log('valid error: ', e);
-  }
+  store.onDelete<number>(['forDelete'], (event) => {
+    console.log(`Field 'forDelete' deleted:`, event);
+  });
+
+  store.onDelete<number>(['forDelete', 'field1'], (event) => {
+    console.log(`Field 'forDelete/field1' deleted:`, event);
+  });
 
   store.upsert(['stats', 'mood'], 10);
   console.log('mood field: ', store.get<number>(['stats', 'mood']));
@@ -67,21 +64,12 @@ export async function testNewScopeSystem() {
     store.get('tail'),
   );
 
-  console.log('traverse test: ',
-    GroupOps.traversePath(test2, 'name'),
-    GroupOps.traversePath(test2, 'head'),
-    GroupOps.traversePath(test2, ['stats', 'hp'])
-  );
-
   store.upsert(['stats', 'mood'], 15);
   store.set(['stats', 'mood'], 20);
   store.delete(['stats', 'mood']);
+  store.delete(['forDelete']);
 
   store.flushEvents();
 
-  try {
-    store.set(['stats', 'mood'], '10');
-  } catch (e) {
-    console.log('valid error: ', e);
-  }
+
 }
