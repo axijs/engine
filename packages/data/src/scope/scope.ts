@@ -1,6 +1,6 @@
-import {DataStorage, PathType} from '@axi-engine/utils';
+import {DataStorage, Destroyable, PathType} from '@axi-engine/utils';
 
-export interface Scope extends DataStorage {
+export interface Scope extends DataStorage, Destroyable {
   readonly uid?: string;
   readonly name?: string;
 

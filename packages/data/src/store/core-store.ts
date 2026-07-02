@@ -215,7 +215,7 @@ export class CoreStore implements Store {
     return this.tree.hasPath(pathArr);
   }
 
-  get(path: PathType): unknown {
+  get<T extends unknown>(path: PathType): T {
     return this.getField(path).value;
   }
 

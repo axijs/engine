@@ -10,7 +10,7 @@ Defined in: packages/data/src/scope/scope.ts:3
 
 ## Extends
 
-- `DataStorage`
+- `DataStorage`.`Destroyable`
 
 ## Properties
 
@@ -34,7 +34,7 @@ Defined in: packages/data/src/scope/scope.ts:4
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:190
+Defined in: packages/utils/dist/index.d.ts:198
 
 Deletes all values
 
@@ -112,7 +112,7 @@ deleting works only with variables in local scope
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:130
+Defined in: packages/utils/dist/index.d.ts:138
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -123,7 +123,7 @@ After calling this, the object should be considered unusable.
 
 #### Inherited from
 
-`DataStorage.destroy`
+`Destroyable.destroy`
 
 ***
 

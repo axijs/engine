@@ -15,7 +15,7 @@ in a larger expression tree.
 ## Example
 
 ```ts
-{ "literal": true }
+const expression = { "literal": true }
 ```
 
 ## Properties

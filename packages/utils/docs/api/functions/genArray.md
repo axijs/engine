@@ -8,7 +8,7 @@
 
 > **genArray**(`length`): `number`[]
 
-Defined in: arrays.ts:7
+Defined in: arrays.ts:9
 
 Generates an array of numbers from 0 to length-1.
 

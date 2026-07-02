@@ -8,7 +8,7 @@
 
 > **isSequentialStart**\<`T`\>(`arr1`, `arr2`): `boolean`
 
-Defined in: arrays.ts:36
+Defined in: arrays.ts:38
 
 Checks if the first array is a sequential starting subset of the second array.
 

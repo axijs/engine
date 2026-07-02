@@ -13,7 +13,7 @@ Combines both reading and writing capabilities.
 
 ## Extends
 
-- [`DataSource`](DataSource.md).[`DataSink`](DataSink.md).[`Destroyable`](Destroyable.md)
+- [`DataSource`](DataSource.md).[`DataSink`](DataSink.md)
 
 ## Methods
 
@@ -95,30 +95,17 @@ The path to the value to be deleted.
 
 ***
 
-### destroy()
-
-> **destroy**(): `void`
-
-Defined in: types.ts:52
-
-Destroys the object, releasing all held resources.
-After calling this, the object should be considered unusable.
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[`Destroyable`](Destroyable.md).[`destroy`](Destroyable.md#destroy)
-
-***
-
 ### get()
 
-> **get**(`path`): `unknown`
+> **get**\<`T`\>(`path`): `T`
 
 Defined in: data.ts:8
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `unknown`
 
 #### Parameters
 
@@ -128,7 +115,7 @@ Defined in: data.ts:8
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Inherited from
 

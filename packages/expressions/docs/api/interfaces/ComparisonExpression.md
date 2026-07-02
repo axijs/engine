@@ -14,13 +14,13 @@ It evaluates the left and right operands and compares them using the specified o
 ## Example
 
 ```ts
-{
- *   "comparison": {
- *     "op": ">=",
- *     "left": { "path": "player.level" },
- *     "right": { "value": 10 }
- *   }
- * }
+const expression = {
+  "comparison": {
+    "op": ">=",
+    "left": { "path": "player.level" },
+    "right": { "value": 10 }
+  }
+}
 ```
 
 ## Properties

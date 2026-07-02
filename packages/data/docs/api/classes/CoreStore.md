@@ -464,9 +464,15 @@ After calling this, the object should be considered unusable.
 
 ### get()
 
-> **get**(`path`): `unknown`
+> **get**\<`T`\>(`path`): `T`
 
 Defined in: packages/data/src/store/core-store.ts:218
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `unknown`
 
 #### Parameters
 
@@ -476,7 +482,7 @@ Defined in: packages/data/src/store/core-store.ts:218
 
 #### Returns
 
-`unknown`
+`T`
 
 #### Implementation of
 

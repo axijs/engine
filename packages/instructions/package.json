@@ -1,6 +1,6 @@
 {
   "name": "@axi-engine/instructions",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "license": "MIT",
   "repository": {
@@ -35,7 +35,7 @@
   ],
   "peerDependencies": {
     "@axijs/ensure": "^1.0.2",
-    "@axi-engine/utils": "^0.3.0",
-    "@axi-engine/expressions": "^0.3.0"
+    "@axi-engine/utils": "^0.3.7",
+    "@axi-engine/expressions": "^0.3.1"
   }
 }

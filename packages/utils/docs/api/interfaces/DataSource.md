@@ -18,9 +18,15 @@ A read-only contract for any system that can provide data by path.
 
 ### get()
 
-> **get**(`path`): `unknown`
+> **get**\<`T`\>(`path`): `T`
 
 Defined in: data.ts:8
+
+#### Type Parameters
+
+##### T
+
+`T` *extends* `unknown`
 
 #### Parameters
 
@@ -30,7 +36,7 @@ Defined in: data.ts:8
 
 #### Returns
 
-`unknown`
+`T`
 
 ***
 

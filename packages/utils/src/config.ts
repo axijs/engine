@@ -7,7 +7,7 @@ export interface UtilsConfig {
 }
 
 const defaultConfig: UtilsConfig = {
-  pathSeparator: '.'
+  pathSeparator: '/'
 };
 
 export const utilsSettings: UtilsConfig = { ...defaultConfig };

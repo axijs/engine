@@ -1,11 +1,11 @@
-import {Destroyable, PathType} from './types';
+import {PathType} from './types';
 
 /**
  * A read-only contract for any system that can provide data by path.
  */
 export interface DataSource {
 
-  get(path: PathType): unknown;
+  get<T extends unknown>(path: PathType): T;
 
   /**
    * Checks if a path valid.
@@ -71,5 +71,5 @@ export interface DataSink {
  * A full CRUD contract for systems that provide complete data management.
  * Combines both reading and writing capabilities.
  */
-export interface DataStorage extends DataSource, DataSink, Destroyable {
+export interface DataStorage extends DataSource, DataSink {
 }

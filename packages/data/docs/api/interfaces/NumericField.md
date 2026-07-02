@@ -164,7 +164,7 @@ The amount to subtract.
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:130
+Defined in: packages/utils/dist/index.d.ts:138
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.

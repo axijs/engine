@@ -22,7 +22,7 @@ export type ReferenceOperand = {
  *
  * @example
  * // Represents the expression: player.hp + 10
- * {
+ * const operand = {
  *   "arithmetic": {
  *     "op": "+",
  *     "left": { "path": "player.hp" },

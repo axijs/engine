@@ -16,7 +16,7 @@ factions, or item types.
 
 ```ts
 // Check if player's faction is one of the "evil" ones
-{
+const expression = {
   "in": {
     "value": { "path": "player.faction" },
     "array": [ "orcs", "goblins", "undead" ]
@@ -26,7 +26,7 @@ factions, or item types.
 
 ```ts
 // Check against a dynamic array from the data source
-{
+const expression = {
   "in": {
     "value": { "path": "player.class" },
     "array": { "path": "quest.valid_classes" }
