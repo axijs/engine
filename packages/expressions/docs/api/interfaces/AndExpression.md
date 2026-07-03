@@ -15,12 +15,12 @@ It evaluates an array of child expressions and resolves to `true` only if
 ## Example
 
 ```ts
-{
- *   "and": [
- *     { "exists": "player.key" },
- *     { "comparison": { "op": "==", "left": { "path": "gate.locked" }, "right": { "value": true } } }
- *   ]
- * }
+const expression = {
+  "and": [
+    { "exists": "player.key" },
+    { "comparison": { "op": "==", "left": { "path": "gate.locked" }, "right": { "value": true } } }
+  ]
+}
 ```
 
 ## Properties

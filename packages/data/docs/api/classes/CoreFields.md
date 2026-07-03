@@ -18,7 +18,7 @@ Defined in: packages/data/src/fields/core-fields.ts:7
 
 > **new CoreFields**(...`args`): `CoreFields`
 
-Defined in: packages/utils/dist/index.d.ts:121
+Defined in: packages/utils/dist/index.d.ts:129
 
 #### Parameters
 

@@ -15,12 +15,12 @@ It evaluates an array of child expressions and resolves to `true` if
 ## Example
 
 ```ts
-{
- *   "or": [
- *     { "exists": "player.key" },
- *     { "exists": "player.gun" }
- *   ]
- * }
+const expression = {
+  "or": [
+    { "exists": "player.key" },
+    { "exists": "player.gun" }
+  ]
+}
 ```
 
 ## Properties

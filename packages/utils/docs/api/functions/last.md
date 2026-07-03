@@ -8,7 +8,7 @@
 
 > **last**\<`T`\>(`array`): `T` \| `undefined`
 
-Defined in: arrays.ts:92
+Defined in: arrays.ts:94
 
 Gets the last element of an array.
 

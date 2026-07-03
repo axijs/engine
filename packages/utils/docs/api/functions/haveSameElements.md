@@ -8,7 +8,7 @@
 
 > **haveSameElements**\<`T`\>(`arr1?`, `arr2?`): `boolean`
 
-Defined in: arrays.ts:55
+Defined in: arrays.ts:57
 
 Checks if two arrays contain the same elements, ignoring order.
 Works for arrays of primitives like strings or numbers.

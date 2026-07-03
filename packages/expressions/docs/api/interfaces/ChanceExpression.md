@@ -16,12 +16,12 @@ The operand should resolve to a number between 0 and 100. step 0.01
 
 ```ts
 // 15% chance to be true
-{ "chance": { "value": 15 } }
+const expression = { "chance": { "value": 15 } }
 ```
 
 ```ts
 // Chance is determined by the player's luck stat
-{ "chance": { "path": "player.stats.luck" } }
+const expression = { "chance": { "path": "player.stats.luck" } }
 ```
 
 ## Properties

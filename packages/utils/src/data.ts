@@ -1,4 +1,4 @@
-import {Destroyable, PathType} from './types';
+import {PathType} from './types';
 
 /**
  * A read-only contract for any system that can provide data by path.

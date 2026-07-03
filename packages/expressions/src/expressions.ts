@@ -6,7 +6,7 @@ import {ComparisonOperationType, Operand} from './types';
  * This is primarily useful for debugging, testing, or creating temporary stubs
  * in a larger expression tree.
  * @example
- * { "literal": true }
+ * const expression = { "literal": true }
  */
 export interface LiteralExpression {
   literal: boolean;
@@ -16,7 +16,7 @@ export interface LiteralExpression {
  * Represents a comparison between two operands.
  * It evaluates the left and right operands and compares them using the specified operator.
  * @example
- * {
+ * const expression = {
  *   "comparison": {
  *     "op": ">=",
  *     "left": { "path": "player.level" },
@@ -44,7 +44,7 @@ export interface ExistsExpression {
  * It evaluates an array of child expressions and resolves to `true` only if
  * *all* of them resolve to `true`.
  * @example
- * {
+ * const expression = {
  *   "and": [
  *     { "exists": "player.key" },
  *     { "comparison": { "op": "==", "left": { "path": "gate.locked" }, "right": { "value": true } } }
@@ -60,7 +60,7 @@ export interface AndExpression {
  * It evaluates an array of child expressions and resolves to `true` if
  * *at least one* of them resolves to `true`.
  * @example
- * {
+ * const expression = {
  *   "or": [
  *     { "exists": "player.key" },
  *     { "exists": "player.gun" }
@@ -75,7 +75,7 @@ export interface OrExpression {
  * Represents a logical NOT operation.
  * It evaluates a single child expression and inverts its boolean result.
  * @example
- * {
+ * const expression = {
  *   "not": { "exists": "player.effects.poison" }
  * }
  */
@@ -89,10 +89,10 @@ export interface NotExpression {
  * The operand should resolve to a number between 0 and 100. step 0.01
  * @example
  * // 15% chance to be true
- * { "chance": { "value": 15 } }
+ * const expression = { "chance": { "value": 15 } }
  * @example
  * // Chance is determined by the player's luck stat
- * { "chance": { "path": "player.stats.luck" } }
+ * const expression = { "chance": { "path": "player.stats.luck" } }
  */
 export interface ChanceExpression {
   chance: Operand
@@ -105,7 +105,7 @@ export interface ChanceExpression {
  * factions, or item types.
  * @example
  * // Check if player's faction is one of the "evil" ones
- * {
+ * const expression = {
  *   "in": {
  *     "value": { "path": "player.faction" },
  *     "array": [ "orcs", "goblins", "undead" ]
@@ -113,7 +113,7 @@ export interface ChanceExpression {
  * }
  * @example
  * // Check against a dynamic array from the data source
- * {
+ * const expression = {
  *   "in": {
  *     "value": { "path": "player.class" },
  *     "array": { "path": "quest.valid_classes" }

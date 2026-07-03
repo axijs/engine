@@ -10,10 +10,6 @@ Defined in: types.ts:47
 
 Represents an object that has a lifecycle and requires explicit destruction.
 
-## Extended by
-
-- [`DataStorage`](DataStorage.md)
-
 ## Methods
 
 ### destroy()

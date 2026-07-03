@@ -1,4 +1,4 @@
-import {DataStorage, PathType} from '@axi-engine/utils';
+import {DataStorage, Destroyable, PathType} from '@axi-engine/utils';
 import {
   Field,
   CoreBooleanField,
@@ -18,7 +18,7 @@ export interface StoreCreateFieldOptions {
  * It acts as a facade, simplifying access to the underlying FieldTree and providing
  * both type-safe and dynamic methods for manipulating data.
  */
-export interface Store extends DataStorage {
+export interface Store extends DataStorage, Destroyable {
   /**
    */
   readonly typeName: string;

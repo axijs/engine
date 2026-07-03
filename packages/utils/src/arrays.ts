@@ -1,3 +1,5 @@
+import {throwIfEmpty} from '@axijs/ensure';
+
 /**
  * Generates an array of numbers from 0 to length-1.
  * @param length The desired length of the array.
@@ -109,10 +111,21 @@ export function unique<T>(array: T[]): T[] {
  * @param array The array to choose from.
  * @returns A random element from the array, or `undefined` if the array is empty.
  */
-export function getRandItem<T>(array: T[]): T | undefined {
-  if (array.length === 0) {
+export function randomItem<T>(array: T[]): T | undefined {
+  if (!array.length) {
     return undefined;
   }
-  const index = Math.floor(Math.random() * array.length);
-  return array[index];
+  return randomItemOrThrow(array);
+}
+
+/**
+ * Gets a random element from an array.
+ * @template T The type of elements in the array.
+ * @param array The array to choose from.
+ * @returns A random element from the array.
+ * @throws {Error} If the array is empty.
+ */
+export function randomItemOrThrow<T>(array: T[]): T {
+  throwIfEmpty(array, `Array is empty`);
+  return array[Math.floor(Math.random() * array.length)];
 }

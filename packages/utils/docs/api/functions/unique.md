@@ -8,7 +8,7 @@
 
 > **unique**\<`T`\>(`array`): `T`[]
 
-Defined in: arrays.ts:102
+Defined in: arrays.ts:104
 
 Creates a duplicate-free version of an array.
 

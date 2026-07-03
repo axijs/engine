@@ -14,9 +14,9 @@ It evaluates a single child expression and inverts its boolean result.
 ## Example
 
 ```ts
-{
- *   "not": { "exists": "player.effects.poison" }
- * }
+const expression = {
+  "not": { "exists": "player.effects.poison" }
+}
 ```
 
 ## Properties

@@ -8,7 +8,7 @@
 
 > **shuffleArray**\<`T`\>(`array`): `T`[]
 
-Defined in: arrays.ts:18
+Defined in: arrays.ts:20
 
 Creates a new array with its elements shuffled in a random order.
 This function does not mutate the original array.

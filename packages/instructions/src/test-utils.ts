@@ -33,8 +33,6 @@ export function createMockDataStore(): DataStorage {
       data.delete(ensurePathString(path));
     },
     clear() {
-    },
-    destroy() {
     }
   };
 }

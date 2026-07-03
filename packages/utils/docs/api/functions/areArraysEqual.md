@@ -8,7 +8,7 @@
 
 > **areArraysEqual**\<`T`\>(`arr1?`, `arr2?`): `boolean`
 
-Defined in: arrays.ts:78
+Defined in: arrays.ts:80
 
 Checks if two arrays are strictly equal (same elements in the same order).
 

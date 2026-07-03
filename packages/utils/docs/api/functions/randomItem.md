@@ -2,13 +2,13 @@
 
 ***
 
-[@axi-engine/utils](../README.md) / getRandItem
+[@axi-engine/utils](../README.md) / randomItem
 
-# Function: getRandItem()
+# Function: randomItem()
 
-> **getRandItem**\<`T`\>(`array`): `T` \| `undefined`
+> **randomItem**\<`T`\>(`array`): `T` \| `undefined`
 
-Defined in: arrays.ts:112
+Defined in: arrays.ts:114
 
 Gets a random element from an array.
 
