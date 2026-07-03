@@ -17,7 +17,7 @@ The result of this calculation is used as the operand's value.
 
 ```ts
 // Represents the expression: player.hp + 10
-{
+const operand = {
   "arithmetic": {
     "op": "+",
     "left": { "path": "player.hp" },
