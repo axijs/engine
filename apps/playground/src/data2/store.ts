@@ -46,6 +46,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   }
 
   onChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
+    console.log('onChange:', path, listener);
     return this.events.onChange(path, listener);
   }
 
@@ -149,14 +150,6 @@ export class Store implements DataStorage, StoreEventSubscriber {
    *
    */
   clear(): void {
-    this.group = NodeFactory.group();
-    // todo: remove data and generate propper events
-  }
-
-  /**
-   * clear data end subscriptions
-   */
-  destroy() {
     this.group = NodeFactory.group();
     this.events.clear();
   }

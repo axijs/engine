@@ -78,7 +78,8 @@ export async function testNewScopeSystem() {
   const nameRef = new FieldRef<string>(store, 'name');
   console.log('nameRef:', nameRef.value);
 
+  nameRef.value = 'Little Jo Jo Junior';
+  nameRef.onChange((e) => console.log('on name changed ref: ', e));
+
   store.flushEvents();
-
-
 }
