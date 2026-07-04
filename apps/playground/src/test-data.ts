@@ -1,6 +1,7 @@
 import {NodeFactory as f} from './data2/fields';
 import {createFieldTypeRegistry} from './data2';
 import {Store} from './data2/store.ts';
+import {FieldRef} from './data2/references/field-ref.ts';
 
 export async function testNewScopeSystem() {
 
@@ -68,6 +69,14 @@ export async function testNewScopeSystem() {
   store.set(['stats', 'mood'], 20);
   store.delete(['stats', 'mood']);
   store.delete(['forDelete']);
+
+  //
+  console.log('ref tests ---->')
+  const headRef = new FieldRef<number>(store, 'head');
+  console.log('headRef: ', headRef.value);
+
+  const nameRef = new FieldRef<string>(store, 'name');
+  console.log('nameRef:', nameRef.value);
 
   store.flushEvents();
 

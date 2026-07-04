@@ -16,3 +16,9 @@ export type DeleteNodeEvent<T = unknown> = {
   oldValue?: T;
 }
 
+export type CreateNodeListener<T = unknown> = (event: CreateNodeEvent<T>) => void;
+
+export type ChangeFieldListener<T = unknown> = (event: ChangeFieldEvent<T>) => void;
+
+export type DeleteNodeListener<T = unknown> = (event: DeleteNodeEvent<T>) => void;
+

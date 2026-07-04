@@ -3,6 +3,8 @@ import type {BooleanFieldReference} from './field-reference.ts';
 
 export class BooleanFieldRef extends FieldRef<boolean> implements BooleanFieldReference {
   toggle(): boolean {
-    return true;
+    const res = !this.value;
+    this.value = res;
+    return res;
   }
 }

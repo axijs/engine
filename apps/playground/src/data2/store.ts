@@ -9,8 +9,9 @@ import {
   type DeleteNodeEvent,
   type EventChannelMode
 } from './event-bus';
+import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 
-export class Store implements DataStorage {
+export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
 
@@ -41,27 +42,27 @@ export class Store implements DataStorage {
   }
 
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
-    return this.events.createNode.subscribe<CreateNodeEvent<T>>(path, listener);
+    return this.events.onCreate(path, listener);
   }
 
   onChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
-    return this.events.changeField.subscribe<ChangeFieldEvent<T>>(path, listener);
+    return this.events.onChange(path, listener);
   }
 
   onDelete<T = unknown>(path: PathType, listener: (event: DeleteNodeEvent<T>) => void) {
-    return this.events.deleteNode.subscribe<DeleteNodeEvent<T>>(path, listener);
+    return this.events.onDelete(path, listener);
   }
 
   unsubscribeOnCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
-    return this.events.createNode.unsubscribe(path, listener);
+    return this.events.unsubscribeOnCreate(path, listener);
   }
 
   unsubscribeOnChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
-    return this.events.changeField.unsubscribe(path, listener);
+    return this.events.unsubscribeOnChange(path, listener);
   }
 
   unsubscribeOnDelete<T = unknown>(path: PathType, listener: (event: DeleteNodeEvent<T>) => void) {
-    return this.events.deleteNode.unsubscribe(path, listener);
+    return this.events.unsubscribeOnDelete(path, listener);
   }
 
   onAnyCreate(listener: (path: string) => void) {
