@@ -1,3 +1,5 @@
+import type {ChangeFieldListener, DeleteNodeListener} from '../event-bus';
+
 /**
  * Represents a wrapper for a specific data node.
  *
@@ -5,12 +7,21 @@
  */
 export interface FieldReference<T> {
   readonly path: string;
+  readonly pathArr: string[];
   /**
    * The current value of the field.
    * Assigning a new value triggers policies and emits the `onChange` event
    * if the value is different from the current one.
    */
   value: T;
+
+  onChange(listener: ChangeFieldListener<T>): void;
+
+  onDelete(listener: DeleteNodeListener<T>): void;
+
+  unsubscribeOnChange(listener: ChangeFieldListener<T>): void;
+
+  unsubscribeOnDelete(listener: DeleteNodeListener<T>): void;
 }
 
 /**
