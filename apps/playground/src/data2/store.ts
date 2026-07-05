@@ -10,12 +10,16 @@ import {
   type EventChannelMode
 } from './event-bus';
 import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
+import {Emitter} from '@axijs/emitter';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
 
   events: StoreEventBus = new StoreEventBus();
+
+  onClear = new Emitter();
+  onGroupReplaced = new Emitter<[FieldGroup]>();
 
   set eventMode(mode: EventChannelMode) {
     this.events.mode = mode;
@@ -29,8 +33,8 @@ export class Store implements DataStorage, StoreEventSubscriber {
     group?: FieldGroup,
     typeRegistry?: FieldTypeRegistry
   }) {
-    this.group = !isUndefined(options?.group) ? options?.group : NodeFactory.group();
-    this.typeRegistry = !isUndefined(options?.typeRegistry) ? options?.typeRegistry : createFieldTypeRegistry();
+    this.group = options?.group ?? NodeFactory.group();
+    this.typeRegistry = options?.typeRegistry ?? createFieldTypeRegistry();
   }
 
   getGroup() {
@@ -39,6 +43,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
 
   replaceGroup(newGroup: FieldGroup) {
     this.group = newGroup;
+    this.onGroupReplaced.emit(this.group);
   }
 
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
@@ -46,7 +51,6 @@ export class Store implements DataStorage, StoreEventSubscriber {
   }
 
   onChange<T = unknown>(path: PathType, listener: (event: ChangeFieldEvent<T>) => void) {
-    console.log('onChange:', path, listener);
     return this.events.onChange(path, listener);
   }
 
@@ -152,6 +156,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   clear(): void {
     this.group = NodeFactory.group();
     this.events.clear();
+    this.onClear.emit();
   }
 
   flushEvents() {

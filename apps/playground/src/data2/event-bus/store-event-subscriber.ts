@@ -1,3 +1,4 @@
+import type {Unsubscribable} from '@axijs/emitter';
 import type {PathType} from '@axi-engine/utils';
 import type {
   ChangeFieldListener,
@@ -5,12 +6,13 @@ import type {
   DeleteNodeListener
 } from './types.ts';
 
+
 export interface StoreEventSubscriber {
-  onCreate<T = unknown>(path: PathType, listener: CreateNodeListener<T>): void;
+  onCreate<T = unknown>(path: PathType, listener: CreateNodeListener<T>): Unsubscribable;
 
-  onChange<T = unknown>(path: PathType, listener: ChangeFieldListener<T>): void;
+  onChange<T = unknown>(path: PathType, listener: ChangeFieldListener<T>): Unsubscribable;
 
-  onDelete<T = unknown>(path: PathType, listener: DeleteNodeListener<T>): void;
+  onDelete<T = unknown>(path: PathType, listener: DeleteNodeListener<T>): Unsubscribable;
 
   unsubscribeOnCreate<T = unknown>(path: PathType, listener: CreateNodeListener<T>): void;
 
