@@ -32,11 +32,11 @@ export class FieldRef<T> implements FieldReference<T> {
   }
 
   onChange(listener: ChangeFieldListener<T>) {
-    this._store.onChange<T>(this._path, listener);
+    return this._store.onChange<T>(this._path, listener);
   }
 
   onDelete(listener: DeleteNodeListener<T>) {
-    this._store.onDelete<T>(this._path, listener);
+    return this._store.onDelete<T>(this._path, listener);
   }
 
   unsubscribeOnChange(listener: ChangeFieldListener<T>) {

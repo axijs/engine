@@ -84,12 +84,3 @@ export interface StringFieldReference extends FieldReference<string> {
    */
   clear(): void
 }
-
-export interface FieldReferences {
-  generic: FieldReference<any>,
-  numeric: NumericFieldReference,
-  boolean: BooleanFieldReference,
-  string: StringFieldReference
-}
-
-export type FieldReferenceName = keyof FieldReferences;
