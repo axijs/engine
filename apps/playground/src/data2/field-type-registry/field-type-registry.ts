@@ -1,18 +1,14 @@
 import {Registry} from '@axi-engine/utils';
-import {isUndefined} from '@axijs/ensure';
-import {type Field, type FieldName, type RegisteredField, isGeneric, NodeFactory} from '../fields';
+import {type Field, type FieldName, type RegisteredField} from '../fields';
 import type {FieldTypeDefinition} from './field-type-definition.ts';
+import {fieldTypeGenericDefinition} from './field-type-default-definitions.ts';
 
 
 export class FieldTypeRegistry {
   private registry = new Registry<FieldName, FieldTypeDefinition>();
 
   private fallbackName: FieldName = 'generic';
-  private fallbackItem: FieldTypeDefinition = {
-    checkType: () => true,
-    checkNode: (field) => isGeneric(field),
-    createNode: (val) => NodeFactory.generic(val)
-  };
+  private fallbackItem: FieldTypeDefinition = fieldTypeGenericDefinition;
 
   register(fieldName: FieldName, config: FieldTypeDefinition) {
     this.registry.register(fieldName, config);
@@ -24,10 +20,8 @@ export class FieldTypeRegistry {
   }
 
   createNode(val: unknown): RegisteredField {
-    const match = this.registry
-      .find((conf) => conf.checkType(val));
-
-    return !isUndefined(match) ? match[1].createNode(val) : this.fallbackItem.createNode(val);
+    const match = this.matchDefinition(val);
+    return match[1].createNode(val);
   }
 
   compare(node: Field<any>, val: unknown): boolean {
@@ -35,9 +29,16 @@ export class FieldTypeRegistry {
   }
 
   getNodeNameByVariable(val: unknown): FieldName {
-    const match = this.registry
-      .find((conf) => conf.checkType(val));
+    return  this.matchDefinition(val)[0];
+  }
 
-    return !isUndefined(match) ? match[0] : this.fallbackName;
+  cloneValue(val: unknown) {
+    const match = this.matchDefinition(val);
+    return match[1].cloneValue(val);
+  }
+
+  private matchDefinition(val: unknown) {
+    const res = this.registry.find((conf) => conf.checkType(val));
+    return res ?? [this.fallbackName, this.fallbackItem];
   }
 }
