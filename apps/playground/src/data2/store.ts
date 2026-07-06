@@ -11,12 +11,14 @@ import {
 } from './event-bus';
 import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 import {Emitter} from '@axijs/emitter';
+import {StoreChangeBuffer} from './store-change-buffer.ts';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
 
   events: StoreEventBus = new StoreEventBus();
+  changeBuffer = new StoreChangeBuffer();
 
   onClear = new Emitter();
   onGroupReplaced = new Emitter<[FieldGroup]>();
@@ -29,10 +31,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     return this.events.mode;
   }
 
-  constructor(options?: {
-    group?: FieldGroup,
-    typeRegistry?: FieldTypeRegistry
-  }) {
+  constructor(options?: { group?: FieldGroup, typeRegistry?: FieldTypeRegistry }) {
     this.group = options?.group ?? NodeFactory.group();
     this.typeRegistry = options?.typeRegistry ?? createFieldTypeRegistry();
   }
@@ -95,8 +94,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   }
 
   get<T = unknown>(path: PathType): T {
-    const field: Field<any> = this.getField(path);
-    return (field as Field<any>).value;
+    return this.getField(path).value;
   }
 
   has(path: PathType): boolean {
@@ -111,43 +109,49 @@ export class Store implements DataStorage, StoreEventSubscriber {
       `Field ${pathStr} and variable have different types:` +
       `field: '${field.type}', variable: '${this.typeRegistry.getNodeNameByVariable(value)}'`
     );
-    const oldValue = field.value;
     field.value = value;
-    this.events.emitOnChange<T>(pathStr, value, oldValue);
+    this.changeBuffer.changed(pathStr, this.typeRegistry.cloneValue(value));
+    // this.events.emitOnChange<T>(pathStr, value, oldValue);
   }
 
   create<T = unknown>(path: PathType, value: T): void {
     const pathStr = ensurePathString(path);
     throwIf(this.has(path), `Field by path: ${pathStr} already exists`);
     GroupOps.set(this.group, path, this.typeRegistry.createNode(value));
-    this.events.emitOnCreate<T>(pathStr, value);
+    this.changeBuffer.created(pathStr, this.typeRegistry.cloneValue(value));
+    // this.events.emitOnCreate<T>(pathStr, value);
   }
 
   upsert<T = unknown>(path: PathType, value: T): void {
     this.has(path) ? this.set<T>(path, value) : this.create<T>(path, value);
   }
 
-  delete<T = unknown>(path: PathType): void {
+  delete(path: PathType): void {
     const pathStr = ensurePathString(path);
     let val = undefined;
     const node = GroupOps.get(this.group, path);
     if (!isUndefined(node)) {
       if (isField(node)) {
-        val = node.value;
+        val = this.typeRegistry.cloneValue(node.value);
       } else if (isGroup(node)) {
         const buffer: { path: string, node: FieldNode }[] = [];
         this.collectNodeChildrenPaths(node, pathStr, buffer);
-
         for (let i = buffer.length - 1; i >= 0; i--) {
           const { path: childPathStr, node: childNode } = buffer[i];
-          if (this.events.deleteNode.channels.has(childPathStr)) {
-            this.events.emitOnDelete(childPathStr, isField(childNode) ? childNode.value : undefined);
-          }
+          this.changeBuffer.deleted(
+            childPathStr,
+            isField(childNode) ? this.typeRegistry.cloneValue(childNode.value): undefined
+          )
+          //   if (this.events.deleteNode.channels.has(childPathStr)) {
+          //     this.events.emitOnDelete(childPathStr, isField(childNode) ? childNode.value : undefined);
+          //   }
         }
       }
     }
     throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
-    this.events.emitOnDelete<T>(pathStr, val);
+    // val can be undefined when deleted branch node
+    this.changeBuffer.deleted(pathStr, val);
+    // this.events.emitOnDelete<T>(pathStr, val);
   }
 
   /**
@@ -159,8 +163,9 @@ export class Store implements DataStorage, StoreEventSubscriber {
     this.onClear.emit();
   }
 
-  flushEvents() {
+  tick() {
     this.events.flush();
+    this.changeBuffer.clear();
   }
 
   private getField(path: PathType): Field<any> {
