@@ -1,5 +1,3 @@
-export type EventChannelMode = 'lazy' | 'eager';
-
 export type ChangeFieldEvent<T = unknown> = {
   path: string;
   value: T;
@@ -22,3 +20,4 @@ export type ChangeFieldListener<T = unknown> = (event: ChangeFieldEvent<T>) => v
 
 export type DeleteNodeListener<T = unknown> = (event: DeleteNodeEvent<T>) => void;
 
+export type AnyListener = (paths: string[]) => void;

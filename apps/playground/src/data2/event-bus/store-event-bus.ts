@@ -1,25 +1,16 @@
 import {StoreEventChannel} from './store-event-channel.ts';
-import type {CreateNodeEvent, DeleteNodeEvent, ChangeFieldEvent, EventChannelMode} from './types.ts';
+import type {CreateNodeEvent, DeleteNodeEvent, ChangeFieldEvent} from './types.ts';
 import type {PathType} from '@axi-engine/utils';
 import type {StoreEventEmitter} from './store-event-emitter.ts';
 import type {StoreEventSubscriber} from './store-event-subscriber.ts';
 
 export class StoreEventBus implements StoreEventEmitter, StoreEventSubscriber {
-  private _mode: EventChannelMode = 'lazy';
-
   readonly createNode = new StoreEventChannel();
   readonly changeField = new StoreEventChannel();
   readonly deleteNode = new StoreEventChannel();
 
-  set mode(mode: EventChannelMode) {
-    this._mode = mode;
-    this.changeField.mode = this._mode;
-    this.createNode.mode = this._mode;
-    this.deleteNode.mode = this._mode;
-  }
 
-  get mode(): EventChannelMode {
-    return this._mode;
+  constructor() {
   }
 
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
@@ -46,6 +37,18 @@ export class StoreEventBus implements StoreEventEmitter, StoreEventSubscriber {
     this.deleteNode.emit<DeleteNodeEvent<T>>(path, {path, oldValue});
   }
 
+  emitOnAnyCreate(paths: string[]) {
+    this.createNode.onAny.emit(paths);
+  }
+
+  emitOnAnyChange(paths: string[]) {
+    this.changeField.onAny.emit(paths);
+  }
+
+  emitOnAnyDelete(paths: string[]) {
+    this.deleteNode.onAny.emit(paths);
+  }
+
   unsubscribeOnCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
     return this.createNode.unsubscribe(path, listener);
   }
@@ -56,12 +59,6 @@ export class StoreEventBus implements StoreEventEmitter, StoreEventSubscriber {
 
   unsubscribeOnDelete<T = unknown>(path: PathType, listener: (event: DeleteNodeEvent<T>) => void) {
     return this.deleteNode.unsubscribe(path, listener);
-  }
-
-  flush() {
-    this.createNode.flush();
-    this.changeField.flush();
-    this.deleteNode.flush();
   }
 
   clear() {
