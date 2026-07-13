@@ -33,7 +33,7 @@ The name or key of this field within its parent container.
 
 ### onChange
 
-> **onChange**: `Subscribable`\<\[`boolean`, `boolean`\]\>
+> **onChange**: `Subscribable`\<\{ `newValue`: `boolean`; `oldValue`: `boolean`; \}\>
 
 Defined in: packages/data/src/fields/field.ts:67
 

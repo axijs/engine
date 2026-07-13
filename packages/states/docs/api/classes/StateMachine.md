@@ -65,7 +65,7 @@ The internal representation of the current state.
 
 ### onChange
 
-> `readonly` **onChange**: `Emitter`\<\[`T`, `T`, `P`\]\>
+> `readonly` **onChange**: `Emitter`\<\{ `from?`: `T`; `payload?`: `P`; `to?`: `T`; \}\>
 
 Defined in: state-machine.ts:47
 
@@ -79,8 +79,8 @@ Emitter
 #### Example
 
 ```ts
-fsm.onChange.subscribe((from, to, payload) => {
-  console.log(`State transitioned from ${from} to ${to}`);
+fsm.onChange.subscribe(e => {
+  console.log(`State transitioned from ${e.from} to ${e.to}`);
 });
 ```
 

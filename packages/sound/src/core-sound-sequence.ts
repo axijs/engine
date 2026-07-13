@@ -27,7 +27,7 @@ export class CoreSoundSequence implements SoundSequence {
 
   readonly onPlay = new Emitter();
   readonly onFinish = new Emitter();
-  readonly onState: StateEmitter<[SoundSequenceState]> = new StateEmitter([this._state]);
+  readonly onState: StateEmitter<SoundSequenceState> = new StateEmitter(this._state);
 
   set loop(val: boolean) {
     this._loop = val;

@@ -45,7 +45,7 @@ The name or key of this field within its parent container.
 
 ### onChange
 
-> **onChange**: `Subscribable`\<\[`T`, `T`\]\>
+> **onChange**: `Subscribable`\<\{ `newValue`: `T`; `oldValue`: `T`; \}\>
 
 Defined in: packages/data/src/fields/field.ts:67
 

@@ -39,14 +39,14 @@ export class FieldTree<TFields extends Fields> implements Destroyable {
    * @param {string} event.name - The name (key) of the added node.
    * @param event.node - The node instance that was added.
    * @example
-   * myTree.onAdd.subscribe(({ name, node }) => {
-   *   console.log(`Node '${name}' was added.`, node);
+   * myTree.onAdd.subscribe((e: { name, node }) => {
+   *   console.log(`Node '${e.name}' was added.`, e.node);
    * });
    */
-  onAdd = new Emitter<[event: {
+  onAdd = new Emitter<{
     name: string,
     node: TreeNode<TFields>
-  }]>();
+  }>();
 
   /**
    * An event emitter that fires once after one or more nodes have been successfully removed.
@@ -54,13 +54,11 @@ export class FieldTree<TFields extends Fields> implements Destroyable {
    * @param {object} event - The event payload.
    * @param {string[]} event.names - An array of names of the nodes that were removed.
    * @example
-   * myTree.onRemove.subscribe(({ names }) => {
-   *   console.log(`Nodes removed: ${names.join(', ')}`);
+   * myTree.onRemove.subscribe((e: { names }) => {
+   *   console.log(`Nodes removed: ${e.names.join(', ')}`);
    * });
    */
-  onRemove = new Emitter<[event: {
-    names: string[]
-  }]>();
+  onRemove = new Emitter<{ names: string[] }>();
 
   /**
    * Provides direct access to the internal node storage.

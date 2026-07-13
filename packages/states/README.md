@@ -149,9 +149,9 @@ await gameState.call(GameState.Paused); // Error: Transition from MainMenu to Pa
 The public `onChange` property is an `Emitter`. You can use its `subscribe` method to be notified of any state change. The method returns a function to unsubscribe.
 
 ```typescript
-const unsubscribe = gameState.onChange.subscribe((from, to, payload) => {
-  const fromState = from !== undefined ? GameState[from] : 'Start';
-  console.log(`State changed from ${fromState} to ${GameState[to]}`, { payload });
+const unsubscribe = gameState.onChange.subscribe(event => {
+  const fromState = event.from !== undefined ? GameState[event.from] : 'Start';
+  console.log(`State changed from ${fromState} to ${GameState[event.to]}`, { payload: event.payload });
 });
 
 await gameState.call(GameState.MainMenu);
@@ -176,9 +176,9 @@ enum GameState {
 // --- Setup ---
 const game = new StateMachine<GameState>();
 
-game.onChange.subscribe((from, to) => {
-  const fromState = from !== undefined ? GameState[from] : 'Start';
-  console.log(`[SYSTEM] Transition: ${fromState} -> ${GameState[to]}`);
+game.onChange.subscribe(e => {
+  const fromState = e.from !== undefined ? GameState[e.from] : 'Start';
+  console.log(`[SYSTEM] Transition: ${fromState} -> ${GameState[e.to]}`);
 });
 
 game.register(GameState.MainMenu, {
