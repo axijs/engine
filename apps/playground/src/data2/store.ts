@@ -161,6 +161,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
    */
   clear(): void {
     this.group = NodeFactory.group();
+    this.changes.clear();
     this.events.clear();
     this.onClear.emit();
   }
