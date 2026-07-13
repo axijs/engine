@@ -12,6 +12,7 @@ import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 import {Emitter} from '@axijs/emitter';
 import {StoreChangeBuffer} from './store-change-buffer.ts';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher.ts';
+import {ComputedManager} from './compute-fields/computed-manager.ts';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
@@ -20,6 +21,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   changes = new StoreChangeBuffer();
   events: StoreEventBus = new StoreEventBus();
   eventDispatcher = new StoreEventDispatcher(this.events, this.changes);
+  computedManager = new ComputedManager(this);
 
   onClear = new Emitter();
   onGroupReplaced = new Emitter<[FieldGroup]>();
