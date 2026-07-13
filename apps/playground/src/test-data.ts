@@ -81,5 +81,5 @@ export async function testNewScopeSystem() {
   nameRef.value = 'Little Jo Jo Junior';
   nameRef.onChange((e) => console.log('on name changed ref: ', e));
 
-  store.flushEvents();
+  store.tick();
 }

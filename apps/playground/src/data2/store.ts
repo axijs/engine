@@ -6,29 +6,30 @@ import {
   type CreateNodeEvent,
   type ChangeFieldEvent,
   StoreEventBus,
-  type DeleteNodeEvent,
-  type EventChannelMode
+  type DeleteNodeEvent, type AnyListener,
 } from './event-bus';
 import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 import {Emitter} from '@axijs/emitter';
 import {StoreChangeBuffer} from './store-change-buffer.ts';
+import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher.ts';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
 
+  changes = new StoreChangeBuffer();
   events: StoreEventBus = new StoreEventBus();
-  changeBuffer = new StoreChangeBuffer();
+  eventDispatcher = new StoreEventDispatcher(this.events, this.changes);
 
   onClear = new Emitter();
   onGroupReplaced = new Emitter<[FieldGroup]>();
 
-  set eventMode(mode: EventChannelMode) {
-    this.events.mode = mode;
+  set eventMode(mode: EventDispatcherMode) {
+    this.eventDispatcher.mode = mode;
   }
 
-  get eventMode(): EventChannelMode {
-    return this.events.mode;
+  get eventMode(): EventDispatcherMode {
+    return this.eventDispatcher.mode;
   }
 
   constructor(options?: { group?: FieldGroup, typeRegistry?: FieldTypeRegistry }) {
@@ -69,27 +70,27 @@ export class Store implements DataStorage, StoreEventSubscriber {
     return this.events.unsubscribeOnDelete(path, listener);
   }
 
-  onAnyCreate(listener: (path: string) => void) {
+  onAnyCreate(listener: AnyListener) {
     return this.events.createNode.onAny.subscribe(listener);
   }
 
-  onAnyChange(listener: (path: string) => void) {
+  onAnyChange(listener: AnyListener) {
     return this.events.changeField.onAny.subscribe(listener);
   }
 
-  onAnyDelete(listener: (path: string) => void) {
+  onAnyDelete(listener: AnyListener) {
     return this.events.deleteNode.onAny.subscribe(listener);
   }
 
-  unsubscribeOnAnyCreate(listener: (path: string) => void) {
+  unsubscribeOnAnyCreate(listener: AnyListener) {
     return this.events.createNode.onAny.unsubscribe(listener);
   }
 
-  unsubscribeOnAnyChange(listener: (path: string) => void) {
+  unsubscribeOnAnyChange(listener: AnyListener) {
     return this.events.changeField.onAny.unsubscribe(listener);
   }
 
-  unsubscribeOnAnyDelete(listener: (path: string) => void) {
+  unsubscribeOnAnyDelete(listener: AnyListener) {
     return this.events.deleteNode.onAny.unsubscribe(listener);
   }
 
@@ -109,8 +110,9 @@ export class Store implements DataStorage, StoreEventSubscriber {
       `Field ${pathStr} and variable have different types:` +
       `field: '${field.type}', variable: '${this.typeRegistry.getNodeNameByVariable(value)}'`
     );
+    const oldValue = this.typeRegistry.cloneValue(field.value);
     field.value = value;
-    this.changeBuffer.changed(pathStr, this.typeRegistry.cloneValue(value));
+    this.changes.changed(pathStr, this.typeRegistry.cloneValue(value), oldValue);
     // this.events.emitOnChange<T>(pathStr, value, oldValue);
   }
 
@@ -118,7 +120,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     const pathStr = ensurePathString(path);
     throwIf(this.has(path), `Field by path: ${pathStr} already exists`);
     GroupOps.set(this.group, path, this.typeRegistry.createNode(value));
-    this.changeBuffer.created(pathStr, this.typeRegistry.cloneValue(value));
+    this.changes.created(pathStr, this.typeRegistry.cloneValue(value));
     // this.events.emitOnCreate<T>(pathStr, value);
   }
 
@@ -138,7 +140,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
         this.collectNodeChildrenPaths(node, pathStr, buffer);
         for (let i = buffer.length - 1; i >= 0; i--) {
           const { path: childPathStr, node: childNode } = buffer[i];
-          this.changeBuffer.deleted(
+          this.changes.deleted(
             childPathStr,
             isField(childNode) ? this.typeRegistry.cloneValue(childNode.value): undefined
           )
@@ -150,7 +152,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     }
     throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
     // val can be undefined when deleted branch node
-    this.changeBuffer.deleted(pathStr, val);
+    this.changes.deleted(pathStr, val);
     // this.events.emitOnDelete<T>(pathStr, val);
   }
 
@@ -164,8 +166,8 @@ export class Store implements DataStorage, StoreEventSubscriber {
   }
 
   tick() {
-    this.events.flush();
-    this.changeBuffer.clear();
+    this.eventDispatcher.flush();
+    this.changes.clear();
   }
 
   private getField(path: PathType): Field<any> {
