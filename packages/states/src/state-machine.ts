@@ -40,11 +40,11 @@ export class StateMachine<T, P = void> {
    * The event provides the old state, the new state, and the payload.
    * @see Emitter
    * @example
-   * fsm.onChange.subscribe((from, to, payload) => {
-   *   console.log(`State transitioned from ${from} to ${to}`);
+   * fsm.onChange.subscribe(e => {
+   *   console.log(`State transitioned from ${e.from} to ${e.to}`);
    * });
    */
-  readonly onChange = new Emitter<[from?: T, to?: T, payload?: P]>();
+  readonly onChange = new Emitter<{from?: T, to?: T, payload?: P}>();
 
   /**
    * Gets the current state of the machine.
@@ -116,7 +116,7 @@ export class StateMachine<T, P = void> {
 
     await (newStateConfig.onEnter as (payload?: P) => void | Promise<void>)?.(payload);
 
-    this.onChange.emit(oldState, newState, payload);
+    this.onChange.emit({from: oldState, to: newState, payload});
   }
 
   /**

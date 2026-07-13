@@ -26,10 +26,10 @@ export class Fields implements Destroyable {
    * @param {string} event.name - The name of the added field.
    * @param {Field<any>} event.field - The `Field` instance that was added.
    */
-  onAdd = new Emitter<[event: {
+  onAdd = new Emitter<{
     name: string,
     field: Field<any>
-  }]>();
+  }>();
 
   /**
    * An event emitter that fires after one or more fields have been removed.
@@ -37,9 +37,7 @@ export class Fields implements Destroyable {
    * @param {object} event - The event payload.
    * @param {string[]} event.names - An array of names of the fields that were successfully removed.
    */
-  onRemove = new Emitter<[event: {
-    names: string[]
-  }]>();
+  onRemove = new Emitter<{ names: string[] }>();
 
   /**
    * Gets the read-only map of all `Field` instances in this container.

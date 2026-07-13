@@ -21,8 +21,8 @@ export class CoreSoundChannel implements SoundChannel {
 
   sequences: Set<SoundSequence> = new Set<SoundSequence>();
 
-  onSizeChanged = new StateEmitter<[number]>([0]);
-  onVolumeChanged = new StateEmitter<[number]>([this._volume]);
+  onSizeChanged = new StateEmitter<number>(0);
+  onVolumeChanged = new StateEmitter<number>(this._volume);
 
   set volume(value: number) {
     this._volume = value;

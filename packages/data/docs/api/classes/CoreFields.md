@@ -306,7 +306,7 @@ Defined in: packages/data/src/fields/fields.ts:17
 
 > **get** **fields**(): `Map`\<`string`, [`Field`](../interfaces/Field.md)\<`any`\>\>
 
-Defined in: packages/data/src/fields/fields.ts:51
+Defined in: packages/data/src/fields/fields.ts:49
 
 **`Internal`**
 
@@ -328,7 +328,7 @@ The collection of fields.
 
 > **add**\<`T`\>(`field`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:79
+Defined in: packages/data/src/fields/fields.ts:77
 
 Adds a pre-existing `Field` instance to the collection and fires the `onAdd` event.
 
@@ -368,7 +368,7 @@ If a field with the same name already exists.
 
 > **clear**(): `void`
 
-Defined in: packages/data/src/fields/fields.ts:211
+Defined in: packages/data/src/fields/fields.ts:209
 
 Removes all fields from the collection, ensuring each is properly destroyed.
 
@@ -386,7 +386,7 @@ Removes all fields from the collection, ensuring each is properly destroyed.
 
 > **create**\<`T`\>(`typeName`, `name`, `initialValue`, `options?`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:102
+Defined in: packages/data/src/fields/fields.ts:100
 
 Creates a new `Field` instance of a specified type, adds it to the collection, and returns it.
 This is the primary factory method for creating fields within this container.
@@ -477,7 +477,7 @@ Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/fields.ts:215
+Defined in: packages/data/src/fields/fields.ts:213
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -496,7 +496,7 @@ After calling this, the object should be considered unusable.
 
 > **findAll**\<`T`\>(`predicate`): `T`[]
 
-Defined in: packages/data/src/fields/fields.ts:198
+Defined in: packages/data/src/fields/fields.ts:196
 
 Finds all fields that satisfy the provided condition.
 Since the container can hold various types of fields, the predicate accepts a base Field<any>.
@@ -531,7 +531,7 @@ An array of found fields cast to type T.
 
 > **findFirst**\<`T`\>(`predicate`): `T` \| `undefined`
 
-Defined in: packages/data/src/fields/fields.ts:182
+Defined in: packages/data/src/fields/fields.ts:180
 
 Finds the first field that satisfies the provided condition.
 Since the container can hold various types of fields, the predicate accepts a base Field<any>.
@@ -566,7 +566,7 @@ The found field cast to type T, or undefined.
 
 > **get**\<`T`\>(`name`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:144
+Defined in: packages/data/src/fields/fields.ts:142
 
 Retrieves a field by its name.
 
@@ -634,7 +634,7 @@ Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts
 
 > **has**(`name`): `boolean`
 
-Defined in: packages/data/src/fields/fields.ts:68
+Defined in: packages/data/src/fields/fields.ts:66
 
 Checks if a field with the given name exists in the collection.
 
@@ -662,7 +662,7 @@ The name of the field to check.
 
 > **remove**(`names`): `void`
 
-Defined in: packages/data/src/fields/fields.ts:154
+Defined in: packages/data/src/fields/fields.ts:152
 
 Removes one or more fields from the collection.
 This method ensures that the `destroy` method of each removed field is called to clean up its resources.
@@ -689,7 +689,7 @@ A single name or an array of names to remove.
 
 > **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
-Defined in: packages/data/src/fields/fields.ts:123
+Defined in: packages/data/src/fields/fields.ts:121
 
 Updates an existing field's value or creates a new one if it doesn't exist.
 
@@ -777,7 +777,7 @@ Defined in: packages/data/src/fields/mixins/with-default-generic-fields.mixin.ts
 
 ### onAdd
 
-> **onAdd**: `Emitter`\<\[`object`\]\>
+> **onAdd**: `Emitter`\<\{ `field`: [`Field`](../interfaces/Field.md)\<`any`\>; `name`: `string`; \}\>
 
 Defined in: packages/data/src/fields/fields.ts:29
 
@@ -803,7 +803,7 @@ The `Field` instance that was added.
 
 ### onRemove
 
-> **onRemove**: `Emitter`\<\[`object`\]\>
+> **onRemove**: `Emitter`\<\{ `names`: `string`[]; \}\>
 
 Defined in: packages/data/src/fields/fields.ts:40
 

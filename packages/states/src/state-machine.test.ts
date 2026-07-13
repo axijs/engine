@@ -76,7 +76,7 @@ describe('StateMachine - Registration & Transitions', () => {
     await fsm.call(StringState.running, payload);
 
     expect(enterSpy).toHaveBeenCalledWith(payload);
-    expect(changeSpy).toHaveBeenCalledWith(undefined, StringState.running, payload);
+    expect(changeSpy).toHaveBeenCalledWith({from: undefined, to: StringState.running, payload});
   });
 });
 

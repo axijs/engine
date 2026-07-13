@@ -67,7 +67,7 @@ A unique identifier for the field.
 
 ### \_onChange
 
-> `protected` `readonly` **\_onChange**: `Emitter`\<\[`boolean`, `boolean`\]\>
+> `protected` `readonly` **\_onChange**: `Emitter`\<\{ `newValue`: `boolean`; `oldValue`: `boolean`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
 
@@ -91,7 +91,7 @@ Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
 
 ### onChange
 
-> `readonly` **onChange**: `Subscribable`\<\[`boolean`, `boolean`\]\>
+> `readonly` **onChange**: `Subscribable`\<\{ `newValue`: `boolean`; `oldValue`: `boolean`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 
@@ -239,7 +239,7 @@ if the value is different from the current one.
 
 > **batchUpdate**(`updateFn`): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:78
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:77
 
 Performs an atomic-like update using a callback function.
 The callback receives the current value and should return the new value.
@@ -270,7 +270,7 @@ A function that transforms the current value into a new one.
 
 > **destroy**(): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:86
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:85
 
 Cleans up resources used by the field and its policies.
 This should be called when the field is no longer needed to prevent memory leaks from reactive policies.
@@ -293,7 +293,7 @@ This should be called when the field is no longer needed to prevent memory leaks
 
 > **setValueSilently**(`val`): `void`
 
-Defined in: packages/data/src/fields/field-definitions/core-field.ts:74
+Defined in: packages/data/src/fields/field-definitions/core-field.ts:73
 
 Updates the field's value without triggering the `onChange` event.
 Useful for internal synchronization or restoring state where side effects are undesirable.

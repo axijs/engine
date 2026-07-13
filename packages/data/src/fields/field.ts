@@ -64,7 +64,7 @@ export interface Field<T> extends Destroyable {
    * An observable stream that emits an event whenever the value changes.
    * The payload contains the new value and the old value.
    */
-  onChange: Subscribable<[newValue: T, oldValue:T]>;
+  onChange: Subscribable<{newValue: T, oldValue:T}>;
 }
 
 /**

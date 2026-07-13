@@ -29,13 +29,13 @@ export interface SoundSequence {
   readonly stopped: boolean;
 
   /** Triggered when the sequence start playing. */
-  readonly onPlay: Emitter<void[]>;
+  readonly onPlay: Emitter;
 
   /** Triggered when the sequence completes playing all tracks (in loop === false only) or has been stopped. */
-  readonly onFinish: Emitter<void[]>;
+  readonly onFinish: Emitter;
 
   /** Triggered whenever the state of the sequence changes. */
-  readonly onState: StateEmitter<[SoundSequenceState]>;
+  readonly onState: StateEmitter<SoundSequenceState>;
 
   /**
    * Updates internal tweens and timers.
