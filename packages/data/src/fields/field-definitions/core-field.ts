@@ -2,6 +2,7 @@ import {dequal} from 'dequal';
 import {Field} from '../field';
 import {Emitter, Subscribable} from '@axijs/emitter';
 
+
 /**
  * A state container that wraps a value.
  * It allows applying a pipeline of transformation or validation "policies" before any new value is set.
@@ -49,8 +50,12 @@ export class CoreField<T> implements Field<T> {
    * Creates an instance of a Field.
    * @param name A unique identifier for the field.
    * @param initialVal The initial value of the field.
+   *
    */
-  constructor(name: string, initialVal: T) {
+  constructor(
+    name: string,
+    initialVal: T
+  ) {
     this._name = name;
     this.value = initialVal;
   }
