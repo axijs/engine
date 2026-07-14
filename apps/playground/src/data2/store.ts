@@ -23,6 +23,8 @@ export class Store implements DataStorage, StoreEventSubscriber {
   eventDispatcher = new StoreEventDispatcher(this.events, this.changes);
   computedManager = new ComputedManager(this);
 
+  private readonlyPaths = new Set<string>();
+
   onClear = new Emitter();
   onGroupReplaced = new Emitter<FieldGroup>();
 
@@ -46,6 +48,14 @@ export class Store implements DataStorage, StoreEventSubscriber {
   replaceGroup(newGroup: FieldGroup) {
     this.group = newGroup;
     this.onGroupReplaced.emit(this.group);
+  }
+
+  markAsReadonly(path: PathType) {
+    this.readonlyPaths.add(ensurePathString(path));
+  }
+
+  unmarkAsReadonly(path: PathType) {
+    this.readonlyPaths.delete(ensurePathString(path));
   }
 
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
@@ -106,6 +116,8 @@ export class Store implements DataStorage, StoreEventSubscriber {
 
   set<T = unknown>(path: PathType, value: T): void {
     const pathStr = ensurePathString(path);
+    throwIf(this.readonlyPaths.has(pathStr),  `Field ${pathStr} is readonly (computed)`);
+
     const field: Field<any> = this.getField(path);
     throwIf(
       !this.typeRegistry.compare(field, value),
