@@ -4,7 +4,7 @@ import {Emitter} from '@axijs/emitter';
 export class StoreEventChannel {
   channels = new EventChannel();
   // should to cal once per flush
-  onAny = new Emitter<[string[]]>();
+  onAny = new Emitter<string[]>();
 
   subscribe<TEvent>(path: PathType, listener: (event: TEvent) => void) {
     return this.channels.subscribe(path, listener);

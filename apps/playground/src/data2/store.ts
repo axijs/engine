@@ -24,7 +24,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   computedManager = new ComputedManager(this);
 
   onClear = new Emitter();
-  onGroupReplaced = new Emitter<[FieldGroup]>();
+  onGroupReplaced = new Emitter<FieldGroup>();
 
   set eventMode(mode: EventDispatcherMode) {
     this.eventDispatcher.mode = mode;
