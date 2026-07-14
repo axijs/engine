@@ -81,27 +81,27 @@ export class CoreStore implements Store {
   createValue<T>(path: PathType, val: T, options?: StoreCreateFieldOptions): T {
     const dest = this.getDestinationFields(path);
     if (options?.fieldType) {
-      return dest.fields.create(options.fieldType, dest.leafName, val, options).value;
+      return dest.fields.create(options.fieldType, dest.leafName, val).value;
     }
     for (let resolver of this.resolvers) {
       if (resolver.supports(val)) {
-        return dest.fields.create(resolver.typeName, dest.leafName, val, options).value;
+        return dest.fields.create(resolver.typeName, dest.leafName, val).value;
       }
     }
-    return dest.fields.createGeneric<T>(dest.leafName, val, options).value;
+    return dest.fields.createGeneric<T>(dest.leafName, val).value;
   }
 
   upsertValue<T>(path: PathType, val: T, options?:StoreCreateFieldOptions): T {
     const dest = this.getDestinationFields(path);
     if (options?.fieldType) {
-      return dest.fields.upsert(options.fieldType, dest.leafName, val, options).value;
+      return dest.fields.upsert(options.fieldType, dest.leafName, val).value;
     }
     for (let resolver of this.resolvers) {
       if (resolver.supports(val)) {
-        return dest.fields.upsert(resolver.typeName, dest.leafName, val, options).value;
+        return dest.fields.upsert(resolver.typeName, dest.leafName, val).value;
       }
     }
-    return dest.fields.upsertGeneric<T>(dest.leafName, val, options).value;
+    return dest.fields.upsertGeneric<T>(dest.leafName, val).value;
   }
 
   createBoolean(path: PathType, initialValue: boolean): CoreBooleanField {
