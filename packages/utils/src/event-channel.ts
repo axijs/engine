@@ -32,7 +32,7 @@ export class EventChannel {
   subscribe<T>(path: PathType, listener: (val: T) => void): Unsubscribable {
     const strPath = ensurePathString(path);
     if(!this.emitters.has(strPath)) {
-      this.emitters.register(strPath, new Emitter<[T]>());
+      this.emitters.register(strPath, new Emitter<T>());
     }
     const emitter = this.emitters.getOrThrow(strPath);
     const sub = emitter.subscribe(listener);
