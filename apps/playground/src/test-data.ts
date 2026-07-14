@@ -81,5 +81,24 @@ export async function testNewScopeSystem() {
   nameRef.value = 'Little Jo Jo Junior';
   nameRef.onChange((e) => console.log('on name changed ref: ', e));
 
+  /** Computed test */
+  store.computedManager.define<number>(['stats', 'hpWithAge'], {
+    dependencies: [['stats', 'hp'], ['stats', 'age']], compute: (hp: number, age: number) => {
+      return hp * age;
+    }
+  });
+
+  store.computedManager.define<number>(['stats', 'hpWithAgeAndBonus'], {
+    dependencies: [['stats', 'hpWithAge']], compute: (val: number) => {
+      return val * 10;
+    }
+  });
+
+  store.computedManager.computeOne(['stats', 'hpWithAge']);
+  store.computedManager.computeOne(['stats', 'hpWithAgeAndBonus']);
+
+  console.log('hpWithAge: ', store.get(['stats', 'hpWithAge']));
+  console.log('hpWithAgeAndBonus:', store.get(['stats', 'hpWithAgeAndBonus']));
+
   store.tick();
 }
