@@ -32,7 +32,7 @@ Defined in: packages/data/src/fields/field-registry.ts:5
 
 > `protected` `readonly` **items**: `Map`\<`string`, `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\>\>
 
-Defined in: packages/utils/dist/index.d.ts:216
+Defined in: packages/utils/dist/index.d.ts:218
 
 #### Inherited from
 
@@ -46,7 +46,7 @@ Defined in: packages/utils/dist/index.d.ts:216
 
 > **get** **size**(): `number`
 
-Defined in: packages/utils/dist/index.d.ts:220
+Defined in: packages/utils/dist/index.d.ts:222
 
 Gets the number of registered items.
 
@@ -64,7 +64,7 @@ Gets the number of registered items.
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:260
+Defined in: packages/utils/dist/index.d.ts:268
 
 Clears all registered items from the registry.
 
@@ -82,7 +82,7 @@ Clears all registered items from the registry.
 
 > **delete**(`key`): `boolean`
 
-Defined in: packages/utils/dist/index.d.ts:256
+Defined in: packages/utils/dist/index.d.ts:264
 
 #### Parameters
 
@@ -100,11 +100,33 @@ Defined in: packages/utils/dist/index.d.ts:256
 
 ***
 
+### find()
+
+> **find**(`predicate`): \[`string`, `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\>\] \| `undefined`
+
+Defined in: packages/utils/dist/index.d.ts:245
+
+#### Parameters
+
+##### predicate
+
+(`value`, `key`) => `boolean`
+
+#### Returns
+
+\[`string`, `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\>\] \| `undefined`
+
+#### Inherited from
+
+`Registry.find`
+
+***
+
 ### forEach()
 
 > **forEach**(`callback`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:232
+Defined in: packages/utils/dist/index.d.ts:234
 
 Executes a provided function once for each registered item.
 
@@ -130,7 +152,7 @@ Function to execute for each element.
 
 > **get**(`key`): `Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\> \| `undefined`
 
-Defined in: packages/utils/dist/index.d.ts:248
+Defined in: packages/utils/dist/index.d.ts:256
 
 Retrieves an item by its key.
 
@@ -158,7 +180,7 @@ The item, or `undefined` if not found.
 
 > **getOrThrow**(`key`): `Constructor`
 
-Defined in: packages/utils/dist/index.d.ts:255
+Defined in: packages/utils/dist/index.d.ts:263
 
 Retrieves an item by its key, throwing an error if it's not found.
 
@@ -190,7 +212,7 @@ if no item is found for the given key.
 
 > **has**(`key`): `boolean`
 
-Defined in: packages/utils/dist/index.d.ts:242
+Defined in: packages/utils/dist/index.d.ts:250
 
 Checks if an item with the given key is registered.
 
@@ -212,11 +234,27 @@ The key to check.
 
 ***
 
+### keys()
+
+> **keys**(): `MapIterator`\<`string`\>
+
+Defined in: packages/utils/dist/index.d.ts:240
+
+#### Returns
+
+`MapIterator`\<`string`\>
+
+#### Inherited from
+
+`Registry.keys`
+
+***
+
 ### register()
 
 > **register**(`key`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:227
+Defined in: packages/utils/dist/index.d.ts:229
 
 Registers an item with a specific key.
 Warns if an item with the same key is already registered.
@@ -249,7 +287,7 @@ The item to register.
 
 > **values**(): `IterableIterator`\<`Constructor`\<[`Field`](../interfaces/Field.md)\<`any`\>\>\>
 
-Defined in: packages/utils/dist/index.d.ts:237
+Defined in: packages/utils/dist/index.d.ts:239
 
 Returns an iterable iterator of all registered values.
 

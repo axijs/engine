@@ -196,7 +196,7 @@ export class CoreStore implements Store {
    * as the current one but is completely detached from the existing data hierarchy.
    * This is useful for creating local scopes, stack frames, or temporary data contexts.
    *
-   * @returns {Store} A new, isolated DataStore instance.
+   * @returns {CoreStore} A new, isolated DataStore instance.
    */
   createIsolated(): CoreStore {
     return new CoreStore(this._factory);
