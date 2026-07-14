@@ -15,9 +15,9 @@ type TypedMethods<
   TCtor extends Constructor<Field<any>>,
   TBaseName extends string
 > = {
-  [K in `create${TBaseName}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor>;
+  [K in `create${TBaseName}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>) => InstanceType<TCtor>;
 } & {
-  [K in `upsert${TBaseName}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor>;
+  [K in `upsert${TBaseName}`]: (name: string, value: GetValueType<InstanceType<TCtor>>) => InstanceType<TCtor>;
 } & {
   [K in `get${TBaseName}`]: (name: string) => InstanceType<TCtor>;
 };
@@ -48,13 +48,13 @@ export function createTypedMethodsMixin<
   {
     return class FieldsWith extends Base {
       // createBoolean, createMySignal, etc.
-      [methodNames.create](name: string, initialValue: any, options?: ConstructorParameters<TCtor>[2]): InstanceType<TCtor> {
-        return this.create(typeName, name, initialValue, options) as InstanceType<TCtor>;
+      [methodNames.create](name: string, initialValue: any): InstanceType<TCtor> {
+        return this.create(typeName, name, initialValue) as InstanceType<TCtor>;
       }
 
       // upsertBoolean, upsertMySignal, etc.
-      [methodNames.upsert](name: string, value: any, options?: ConstructorParameters<TCtor>[2]): InstanceType<TCtor> {
-        return this.upsert(typeName, name, value, options) as InstanceType<TCtor>;
+      [methodNames.upsert](name: string, value: any): InstanceType<TCtor> {
+        return this.upsert(typeName, name, value) as InstanceType<TCtor>;
       }
 
       // getBoolean, getMySignal, etc.

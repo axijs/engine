@@ -94,17 +94,15 @@ export class Fields implements Destroyable {
    * @param {string} typeName - The registered type name of the field to create (e.g., 'numeric', 'boolean').
    * @param {string} name - The unique name for the new field.
    * @param {*} initialValue - The initial value for the new field.
-   * @param {*} [options] - Optional configuration passed to the field's constructor.
    * @returns {T} The newly created `Field` instance.
    */
   create<T extends Field<any>>(
     typeName: string,
     name: string,
-    initialValue: any,
-    options?: any
+    initialValue: any
   ): T {
     const Ctor = this._fieldRegistry.getOrThrow(typeName);
-    const field = new Ctor(name, initialValue, options);
+    const field = new Ctor(name, initialValue);
     this.add(field);
     return field as T;
   }
@@ -115,21 +113,19 @@ export class Fields implements Destroyable {
    * @param {string} typeName - The type name to use if a new field needs to be created.
    * @param {string} name - The name of the field to update or create.
    * @param {*} value - The new value to set.
-   * @param {*} [options] - Optional configuration, used only if a new field is created.
    * @returns {T} The existing or newly created `Field` instance.
    */
   upsert<T extends Field<any>>(
     typeName: string,
     name: string,
-    value: any,
-    options?: any
+    value: any
   ): T {
     if (this.has(name)) {
       const field = this.get<T>(name);
       field.value = value;
       return field;
     }
-    return this.create<T>(typeName, name, value, options);
+    return this.create<T>(typeName, name, value);
   }
 
   /**
