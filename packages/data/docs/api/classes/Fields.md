@@ -359,9 +359,9 @@ A single name or an array of names to remove.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
+> **upsert**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
 Defined in: packages/data/src/fields/fields.ts:121
 

@@ -54,7 +54,7 @@ export function createTypedMethodsMixin<
 
       // upsetBoolean, upsetMySignal, etc.
       [methodNames.upset](name: string, value: any, options?: ConstructorParameters<TCtor>[2]): InstanceType<TCtor> {
-        return this.upset(typeName, name, value, options) as InstanceType<TCtor>;
+        return this.upsert(typeName, name, value, options) as InstanceType<TCtor>;
       }
 
       // getBoolean, getMySignal, etc.

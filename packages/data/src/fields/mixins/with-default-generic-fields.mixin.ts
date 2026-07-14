@@ -12,7 +12,7 @@ export function WithDefaultGenericFields<TBase extends Constructor<Fields>>(Base
     }
 
     upsetGeneric<T>(name: string, value: T, options?: FieldOptions<T>): CoreField<T> {
-      return this.upset(CoreField.typeName, name, value, options);
+      return this.upsert(CoreField.typeName, name, value, options);
     }
 
     getGeneric<T>(name: string): CoreField<T> {

@@ -45,7 +45,7 @@ The name or key of this field within its parent container.
 
 ### onChange
 
-> **onChange**: `Subscribable`\<\{ `newValue`: `T`; `oldValue`: `T`; \}\>
+> **onChange**: `Subscribable`\<\{ `oldValue`: `T`; `value`: `T`; \}\>
 
 Defined in: packages/data/src/fields/field.ts:67
 
@@ -114,7 +114,7 @@ A function that transforms the current value into a new one.
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:138
+Defined in: packages/utils/dist/index.d.ts:140
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.

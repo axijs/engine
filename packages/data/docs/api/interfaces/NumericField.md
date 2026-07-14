@@ -53,7 +53,7 @@ The name or key of this field within its parent container.
 
 ### onChange
 
-> **onChange**: `Subscribable`\<\{ `newValue`: `number`; `oldValue`: `number`; \}\>
+> **onChange**: `Subscribable`\<\{ `oldValue`: `number`; `value`: `number`; \}\>
 
 Defined in: packages/data/src/fields/field.ts:67
 
@@ -164,7 +164,7 @@ The amount to subtract.
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:138
+Defined in: packages/utils/dist/index.d.ts:140
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.

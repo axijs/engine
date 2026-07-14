@@ -64,7 +64,7 @@ export interface Store extends DataStorage, Destroyable {
    * @returns {T} value of the newly created Field instance.
    * @throws An error if a node already exists at the path or if the parent path is invalid.
    */
-  upsetValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
+  upsertValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T
 
   /**
    * Creates a new, strongly-typed CoreBooleanField.

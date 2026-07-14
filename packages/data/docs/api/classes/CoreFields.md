@@ -18,7 +18,7 @@ Defined in: packages/data/src/fields/core-fields.ts:7
 
 > **new CoreFields**(...`args`): `CoreFields`
 
-Defined in: packages/utils/dist/index.d.ts:129
+Defined in: packages/utils/dist/index.d.ts:131
 
 #### Parameters
 
@@ -685,9 +685,9 @@ A single name or an array of names to remove.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
+> **upsert**\<`T`\>(`typeName`, `name`, `value`, `options?`): `T`
 
 Defined in: packages/data/src/fields/fields.ts:121
 
@@ -735,7 +735,7 @@ The existing or newly created `Field` instance.
 
 #### Inherited from
 
-`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upset`
+`WithBooleanFields(WithStringFields(WithNumericFields(WithDefaultGenericFields(Fields)))).upsert`
 
 ***
 

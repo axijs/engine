@@ -75,10 +75,10 @@ export class CoreScope implements Scope {
   /**
    * working only for clearly resolved path to variable
    */
-  upset<T>(name: PathType, value: T) {
+  upsert<T>(name: PathType, value: T) {
     try {
       const pathAndScope = this.tracePath(name);
-      pathAndScope.scope.data.upset(pathAndScope.path, value);
+      pathAndScope.scope.data.upsert(pathAndScope.path, value);
     } catch (e) {
       throw new ScopeError(`Can't create or update variable by path: ${ensurePathString(name)}`, {cause: e});
     }

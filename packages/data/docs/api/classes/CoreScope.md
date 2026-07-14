@@ -348,9 +348,9 @@ An object containing the target scope (`node`) and the adjusted path (`path`) re
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`name`, `value`): `void`
+> **upsert**\<`T`\>(`name`, `value`): `void`
 
 Defined in: packages/data/src/scope/core-scope.ts:78
 
@@ -378,4 +378,4 @@ working only for clearly resolved path to variable
 
 #### Implementation of
 
-[`Scope`](../interfaces/Scope.md).[`upset`](../interfaces/Scope.md#upset)
+[`Scope`](../interfaces/Scope.md).[`upsert`](../interfaces/Scope.md#upsert)

@@ -118,7 +118,7 @@ export class Fields implements Destroyable {
    * @param {*} [options] - Optional configuration, used only if a new field is created.
    * @returns {T} The existing or newly created `Field` instance.
    */
-  upset<T extends Field<any>>(
+  upsert<T extends Field<any>>(
     typeName: string,
     name: string,
     value: any,

@@ -20,8 +20,8 @@ export class CoreField<T> implements Field<T> {
   /** A unique identifier for the field. */
   protected readonly _name: string;
   protected  _value!: T;
-  protected readonly _onChange: Emitter<{newValue: T, oldValue: T}> = new Emitter();
-  readonly onChange: Subscribable<{newValue: T, oldValue: T}> = this._onChange;
+  protected readonly _onChange: Emitter<{value: T, oldValue: T}> = new Emitter();
+  readonly onChange: Subscribable<{value: T, oldValue: T}> = this._onChange;
 
   readonly policies: Policies<T> = new Policies();
 
@@ -47,7 +47,7 @@ export class CoreField<T> implements Field<T> {
     const finalVal = this.policies.apply(val);
     if (!dequal(this._value, finalVal)) {
       this._value = finalVal;
-      this._onChange.emit({newValue: this._value, oldValue: oldVal});
+      this._onChange.emit({value: this._value, oldValue: oldVal});
     }
   }
 

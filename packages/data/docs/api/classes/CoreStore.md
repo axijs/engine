@@ -960,9 +960,9 @@ An error if no field exists at the specified path.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**(`path`, `value`): `void`
+> **upsert**(`path`, `value`): `void`
 
 Defined in: packages/data/src/store/core-store.ts:230
 
@@ -989,13 +989,13 @@ The value to set.
 
 #### Implementation of
 
-[`Store`](../interfaces/Store.md).[`upset`](../interfaces/Store.md#upset)
+[`Store`](../interfaces/Store.md).[`upsert`](../interfaces/Store.md#upsert)
 
 ***
 
-### upsetValue()
+### upsertValue()
 
-> **upsetValue**\<`T`\>(`path`, `val`, `options?`): `T`
+> **upsertValue**\<`T`\>(`path`, `val`, `options?`): `T`
 
 Defined in: packages/data/src/store/core-store.ts:98
 
@@ -1041,4 +1041,4 @@ An error if a node already exists at the path or if the parent path is invalid.
 
 #### Implementation of
 
-[`Store`](../interfaces/Store.md).[`upsetValue`](../interfaces/Store.md#upsetvalue)
+[`Store`](../interfaces/Store.md).[`upsertValue`](../interfaces/Store.md#upsertvalue)

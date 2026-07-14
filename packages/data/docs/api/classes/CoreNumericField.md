@@ -67,7 +67,7 @@ A unique identifier for the field.
 
 ### \_onChange
 
-> `protected` `readonly` **\_onChange**: `Emitter`\<\{ `newValue`: `number`; `oldValue`: `number`; \}\>
+> `protected` `readonly` **\_onChange**: `Emitter`\<\{ `oldValue`: `number`; `value`: `number`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
 
@@ -91,7 +91,7 @@ Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
 
 ### onChange
 
-> `readonly` **onChange**: `Subscribable`\<\{ `newValue`: `number`; `oldValue`: `number`; \}\>
+> `readonly` **onChange**: `Subscribable`\<\{ `oldValue`: `number`; `value`: `number`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 

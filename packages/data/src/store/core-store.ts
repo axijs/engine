@@ -95,14 +95,14 @@ export class CoreStore implements Store {
     return dest.fields.createGeneric<T>(dest.leafName, val, options).value;
   }
 
-  upsetValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
+  upsertValue<T>(path: PathType, val: T, options?: FieldOptions<T> & StoreCreateFieldOptions): T {
     const dest = this.getDestinationFields(path);
     if (options?.fieldType) {
-      return dest.fields.upset(options.fieldType, dest.leafName, val, options).value;
+      return dest.fields.upsert(options.fieldType, dest.leafName, val, options).value;
     }
     for (let resolver of this.resolvers) {
       if (resolver.supports(val)) {
-        return dest.fields.upset(resolver.typeName, dest.leafName, val, options).value;
+        return dest.fields.upsert(resolver.typeName, dest.leafName, val, options).value;
       }
     }
     return dest.fields.upsetGeneric<T>(dest.leafName, val, options).value;
@@ -227,8 +227,8 @@ export class CoreStore implements Store {
     this.createValue(path, value);
   }
 
-  upset(path: PathType, value: unknown) {
-    this.upsetValue(path, value);
+  upsert(path: PathType, value: unknown) {
+    this.upsertValue(path, value);
   }
 
   delete(path: PathType) {

@@ -22,7 +22,7 @@ export interface Scope extends DataStorage, Destroyable {
    */
   set<T = any>(name: PathType, value: T): void;
 
-  upset<T = any>(name: PathType, value: T): void;
+  upsert<T = any>(name: PathType, value: T): void;
 
   /**
    * hierarchically create variable with name and value

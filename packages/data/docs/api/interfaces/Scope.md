@@ -34,7 +34,7 @@ Defined in: packages/data/src/scope/scope.ts:4
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:198
+Defined in: packages/utils/dist/index.d.ts:200
 
 Deletes all values
 
@@ -112,7 +112,7 @@ deleting works only with variables in local scope
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:138
+Defined in: packages/utils/dist/index.d.ts:140
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -238,9 +238,9 @@ searching target variable from top frame or context to bottom
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**\<`T`\>(`name`, `value`): `void`
+> **upsert**\<`T`\>(`name`, `value`): `void`
 
 Defined in: packages/data/src/scope/scope.ts:25
 
@@ -271,4 +271,4 @@ The value to set.
 
 #### Overrides
 
-`DataStorage.upset`
+`DataStorage.upsert`

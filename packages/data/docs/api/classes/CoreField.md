@@ -77,7 +77,7 @@ A unique identifier for the field.
 
 ### \_onChange
 
-> `protected` `readonly` **\_onChange**: `Emitter`\<\{ `newValue`: `T`; `oldValue`: `T`; \}\>
+> `protected` `readonly` **\_onChange**: `Emitter`\<\{ `oldValue`: `T`; `value`: `T`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:23
 
@@ -93,7 +93,7 @@ Defined in: packages/data/src/fields/field-definitions/core-field.ts:22
 
 ### onChange
 
-> `readonly` **onChange**: `Subscribable`\<\{ `newValue`: `T`; `oldValue`: `T`; \}\>
+> `readonly` **onChange**: `Subscribable`\<\{ `oldValue`: `T`; `value`: `T`; \}\>
 
 Defined in: packages/data/src/fields/field-definitions/core-field.ts:24
 
