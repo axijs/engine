@@ -15,7 +15,7 @@
 - [LogInstructionHandler](classes/LogInstructionHandler.md)
 - [SetVariableInstructionHandler](classes/SetVariableInstructionHandler.md)
 - [SwitchInstructionHandler](classes/SwitchInstructionHandler.md)
-- [UpSetVariableInstructionHandler](classes/UpSetVariableInstructionHandler.md)
+- [UpSertVariableInstructionHandler](classes/UpSertVariableInstructionHandler.md)
 
 ## Interfaces
 
@@ -30,7 +30,7 @@
 - [SetVariableInstruction](interfaces/SetVariableInstruction.md)
 - [SwitchCase](interfaces/SwitchCase.md)
 - [SwitchInstruction](interfaces/SwitchInstruction.md)
-- [UpSetVariableInstruction](interfaces/UpSetVariableInstruction.md)
+- [UpSertVariableInstruction](interfaces/UpSertVariableInstruction.md)
 
 ## Type Aliases
 

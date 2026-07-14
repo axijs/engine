@@ -184,9 +184,9 @@ The new value to set.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**(`path`, `value`): `void`
+> **upsert**(`path`, `value`): `void`
 
 Defined in: data.ts:55
 
@@ -213,4 +213,4 @@ The value to set.
 
 #### Inherited from
 
-[`DataSink`](DataSink.md).[`upset`](DataSink.md#upset)
+[`DataSink`](DataSink.md).[`upsert`](DataSink.md#upsert)

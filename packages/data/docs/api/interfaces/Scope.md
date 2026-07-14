@@ -34,7 +34,7 @@ Defined in: packages/data/src/scope/scope.ts:4
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:200
+Defined in: packages/utils/dist/index.d.ts:198
 
 Deletes all values
 
@@ -112,7 +112,7 @@ deleting works only with variables in local scope
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:140
+Defined in: packages/utils/dist/index.d.ts:138
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.

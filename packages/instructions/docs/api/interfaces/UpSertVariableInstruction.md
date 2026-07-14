@@ -2,9 +2,9 @@
 
 ***
 
-[@axi-engine/instructions](../README.md) / UpSetVariableInstruction
+[@axi-engine/instructions](../README.md) / UpSertVariableInstruction
 
-# Interface: UpSetVariableInstruction
+# Interface: UpSertVariableInstruction
 
 Defined in: packages/instructions/src/instructions.ts:38
 
@@ -13,9 +13,9 @@ Acts as an "Upsert" operation.
 
 ## Properties
 
-### upset
+### upsert
 
-> **upset**: `object`
+> **upsert**: `object`
 
 Defined in: packages/instructions/src/instructions.ts:39
 

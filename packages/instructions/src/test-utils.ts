@@ -26,7 +26,7 @@ export function createMockDataStore(): DataStorage {
       throwIf(!data.has(key), `Variable '${key}' does not exist`);
       data.set(key, value);
     },
-    upset: (path: PathType, value: unknown) => {
+    upsert: (path: PathType, value: unknown) => {
       data.set(ensurePathString(path), value);
     },
     delete: (path: PathType) => {

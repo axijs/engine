@@ -105,7 +105,7 @@ export class CoreStore implements Store {
         return dest.fields.upsert(resolver.typeName, dest.leafName, val, options).value;
       }
     }
-    return dest.fields.upsetGeneric<T>(dest.leafName, val, options).value;
+    return dest.fields.upsertGeneric<T>(dest.leafName, val, options).value;
   }
 
   createBoolean(path: PathType, initialValue: boolean, options?: CoreBooleanFieldOptions): CoreBooleanField {

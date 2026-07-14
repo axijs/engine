@@ -61,8 +61,8 @@ Defined in: packages/instructions/src/instructions.ts:103
 
 ***
 
-### upset
+### upsert
 
-> **upset**: [`UpSetVariableInstruction`](UpSetVariableInstruction.md)
+> **upsert**: [`UpSertVariableInstruction`](UpSertVariableInstruction.md)
 
 Defined in: packages/instructions/src/instructions.ts:100

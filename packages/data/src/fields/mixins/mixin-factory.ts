@@ -9,7 +9,7 @@ type GetValueType<TField extends Field<any>> = TField extends Field<infer U> ? U
 
 /**
  * A mapped type that creates the method signatures for a typed mixin.
- * e.g., createBoolean, upsetBoolean, getBoolean
+ * e.g., createBoolean, upsertBoolean, getBoolean
  */
 type TypedMethods<
   TCtor extends Constructor<Field<any>>,
@@ -17,7 +17,7 @@ type TypedMethods<
 > = {
   [K in `create${TBaseName}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor>;
 } & {
-  [K in `upset${TBaseName}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor>;
+  [K in `upsert${TBaseName}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor>;
 } & {
   [K in `get${TBaseName}`]: (name: string) => InstanceType<TCtor>;
 };
@@ -39,7 +39,7 @@ export function createTypedMethodsMixin<
 ) {
   const methodNames = {
     create: `create${baseMethodName}`,
-    upset: `upset${baseMethodName}`,
+    upsert: `upsert${baseMethodName}`,
     get: `get${baseMethodName}`,
   };
 
@@ -52,8 +52,8 @@ export function createTypedMethodsMixin<
         return this.create(typeName, name, initialValue, options) as InstanceType<TCtor>;
       }
 
-      // upsetBoolean, upsetMySignal, etc.
-      [methodNames.upset](name: string, value: any, options?: ConstructorParameters<TCtor>[2]): InstanceType<TCtor> {
+      // upsertBoolean, upsertMySignal, etc.
+      [methodNames.upsert](name: string, value: any, options?: ConstructorParameters<TCtor>[2]): InstanceType<TCtor> {
         return this.upsert(typeName, name, value, options) as InstanceType<TCtor>;
       }
 

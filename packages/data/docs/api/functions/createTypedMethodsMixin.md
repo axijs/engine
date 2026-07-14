@@ -6,7 +6,7 @@
 
 # Function: createTypedMethodsMixin()
 
-> **createTypedMethodsMixin**\<`TCtor`, `TBaseName`\>(`typeName`, `baseMethodName`): \<`TBase`\>(`Base`) => `Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upset${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
+> **createTypedMethodsMixin**\<`TCtor`, `TBaseName`\>(`typeName`, `baseMethodName`): \<`TBase`\>(`Base`) => `Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upsert${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
 
 Defined in: packages/data/src/fields/mixins/mixin-factory.ts:33
 
@@ -41,7 +41,7 @@ The base name for the generated methods (e.g., 'Boolean', 'MySignal').
 
 A fully functional, typed mixin.
 
-> \<`TBase`\>(`Base`): `Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upset${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
+> \<`TBase`\>(`Base`): `Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upsert${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
 
 ### Type Parameters
 
@@ -57,4 +57,4 @@ A fully functional, typed mixin.
 
 ### Returns
 
-`Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upset${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>
+`Constructor`\<`InstanceType`\<`TBase`\> & `` { [K in `create${string}`]: (name: string, initialValue: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `upsert${string}`]: (name: string, value: GetValueType<InstanceType<TCtor>>, options?: ConstructorParameters<TCtor>[2]) => InstanceType<TCtor> } `` & `` { [K in `get${string}`]: (name: string) => InstanceType<TCtor> } ``\>

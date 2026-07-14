@@ -116,9 +116,9 @@ The new value to set.
 
 ***
 
-### upset()
+### upsert()
 
-> **upset**(`path`, `value`): `void`
+> **upsert**(`path`, `value`): `void`
 
 Defined in: data.ts:55
 

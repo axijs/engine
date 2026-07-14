@@ -30,7 +30,7 @@ Defined in: packages/data/src/store/store.ts:25
 
 > **clear**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:200
+Defined in: packages/utils/dist/index.d.ts:198
 
 Deletes all values
 
@@ -46,19 +46,13 @@ Deletes all values
 
 ### create()
 
-> **create**\<`T`\>(`path`, `value`): `void`
+> **create**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:182
+Defined in: packages/utils/dist/index.d.ts:180
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
 at the path.
-
-#### Type Parameters
-
-##### T
-
-`T` = `unknown`
 
 #### Parameters
 
@@ -70,7 +64,7 @@ The full path where the new value will be created.
 
 ##### value
 
-`T`
+`unknown`
 
 The initial value to create.
 
@@ -349,7 +343,7 @@ An error if a node already exists at the path or if the parent path is invalid.
 
 > **delete**(`path`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:196
+Defined in: packages/utils/dist/index.d.ts:194
 
 Deletes the value at the specified path.
 
@@ -375,7 +369,7 @@ The path to the value to be deleted.
 
 > **destroy**(): `void`
 
-Defined in: packages/utils/dist/index.d.ts:140
+Defined in: packages/utils/dist/index.d.ts:138
 
 Destroys the object, releasing all held resources.
 After calling this, the object should be considered unusable.
@@ -394,13 +388,13 @@ After calling this, the object should be considered unusable.
 
 > **get**\<`T`\>(`path`): `T`
 
-Defined in: packages/utils/dist/index.d.ts:147
+Defined in: packages/utils/dist/index.d.ts:145
 
 #### Type Parameters
 
 ##### T
 
-`T` = `unknown`
+`T` *extends* `unknown`
 
 #### Parameters
 
@@ -648,7 +642,7 @@ An error if the path is invalid or no field exists at the path.
 
 > **has**(`path`): `boolean`
 
-Defined in: packages/utils/dist/index.d.ts:153
+Defined in: packages/utils/dist/index.d.ts:151
 
 Checks if a path valid.
 
@@ -697,18 +691,12 @@ The path to the node to remove.
 
 ### set()
 
-> **set**\<`T`\>(`path`, `value`): `void`
+> **set**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:173
+Defined in: packages/utils/dist/index.d.ts:171
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
-
-#### Type Parameters
-
-##### T
-
-`T` = `unknown`
 
 #### Parameters
 
@@ -720,7 +708,7 @@ The path to the value to be updated.
 
 ##### value
 
-`T`
+`unknown`
 
 The new value to set.
 
@@ -778,18 +766,12 @@ An error if no field exists at the specified path.
 
 ### upsert()
 
-> **upsert**\<`T`\>(`path`, `value`): `void`
+> **upsert**(`path`, `value`): `void`
 
-Defined in: packages/utils/dist/index.d.ts:190
+Defined in: packages/utils/dist/index.d.ts:188
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.
-
-#### Type Parameters
-
-##### T
-
-`T` = `unknown`
 
 #### Parameters
 
@@ -801,7 +783,7 @@ The path to the value to be created or updated.
 
 ##### value
 
-`T`
+`unknown`
 
 The value to set.
 
