@@ -13,6 +13,7 @@ import {Emitter} from '@axijs/emitter';
 import {StoreChangeBuffer} from './store-change-buffer.ts';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher.ts';
 import {ComputedManager} from './compute-fields/computed-manager.ts';
+import type {ComputedFieldConfig} from './compute-fields/computed-field-config.ts';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
@@ -157,7 +158,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
           this.changes.deleted(
             childPathStr,
             isField(childNode) ? this.typeRegistry.cloneValue(childNode.value): undefined
-          )
+          );
           //   if (this.events.deleteNode.channels.has(childPathStr)) {
           //     this.events.emitOnDelete(childPathStr, isField(childNode) ? childNode.value : undefined);
           //   }
@@ -167,7 +168,15 @@ export class Store implements DataStorage, StoreEventSubscriber {
     throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
     // val can be undefined when deleted branch node
     this.changes.deleted(pathStr, val);
+
+    // delete from computedManager and readonlyPaths, nothing will happen if field didn't exists
+    this.computedManager.delete(pathStr);
+    this.readonlyPaths.delete(pathStr);
     // this.events.emitOnDelete<T>(pathStr, val);
+  }
+
+  computed<T>(path: PathType, config: ComputedFieldConfig<T>) {
+    this.computedManager.define<T>(path, config);
   }
 
   /**

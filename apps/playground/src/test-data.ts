@@ -57,6 +57,16 @@ export async function testNewScopeSystem() {
     console.log(`Field 'forDelete/field1' deleted:`, event);
   });
 
+  /** computed fields test */
+  store.onCreate<number>(['stats', 'hpWithAge'], (event) => {
+    console.log(`Computed field 'hpWithAge' created:`, event);
+  });
+
+  store.onChange<number>(['stats', 'hpWithAge'], (event) => {
+    console.log(`Computed field 'hpWithAge' changed:`, event);
+  });
+
+
   store.upsert(['stats', 'mood'], 10);
   console.log('mood field: ', store.get<number>(['stats', 'mood']));
 
@@ -82,20 +92,20 @@ export async function testNewScopeSystem() {
   nameRef.onChange((e) => console.log('on name changed ref: ', e));
 
   /** Computed test */
-  store.computedManager.define<number>(['stats', 'hpWithAge'], {
+  store.computed<number>(['stats', 'hpWithAge'], {
     dependencies: [['stats', 'hp'], ['stats', 'age']], compute: (hp: number, age: number) => {
       return hp * age;
     }
   });
 
-  store.computedManager.define<number>(['stats', 'hpWithAgeAndBonus'], {
+  store.computed<number>(['stats', 'hpWithAgeAndBonus'], {
     dependencies: [['stats', 'hpWithAge']], compute: (val: number) => {
       return val * 10;
     }
   });
 
-  store.computedManager.computeOne(['stats', 'hpWithAge']);
-  store.computedManager.computeOne(['stats', 'hpWithAgeAndBonus']);
+  // store.computedManager.computeOne(['stats', 'hpWithAge']);
+  // store.computedManager.computeOne(['stats', 'hpWithAgeAndBonus']);
 
   console.log('hpWithAge: ', store.get(['stats', 'hpWithAge']));
   console.log('hpWithAgeAndBonus:', store.get(['stats', 'hpWithAgeAndBonus']));

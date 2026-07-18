@@ -20,6 +20,7 @@ export class StoreChangeBuffer {
   hasCreated(path: string) {
     return this._created.has(path);
   }
+
   hasChanged(path: string) {
     return this._changed.has(path);
   }

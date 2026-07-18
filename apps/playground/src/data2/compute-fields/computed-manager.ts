@@ -19,6 +19,7 @@ export class ComputedManager {
     throwIf(this.fields.has(strPath), `Field with path: ${strPath} already registered as computed`);
 
     this.fields.register(strPath, config);
+    this.computeConfig(path, config);
   }
 
   computeAll() {
@@ -27,6 +28,10 @@ export class ComputedManager {
 
   computeOne(path: PathType) {
     this.computeConfig(path, this.fields.getOrThrow(ensurePathString(path)));
+  }
+
+  delete(path: PathType) {
+    this.fields.delete(ensurePathString(path));
   }
 
   private computeConfig(path: PathType, config: ComputedFieldConfig<unknown>) {
