@@ -1,7 +1,7 @@
 import {NodeFactory as f} from './data2/fields';
 import {createFieldTypeRegistry} from './data2';
 import {Store} from './data2/store.ts';
-import {FieldRef} from './data2/references/field-ref.ts';
+
 
 export async function testNewScopeSystem() {
 
@@ -30,66 +30,16 @@ export async function testNewScopeSystem() {
     })
   });
 
-  console.log('test: ', catTest);
-
   const store = new Store({
     group: catTest,
     typeRegistry: fieldTypeRegistry
   });
 
-  store.onChange<number>(['stats', 'mood'], (event) => {
-    console.log(`Field 'mood' changed:`, event);
-  });
-
-  store.onCreate<number>(['stats', 'mood'], (event) => {
-    console.log(`Field 'mood' created:`, event);
-  });
-
-  store.onDelete<number>(['stats', 'mood'], (event) => {
-    console.log(`Field 'mood' deleted:`, event);
-  });
-
-  store.onDelete<number>(['forDelete'], (event) => {
-    console.log(`Field 'forDelete' deleted:`, event);
-  });
-
-  store.onDelete<number>(['forDelete', 'field1'], (event) => {
-    console.log(`Field 'forDelete/field1' deleted:`, event);
-  });
-
-  /** computed fields test */
-  store.onCreate<number>(['stats', 'hpWithAge'], (event) => {
-    console.log(`Computed field 'hpWithAge' created:`, event);
-  });
-
-  store.onChange<number>(['stats', 'hpWithAge'], (event) => {
-    console.log(`Computed field 'hpWithAge' changed:`, event);
-  });
-
-
-  store.upsert(['stats', 'mood'], 10);
-  console.log('mood field: ', store.get<number>(['stats', 'mood']));
-
-  console.log('store reading test:',
-    store.get('head'),
-    store.get('tail'),
-  );
-
-  store.upsert(['stats', 'mood'], 15);
-  store.set(['stats', 'mood'], 20);
-  store.delete(['stats', 'mood']);
-  store.delete(['forDelete']);
-
-  //
-  console.log('ref tests ---->')
-  const headRef = new FieldRef<number>(store, 'head');
-  console.log('headRef: ', headRef.value);
-
-  const nameRef = new FieldRef<string>(store, 'name');
-  console.log('nameRef:', nameRef.value);
-
-  nameRef.value = 'Little Jo Jo Junior';
-  nameRef.onChange((e) => console.log('on name changed ref: ', e));
+  // store.upsert(['stats', 'mood'], 10);
+  // store.upsert(['stats', 'mood'], 15);
+  // store.set(['stats', 'mood'], 20);
+  // store.delete(['stats', 'mood']);
+  // store.delete(['forDelete']);
 
   /** Computed test */
   store.computed<number>(['stats', 'hpWithAge'], {
@@ -104,11 +54,33 @@ export async function testNewScopeSystem() {
     }
   });
 
-  // store.computedManager.computeOne(['stats', 'hpWithAge']);
-  // store.computedManager.computeOne(['stats', 'hpWithAgeAndBonus']);
+  store.computed<string>(['stats', 'hpWithAgeLabel'], {
+    dependencies: [['stats', 'hpWithAge']], compute: (val: number) => {
+      return 'HP With Age: ' + val;
+    }
+  });
 
-  console.log('hpWithAge: ', store.get(['stats', 'hpWithAge']));
-  console.log('hpWithAgeAndBonus:', store.get(['stats', 'hpWithAgeAndBonus']));
+  store.onCreate<number>(['stats', 'hpWithAge'], (event) => {
+    console.log(`'hpWithAge' created:`, event);
+  });
+
+  store.onChange<number>(['stats', 'hpWithAge'], (event) => {
+    console.log(`'hpWithAge' changed:`, event);
+  });
+
+  store.onCreate(['stats', 'hpWithAgeLabel'], e => {
+    console.log(`'hpWithAgeLabel' created:`, e);
+  });
+
+  store.onChange(['stats', 'hpWithAgeLabel'], e => {
+    console.log(`'hpWithAgeLabel' changed:`, e);
+  });
+
+  store.set(['stats', 'hp'], 25);
+  store.set(['stats', 'hp'], 30);
 
   store.tick();
+
+  console.log(store.getGroup());
+
 }

@@ -29,17 +29,40 @@ export class ComputedChangeDetector {
       }
       this.reversed.get(strFieldPath)?.push(strPathComputed);
     });
-    console.log(this.reversed);
   }
 
-  remove(path: PathType, config: ComputedFieldConfig<any>) {
+  delete(path: PathType) {
     // todo:
-    console.log(path, config);
+    console.log(path);
   }
 
   compute() {
-    this.changes._changed.forEach(path => {
-      console.log(path);
+    this.changes.getChangedPaths().forEach(path => {
+      console.log('changed: ', path);
+      this.computePath(path)
     });
+    // todo:
+    // this.changes.getDeletedPaths().forEach(path => {
+    //   console.log('deleted: ', path);
+    //   this.computePath(path);
+    // });
+  }
+
+  computePath(path: string) {
+    const buffer: string[] = [];
+    this.collectFields(path, buffer);
+    if (!buffer.length) {
+      return;
+    }
+    console.log('buffer: ', buffer);
+    buffer.forEach(computePath => this.computed.computeOne(computePath));
+  }
+
+  private collectFields(path: string, buffer: string[]) {
+    if (this.reversed.has(path)) {
+      const computedFieldPaths = this.reversed.get(path)!;
+      buffer.push(...computedFieldPaths);
+      computedFieldPaths.forEach(computedPath => this.collectFields(computedPath, buffer));
+    }
   }
 }

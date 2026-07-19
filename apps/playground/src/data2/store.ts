@@ -173,6 +173,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
 
     // delete from computedManager and readonlyPaths, nothing will happen if field didn't exists
     this.computedManager.delete(pathStr);
+    // this.computedChanges.delete(pathStr);
     this.readonlyPaths.delete(pathStr);
     // this.events.emitOnDelete<T>(pathStr, val);
   }
