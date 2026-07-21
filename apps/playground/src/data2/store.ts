@@ -181,6 +181,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   computed<T>(path: PathType, config: ComputedFieldConfig<T>) {
     this.computedManager.define<T>(path, config);
     this.computedChanges.append(path, config);
+    this.markAsReadonly(path);
   }
 
   /**

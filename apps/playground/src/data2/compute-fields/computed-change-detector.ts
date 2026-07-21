@@ -37,15 +37,8 @@ export class ComputedChangeDetector {
   }
 
   compute() {
-    this.changes.getChangedPaths().forEach(path => {
-      console.log('changed: ', path);
-      this.computePath(path)
-    });
-    // todo:
-    // this.changes.getDeletedPaths().forEach(path => {
-    //   console.log('deleted: ', path);
-    //   this.computePath(path);
-    // });
+    this.changes.getChangedPaths().forEach(path => this.computePath(path));
+    this.changes.getDeletedPaths().forEach(path => {this.computePath(path)});
   }
 
   computePath(path: string) {
