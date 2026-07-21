@@ -30,6 +30,10 @@ export class ComputedManager {
     this.computeConfig(path, this.fields.getOrThrow(ensurePathString(path)));
   }
 
+  has(path: PathType) {
+    return this.fields.has(ensurePathString(path));
+  }
+
   delete(path: PathType) {
     this.fields.delete(ensurePathString(path));
   }

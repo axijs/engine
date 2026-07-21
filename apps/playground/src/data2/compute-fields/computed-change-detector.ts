@@ -37,25 +37,34 @@ export class ComputedChangeDetector {
   }
 
   compute() {
-    this.changes.getChangedPaths().forEach(path => this.computePath(path));
-    this.changes.getDeletedPaths().forEach(path => {this.computePath(path)});
+    const visited = new Set<string>();
+    const order: string[] = [];
+
+    // this.changes.getCreatedPaths().forEach(path => this.tracePath(path, visited, order));
+    this.changes.getChangedPaths().forEach(path => {
+      console.log('changed: ', path);
+      this.tracePath(path, visited, order)
+    });
+    console.log('tracePath:' , visited, order);
+
+    // this.changes.getDeletedPaths().forEach(path => this.tracePath(path, visited, order));
+
+    order
+      .reverse()
+      .filter(computePath => this.computed.has(computePath))
+      .forEach(computePath => this.computed.computeOne(computePath));
   }
 
-  computePath(path: string) {
-    const buffer: string[] = [];
-    this.collectFields(path, buffer);
-    if (!buffer.length) {
+  private tracePath(path: string, visited: Set<string>, order: string[]) {
+    if (visited.has(path)) {
       return;
     }
-    console.log('buffer: ', buffer);
-    buffer.forEach(computePath => this.computed.computeOne(computePath));
-  }
+    visited.add(path);
 
-  private collectFields(path: string, buffer: string[]) {
     if (this.reversed.has(path)) {
-      const computedFieldPaths = this.reversed.get(path)!;
-      buffer.push(...computedFieldPaths);
-      computedFieldPaths.forEach(computedPath => this.collectFields(computedPath, buffer));
+      this.reversed.get(path)!.forEach(relatedPath => this.tracePath(relatedPath, visited, order));
     }
+
+    order.push(path);
   }
 }
