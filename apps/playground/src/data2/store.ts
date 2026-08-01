@@ -12,9 +12,9 @@ import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 import {Emitter} from '@axijs/emitter';
 import {StoreChangeBuffer} from './store-change-buffer.ts';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher.ts';
-import {ComputedManager} from './compute-fields/computed-manager.ts';
-import type {ComputedFieldConfig} from './compute-fields/computed-field-config.ts';
-import {ComputedChangeDetector} from './compute-fields/computed-change-detector.ts';
+import {ComputedManager} from './computed-fields/computed-manager.ts';
+import type {ComputeFieldConfig} from './computed-fields/compute-field-config.ts';
+import {ComputedChangeDetector} from './computed-fields/computed-change-detector.ts';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
@@ -176,7 +176,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     // this.events.emitOnDelete<T>(pathStr, val);
   }
 
-  computed<T>(path: PathType, config: ComputedFieldConfig<T>) {
+  computed<T>(path: PathType, config: ComputeFieldConfig<T>) {
     this.computedManager.define<T>(path, config);
     this.computedChanges.append(path, config);
     this.markAsReadonly(path);

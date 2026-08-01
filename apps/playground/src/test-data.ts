@@ -43,41 +43,45 @@ export async function testNewScopeSystem() {
 
   /** Computed test */
   store.computed<number>(['stats', 'hpWithAge'], {
-    dependencies: [
+    /*dependencies: [
       ['stats', 'hp'],
-      ['stats', 'age']
-    ], compute: (hp: number, age: number) => {
+
+    ],*/ compute: (get) => {
+      const hp = get<number>(['stats', 'hp']);
+      const age = get<number>(['stats', 'age']);
       return hp * age;
     }
   });
 
   store.computed<number>(['stats', 'hpWithAgeAndBonus'], {
-    dependencies: [
+    /*dependencies: [
       ['stats', 'hpWithAge']
-    ], compute: (val: number) => {
-      return val * 10;
+    ],*/ compute: (get) => {
+      // return val * 10;
     }
   });
 
   store.computed<string>(['stats', 'hpLabel'], {
-    dependencies: [
-      ['stats', 'hp'],
-      ['stats', 'age'],
-      ['stats', 'hpWithAge'],
-    ],
-    compute: (hp: number, age: number, val: number) => {
+    // dependencies: [
+    //   ['stats', 'hp'],
+    //   ['stats', 'age'],
+    //   ['stats', 'hpWithAge'],
+    // ],
+    compute: (get) => {
+      // hp: number, age: number, val: number
       return `HP: ${hp} / Age: ${age}, Val: ${ val}`;
     }
   });
 
   store.computed<string>(['stats', 'hpLabelDeepTest'], {
-    dependencies: [
+    /*dependencies: [
       ['stats', 'hp'],
       ['stats', 'hpWithAge'],
       ['stats', 'hpWithAgeAndBonus'],
-    ],
-    compute: (hp: number, hpWithAge: number, hpWithAgeAndBonus: number) => {
-      return `HP: ${hp} / hpWithAge: ${hpWithAge}, hpWithAgeAndBonus: ${hpWithAgeAndBonus}`;
+    ],*/
+    compute: (get) => {
+      // hp: number, hpWithAge: number, hpWithAgeAndBonus: number
+      // return `HP: ${hp} / hpWithAge: ${hpWithAge}, hpWithAgeAndBonus: ${hpWithAgeAndBonus}`;
     }
   });
 
