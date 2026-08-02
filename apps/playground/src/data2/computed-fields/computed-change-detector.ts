@@ -2,8 +2,6 @@ import {StoreChangeBuffer} from '../store-change-buffer.ts';
 import {ComputedManager} from './computed-manager.ts';
 import {ensurePathString, type PathType} from '@axi-engine/utils';
 import type {ComputeFieldConfig} from './compute-field-config.ts';
-import {isObject} from '@axijs/ensure';
-
 
 export class ComputedChangeDetector {
   changes: StoreChangeBuffer;
@@ -20,14 +18,10 @@ export class ComputedChangeDetector {
   append(path: PathType, config: ComputeFieldConfig<any>) {
     const strPathComputed = ensurePathString(path);
     config.dependencies.forEach(dependency => {
-      const strFieldPath = !isObject(dependency) ?
-        ensurePathString(dependency) :
-        ensurePathString(dependency.path);
-
-      if (!this.reversed.has(strFieldPath)) {
-        this.reversed.set(strFieldPath, []);
+      if (!this.reversed.has(dependency)) {
+        this.reversed.set(dependency, []);
       }
-      this.reversed.get(strFieldPath)?.push(strPathComputed);
+      this.reversed.get(dependency)?.push(strPathComputed);
     });
   }
 

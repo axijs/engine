@@ -5,7 +5,7 @@ export type FieldGetter = <T>(path: PathType, fallback?: T) => T;
 export type ComputeFunction<T> = (get: FieldGetter) => T;
 
 export interface ComputeFieldConfig<T> {
-  dependencies: PathType[];
+  dependencies: string[];
   compute: ComputeFunction<T>;
 }
 

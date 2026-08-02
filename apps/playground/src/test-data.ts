@@ -42,47 +42,28 @@ export async function testNewScopeSystem() {
   // store.delete(['forDelete']);
 
   /** Computed test */
-  store.computed<number>(['stats', 'hpWithAge'], {
-    /*dependencies: [
-      ['stats', 'hp'],
-
-    ],*/ compute: (get) => {
-      const hp = get<number>(['stats', 'hp']);
-      const age = get<number>(['stats', 'age']);
-      return hp * age;
-    }
+  store.computed<number>(['stats', 'hpWithAge'], (get) => {
+    const hp = get<number>(['stats', 'hp']);
+    const age = get<number>(['stats', 'age']);
+    return hp * age;
   });
 
-  store.computed<number>(['stats', 'hpWithAgeAndBonus'], {
-    /*dependencies: [
-      ['stats', 'hpWithAge']
-    ],*/ compute: (get) => {
-      // return val * 10;
-    }
+  store.computed<number>(['stats', 'hpWithAgeAndBonus'], (get) => {
+    return get<number>(['stats', 'hpWithAge']) * 10;
   });
 
-  store.computed<string>(['stats', 'hpLabel'], {
-    // dependencies: [
-    //   ['stats', 'hp'],
-    //   ['stats', 'age'],
-    //   ['stats', 'hpWithAge'],
-    // ],
-    compute: (get) => {
-      // hp: number, age: number, val: number
-      return `HP: ${hp} / Age: ${age}, Val: ${ val}`;
-    }
+  store.computed<string>(['stats', 'hpLabel'], (get) => {
+    const hp = get<number>(['stats', 'hp']);
+    const age = get<number>(['stats', 'age']);
+    const hpWithAge = get<number>(['stats', 'hpWithAge']);
+    return `HP: ${hp} / Age: ${age}, hpWithAge: ${hpWithAge}`;
   });
 
-  store.computed<string>(['stats', 'hpLabelDeepTest'], {
-    /*dependencies: [
-      ['stats', 'hp'],
-      ['stats', 'hpWithAge'],
-      ['stats', 'hpWithAgeAndBonus'],
-    ],*/
-    compute: (get) => {
-      // hp: number, hpWithAge: number, hpWithAgeAndBonus: number
-      // return `HP: ${hp} / hpWithAge: ${hpWithAge}, hpWithAgeAndBonus: ${hpWithAgeAndBonus}`;
-    }
+  store.computed<string>(['stats', 'hpLabelDeepTest'], (get) => {
+    const hp = get<number>(['stats', 'hp']);
+    const hpWithAge = get<number>(['stats', 'hpWithAge']);
+    const hpWithAgeAndBonus = get<number>(['stats', 'hpWithAgeAndBonus']);
+    return `HP: ${hp} / hpWithAge: ${hpWithAge}, hpWithAgeAndBonus: ${hpWithAgeAndBonus}`;
   });
 
   store.onCreate<number>(['stats', 'hpWithAge'], (event) => {

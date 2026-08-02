@@ -1,6 +1,6 @@
 import {type DataStorage, ensurePathString, type PathType, Registry} from '@axi-engine/utils';
-import type {ComputeFieldConfig, ComputeFunction} from './compute-field-config.ts';
-import {isObject, throwIf} from '@axijs/ensure';
+import type {ComputeFieldConfig, ComputeFunction, FieldGetter} from './compute-field-config.ts';
+import {throwIf} from '@axijs/ensure';
 
 /** todo: need to add lazy updating */
 export class ComputedManager {
@@ -43,12 +43,13 @@ export class ComputedManager {
   }
 
   private computeConfig(path: PathType, config: ComputeFieldConfig<unknown>) {
-    // const params = config.dependencies.map(dep => {
-    //   if (!isObject(dep)) {
-    //     return this.store.get(dep);
-    //   }
-    //   return this.store.has(dep.path) ? this.store.get(dep.path) : dep.fallback;
-    // });
-    // this.store.upsert(path, config.compute(...params));
+    const dependencies: string[] = [];
+    const func: FieldGetter = (path: PathType, fallback?: any) => {
+      dependencies.push(ensurePathString(path));
+      return this.store.has(path) ? this.store.get(path) : fallback;
+    }
+
+    this.store.upsert(path, config.compute(func));
+    console.log('dependencies: ', dependencies);
   }
 }
