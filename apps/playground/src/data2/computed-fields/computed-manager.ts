@@ -12,26 +12,31 @@ export class ComputedManager {
     this.store = store;
   }
 
+  getDependencies(path: PathType) {
+    return this.fields.getOrThrow(ensurePathString(path)).dependencies;
+  }
+
   define<T>(path: PathType, func: ComputeFunction<T>) {
     const strPath = ensurePathString(path);
 
     throwIf(this.store.has(path), `Field with path: ${strPath} already exists in the store`);
     throwIf(this.fields.has(strPath), `Field with path: ${strPath} already registered as computed`);
 
-    const config: ComputeFieldConfig<T> = {
+    this.fields.register(strPath, {
       compute: func,
       dependencies: []
-    };
-    this.fields.register(strPath, config);
-    this.computeConfig(path, config);
+    });
   }
 
-  computeAll() {
-    this.fields.forEach((config, key) => this.computeConfig(key, config));
-  }
-
-  computeOne(path: PathType) {
-    this.computeConfig(path, this.fields.getOrThrow(ensurePathString(path)));
+  compute(computePath: PathType) {
+    const dependencies: Set<string> = new Set();
+    const func: FieldGetter = (path: PathType, fallback?: any) => {
+      dependencies.add(ensurePathString(path));
+      return this.store.has(path) ? this.store.get(path) : fallback;
+    }
+    const config = this.fields.getOrThrow(ensurePathString(computePath));
+    this.store.upsert(computePath, config.compute(func));
+    config.dependencies = [...dependencies];
   }
 
   has(path: PathType) {
@@ -40,16 +45,5 @@ export class ComputedManager {
 
   delete(path: PathType) {
     this.fields.delete(ensurePathString(path));
-  }
-
-  private computeConfig(path: PathType, config: ComputeFieldConfig<unknown>) {
-    const dependencies: string[] = [];
-    const func: FieldGetter = (path: PathType, fallback?: any) => {
-      dependencies.push(ensurePathString(path));
-      return this.store.has(path) ? this.store.get(path) : fallback;
-    }
-
-    this.store.upsert(path, config.compute(func));
-    console.log('dependencies: ', dependencies);
   }
 }

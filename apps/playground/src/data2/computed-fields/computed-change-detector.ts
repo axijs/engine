@@ -1,7 +1,7 @@
 import {StoreChangeBuffer} from '../store-change-buffer.ts';
 import {ComputedManager} from './computed-manager.ts';
 import {ensurePathString, type PathType} from '@axi-engine/utils';
-import type {ComputeFieldConfig} from './compute-field-config.ts';
+
 
 export class ComputedChangeDetector {
   changes: StoreChangeBuffer;
@@ -15,14 +15,19 @@ export class ComputedChangeDetector {
     this.computed = computed;
   }
 
-  append(path: PathType, config: ComputeFieldConfig<any>) {
-    const strPathComputed = ensurePathString(path);
-    config.dependencies.forEach(dependency => {
-      if (!this.reversed.has(dependency)) {
-        this.reversed.set(dependency, []);
-      }
-      this.reversed.get(dependency)?.push(strPathComputed);
-    });
+  register(path: PathType) {
+    const pathStr = ensurePathString(path);
+    const oldDependencies: string[] = this.computed.getDependencies(pathStr);
+    this.computed.compute(path);
+    const newDependencies: string[] = this.computed.getDependencies(pathStr);
+    console.log('old / new Dependencies: ', oldDependencies, newDependencies);
+
+    // newDependencies.forEach(dependency => {
+    //   if (!this.reversed.has(dependency)) {
+    //     this.reversed.set(dependency, []);
+    //   }
+    //   this.reversed.get(dependency)?.push(pathStr);
+    // });
   }
 
   delete(path: PathType) {
@@ -46,7 +51,7 @@ export class ComputedChangeDetector {
     order
       .reverse()
       .filter(computePath => this.computed.has(computePath))
-      .forEach(computePath => this.computed.computeOne(computePath));
+      .forEach(computePath => this.computed.compute(computePath));
   }
 
   private tracePath(path: string, visited: Set<string>, order: string[]) {

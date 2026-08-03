@@ -178,7 +178,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
 
   computed<T>(path: PathType, func: ComputeFunction<T>) {
     this.computedManager.define<T>(path, func);
-    // this.computedChanges.append(path, config);
+    this.computedChanges.register(path);
     this.markAsReadonly(path);
   }
 
