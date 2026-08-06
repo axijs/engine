@@ -119,10 +119,12 @@ export class Store implements DataStorage, StoreEventSubscriber {
 
   set<T = unknown>(path: PathType, value: T): void {
     const pathStr = ensurePathString(path);
+    throwIf(this.readonlyPaths.has(pathStr),  `Field '${pathStr}' is readonly (computed)`);
+
     const field: Field<any> = this.getField(path);
     throwIf(
       !this.typeRegistry.compare(field, value),
-      `Field ${pathStr} and variable have different types:` +
+      `Field '${pathStr}' and variable have different types:` +
       `field: '${field.type}', variable: '${this.typeRegistry.getNodeNameByVariable(value)}'`
     );
     const oldValue = this.typeRegistry.cloneValue(field.value);

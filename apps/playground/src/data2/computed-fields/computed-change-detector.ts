@@ -2,7 +2,6 @@ import {StoreChangeBuffer} from '../store-change-buffer.ts';
 import {ComputedManager} from './computed-manager.ts';
 import {ensurePathString, type PathType} from '@axi-engine/utils';
 
-
 export class ComputedChangeDetector {
   changes: StoreChangeBuffer;
   computed: ComputedManager;
@@ -20,14 +19,18 @@ export class ComputedChangeDetector {
     const oldDependencies: string[] = this.computed.getDependencies(pathStr);
     this.computed.compute(path);
     const newDependencies: string[] = this.computed.getDependencies(pathStr);
-    console.log('old / new Dependencies: ', oldDependencies, newDependencies);
 
-    // newDependencies.forEach(dependency => {
-    //   if (!this.reversed.has(dependency)) {
-    //     this.reversed.set(dependency, []);
-    //   }
-    //   this.reversed.get(dependency)?.push(pathStr);
-    // });
+    oldDependencies.forEach(dep => {
+      if (!newDependencies.includes(dep)) {
+        this.removeDependency(dep, pathStr);
+      }
+    });
+
+    newDependencies.forEach(dep => {
+      if (!oldDependencies.includes(dep)) {
+        this.addDependency(dep, pathStr);
+      }
+    });
   }
 
   delete(path: PathType) {
@@ -39,14 +42,8 @@ export class ComputedChangeDetector {
     const visited = new Set<string>();
     const order: string[] = [];
 
-    // this.changes.getCreatedPaths().forEach(path => this.tracePath(path, visited, order));
-    this.changes.getChangedPaths().forEach(path => {
-      console.log('changed: ', path);
-      this.tracePath(path, visited, order)
-    });
-    console.log('tracePath:' , visited, order);
-
-    // this.changes.getDeletedPaths().forEach(path => this.tracePath(path, visited, order));
+    this.changes.getChangedPaths().forEach(path => this.tracePath(path, visited, order));
+    this.changes.getDeletedPaths().forEach(path => this.tracePath(path, visited, order));
 
     order
       .reverse()
@@ -65,5 +62,20 @@ export class ComputedChangeDetector {
     }
 
     order.push(path);
+  }
+
+  private addDependency(dep: string, pathStr: string) {
+    if (!this.reversed.has(dep)) {
+      this.reversed.set(dep, []);
+    }
+    this.reversed.get(dep)!.push(pathStr);
+  }
+
+  private removeDependency(dep: string, pathStr: string) {
+    const paths = this.reversed.get(dep)!;
+    paths.splice(paths.indexOf(pathStr), 1);
+    if (!paths.length) {
+      this.reversed.delete(dep);
+    }
   }
 }
