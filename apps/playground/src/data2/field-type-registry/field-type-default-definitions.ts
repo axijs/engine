@@ -4,6 +4,8 @@ import {isBoolean, isNumber, isString} from '@axijs/ensure';
 import {isBoolean as isNodeBoolean, isNumeric as isNodeNumeric, isString as isNodeString} from '../fields';
 import {isScalar} from '@axi-engine/utils';
 
+export type FieldTypeDefinitionConfig = Partial<Record<FieldName, FieldTypeDefinition>>;
+
 export const fieldTypeGenericDefinition: FieldTypeDefinition = {
   checkType: () => true,
   checkNode: (field) => isGeneric(field),
@@ -11,7 +13,7 @@ export const fieldTypeGenericDefinition: FieldTypeDefinition = {
   cloneValue: (val: unknown) => isScalar(val) ? val : structuredClone(val)
 };
 
-export const fieldTypeDefaultDefinitions: Partial<Record<FieldName, FieldTypeDefinition>> = {
+export const fieldTypeDefaultDefinitions: FieldTypeDefinitionConfig = {
   boolean: {
     checkType: (val: unknown) => isBoolean(val),
     checkNode: (node: Field<any>) => isNodeBoolean(node),

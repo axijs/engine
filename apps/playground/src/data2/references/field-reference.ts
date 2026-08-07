@@ -10,8 +10,6 @@ export interface ReadonlyFieldReference<T> {
   readonly pathArr: string[];
   /**
    * The current value of the field.
-   * Assigning a new value triggers policies and emits the `onChange` event
-   * if the value is different from the current one.
    */
   readonly value: T;
 
@@ -25,6 +23,10 @@ export interface ReadonlyFieldReference<T> {
 }
 
 export interface FieldReference<T> extends ReadonlyFieldReference<T> {
+  /**
+   * Assigning a new value triggers policies and emits the `onChange` event
+   * if the value is different from the current one.
+   */
   value: T;
 }
 
