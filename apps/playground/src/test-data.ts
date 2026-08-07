@@ -35,58 +35,26 @@ export async function testNewScopeSystem() {
     typeRegistry: fieldTypeRegistry
   });
 
-  /** Computed test */
-  // store.computed<number>(['stats', 'hpWithAge'], (get) => {
-  //   const hp = get<number>(['stats', 'hp']);
-  //   const age = get<number>(['stats', 'age']);
-  //   return hp * age;
-  // });
-
-  // store.computed<number>(['stats', 'hpWithAgeAndBonus'], (get) => {
-  //   return get<number>(['stats', 'hpWithAge']) * 10;
-  // });
-
-  // store.computed<string>(['stats', 'hpLabel'], (get) => {
-  //   const hp = get<number>(['stats', 'hp']);
-  //   const age = get<number>(['stats', 'age']);
-  //   const hpWithAge = get<number>(['stats', 'hpWithAge']);
-  //   return `HP: ${hp} / Age: ${age}, hpWithAge: ${hpWithAge}`;
-  // });
-  //
-  // store.computed<string>(['stats', 'hpLabelDeepTest'], (get) => {
-  //   const hp = get<number>(['stats', 'hp']);
-  //   const hpWithAge = get<number>(['stats', 'hpWithAge']);
-  //   const hpWithAgeAndBonus = get<number>(['stats', 'hpWithAgeAndBonus']);
-  //   return `HP: ${hp} / hpWithAge: ${hpWithAge}, hpWithAgeAndBonus: ${hpWithAgeAndBonus}`;
-  // });
-
-  store.onCreate<number>(['stats', 'multiHp'], (event) => {
-    console.log(`'multiHp' created:`, event);
+  store.onCreate<number>(['stats', 'hp'], (event) => {
+    console.log(`'Hp' created:`, event);
   });
 
-  store.onChange<number>(['stats', 'multiHp'], (event) => {
-    console.log(`'multiHp' changed:`, event);
+  store.onChange<number>(['stats', 'hp'], (event) => {
+    console.log(`'Hp' changed:`, event);
   });
 
-  // store.onCreate<number>(['stats', 'hpWithAge'], (event) => {
-  //   console.log(`'hpWithAge' created:`, event);
-  // });
-  //
-  // store.onChange<number>(['stats', 'hpWithAge'], (event) => {
-  //   console.log(`'hpWithAge' changed:`, event);
-  // });
+  const hpRef = store.getTypedRef<'numeric'>('numeric', ['stats', 'hp']);
+  console.log('hp ref val: ', hpRef.value);
 
-  // store.onCreate(['stats', 'hpWithAgeLabel'], e => {
-  //   console.log(`'hpWithAgeLabel' created:`, e);
-  // });
-  //
-  // store.onChange(['stats', 'hpWithAgeLabel'], e => {
-  //   console.log(`'hpWithAgeLabel' changed:`, e);
-  // });
+  const readonlyHpRef = store.getReadonlyRef<number>(['stats', 'hp']);
+  console.log('readonly hp: ', readonlyHpRef.value);
 
   store.set(['stats', 'hp'], 25);
   store.tick();
 
   store.set(['stats', 'hp'], 30);
+  store.tick();
+
+  hpRef.inc(10);
   store.tick();
 }
