@@ -1,14 +1,22 @@
-import {type DataStorage, ensurePathString, type PathType, Registry} from '@axi-engine/utils';
+import {
+  type DataSink,
+  type DataSource,
+  ensurePathString,
+  type PathType,
+  Registry
+} from '@axi-engine/utils';
 import type {ComputeFieldConfig, ComputeFunction, FieldGetter} from './compute-field-config.ts';
 import {throwIf} from '@axijs/ensure';
+
+export type ComputedStorageContext = DataSource & Pick<DataSink, 'upsert'>;
 
 /** todo: need to add lazy updating */
 export class ComputedManager {
 
-  store: DataStorage;
+  store: ComputedStorageContext;
   fields = new Registry<string, ComputeFieldConfig<unknown>>();
 
-  constructor(store: DataStorage) {
+  constructor(store: ComputedStorageContext) {
     this.store = store;
   }
 
