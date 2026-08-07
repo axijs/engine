@@ -29,6 +29,18 @@ export class StoreChangeBuffer {
     return this._deleted.has(path);
   }
 
+  unsetCreated(path: string) {
+    return this._created.delete(path);
+  }
+
+  unsetChanged(path: string) {
+    return this._changed.delete(path);
+  }
+
+  unsetDeleted(path: string) {
+    return this._deleted.delete(path);
+  }
+
   getCreatedPaths() {
     return [...this._created.keys()];
   }

@@ -3,9 +3,11 @@ import {type DataStorage, ensurePathArray, ensurePathString, type PathType} from
 import type {ChangeFieldListener, DeleteNodeListener} from '../event-bus';
 import type {StoreEventSubscriber} from '../event-bus/store-event-subscriber.ts';
 
+export type StoreWithEvents = DataStorage & StoreEventSubscriber;
+
 export class FieldRef<T> implements FieldReference<T> {
 
-  readonly _store: DataStorage & StoreEventSubscriber;
+  readonly _store: StoreWithEvents;
   readonly _path: string;
   readonly _pathArr: string[];
 
@@ -25,7 +27,7 @@ export class FieldRef<T> implements FieldReference<T> {
     return this._store.get(this._pathArr);
   }
 
-  constructor(store: DataStorage & StoreEventSubscriber, path: PathType) {
+  constructor(store: StoreWithEvents, path: PathType) {
     this._store = store;
     this._path = ensurePathString(path);
     this._pathArr = ensurePathArray(path);

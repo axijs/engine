@@ -5,7 +5,7 @@ import type {ChangeFieldListener, DeleteNodeListener} from '../event-bus';
  *
  * @template T The type of the value stored in the field.
  */
-export interface FieldReference<T> {
+export interface ReadonlyFieldReference<T> {
   readonly path: string;
   readonly pathArr: string[];
   /**
@@ -13,7 +13,7 @@ export interface FieldReference<T> {
    * Assigning a new value triggers policies and emits the `onChange` event
    * if the value is different from the current one.
    */
-  value: T;
+  readonly value: T;
 
   onChange(listener: ChangeFieldListener<T>): void;
 
@@ -22,6 +22,10 @@ export interface FieldReference<T> {
   unsubscribeOnChange(listener: ChangeFieldListener<T>): void;
 
   unsubscribeOnDelete(listener: DeleteNodeListener<T>): void;
+}
+
+export interface FieldReference<T> extends ReadonlyFieldReference<T> {
+  value: T;
 }
 
 /**

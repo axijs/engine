@@ -14,6 +14,31 @@ export class StoreEventDispatcher {
     this.changes = changes;
   }
 
+  eagerCreated(path: string) {
+    if (this.mode !== 'eager' || !this.changes.hasCreated(path)) {
+      return;
+    }
+    this.events.emitOnCreate(path, this.changes.getCreatedValue(path));
+    this.changes.unsetCreated(path);
+  }
+
+  eagerChanged(path: string) {
+    if (this.mode !== 'eager' || !this.changes.hasChanged(path)) {
+      return;
+    }
+    const val = this.changes.getChangedValue(path);
+    this.events.emitOnChange(path, val.value, val.oldValue);
+    this.changes.unsetChanged(path);
+  }
+
+  eagerDeleted(path: string) {
+    if (this.mode !== 'eager' || !this.changes.hasDeleted(path)) {
+      return;
+    }
+    this.events.emitOnDelete(path, this.changes.getDeletedValue(path));
+    this.changes.unsetDeleted(path);
+  }
+
   flush() {
     this.flushCreated();
     this.flushChanged();

@@ -1,11 +1,12 @@
 import type {
   BooleanFieldReference,
   FieldReference,
-  NumericFieldReference,
+  NumericFieldReference, ReadonlyFieldReference,
   StringFieldReference
 } from './field-reference.ts';
 
 export interface FieldReferences {
+  readonly: ReadonlyFieldReference<any>,
   generic: FieldReference<any>,
   numeric: NumericFieldReference,
   boolean: BooleanFieldReference,

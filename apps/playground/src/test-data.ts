@@ -1,6 +1,6 @@
 import {NodeFactory as f} from './data2/fields';
 import {createFieldTypeRegistry} from './data2';
-import {Store} from './data2/store.ts';
+import {Store} from './data2';
 
 
 export async function testNewScopeSystem() {
@@ -33,10 +33,6 @@ export async function testNewScopeSystem() {
   const store = new Store({
     group: catTest,
     typeRegistry: fieldTypeRegistry
-  });
-
-  store.computed<number>(['stats', 'multiHp'], (get) => {
-    return get<number>(['stats', 'hp']) * 10;
   });
 
   /** Computed test */

@@ -1,7 +1,7 @@
 import {type DataStorage, ensurePathString, type PathType, utilsSettings} from '@axi-engine/utils';
 import {type Field, type FieldGroup, type FieldNode, GroupOps, isField, isGroup, NodeFactory} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
-import {createFieldTypeRegistry, FieldTypeRegistry} from './field-type-registry';
+import {FieldTypeRegistry} from './field-type-registry';
 import {
   type CreateNodeEvent,
   type ChangeFieldEvent,
@@ -12,20 +12,24 @@ import type {StoreEventSubscriber} from './event-bus/store-event-subscriber.ts';
 import {Emitter} from '@axijs/emitter';
 import {StoreChangeBuffer} from './store-change-buffer.ts';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher.ts';
-import {ComputedManager} from './computed-fields/computed-manager.ts';
-import type {ComputeFunction} from './computed-fields/compute-field-config.ts';
-import {ComputedChangeDetector} from './computed-fields/computed-change-detector.ts';
+import {
+  type FieldReference,
+  type FieldReferenceName,
+  type FieldReferences,
+  type ReadonlyFieldReference,
+  type ReferenceSource
+} from './references';
+import type {ReferenceRegistry} from './references/reference-registry.ts';
+import {getDefaultReferenceRegistry, getDefaultTypeRegistry} from './setup.ts';
 
-export class Store implements DataStorage, StoreEventSubscriber {
+export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
+  referenceRegistry: ReferenceRegistry;
 
   changes = new StoreChangeBuffer();
   events: StoreEventBus = new StoreEventBus();
   eventDispatcher = new StoreEventDispatcher(this.events, this.changes);
-  computedManager = new ComputedManager(this);
-  computedChanges = new ComputedChangeDetector(this.changes, this.computedManager);
-
   private readonlyPaths = new Set<string>();
 
   onClear = new Emitter();
@@ -39,9 +43,14 @@ export class Store implements DataStorage, StoreEventSubscriber {
     return this.eventDispatcher.mode;
   }
 
-  constructor(options?: { group?: FieldGroup, typeRegistry?: FieldTypeRegistry }) {
+  constructor(options?: {
+    group?: FieldGroup,
+    typeRegistry?: FieldTypeRegistry,
+    referenceRegistry?: ReferenceRegistry
+  }) {
     this.group = options?.group ?? NodeFactory.group();
-    this.typeRegistry = options?.typeRegistry ?? createFieldTypeRegistry();
+    this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this.referenceRegistry = options?.referenceRegistry ?? getDefaultReferenceRegistry();
   }
 
   getGroup() {
@@ -130,7 +139,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     const oldValue = this.typeRegistry.cloneValue(field.value);
     field.value = value;
     this.changes.changed(pathStr, this.typeRegistry.cloneValue(value), oldValue);
-    // this.events.emitOnChange<T>(pathStr, value, oldValue);
+    this.eventDispatcher.eagerChanged(pathStr);
   }
 
   create<T = unknown>(path: PathType, value: T): void {
@@ -138,7 +147,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     throwIf(this.has(path), `Field by path: ${pathStr} already exists`);
     GroupOps.set(this.group, path, this.typeRegistry.createNode(value));
     this.changes.created(pathStr, this.typeRegistry.cloneValue(value));
-    // this.events.emitOnCreate<T>(pathStr, value);
+    this.eventDispatcher.eagerCreated(pathStr);
   }
 
   upsert<T = unknown>(path: PathType, value: T): void {
@@ -161,27 +170,14 @@ export class Store implements DataStorage, StoreEventSubscriber {
             childPathStr,
             isField(childNode) ? this.typeRegistry.cloneValue(childNode.value): undefined
           );
-          //   if (this.events.deleteNode.channels.has(childPathStr)) {
-          //     this.events.emitOnDelete(childPathStr, isField(childNode) ? childNode.value : undefined);
-          //   }
+          this.eventDispatcher.eagerDeleted(childPathStr);
         }
       }
     }
     throwIf(!GroupOps.remove(this.group, path), `Can't delete node by path: ${pathStr}`);
     // val can be undefined when deleted branch node
     this.changes.deleted(pathStr, val);
-
-    // delete from computedManager and readonlyPaths, nothing will happen if field didn't exists
-    this.computedManager.delete(pathStr);
-    // this.computedChanges.delete(pathStr);
     this.readonlyPaths.delete(pathStr);
-    // this.events.emitOnDelete<T>(pathStr, val);
-  }
-
-  computed<T>(path: PathType, func: ComputeFunction<T>) {
-    this.computedManager.define<T>(path, func);
-    this.computedChanges.register(path);
-    this.markAsReadonly(path);
   }
 
   /**
@@ -195,9 +191,20 @@ export class Store implements DataStorage, StoreEventSubscriber {
   }
 
   tick() {
-    this.computedChanges.compute();
     this.eventDispatcher.flush();
     this.changes.clear();
+  }
+
+  getRef<T = unknown>(path: PathType): FieldReference<T> {
+    return this.referenceRegistry.registry.getOrThrow('generic')(this, path);
+  }
+
+  getReadonlyRef<T = unknown>(path: PathType): ReadonlyFieldReference<T> {
+    return this.referenceRegistry.registry.getOrThrow('readonly')(this, path);
+  }
+
+  getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K] {
+    return this.referenceRegistry.registry.getOrThrow(type)(this, path);
   }
 
   private getField(path: PathType): Field<any> {
