@@ -1,8 +1,8 @@
 import {sound} from '@pixi/sound';
 import {CoreSoundChannel, CoreSoundSequence, createSoundSystem} from '@axi-engine/sound';
-import {Ticker} from './ticker.ts';
+import {Ticker} from './ticker';
 import type {TimeContext} from '@axi-engine/utils';
-import {bindSequenceEvents, getButtons, getSpans} from './main-tools.ts';
+import {bindSequenceEvents, getButtons, getSpans} from './main-tools';
 
 sound.add('crop', 'sound/metronome_crop.ogg');
 sound.add('full', 'sound/metronome_full.ogg');

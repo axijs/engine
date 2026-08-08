@@ -1,12 +1,12 @@
-import {ensurePathArray, ensurePathString, PathType, uid} from '@axi-engine/utils';
+import {type DataStorage, ensurePathArray, ensurePathString, PathType, uid} from '@axi-engine/utils';
 import {throwError} from '@axijs/ensure';
 import {Scope} from './scope';
-import {CoreStore} from '../store'
+import {Store} from '../store'
 import {ScopeError} from './errors';
 import {SCOPE_SYSTEM_CONFIG} from './config';
 
 export interface ScopeOptions {
-  data: CoreStore,
+  data: DataStorage,
   uid?: string,
   name?: string,
   parent?: CoreScope
@@ -14,7 +14,7 @@ export interface ScopeOptions {
 
 export class CoreScope implements Scope {
   readonly uid: string;
-  data: CoreStore;
+  data: DataStorage;
   name?: string;
   parent?: CoreScope;
 
@@ -27,7 +27,7 @@ export class CoreScope implements Scope {
 
   extend(childName?: string): Scope {
     return new CoreScope({
-      data: this.data.createIsolated(),
+      data: new Store(),
       parent: this,
       name: childName
     });
@@ -37,10 +37,10 @@ export class CoreScope implements Scope {
     try {
       const pathAndScope = this.tracePath(name);
       if (pathAndScope.scope !== this) {
-        return pathAndScope.scope.data.getValue<T>(pathAndScope.path);
+        return pathAndScope.scope.data.get<T>(pathAndScope.path);
       }
       if (this.data.has(pathAndScope.path)) {
-        return this.data.getValue<T>(pathAndScope.path);
+        return this.data.get<T>(pathAndScope.path);
       }
       if (this.parent) {
         return this.parent.get<T>(pathAndScope.path);
@@ -55,11 +55,11 @@ export class CoreScope implements Scope {
     try {
       const pathAndScope = this.tracePath(name);
       if (pathAndScope.scope !== this) {
-        pathAndScope.scope.data.setValue<T>(pathAndScope.path, value);
+        pathAndScope.scope.data.set<T>(pathAndScope.path, value);
         return;
       }
       if (this.data.has(pathAndScope.path)) {
-        this.data.setValue<T>(pathAndScope.path, value);
+        this.data.set<T>(pathAndScope.path, value);
         return;
       }
       if (this.parent) {
@@ -113,7 +113,7 @@ export class CoreScope implements Scope {
   }
 
   destroy() {
-    this.data.destroy();
+    this.data.clear();
     this.parent = undefined;
   }
 

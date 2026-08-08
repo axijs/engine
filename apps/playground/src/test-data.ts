@@ -1,11 +1,7 @@
-import {NodeFactory as f} from './data2/fields';
-import {createFieldTypeRegistry, NumericFieldRef} from './data2';
-import {Store} from './data2';
+import {NodeFactory as f, NumericFieldRef, Store} from '@axi-engine/data';
 
 
 export async function testNewScopeSystem() {
-
-  const fieldTypeRegistry = createFieldTypeRegistry();
 
   const catTest = f.group({
     name: f.str('Little Jo'),
@@ -30,10 +26,7 @@ export async function testNewScopeSystem() {
     })
   });
 
-  const store = new Store({
-    group: catTest,
-    typeRegistry: fieldTypeRegistry
-  });
+  const store = new Store({group: catTest});
 
   store.onCreate<number>(['stats', 'hp'], (event) => {
     console.log(`'Hp' created:`, event);

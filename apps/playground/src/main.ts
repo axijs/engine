@@ -1,7 +1,7 @@
 import './style.css'
 
-import {testNewScopeSystem} from './test-data.ts';
-import {testTasks} from './test-tasks.ts';
+import {testNewScopeSystem} from './test-data';
+import {testTasks} from './test-tasks';
 
 
 testTasks().then(() => {
