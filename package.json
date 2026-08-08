@@ -58,6 +58,7 @@
     "release:configs": "npm run build:configs && npm run publish:configs",
     "release:expressions": "npm run build:expressions && npm run publish:expressions",
     "release:data": "npm run build:data && npm run publish:data",
+    "release:data:next": "npm run build:data && npm run publish:data:next",
     "release:instructions": "npm run build:instructions && npm run publish:instructions",
     "release:sound": "npm run build:sound && npm run publish:sound",
     "release:states": "npm run build:states && npm run publish:states",
