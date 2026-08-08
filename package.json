@@ -47,6 +47,7 @@
     "publish:configs": "npm publish --workspace=@axi-engine/configs --access public",
     "publish:expressions": "npm publish --workspace=@axi-engine/expressions --access public",
     "publish:data": "npm publish --workspace=@axi-engine/data --access public",
+    "publish:data:next": "npm publish --workspace=@axi-engine/data --access public --tag next",
     "publish:instructions": "npm publish --workspace=@axi-engine/instructions --access public",
     "publish:sound": "npm publish --workspace=@axi-engine/sound --access public",
     "publish:states": "npm publish --workspace=@axi-engine/states --access public",
