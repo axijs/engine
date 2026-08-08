@@ -8,4 +8,6 @@ export interface ReferenceSource {
   getReadonlyRef<T = unknown>(path: PathType): ReadonlyFieldReference<T>;
 
   getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K];
+
+  getAutoRef<T extends FieldReference<any>>(path: PathType): T;
 }

@@ -1,5 +1,14 @@
 import {type DataStorage, ensurePathString, type PathType, utilsSettings} from '@axi-engine/utils';
-import {type Field, type FieldGroup, type FieldNode, GroupOps, isField, isGroup, NodeFactory} from './fields';
+import {
+  type Field,
+  type FieldGroup,
+  type FieldName,
+  type FieldNode,
+  GroupOps,
+  isField,
+  isGroup,
+  NodeFactory
+} from './fields';
 import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {FieldTypeRegistry} from './field-type-registry';
 import {
@@ -19,8 +28,8 @@ import {
   type ReadonlyFieldReference,
   type ReferenceSource
 } from './references';
-import type {ReferenceRegistry} from './references/reference-registry.ts';
 import {getDefaultReferenceRegistry, getDefaultTypeRegistry} from './setup.ts';
+import {ReferenceRegistry} from './reference-registry';
 
 export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource {
   group: FieldGroup;
@@ -136,6 +145,11 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
       `Field '${pathStr}' and variable have different types:` +
       `field: '${field.type}', variable: '${this.typeRegistry.getNodeNameByVariable(value)}'`
     );
+
+    if (this.typeRegistry.isValueEquivalent(field, value)) {
+      return;
+    }
+
     const oldValue = this.typeRegistry.cloneValue(field.value);
     field.value = value;
     this.changes.changed(pathStr, this.typeRegistry.cloneValue(value), oldValue);
@@ -196,15 +210,30 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
   }
 
   getRef<T = unknown>(path: PathType): FieldReference<T> {
-    return this.referenceRegistry.registry.getOrThrow('generic')(this, path);
+    return this.referenceRegistry.create('generic', this, path);
   }
 
   getReadonlyRef<T = unknown>(path: PathType): ReadonlyFieldReference<T> {
-    return this.referenceRegistry.registry.getOrThrow('readonly')(this, path);
+    return this.referenceRegistry.create('readonly', this, path);
   }
 
   getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K] {
-    return this.referenceRegistry.registry.getOrThrow(type)(this, path);
+    return this.referenceRegistry.create(type, this, path);
+  }
+
+  getAutoRef<T extends FieldReference<any>>(path: PathType): T {
+    const fieldType = this.getField(path).type as FieldName;
+    return this.referenceRegistry.create(fieldType, this, path) as T;
+  }
+
+  createRef<R extends FieldReference<any> = FieldReference<any>>(path: PathType, value: R['value']): R {
+    this.create(path, value);
+    return this.getAutoRef<R>(path);
+  }
+
+  upsertRef<R extends FieldReference<any> = FieldReference<any>>(path: PathType, value: R['value']): R {
+    this.upsert(path, value);
+    return this.getAutoRef<R>(path);
   }
 
   private getField(path: PathType): Field<any> {

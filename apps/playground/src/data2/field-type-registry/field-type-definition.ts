@@ -10,7 +10,10 @@ export interface FieldTypeDefinition {
   // creating node
   createNode(val: unknown): RegisteredField;
 
+  isValueEquivalent(oldVal: unknown, newVal: unknown): boolean;
+
   // copy node value
   cloneValue(val: unknown): unknown;
+
 }
 

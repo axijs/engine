@@ -1,5 +1,5 @@
 import {NodeFactory as f} from './data2/fields';
-import {createFieldTypeRegistry} from './data2';
+import {createFieldTypeRegistry, NumericFieldRef} from './data2';
 import {Store} from './data2';
 
 
@@ -48,6 +48,15 @@ export async function testNewScopeSystem() {
 
   const readonlyHpRef = store.getReadonlyRef<number>(['stats', 'hp']);
   console.log('readonly hp: ', readonlyHpRef.value);
+
+  const autoRef: NumericFieldRef = store.getAutoRef<NumericFieldRef>(['stats', 'hp']);
+  console.log(autoRef.value);
+
+  const numRef = store.createRef<NumericFieldRef>(['stats', 'test'], 50);
+  console.log(numRef);
+
+  const anyRef = store.upsertRef(['stats', 'test2'], 'test');
+  console.log(anyRef);
 
   store.set(['stats', 'hp'], 25);
   store.tick();

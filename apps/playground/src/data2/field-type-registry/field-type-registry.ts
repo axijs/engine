@@ -29,7 +29,12 @@ export class FieldTypeRegistry {
   }
 
   getNodeNameByVariable(val: unknown): FieldName {
-    return  this.matchDefinition(val)[0];
+    return this.matchDefinition(val)[0];
+  }
+
+  isValueEquivalent(node: Field<any>, newVal: unknown): boolean {
+    const match = this.matchDefinition(newVal);
+    return match[1].isValueEquivalent(node.value, newVal);
   }
 
   cloneValue(val: unknown) {

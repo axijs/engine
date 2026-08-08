@@ -1,9 +1,5 @@
 import type {ReferenceRegistryConfig} from './types.ts';
-import {ReadonlyFieldRef} from './readonly-field-ref.ts';
-import {FieldRef} from './field-ref.ts';
-import {StringFieldRef} from './string-field-ref.ts';
-import {BooleanFieldRef} from './boolean-field-ref.ts';
-import {NumericFieldRef} from './numeric-field-ref.ts';
+import {ReadonlyFieldRef, FieldRef, StringFieldRef, BooleanFieldRef, NumericFieldRef} from '../references';
 
 export const referenceRegistryDefaultConfig: ReferenceRegistryConfig = {
   readonly: (store, path) => new ReadonlyFieldRef(store, path),
