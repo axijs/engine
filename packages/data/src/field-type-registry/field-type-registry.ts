@@ -42,6 +42,11 @@ export class FieldTypeRegistry {
     return match[1].cloneValue(val);
   }
 
+  snapshotFieldValue(field: Field<any>) {
+    const definition = this.registry.get(field.type as FieldName) ?? this.fallbackItem;
+    return definition.serialize ? definition.serialize(field.value) : definition.cloneValue(field.value);
+  }
+
   private matchDefinition(val: unknown) {
     const res = this.registry.find((conf) => conf.checkType(val));
     return res ?? [this.fallbackName, this.fallbackItem];

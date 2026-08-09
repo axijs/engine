@@ -20,7 +20,7 @@ Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:12
 
 ##### fieldsSnapshotter
 
-[`FieldsSnapshotter`](FieldsSnapshotter.md)
+[`ScopeSnapshotter`](FieldsSnapshotter.md)
 
 #### Returns
 
@@ -30,7 +30,7 @@ Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:12
 
 ### fieldsSnapshotter
 
-> `readonly` **fieldsSnapshotter**: [`FieldsSnapshotter`](FieldsSnapshotter.md)
+> `readonly` **fieldsSnapshotter**: [`ScopeSnapshotter`](FieldsSnapshotter.md)
 
 Defined in: packages/data/src/fields/serializers/field-tree-snapshotter.ts:12
 

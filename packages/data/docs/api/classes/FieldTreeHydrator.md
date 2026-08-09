@@ -12,7 +12,7 @@ Orchestrates the recursive deserialization of `FieldTree` instances.
 
 This class handles the conversion of an entire `FieldTree` object graph into a
 plain, storable snapshot and vice-versa. It delegates the processing of `Fields`
-leaf nodes to a dedicated `FieldsHydrator`.
+leaf nodes to a dedicated `ScopeHydrator`.
 
 ## Todo
 
@@ -44,7 +44,7 @@ Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:35
 
 ##### fieldsHydrator
 
-[`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
+[`ScopeHydrator`](FieldsHydrator.md)\<`TFields`\>
 
 #### Returns
 
@@ -62,7 +62,7 @@ Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:24
 
 ### \_fieldsHydrator
 
-> **\_fieldsHydrator**: [`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
+> **\_fieldsHydrator**: [`ScopeHydrator`](FieldsHydrator.md)\<`TFields`\>
 
 Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:25
 
@@ -86,13 +86,13 @@ Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:27
 
 #### Get Signature
 
-> **get** **fieldsHydrator**(): [`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
+> **get** **fieldsHydrator**(): [`ScopeHydrator`](FieldsHydrator.md)\<`TFields`\>
 
 Defined in: packages/data/src/fields/serializers/field-tree-hydrator.ts:31
 
 ##### Returns
 
-[`FieldsHydrator`](FieldsHydrator.md)\<`TFields`\>
+[`ScopeHydrator`](FieldsHydrator.md)\<`TFields`\>
 
 ## Methods
 

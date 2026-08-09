@@ -15,5 +15,10 @@ export interface FieldTypeDefinition {
   // copy node value
   cloneValue(val: unknown): unknown;
 
+  // optional methods for serialization / deserialization,
+  // if not set - will use cloveValue of snapshot / hydrate
+  serialize?(val: unknown): unknown;
+
+  deserialize?(val: unknown): unknown;
 }
 

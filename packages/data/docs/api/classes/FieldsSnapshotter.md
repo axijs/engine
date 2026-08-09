@@ -17,7 +17,7 @@ into a storable snapshot.
 
 ### Constructor
 
-> **new FieldsSnapshotter**(`fieldSnapshotter`): `FieldsSnapshotter`
+> **new FieldsSnapshotter**(`fieldSnapshotter`): `ScopeSnapshotter`
 
 Defined in: packages/data/src/fields/serializers/fields-snapshotter.ts:16
 
@@ -33,7 +33,7 @@ A serializer of field instances.
 
 #### Returns
 
-`FieldsSnapshotter`
+`ScopeSnapshotter`
 
 ## Methods
 

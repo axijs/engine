@@ -1,4 +1,4 @@
-import {NodeFactory as f, NumericFieldRef, Store} from '@axi-engine/data';
+import {FieldsSnapshotter, NodeFactory as f, NumericFieldRef, Store} from '@axi-engine/data';
 
 
 export async function testNewScopeSystem() {
@@ -13,18 +13,13 @@ export async function testNewScopeSystem() {
     stats: f.group({
       hp: f.num(10),
       age: f.num(2)
-    }),
-
-    forDelete: f.group({
-      field1: f.num(10),
-      group1: f.group({
-        group2: f.group({
-          g2f1: f.num(10),
-          g2f2: f.str('abra')
-        })
-      })
     })
   });
+
+  const fieldsSnapshotter  = new FieldsSnapshotter();
+  const catTestSnapshot = fieldsSnapshotter.snapshot(catTest);
+  console.log('catTest snapshot: ', catTestSnapshot);
+  // console.log('catTest')
 
   const store = new Store({group: catTest});
 

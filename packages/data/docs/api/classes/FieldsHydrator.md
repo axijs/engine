@@ -21,7 +21,7 @@ Responsible for converting snapshot of `Fields` object into a `Fields` instance.
 
 ### Constructor
 
-> **new FieldsHydrator**\<`TFields`\>(`fieldsFactory`, `fieldHydrator`): `FieldsHydrator`\<`TFields`\>
+> **new FieldsHydrator**\<`TFields`\>(`fieldsFactory`, `fieldHydrator`): `ScopeHydrator`\<`TFields`\>
 
 Defined in: packages/data/src/fields/serializers/fields-hydrator.ts:17
 
@@ -43,7 +43,7 @@ A hydrator of field instances.
 
 #### Returns
 
-`FieldsHydrator`\<`TFields`\>
+`ScopeHydrator`\<`TFields`\>
 
 ## Methods
 
