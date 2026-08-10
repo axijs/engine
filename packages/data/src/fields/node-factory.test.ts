@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest';
 import {NodeFactory} from './node-factory';
-import {isGroup, isField} from './node-guards';
+import {isGroup, isField} from './guards';
 
 describe('NodeFactory', () => {
 	it('creates raw nodes', () => {

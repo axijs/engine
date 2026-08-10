@@ -1,13 +1,16 @@
 import {FieldTypeRegistry} from '../field-type-registry';
-import {getDefaultTypeRegistry} from '../config';
+import {getDefaultSerializerRegistry, getDefaultTypeRegistry} from '../config';
 import {Field, FieldGroup, isGroup} from '../fields';
 import {SerializedGroup} from './types';
+import {SerializerRegistry} from './serializer-registry';
 
 export class FieldsSnapshotter {
   protected typeRegistry: FieldTypeRegistry;
+  protected serializerRegistry: SerializerRegistry;
 
-  constructor(typeRegistry?: FieldTypeRegistry) {
-    this.typeRegistry = typeRegistry ?? getDefaultTypeRegistry();
+  constructor(options?: { typeRegistry?: FieldTypeRegistry, serializerRegistry?: SerializerRegistry }) {
+    this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this.serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
   }
 
   snapshot(group: FieldGroup): SerializedGroup {
@@ -26,6 +29,8 @@ export class FieldsSnapshotter {
   }
 
   snapshotField(field: Field<any>) {
-    return this.typeRegistry.snapshotFieldValue(field);
+    return this.serializerRegistry.has(field.type) ?
+      this.serializerRegistry.getOrThrow(field.type).serialize(field.value) :
+      this.typeRegistry.cloneValue(field.value);
   }
 }

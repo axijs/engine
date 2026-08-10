@@ -1,6 +1,6 @@
 import {isUndefined} from '@axijs/ensure';
 import {ensurePathArray, type PathType} from '@axi-engine/utils';
-import {isGroup} from './node-guards';
+import {isGroup} from './guards';
 import type {FieldGroup, FieldNode} from './field-group';
 import {NodeOps} from './node-ops';
 import {NodeFactory} from './node-factory';

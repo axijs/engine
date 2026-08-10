@@ -1,4 +1,4 @@
-import {isGroup} from './node-guards';
+import {isGroup} from './guards';
 import type {FieldGroup, FieldNode} from './field-group';
 
 export const NodeOps = {

@@ -32,3 +32,4 @@ export interface RegisteredFields {
 export type RegisteredField = RegisteredFields[keyof RegisteredFields];
 
 export type FieldName = keyof RegisteredFields;
+

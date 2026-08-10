@@ -8,7 +8,7 @@ import {
   isNode,
   isNumeric,
   isString,
-} from './node-guards';
+} from './guards';
 
 describe('node guards', () => {
   it('detects basic node shape', () => {
