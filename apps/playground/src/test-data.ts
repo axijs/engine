@@ -1,4 +1,4 @@
-import {FieldsSnapshotter, NodeFactory as f, NumericFieldRef, Store} from '@axi-engine/data';
+import {FieldsHydrator, FieldsSnapshotter, NodeFactory as f, NumericFieldRef, Store} from '@axi-engine/data';
 
 
 export async function testNewScopeSystem() {
@@ -17,9 +17,16 @@ export async function testNewScopeSystem() {
   });
 
   const fieldsSnapshotter  = new FieldsSnapshotter();
+  const fieldsHydrator = new FieldsHydrator();
   const catTestSnapshot = fieldsSnapshotter.snapshot(catTest);
   console.log('catTest snapshot: ', catTestSnapshot);
-  // console.log('catTest')
+
+  const patchTest = f.group({
+    name: f.str('Big Foo'),
+  });
+
+  const patchRes = fieldsHydrator.patch(patchTest, catTestSnapshot);
+  console.log('Path test', patchTest, patchRes);
 
   const store = new Store({group: catTest});
 

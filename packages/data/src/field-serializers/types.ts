@@ -9,3 +9,15 @@ export interface SerializedGroup {
 }
 
 export type SerializedNode = SerializedField | SerializedGroup;
+
+
+export interface NodePatchResult {
+  path: string;
+  value?: unknown;
+}
+
+export interface GroupPatchResult {
+  created: NodePatchResult[];
+  changed: NodePatchResult[];
+  deleted: NodePatchResult[];
+}
