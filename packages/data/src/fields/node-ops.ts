@@ -45,10 +45,10 @@ export const NodeOps = {
   },
 
   remove: (node: FieldNode, childName: string): boolean => {
-    if (NodeOps.has(node, childName)) {
-      delete (node as FieldGroup).items[childName];
-      return true;
+    if (!NodeOps.has(node, childName)) {
+      return false;
     }
-    return false;
+    delete (node as FieldGroup).items[childName];
+    return true;
   }
 }

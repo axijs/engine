@@ -37,6 +37,10 @@ export class FieldTypeRegistry {
     return match[1].isValueEquivalent(node.value, newVal);
   }
 
+  cloneNodeValue(val: Field<unknown>) {
+    return this.getDefinition(val.type as FieldName).cloneValue(val.value);
+  }
+
   cloneValue(val: unknown) {
     const match = this.matchDefinition(val);
     return match[1].cloneValue(val);
@@ -45,5 +49,9 @@ export class FieldTypeRegistry {
   private matchDefinition(val: unknown) {
     const res = this.registry.find((conf) => conf.checkType(val));
     return res ?? [this.fallbackName, this.fallbackItem];
+  }
+
+  private getDefinition(type: FieldName) {
+    return this.registry.get(type) ?? this.fallbackItem;
   }
 }

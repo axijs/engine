@@ -1,5 +1,5 @@
 import {isUndefined} from '@axijs/ensure';
-import {ensurePathArray, type PathType} from '@axi-engine/utils';
+import {ensurePathArray, joinPathString, type PathType} from '@axi-engine/utils';
 import {isGroup} from './guards';
 import type {FieldGroup, FieldNode} from './field-group';
 import {NodeOps} from './node-ops';
@@ -17,9 +17,33 @@ import {NodeFactory} from './node-factory';
  */
 
 export const GroupOps = {
+  collectPaths: (group: FieldGroup, basePath: string[] = [], result: string[][] = []): string[][] => {
+    for (const key in group.items) {
+      const node = group.items[key];
+      const currentPath = [...basePath, key];
+      result.push(currentPath);
+      if (isGroup(node)) {
+        GroupOps.collectPaths(node, currentPath, result);
+      }
+    }
+    return result;
+  },
+
+  collectPathsStr: (group: FieldGroup, basePath: string = '', result: string[] = []): string[] => {
+    for (const key in group.items) {
+      const node = group.items[key];
+      const currentPath = joinPathString(basePath, key);
+      result.push(currentPath);
+
+      if (isGroup(node)) {
+        GroupOps.collectPathsStr(node, currentPath, result);
+      }
+    }
+    return result;
+  },
+
   traversePath: (group: FieldGroup, path: PathType, options?: { createPath?: boolean })
-    : { branch: FieldGroup, leafName: string } | undefined =>
-  {
+    : { branch: FieldGroup, leafName: string } | undefined => {
     const pathArr = ensurePathArray(path);
     if (!pathArr.length) {
       return undefined;
