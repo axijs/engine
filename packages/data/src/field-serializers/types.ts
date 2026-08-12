@@ -14,6 +14,7 @@ export type SerializedNode = SerializedField | SerializedGroup;
 export interface NodePatchResult {
   path: string;
   value?: unknown;
+  oldValue?: unknown;
 }
 
 export interface GroupPatchResult {

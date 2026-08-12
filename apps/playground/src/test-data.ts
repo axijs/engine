@@ -1,4 +1,4 @@
-import {FieldsHydrator, FieldsSnapshotter, GroupOps, NodeFactory as f} from '@axi-engine/data';
+import {FieldsHydrator, FieldsSnapshotter, NodeFactory as f} from '@axi-engine/data';
 
 
 export async function testNewScopeSystem() {
@@ -21,9 +21,6 @@ export async function testNewScopeSystem() {
     })
   });
 
-  console.log('collect path test: ', GroupOps.collectPaths(catTest));
-  console.log('collect path str test: ', GroupOps.collectPathsStr(catTest));
-
   const fieldsSnapshotter  = new FieldsSnapshotter();
   const fieldsHydrator = new FieldsHydrator();
   const catTestSnapshot = fieldsSnapshotter.snapshot(catTest);
@@ -35,10 +32,16 @@ export async function testNewScopeSystem() {
     passion: f.num(10),
     structure: f.group({
       constructionA: f.num(10),
-      constructionB: f.num(20)
+      constructionB: f.num(20),
+      structureGroup: f.group({
+        itemA: f.str('hello'),
+        itemB: f.num(1551666),
+        itemC: f.bool(true),
+      })
     })
   });
 
+  console.log('Before Patch: ', structuredClone(patchTest));
   const patchRes = fieldsHydrator.patch(patchTest, catTestSnapshot);
   console.log('Path test', patchTest, patchRes);
 

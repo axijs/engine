@@ -14,6 +14,11 @@ export class FieldTypeRegistry {
     this.registry.register(fieldName, config);
   }
 
+  getDefinition(type: FieldName) {
+    return this.registry.get(type) ?? this.fallbackItem;
+  }
+
+
   setFallback(fieldName: FieldName, config: FieldTypeDefinition) {
     this.fallbackName = fieldName;
     this.fallbackItem = config;
@@ -49,9 +54,5 @@ export class FieldTypeRegistry {
   private matchDefinition(val: unknown) {
     const res = this.registry.find((conf) => conf.checkType(val));
     return res ?? [this.fallbackName, this.fallbackItem];
-  }
-
-  private getDefinition(type: FieldName) {
-    return this.registry.get(type) ?? this.fallbackItem;
   }
 }
