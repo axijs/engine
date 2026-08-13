@@ -1,4 +1,4 @@
-import {GroupPatchResult, SerializedField, SerializedGroup} from './types';
+import {GroupPatchResult, SerializedField, SerializedGroup, SerializedNode} from './types';
 import {Field, FieldGroup, FieldNode, isField, isGroup, NodeName, NodeOps} from '../fields';
 import {FieldTypeRegistry} from '../field-type-registry';
 import {getDefaultSerializerRegistry, getDefaultTypeRegistry} from '../config';
@@ -55,21 +55,32 @@ export class FieldsHydrator {
       } else {
         const node = group.items[key];
         const snapshotNode = snapshot.items[key];
-        if (node.type !== snapshotNode.type) {
-          this.deleteNodeOnPatch(group, key, patchResult);
-        } else {
-          if (isField(node)) {
-            const oldVal = node.value;
-            node.value = this.typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
-            patchResult.changed.push({path: key, value: node.value, oldValue: oldVal});
-          } else if (isGroup(node)) {
-
-          }
-        }
+        this.patchNode(node, snapshotNode, key, patchResult);
       }
     }
 
     return patchResult;
+  }
+
+  patchNode(
+    node: FieldNode,
+    snapshotNode: SerializedNode,
+    path: string,
+    patchResult: GroupPatchResult
+  ) {
+
+    // if (node.type !== snapshotNode.type) {
+    //   this.deleteNodeOnPatch(group, key, patchResult);
+    //   this.createFromSnapshot(group, key, snapshotNode, patchResult);
+    // } else {
+    //   if (isField(node)) {
+    //     const oldVal = node.value;
+    //     node.value = this.typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
+    //     patchResult.changed.push({path: key, value: node.value, oldValue: oldVal});
+    //   } else if (isGroup(node)) {
+    //
+    //   }
+    // }
   }
 
   private deleteNodeOnPatch(group: FieldGroup, key: string, patchResult: GroupPatchResult) {
@@ -97,47 +108,8 @@ export class FieldsHydrator {
     return record;
   }
 
-  // patchGroup(path: string[], group: FieldGroup, node: SerializedNode, patchResult: GroupPatchResult) {
-  //
-  // }
-  //
-  // patchField(path: string[], group: FieldGroup, node: SerializedField, patchResult: GroupPatchResult) {
-  //   if (!GroupOps.has(group, path)) {
-  //     // todo: create
-  //   } else {
-  //     const node = GroupOps.get(group, path)!;
-  //     if (isGroup(node)) {
-  //       // todo: delete group and create field
-  //     } else {
-  //       // todo: compare type, if they same - update value, otherwise - recreate
-  //     }
-  //   }
-  //
-  //   console.log('patch field: ', path, node);
-  // }
+  createFromSnapshot(group: FieldGroup, key: string, snapshotNode: SerializedNode, patchResult: GroupPatchResult) {
 
-  // private clearTarget(group: FieldGroup, snapshot: SerializedGroup) {
-  //   for (const [key, node] of Object.entries(group.items)) {
-  //     if (!(key in snapshot.items)) {
-  //       const path = [key];
-  //
-  //
-  //       // this.collectDeletingDetails(group.items[key], [key]);
-  //
-  //       // NodeOps.remove(group, key);
-  //       // console.log('remove node or field: ', key, node);
-  //     }
-  //   }
-  //
-  // }
-  //
-  // private collectDeletingDetails(node: FieldNode, path: string[]) {
-  //   const items: NodePatchResult[] = [];
-  //   if (isField(node)) {
-  //     items.push({path: ensurePathString(path), value: this.typeRegistry.cloneNodeValue(node)});
-  //   } else if (isGroup(node)) {
-  //     this.collectDeletingDetails(node, path);
-  //   }
-  //   return items;
-  // }
+  }
+
 }
