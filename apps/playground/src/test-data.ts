@@ -29,6 +29,11 @@ export async function testNewScopeSystem() {
   const patchTest = f.group({
     name: f.str('Big Foo'),
     head: f.str('String Head'),
+
+    stats: f.group({
+      hp: f.num(23),
+    }),
+
     passion: f.num(10),
     structure: f.group({
       constructionA: f.num(10),
@@ -43,7 +48,8 @@ export async function testNewScopeSystem() {
 
   console.log('Before Patch: ', structuredClone(patchTest));
   const patchRes = fieldsHydrator.patch(patchTest, catTestSnapshot);
-  console.log('Path test', patchTest, patchRes);
+  console.log('Path test', patchTest);
+  console.log('patched fields: ', patchRes);
 
   // const store = new Store({group: catTest});
   //

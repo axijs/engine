@@ -1,9 +1,19 @@
-import {GroupPatchResult, SerializedField, SerializedGroup, SerializedNode} from './types';
-import {Field, FieldGroup, FieldNode, isField, isGroup, NodeName, NodeOps} from '../fields';
+import {GroupPatchResult, SerializedField, SerializedGroup} from './types';
+import {
+  Field,
+  FieldGroup,
+  FieldNode,
+  isField,
+  isGroup,
+  NodeName,
+  NodeOps,
+  NodeFactory,
+  FieldName
+} from '../fields';
 import {FieldTypeRegistry} from '../field-type-registry';
 import {getDefaultSerializerRegistry, getDefaultTypeRegistry} from '../config';
 import {SerializerRegistry} from './serializer-registry';
-import {isSerializedGroup} from './guards';
+import {isSerializedField, isSerializedGroup} from './guards';
 import {joinPathString} from '@axi-engine/utils';
 
 
@@ -49,45 +59,54 @@ export class FieldsHydrator {
       deleted: [],
     };
 
-    for (const key in group.items) {
-      if (!(key in snapshot.items)) {
-        this.deleteNodeOnPatch(group, key, patchResult);
-      } else {
-        const node = group.items[key];
-        const snapshotNode = snapshot.items[key];
-        this.patchNode(node, snapshotNode, key, patchResult);
-      }
-    }
+    this.patchNode(group, snapshot, '', patchResult);
 
     return patchResult;
   }
 
   patchNode(
-    node: FieldNode,
-    snapshotNode: SerializedNode,
+    group: FieldGroup,
+    snapshot: SerializedGroup,
     path: string,
     patchResult: GroupPatchResult
   ) {
-
-    // if (node.type !== snapshotNode.type) {
-    //   this.deleteNodeOnPatch(group, key, patchResult);
-    //   this.createFromSnapshot(group, key, snapshotNode, patchResult);
-    // } else {
-    //   if (isField(node)) {
-    //     const oldVal = node.value;
-    //     node.value = this.typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
-    //     patchResult.changed.push({path: key, value: node.value, oldValue: oldVal});
-    //   } else if (isGroup(node)) {
-    //
-    //   }
-    // }
+    for (const key in group.items) {
+      if (!(key in snapshot.items)) {
+        this.deleteNodeOnPatch(group, key, path, patchResult);
+      } else {
+        const node = group.items[key];
+        const snapshotNode = snapshot.items[key];
+        if (node.type !== snapshotNode.type) {
+          this.deleteNodeOnPatch(group, key, path, patchResult);
+          this.createFromSnapshot(group, snapshot, key, path, patchResult);
+        } else {
+          const newPath = joinPathString(path, key);
+          if (isGroup(node)) {
+            this.patchNode(node, snapshotNode as SerializedGroup, newPath, patchResult);
+          } else if (isField(node)) {
+            const oldVal = node.value;
+            node.value = this.typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
+            patchResult.changed.push({
+              path: newPath,
+              value: node.value,
+              oldValue: oldVal
+            });
+          }
+        }
+      }
+    }
+    for (const key in snapshot.items) {
+      if (!(key in group.items)) {
+        this.createFromSnapshot(group, snapshot, key, path, patchResult);
+      }
+    }
   }
 
-  private deleteNodeOnPatch(group: FieldGroup, key: string, patchResult: GroupPatchResult) {
+  private deleteNodeOnPatch(group: FieldGroup, key: string, path: string, patchResult: GroupPatchResult) {
     const nodeToDelete = group.items[key];
     const deleted = this.flatNode(nodeToDelete, key, {});
     patchResult.deleted.push(...Object.keys(deleted).reverse()
-      .map(deletedKey => ({path: deletedKey, value: deleted[deletedKey]})));
+      .map(deletedKey => ({path: joinPathString(path, deletedKey), value: deleted[deletedKey]})));
 
     NodeOps.remove(group, key);
   }
@@ -108,8 +127,29 @@ export class FieldsHydrator {
     return record;
   }
 
-  createFromSnapshot(group: FieldGroup, key: string, snapshotNode: SerializedNode, patchResult: GroupPatchResult) {
-
+  private createFromSnapshot(
+    group: FieldGroup,
+    snapshot: SerializedGroup,
+    key: string,
+    path: string,
+    patchResult: GroupPatchResult
+  ) {
+    const snapshotNode = snapshot.items[key];
+    const newPath = joinPathString(path, key);
+    if (isSerializedField(snapshotNode)) {
+      const def = this.typeRegistry.getDefinition(snapshotNode.type as FieldName);
+      NodeOps.add(group, key, NodeFactory.raw(snapshotNode.type, def.cloneValue(snapshotNode.value)) as FieldNode);
+      patchResult.created.push({
+        path: newPath,
+        value: def.cloneValue(snapshotNode.value),
+      });
+    } else if (isSerializedGroup(snapshotNode)) {
+      const groupNode = NodeFactory.group({});
+      NodeOps.add(group, key, groupNode);
+      patchResult.created.push({path: newPath});
+      for (const snapshotKey in snapshotNode.items) {
+        this.createFromSnapshot(groupNode, snapshotNode, snapshotKey, newPath, patchResult);
+      }
+    }
   }
-
 }
