@@ -31,10 +31,7 @@ export class FieldsHydrator {
     const result: FieldGroup = {type: 'group', items: {}};
 
     for (const [key, node] of Object.entries(snapshot.items)) {
-      result.items[key] = {
-        type: node.type as NodeName,
-        value: isSerializedGroup(node) ? this.hydrate(node) : this.hydrateField(node)
-      };
+      result.items[key] = isSerializedGroup(node) ? this.hydrate(node) : this.hydrateField(node) as FieldNode;
     }
 
     return result;
