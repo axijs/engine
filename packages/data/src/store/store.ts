@@ -39,7 +39,7 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
   changes = new StoreChangeBuffer();
   events: StoreEventBus = new StoreEventBus();
   eventDispatcher = new StoreEventDispatcher(this.events, this.changes);
-  private readonlyPaths = new Set<string>();
+  private _readonlyPaths = new Set<string>();
 
   onClear = new Emitter();
   onGroupReplaced = new Emitter<FieldGroup>();
@@ -72,11 +72,24 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
   }
 
   markAsReadonly(path: PathType) {
-    this.readonlyPaths.add(ensurePathString(path));
+    this._readonlyPaths.add(ensurePathString(path));
   }
 
   unmarkAsReadonly(path: PathType) {
-    this.readonlyPaths.delete(ensurePathString(path));
+    this._readonlyPaths.delete(ensurePathString(path));
+  }
+
+  getReadonlyPaths(): string[] {
+    return [...this._readonlyPaths];
+  }
+
+  setReadonlyPaths(paths: string[]) {
+    this.clearReadonly();
+    paths.forEach(p => this._readonlyPaths.add(p));
+  }
+
+  clearReadonly() {
+    this._readonlyPaths.clear();
   }
 
   onCreate<T = unknown>(path: PathType, listener: (event: CreateNodeEvent<T>) => void) {
@@ -137,7 +150,7 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
 
   set<T = unknown>(path: PathType, value: T): void {
     const pathStr = ensurePathString(path);
-    throwIf(this.readonlyPaths.has(pathStr),  `Field '${pathStr}' is readonly (computed)`);
+    throwIf(this._readonlyPaths.has(pathStr),  `Field '${pathStr}' is readonly (computed)`);
 
     const field: Field<any> = this.getField(path);
     throwIf(
@@ -243,7 +256,7 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
   private clearOnDeleteNode(pathStr: string, val: unknown) {
     this.changes.deleted(pathStr, val);
     this.eventDispatcher.eagerDeleted(pathStr);
-    this.readonlyPaths.delete(pathStr);
+    this._readonlyPaths.delete(pathStr);
   }
 
   private collectNodeChildrenPaths(
