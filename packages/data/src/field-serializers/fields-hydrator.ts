@@ -5,7 +5,6 @@ import {
   FieldNode,
   isField,
   isGroup,
-  NodeName,
   NodeOps,
   NodeFactory,
   FieldName
