@@ -39,6 +39,6 @@
   "peerDependencies": {
     "@axijs/ensure": "^1.0.2",
     "@axijs/emitter": "^1.1.1",
-    "@axi-engine/utils": "^0.3.9"
+    "@axi-engine/utils": "^0.3.9-rc0"
   }
 }
