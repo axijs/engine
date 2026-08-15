@@ -1,5 +1,6 @@
-import {FieldsSnapshotter, FieldsSnapshotterOptions, SerializedGroup} from '../field-serializers';
+import {FieldsSnapshotter, FieldsSnapshotterOptions} from '../field-serializers';
 import {Store} from '../store';
+import {SerializedStore} from './types';
 
 export class StoreSnapshotter {
   snapshotter: FieldsSnapshotter;
@@ -7,10 +8,9 @@ export class StoreSnapshotter {
     this.snapshotter = new FieldsSnapshotter(options);
   }
 
-  snapshot(store: Store): {group: SerializedGroup, readonlyPaths: string[]} {
+  snapshot(store: Store): SerializedStore {
     return {
       group: this.snapshotter.snapshot(store.getGroup()),
-      readonlyPaths: store.readonlyPaths,
     };
   }
 }

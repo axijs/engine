@@ -9,7 +9,6 @@ export class StoreEventBus implements StoreEventEmitter, StoreEventSubscriber {
   readonly changeField = new StoreEventChannel();
   readonly deleteNode = new StoreEventChannel();
 
-
   constructor() {
   }
 

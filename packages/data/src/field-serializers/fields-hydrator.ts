@@ -16,12 +16,17 @@ import {isSerializedField, isSerializedGroup} from './guards';
 import {joinPathString} from '@axi-engine/utils';
 
 
+export interface FieldsHydratorOptions {
+  typeRegistry?: FieldTypeRegistry;
+  serializerRegistry?: SerializerRegistry;
+}
+
 export class FieldsHydrator {
 
   protected typeRegistry: FieldTypeRegistry;
   protected serializerRegistry: SerializerRegistry;
 
-  constructor(options?: { typeRegistry?: FieldTypeRegistry, serializerRegistry?: SerializerRegistry }) {
+  constructor(options?: FieldsHydratorOptions) {
     this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
     this.serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
   }
@@ -34,15 +39,6 @@ export class FieldsHydrator {
     }
 
     return result;
-  }
-
-  hydrateField(node: SerializedField): Field<unknown> {
-    return {
-      type: node.type,
-      value: this.serializerRegistry.has(node.type) ?
-        this.serializerRegistry.getOrThrow(node.type).deserialize(node.value) :
-        this.typeRegistry.cloneValue(node.value)
-    }
   }
 
   /**
@@ -60,7 +56,16 @@ export class FieldsHydrator {
     return patchResult;
   }
 
-  patchNode(
+  private hydrateField(node: SerializedField): Field<unknown> {
+    return {
+      type: node.type,
+      value: this.serializerRegistry.has(node.type) ?
+        this.serializerRegistry.getOrThrow(node.type).deserialize(node.value) :
+        this.typeRegistry.cloneValue(node.value)
+    }
+  }
+
+  private patchNode(
     group: FieldGroup,
     snapshot: SerializedGroup,
     path: string,
