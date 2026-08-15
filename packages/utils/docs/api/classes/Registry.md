@@ -66,7 +66,7 @@ Gets the number of registered items.
 
 > **clear**(): `void`
 
-Defined in: registry.ts:84
+Defined in: registry.ts:101
 
 Clears all registered items from the registry.
 
@@ -80,7 +80,7 @@ Clears all registered items from the registry.
 
 > **delete**(`key`): `boolean`
 
-Defined in: registry.ts:77
+Defined in: registry.ts:94
 
 #### Parameters
 
@@ -91,6 +91,24 @@ Defined in: registry.ts:77
 #### Returns
 
 `boolean`
+
+***
+
+### find()
+
+> **find**(`predicate`): \[`K`, `V`\] \| `undefined`
+
+Defined in: registry.ts:56
+
+#### Parameters
+
+##### predicate
+
+(`value`, `key`) => `boolean`
+
+#### Returns
+
+\[`K`, `V`\] \| `undefined`
 
 ***
 
@@ -120,7 +138,7 @@ Function to execute for each element.
 
 > **get**(`key`): `V` \| `undefined`
 
-Defined in: registry.ts:61
+Defined in: registry.ts:78
 
 Retrieves an item by its key.
 
@@ -144,7 +162,7 @@ The item, or `undefined` if not found.
 
 > **getOrThrow**(`key`): `V`
 
-Defined in: registry.ts:71
+Defined in: registry.ts:88
 
 Retrieves an item by its key, throwing an error if it's not found.
 
@@ -172,7 +190,7 @@ if no item is found for the given key.
 
 > **has**(`key`): `boolean`
 
-Defined in: registry.ts:52
+Defined in: registry.ts:69
 
 Checks if an item with the given key is registered.
 
@@ -187,6 +205,18 @@ The key to check.
 #### Returns
 
 `boolean`
+
+***
+
+### keys()
+
+> **keys**(): `MapIterator`\<`K`\>
+
+Defined in: registry.ts:48
+
+#### Returns
+
+`MapIterator`\<`K`\>
 
 ***
 

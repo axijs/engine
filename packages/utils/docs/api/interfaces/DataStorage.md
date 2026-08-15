@@ -37,13 +37,19 @@ Deletes all values
 
 ### create()
 
-> **create**(`path`, `value`): `void`
+> **create**\<`T`\>(`path`, `value`): `void`
 
 Defined in: data.ts:46
 
 Strictly creates a new value at the specified path.
 This operation should typically fail or throw an error if a value already exists
 at the path.
+
+#### Type Parameters
+
+##### T
+
+`T` = `unknown`
 
 #### Parameters
 
@@ -55,7 +61,7 @@ The full path where the new value will be created.
 
 ##### value
 
-`unknown`
+`T`
 
 The initial value to create.
 
@@ -105,7 +111,7 @@ Defined in: data.ts:8
 
 ##### T
 
-`T` *extends* `unknown`
+`T` = `unknown`
 
 #### Parameters
 
@@ -153,12 +159,18 @@ The path to the node.
 
 ### set()
 
-> **set**(`path`, `value`): `void`
+> **set**\<`T`\>(`path`, `value`): `void`
 
 Defined in: data.ts:36
 
 Strictly updates the value at an *existing* path.
 This operation should typically fail or throw an error if no value exists at the path.
+
+#### Type Parameters
+
+##### T
+
+`T` = `unknown`
 
 #### Parameters
 
@@ -170,7 +182,7 @@ The path to the value to be updated.
 
 ##### value
 
-`unknown`
+`T`
 
 The new value to set.
 
@@ -186,12 +198,18 @@ The new value to set.
 
 ### upsert()
 
-> **upsert**(`path`, `value`): `void`
+> **upsert**\<`T`\>(`path`, `value`): `void`
 
 Defined in: data.ts:55
 
 Updates a value at a specified path if it exists, or creates it if it does not.
 This is a convenient and non-strict combination of the `set` and `create` operations.
+
+#### Type Parameters
+
+##### T
+
+`T` = `unknown`
 
 #### Parameters
 
@@ -203,7 +221,7 @@ The path to the value to be created or updated.
 
 ##### value
 
-`unknown`
+`T`
 
 The value to set.
 

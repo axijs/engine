@@ -26,7 +26,7 @@ Defined in: data.ts:8
 
 ##### T
 
-`T` *extends* `unknown`
+`T` = `unknown`
 
 #### Parameters
 
