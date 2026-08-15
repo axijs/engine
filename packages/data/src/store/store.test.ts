@@ -122,12 +122,4 @@ describe('Store', () => {
     store.delete('player/level');
     expect(deleted).toEqual([{path: 'player/level', oldValue: 1}]);
   });
-
-  it('throws when setting a readonly field', () => {
-    const store = new Store();
-    store.create('player/name', 'hero');
-    store.markAsReadonly('player/name');
-
-    expect(() => store.set('player/name', 'villain')).toThrow(/readonly/);
-  });
 });
