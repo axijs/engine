@@ -6,6 +6,7 @@
 
 ## Classes
 
+- [EventChannel](classes/EventChannel.md)
 - [Registry](classes/Registry.md)
 
 ## Interfaces
@@ -44,6 +45,8 @@
 - [isPercentageString](functions/isPercentageString.md)
 - [isScalar](functions/isScalar.md)
 - [isSequentialStart](functions/isSequentialStart.md)
+- [joinPath](functions/joinPath.md)
+- [joinPathString](functions/joinPathString.md)
 - [last](functions/last.md)
 - [percentOf](functions/percentOf.md)
 - [randInt](functions/randInt.md)
