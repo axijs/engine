@@ -1,6 +1,6 @@
 import {createFieldTypeRegistry} from './field-type-registry';
 import {createReferenceRegistry} from './reference-registry';
-import {createSerializerRegistry} from './field-serializers/setup';
+import {createSerializerRegistry} from './field-serializers';
 
 export const DataSystemConfiguration = {
   typeRegistry: createFieldTypeRegistry(),
