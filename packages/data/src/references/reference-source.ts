@@ -9,5 +9,5 @@ export interface ReferenceSource {
 
   getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K];
 
-  getAutoRef<T extends FieldReference<any>>(path: PathType): T;
+  // getAutoRef<T extends FieldReference<any>>(path: PathType): T;
 }

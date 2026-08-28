@@ -31,10 +31,9 @@ import {
 import {ReferenceRegistry} from '../reference-registry';
 import {getDefaultReferenceRegistry, getDefaultTypeRegistry} from '../config';
 
-export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource {
+export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
   typeRegistry: FieldTypeRegistry;
-  referenceRegistry: ReferenceRegistry;
 
   changes = new StoreChangeBuffer();
   events: StoreEventBus = new StoreEventBus();
@@ -53,12 +52,10 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
 
   constructor(options?: {
     group?: FieldGroup,
-    typeRegistry?: FieldTypeRegistry,
-    referenceRegistry?: ReferenceRegistry
+    typeRegistry?: FieldTypeRegistry
   }) {
     this.group = options?.group ?? NodeFactory.group();
     this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
-    this.referenceRegistry = options?.referenceRegistry ?? getDefaultReferenceRegistry();
   }
 
   getGroup() {
@@ -168,10 +165,10 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
         const buffer: { path: string, node: FieldNode }[] = [];
         this.collectNodeChildrenPaths(node, pathStr, buffer);
         for (let i = buffer.length - 1; i >= 0; i--) {
-          const { path: childPathStr, node: childNode } = buffer[i];
+          const {path: childPathStr, node: childNode} = buffer[i];
           this.clearOnDeleteNode(
             childPathStr,
-            isField(childNode) ? this.typeRegistry.cloneValue(childNode.value): undefined
+            isField(childNode) ? this.typeRegistry.cloneValue(childNode.value) : undefined
           );
         }
       }
@@ -193,33 +190,6 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
   tick() {
     this.eventDispatcher.flush();
     this.changes.clear();
-  }
-
-  getRef<T = unknown>(path: PathType): FieldReference<T> {
-    return this.referenceRegistry.create('generic', this, path);
-  }
-
-  getReadonlyRef<T = unknown>(path: PathType): ReadonlyFieldReference<T> {
-    return this.referenceRegistry.create('readonly', this, path);
-  }
-
-  getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K] {
-    return this.referenceRegistry.create(type, this, path);
-  }
-
-  getAutoRef<T extends FieldReference<any>>(path: PathType): T {
-    const fieldType = this.getField(path).type as FieldName;
-    return this.referenceRegistry.create(fieldType, this, path) as T;
-  }
-
-  createRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R {
-    this.create(path, value);
-    return this.getAutoRef<R>(path);
-  }
-
-  upsertRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R {
-    this.upsert(path, value);
-    return this.getAutoRef<R>(path);
   }
 
   private getField(path: PathType): Field<any> {

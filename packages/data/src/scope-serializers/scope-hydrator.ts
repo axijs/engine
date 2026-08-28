@@ -28,10 +28,7 @@ export class ScopeHydrator {
       uid: snapshot.uid,
       name: snapshot.name,
       parent: parentScope,
-      data: this.hydrator.hydrate(snapshot.data, {
-        typeRegistry: parentScope?.data.typeRegistry,
-        referenceRegistry: parentScope?.data.referenceRegistry,
-      })
+      data: this.hydrator.hydrate(snapshot.data, { typeRegistry: parentScope?.data.typeRegistry})
     });
   }
 

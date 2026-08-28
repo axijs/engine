@@ -1,13 +1,15 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../store';
+import {DataReferences} from './data-references';
 
 describe('readonly field reference', () => {
   it('returns a readonly reference and subscribes to change/delete events', () => {
     const store = new Store();
+    const refs = new DataReferences({data: store});
     store.eventMode = 'eager';
     store.create('player/name', 'hero');
 
-    const ref = store.getReadonlyRef<string>('player/name');
+    const ref = refs.getReadonlyRef<string>('player/name');
     expect(ref.value).toBe('hero');
     expect(ref.path).toBe('player/name');
     expect(ref.pathArr).toEqual(['player', 'name']);

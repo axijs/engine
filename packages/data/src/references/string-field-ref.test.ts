@@ -1,12 +1,14 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../store';
+import {DataReferences} from './data-references';
 
 describe('string field reference', () => {
   it('creates a string reference with append, prepend, trim, isEmpty and clear', () => {
     const store = new Store();
+    const refs = new DataReferences({data: store});
     store.create('settings/title', '  Hello ');
 
-    const ref = store.getTypedRef('string', 'settings/title');
+    const ref = refs.getTypedRef('string', 'settings/title');
     expect(ref.value).toBe('  Hello ');
     expect(ref.append(' World').value).toBe('  Hello  World');
     expect(ref.prepend('Say: ').value).toBe('Say:   Hello  World');

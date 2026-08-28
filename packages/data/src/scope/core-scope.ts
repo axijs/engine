@@ -29,10 +29,7 @@ export class CoreScope implements Scope {
     return new CoreScope({
       name: childName,
       parent: this,
-      data: new Store({
-        referenceRegistry: this.data.referenceRegistry,
-        typeRegistry: this.data.typeRegistry
-      }),
+      data: new Store({typeRegistry: this.data.typeRegistry}),
     });
   }
 

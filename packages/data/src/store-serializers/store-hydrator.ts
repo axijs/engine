@@ -19,8 +19,7 @@ export class StoreHydrator {
     }): Store {
     return new Store({
       group: this.hydrator.hydrate(snapshot.group),
-      typeRegistry: options?.typeRegistry,
-      referenceRegistry: options?.referenceRegistry
+      typeRegistry: options?.typeRegistry
     });
   }
 
