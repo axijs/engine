@@ -3,9 +3,9 @@ import {CoreScope} from '../scope';
 import {ScopeSnapshot} from './types';
 
 export class ScopeSnapshotter {
-  readonly storeSnapshotter: StoreSnapshotter;
-  constructor(storeSnapshotter: StoreSnapshotter) {
-    this.storeSnapshotter = storeSnapshotter;
+  readonly snapshotter: StoreSnapshotter;
+  constructor(snapshotter?: StoreSnapshotter) {
+    this.snapshotter = snapshotter ?? new StoreSnapshotter();
   }
 
   snapshot(scope: CoreScope): ScopeSnapshot {
@@ -13,7 +13,7 @@ export class ScopeSnapshotter {
       uid: scope.uid,
       name: scope.name,
       parent: scope.parent?.uid,
-      data: this.storeSnapshotter.snapshot(scope.data)
+      data: this.snapshotter.snapshot(scope.data)
     }
   }
 }

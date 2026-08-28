@@ -9,10 +9,10 @@ export type ScopeParentGetter = ((parentId: string | undefined) => CoreScope | u
  * Resolves a parent scope from its uid stored in a scope snapshot.
  */
 export class ScopeHydrator {
-  readonly storeHydrator: StoreHydrator;
-  
-  constructor(storeHydrator: StoreHydrator) {
-    this.storeHydrator = storeHydrator;
+  readonly hydrator: StoreHydrator;
+
+  constructor(hydrator?: StoreHydrator) {
+    this.hydrator = hydrator ?? new StoreHydrator();
   }
 
   /**
@@ -21,12 +21,17 @@ export class ScopeHydrator {
    * The parent can be provided directly as a scope or resolved from the
    * snapshot parent uid by passing a {@link ScopeParentGetter} function.
    */
-  hydrate(snapshot: ScopeSnapshot, parent?: CoreScope |  ScopeParentGetter) {
+  hydrate(snapshot: ScopeSnapshot, parent?: CoreScope | ScopeParentGetter) {
+    const parentScope = isFunction(parent) ? parent(snapshot.parent) : parent;
+
     return new CoreScope({
       uid: snapshot.uid,
       name: snapshot.name,
-      parent: isFunction(parent) ? parent(snapshot.parent) : parent,
-      data: this.storeHydrator.hydrate(snapshot.data)
+      parent: parentScope,
+      data: this.hydrator.hydrate(snapshot.data, {
+        typeRegistry: parentScope?.data.typeRegistry,
+        referenceRegistry: parentScope?.data.referenceRegistry,
+      })
     });
   }
 
@@ -42,6 +47,6 @@ export class ScopeHydrator {
     if (!!parent) {
       scope.parent = isFunction(parent) ? parent(snapshot.parent) : parent;
     }
-    this.storeHydrator.patch(scope.data, snapshot.data);
+    this.hydrator.patch(scope.data, snapshot.data);
   }
 }

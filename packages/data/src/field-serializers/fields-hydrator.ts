@@ -23,12 +23,13 @@ export interface FieldsHydratorOptions {
 
 export class FieldsHydrator {
 
-  protected typeRegistry: FieldTypeRegistry;
-  protected serializerRegistry: SerializerRegistry;
+  protected _typeRegistry: FieldTypeRegistry;
+  protected _serializerRegistry: SerializerRegistry;
+
 
   constructor(options?: FieldsHydratorOptions) {
-    this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
-    this.serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
+    this._typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this._serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
   }
 
   hydrate(snapshot: SerializedGroup): FieldGroup {
@@ -59,9 +60,9 @@ export class FieldsHydrator {
   private hydrateField(node: SerializedField): Field<unknown> {
     return {
       type: node.type,
-      value: this.serializerRegistry.has(node.type) ?
-        this.serializerRegistry.getOrThrow(node.type).deserialize(node.value) :
-        this.typeRegistry.cloneValue(node.value)
+      value: this._serializerRegistry.has(node.type) ?
+        this._serializerRegistry.getOrThrow(node.type).deserialize(node.value) :
+        this._typeRegistry.cloneValue(node.value)
     }
   }
 
@@ -86,7 +87,7 @@ export class FieldsHydrator {
             this.patchNode(node, snapshotNode as SerializedGroup, newPath, patchResult);
           } else if (isField(node)) {
             const oldVal = node.value;
-            node.value = this.typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
+            node.value = this._typeRegistry.getDefinition(node.type).cloneValue((snapshotNode as SerializedField).value);
             patchResult.changed.push({
               path: newPath,
               value: node.value,
@@ -119,7 +120,7 @@ export class FieldsHydrator {
   ) {
     record[nodePath] = undefined;
     if (isField(node)) {
-      record[nodePath] = this.typeRegistry.cloneNodeValue(node);
+      record[nodePath] = this._typeRegistry.cloneNodeValue(node);
     } else if (isGroup(node)) {
       for (const key in node.items) {
         this.flatNode(node.items[key], joinPathString(nodePath, key), record);
@@ -138,7 +139,7 @@ export class FieldsHydrator {
     const snapshotNode = snapshot.items[key];
     const newPath = joinPathString(path, key);
     if (isSerializedField(snapshotNode)) {
-      const def = this.typeRegistry.getDefinition(snapshotNode.type as FieldName);
+      const def = this._typeRegistry.getDefinition(snapshotNode.type as FieldName);
       NodeOps.add(group, key, NodeFactory.raw(snapshotNode.type, def.cloneValue(snapshotNode.value)) as FieldNode);
       patchResult.created.push({
         path: newPath,

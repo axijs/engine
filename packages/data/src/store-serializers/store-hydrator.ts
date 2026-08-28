@@ -1,17 +1,27 @@
 import {SerializedStore} from './types';
 import {Store} from '../store';
-import {FieldsHydrator, FieldsHydratorOptions} from '../field-serializers';
+import {FieldsHydrator} from '../field-serializers';
+import {FieldTypeRegistry} from '../field-type-registry';
+import {ReferenceRegistry} from '../reference-registry';
 
 export class StoreHydrator {
   hydrator: FieldsHydrator;
 
-
-  constructor(options: FieldsHydratorOptions) {
-    this.hydrator = new FieldsHydrator(options);
+  constructor(hydrator?: FieldsHydrator) {
+    this.hydrator = hydrator ?? new FieldsHydrator();
   }
 
-  hydrate(snapshot: SerializedStore): Store {
-    return new Store({group: this.hydrator.hydrate(snapshot.group)});
+  hydrate(
+    snapshot: SerializedStore,
+    options?: {
+      typeRegistry?: FieldTypeRegistry;
+      referenceRegistry?: ReferenceRegistry;
+    }): Store {
+    return new Store({
+      group: this.hydrator.hydrate(snapshot.group),
+      typeRegistry: options?.typeRegistry,
+      referenceRegistry: options?.referenceRegistry
+    });
   }
 
   patch(store: Store, snapshot: SerializedStore) {
