@@ -212,12 +212,12 @@ export class Store implements DataStorage, StoreEventSubscriber, ReferenceSource
     return this.referenceRegistry.create(fieldType, this, path) as T;
   }
 
-  createRef<R extends FieldReference<any> = FieldReference<any>>(path: PathType, value: R['value']): R {
+  createRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R {
     this.create(path, value);
     return this.getAutoRef<R>(path);
   }
 
-  upsertRef<R extends FieldReference<any> = FieldReference<any>>(path: PathType, value: R['value']): R {
+  upsertRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R {
     this.upsert(path, value);
     return this.getAutoRef<R>(path);
   }
