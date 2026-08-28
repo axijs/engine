@@ -6,7 +6,9 @@ export * from './references'
 export * from './reference-registry'
 
 export * from './store'
+export * from './store-serializers'
+
 export * from './scope'
+export * from './scope-serializers'
+
 export * from './config'
-
-

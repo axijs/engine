@@ -1,8 +1,10 @@
-import {DataStorage, Destroyable, PathType} from '@axi-engine/utils';
+import { DataStorage, Destroyable, PathType } from '@axi-engine/utils';
+
 
 export interface Scope extends DataStorage, Destroyable {
-  readonly uid?: string;
+  readonly uid: string;
   readonly name?: string;
+  parent?: Scope;
 
   /**
    * create child Scope with optional name
@@ -10,34 +12,40 @@ export interface Scope extends DataStorage, Destroyable {
   extend(name?: string): Scope;
 
   /**
-   * hierarchically read value from context
-   * if name has only one segment - will return value from this Scope or throw error
-   * if name has several segments - will split path to segments and check parents
+   * Reads a value from this scope or, when it is not found locally, from its
+   * parent scope chain.
+   *
+   * A multi-segment path can also address a named scope, for example
+   * `global.settings.debug`.
    */
   get<T = any>(name: PathType): T;
 
   /**
-   * hierarchically set value to field with name
-   * searching target variable from top frame or context to bottom
+   * Updates an existing value in the nearest scope where it is found.
+   *
+   * A multi-segment path addressing a named scope updates that scope directly.
    */
   set<T = any>(name: PathType, value: T): void;
 
+  /**
+   * Updates an existing value or creates a new one in the scope resolved by the
+   * path. A plain name is therefore created in the current scope.
+   */
   upsert<T = any>(name: PathType, value: T): void;
 
   /**
-   * hierarchically create variable with name and value
-   * will create variable in the top context block or frame
+   * Creates a new value in the scope resolved by the path.
    */
   create<T = any>(name: PathType, value: T): void
 
   /**
-   * hierarchically delete variable with name, manual deleting can be dangerous!
-   * deleting works only with variables in local scope
-   * */
+   * Deletes a value from the scope resolved by the path.
+   */
   delete(name: PathType): void
 
   /**
-   * hierarchically check is variable with name exists
+   * Checks whether a value exists in this scope or anywhere in its parent scope
+   * chain.
    */
   has(name: PathType): boolean
 }

@@ -1,4 +1,4 @@
-import {type DataStorage, ensurePathArray, ensurePathString, PathType, uid} from '@axi-engine/utils';
+import {ensurePathArray, ensurePathString, PathType, uid} from '@axi-engine/utils';
 import {throwError} from '@axijs/ensure';
 import {Scope} from './scope';
 import {Store} from '../store'
@@ -6,30 +6,33 @@ import {ScopeError} from './errors';
 import {SCOPE_SYSTEM_CONFIG} from './config';
 
 export interface ScopeOptions {
-  data: DataStorage,
-  uid?: string,
-  name?: string,
-  parent?: CoreScope
+  uid?: string;
+  name?: string;
+  parent?: CoreScope;
+  data?: Store;
 }
 
 export class CoreScope implements Scope {
   readonly uid: string;
-  data: DataStorage;
   name?: string;
   parent?: CoreScope;
+  data: Store;
 
   constructor(options: ScopeOptions) {
     this.uid = options.uid ?? uid();
-    this.data = options.data;
     this.name = options.name;
     this.parent = options.parent;
+    this.data = options.data ?? new Store();
   }
 
-  extend(childName?: string): Scope {
+  extend(childName?: string): CoreScope {
     return new CoreScope({
-      data: new Store(),
+      name: childName,
       parent: this,
-      name: childName
+      data: new Store({
+        referenceRegistry: this.data.referenceRegistry,
+        typeRegistry: this.data.typeRegistry
+      }),
     });
   }
 
