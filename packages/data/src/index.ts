@@ -1,3 +1,5 @@
+export * from './config'
+
 export * from './fields'
 export * from './field-type-registry'
 export * from './field-serializers'
@@ -10,5 +12,3 @@ export * from './store-serializers'
 
 export * from './scope'
 export * from './scope-serializers'
-
-export * from './config'
