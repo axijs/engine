@@ -11,6 +11,8 @@ export interface Scope extends DataStorage, Destroyable {
    */
   extend(name?: string): Scope;
 
+  tick(): void;
+
   /**
    * Reads a value from this scope or, when it is not found locally, from its
    * parent scope chain.
@@ -36,16 +38,16 @@ export interface Scope extends DataStorage, Destroyable {
   /**
    * Creates a new value in the scope resolved by the path.
    */
-  create<T = any>(name: PathType, value: T): void
+  create<T = any>(name: PathType, value: T): void;
 
   /**
    * Deletes a value from the scope resolved by the path.
    */
-  delete(name: PathType): void
+  delete(name: PathType): void;
 
   /**
    * Checks whether a value exists in this scope or anywhere in its parent scope
    * chain.
    */
-  has(name: PathType): boolean
+  has(name: PathType): boolean;
 }
