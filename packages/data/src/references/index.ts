@@ -9,3 +9,4 @@ export * from './numeric-field-ref'
 export * from './string-field-ref'
 
 export * from './reference-source'
+export * from './data-references'
