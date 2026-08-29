@@ -5,11 +5,11 @@ import {DataReferences} from './data-references';
 describe('numeric field reference', () => {
   it('creates a numeric reference with inc and dec helpers', () => {
     const store = new Store();
-    const refs = new DataReferences({data: store});
+    const refs = new DataReferences(store);
 
     store.create('player/points', 5);
 
-    const ref = refs.getTypedRef('numeric', 'player/points');
+    const ref = refs.get('numeric', 'player/points');
     expect(ref.value).toBe(5);
     ref.inc(10);
     expect(ref.value).toBe(15);

@@ -1,8 +1,9 @@
 import {SerializedStore} from '../store-serializers';
 
 export interface ScopeSnapshot {
-  uid: string,
-  name?: string,
-  parent?: string // parent uid
-  data: SerializedStore
+  uid: string;
+  name?: string;
+  // parent?: ScopeSnapshot;
+  children?: ScopeSnapshot[];
+  data: SerializedStore;
 }

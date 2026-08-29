@@ -10,7 +10,7 @@ import {
   FieldName
 } from '../fields';
 import {FieldTypeRegistry} from '../field-type-registry';
-import {getDefaultSerializerRegistry, getDefaultTypeRegistry} from '../config';
+import {getDefaultSerializerRegistry, getDefaultFieldTypeRegistry} from '../config';
 import {SerializerRegistry} from './serializer-registry';
 import {isSerializedField, isSerializedGroup} from './guards';
 import {joinPathString} from '@axi-engine/utils';
@@ -28,7 +28,7 @@ export class FieldsHydrator {
 
 
   constructor(options?: FieldsHydratorOptions) {
-    this._typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this._typeRegistry = options?.typeRegistry ?? getDefaultFieldTypeRegistry();
     this._serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
   }
 

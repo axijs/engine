@@ -3,11 +3,18 @@ import type {FieldReference, ReadonlyFieldReference} from './field-reference';
 import type {FieldReferenceName, FieldReferences} from './field-references';
 
 export interface ReferenceSource {
-  getRef<T = unknown>(path: PathType): FieldReference<T>;
 
-  getReadonlyRef<T = unknown>(path: PathType): ReadonlyFieldReference<T>;
+  get<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K];
 
-  getTypedRef<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K];
+  getBase<T = unknown>(path: PathType): FieldReference<T>;
 
-  // getAutoRef<T extends FieldReference<any>>(path: PathType): T;
+  getReadonly<T = unknown>(path: PathType): ReadonlyFieldReference<T>;
+
+  getAuto<T extends FieldReference<any>>(path: PathType): T;
+
+  /** create field and return auto ref on it */
+  createAndRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R;
+
+  /** create or update field and return auto ref on it  */
+  upsertAndRef<R extends FieldReference<any>>(path: PathType, value: R['value']): R;
 }

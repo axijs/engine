@@ -18,7 +18,14 @@ export class CoreScope implements Scope {
   parent?: CoreScope;
   data: Store;
 
-  private readonly children = new Set<CoreScope>();
+  private readonly _children = new Set<CoreScope>();
+
+  /**
+   *
+   */
+  get children() {
+    return this._children;
+  }
 
   constructor(options: ScopeOptions) {
     this.uid = options.uid ?? uid();
@@ -33,14 +40,14 @@ export class CoreScope implements Scope {
       parent: this,
       data: new Store({typeRegistry: this.data.typeRegistry}),
     });
-    this.children.add(child);
+    this._children.add(child);
 
     return child;
   }
 
   tick() {
     this.data.tick();
-    this.children.forEach(child => child.tick());
+    this._children.forEach(child => child.tick());
   }
 
   get<T = any>(name: PathType): T {
@@ -124,7 +131,7 @@ export class CoreScope implements Scope {
 
   destroy() {
     this.data.clear();
-    this.parent?.children.delete(this);
+    this.parent?._children.delete(this);
     this.parent = undefined;
   }
 

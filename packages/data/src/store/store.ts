@@ -4,7 +4,6 @@ import {Emitter} from '@axijs/emitter';
 import {
   type Field,
   type FieldGroup,
-  type FieldName,
   type FieldNode,
   GroupOps,
   isField,
@@ -21,15 +20,7 @@ import {
 } from '../event-bus';
 import {StoreChangeBuffer} from './store-change-buffer';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher';
-import {
-  type FieldReference,
-  type FieldReferenceName,
-  type FieldReferences,
-  type ReadonlyFieldReference,
-  type ReferenceSource
-} from '../references';
-import {ReferenceRegistry} from '../reference-registry';
-import {getDefaultReferenceRegistry, getDefaultTypeRegistry} from '../config';
+import {getDefaultFieldTypeRegistry} from '../config';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
@@ -55,7 +46,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
     typeRegistry?: FieldTypeRegistry
   }) {
     this.group = options?.group ?? NodeFactory.group();
-    this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this.typeRegistry = options?.typeRegistry ?? getDefaultFieldTypeRegistry();
   }
 
   getGroup() {

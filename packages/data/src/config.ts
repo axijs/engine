@@ -8,7 +8,7 @@ export const DataSystemConfiguration = {
   serializerRegistry: createSerializerRegistry()
 }
 
-export function getDefaultTypeRegistry() {
+export function getDefaultFieldTypeRegistry() {
   return DataSystemConfiguration.typeRegistry;
 }
 

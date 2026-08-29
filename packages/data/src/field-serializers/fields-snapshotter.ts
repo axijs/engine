@@ -1,5 +1,5 @@
 import {FieldTypeRegistry} from '../field-type-registry';
-import {getDefaultSerializerRegistry, getDefaultTypeRegistry} from '../config';
+import {getDefaultSerializerRegistry, getDefaultFieldTypeRegistry} from '../config';
 import {Field, FieldGroup, isGroup} from '../fields';
 import {SerializedField, SerializedGroup} from './types';
 import {SerializerRegistry} from './serializer-registry';
@@ -14,7 +14,7 @@ export class FieldsSnapshotter {
   protected serializerRegistry: SerializerRegistry;
 
   constructor(options?: FieldsSnapshotterOptions) {
-    this.typeRegistry = options?.typeRegistry ?? getDefaultTypeRegistry();
+    this.typeRegistry = options?.typeRegistry ?? getDefaultFieldTypeRegistry();
     this.serializerRegistry = options?.serializerRegistry ?? getDefaultSerializerRegistry();
   }
 

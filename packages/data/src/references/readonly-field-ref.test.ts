@@ -5,11 +5,11 @@ import {DataReferences} from './data-references';
 describe('readonly field reference', () => {
   it('returns a readonly reference and subscribes to change/delete events', () => {
     const store = new Store();
-    const refs = new DataReferences({data: store});
+    const refs = new DataReferences(store);
     store.eventMode = 'eager';
     store.create('player/name', 'hero');
 
-    const ref = refs.getReadonlyRef<string>('player/name');
+    const ref = refs.getReadonly<string>('player/name');
     expect(ref.value).toBe('hero');
     expect(ref.path).toBe('player/name');
     expect(ref.pathArr).toEqual(['player', 'name']);

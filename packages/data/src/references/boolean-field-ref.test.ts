@@ -5,10 +5,10 @@ import {DataReferences} from './data-references';
 describe('boolean field references', () => {
   it('creates a boolean reference and toggles value', () => {
     const store = new Store();
-    const refs = new DataReferences({data: store});
+    const refs = new DataReferences(store);
     store.create('ui/visible', false);
 
-    const ref = refs.getTypedRef('boolean', 'ui/visible');
+    const ref = refs.get('boolean', 'ui/visible');
     expect(ref.value).toBe(false);
     expect(ref.toggle()).toBe(true);
     expect(ref.value).toBe(true);
