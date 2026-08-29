@@ -15,7 +15,7 @@ export class ScopeSnapshotter {
 
   /**
    * Captures a single scope and its serialized data.
-   * 
+   *
    * @param scope The scope to snapshot.
    * @returns A snapshot of the scope without child scopes.
    */
@@ -23,30 +23,28 @@ export class ScopeSnapshotter {
     return {
       uid: scope.uid,
       name: scope.name,
+      parentUid: isUndefined(scope.parent) ? undefined : scope.parent.uid,
       data: this.snapshotter.snapshot(scope.data)
     };
   }
 
   /**
    * Captures a scope and all nested child scopes.
-   * 
+   *
    * @param scope The root scope of the subtree.
    * @returns A snapshot containing the scope data and its child snapshots.
    */
   snapshotSubtree(scope: CoreScope): ScopeSnapshot {
-    return {
-      uid: scope.uid,
-      name: scope.name,
-      data: this.snapshotter.snapshot(scope.data),
-      children: scope.children.size === 0 ?
-        undefined :
-        [...scope.children].map(child => this.snapshotSubtree(child))
-    };
+    const snap = this.snapshotScope(scope);
+    snap.children = scope.children.size === 0 ? undefined :
+      [...scope.children].map(child => this.snapshotSubtree(child));
+
+    return snap;
   }
 
   /**
    * Captures the full hierarchy from the root ancestor.
-   * 
+   *
    * @param scope Any scope in the hierarchy.
    * @returns A snapshot of the entire scope tree rooted at the topmost ancestor.
    */
