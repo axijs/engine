@@ -30,6 +30,9 @@ export class FieldTypeRegistry {
   }
 
   compare(node: Field<any>, val: unknown): boolean {
+    if (node.type === this.fallbackName) {
+      return true;
+    }
     return node.type === this.getNodeNameByVariable(val);
   }
 
@@ -38,6 +41,9 @@ export class FieldTypeRegistry {
   }
 
   isValueEquivalent(node: Field<any>, newVal: unknown): boolean {
+    if (node.type === this.fallbackName) {
+      return this.fallbackItem.isValueEquivalent(node.value, newVal);
+    }
     const match = this.matchDefinition(newVal);
     return match[1].isValueEquivalent(node.value, newVal);
   }

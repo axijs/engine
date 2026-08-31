@@ -1,5 +1,6 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from './store';
+import {GroupOps} from '../fields';
 
 describe('Store', () => {
   it('creates a new field and reads it back', () => {
@@ -121,5 +122,15 @@ describe('Store', () => {
 
     store.delete('player/level');
     expect(deleted).toEqual([{path: 'player/level', oldValue: 1}]);
+  });
+
+  it('generic field', () => {
+    const store = new Store();
+    store.create('test', undefined);
+    const node = GroupOps.get(store.getGroup(),'test');
+    expect(node?.type).toEqual('generic');
+
+    store.set('test', 'hello');
+    expect(store.get('test')).toEqual('hello');
   });
 });
