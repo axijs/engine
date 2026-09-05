@@ -10,7 +10,10 @@ export class StoreChangeBuffer {
   }
 
   changed(path: string, value: unknown, oldValue: unknown) {
-    this._changed.set(path, {value, oldValue});
+    this._changed.set(path, {
+      value,
+      oldValue: this._changed.has(path) ? this._changed.get(path)!.oldValue : oldValue
+    });
   }
 
   deleted(path: string, val: unknown) {

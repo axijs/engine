@@ -1,5 +1,5 @@
 import {FieldRef} from './field-ref';
-import type {NumericFieldReference} from './field-reference';
+import type {NumericFieldReference} from './numeric-field-reference';
 
 export class NumericFieldRef extends FieldRef<number> implements NumericFieldReference {
   inc(val: number) {

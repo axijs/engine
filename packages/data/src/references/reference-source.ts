@@ -1,6 +1,7 @@
 import type {PathType} from '@axi-engine/utils';
-import type {FieldReference, ReadonlyFieldReference} from './field-reference';
+import type {FieldReference} from './field-reference';
 import type {FieldReferenceName, FieldReferences} from './field-references';
+import {ReadonlyFieldReference} from './readonly-field-reference';
 
 export interface ReferenceSource {
 

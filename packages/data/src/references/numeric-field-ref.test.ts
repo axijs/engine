@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest';
 import {Store} from '../store';
 import {DataReferences} from './data-references';
 
+
 describe('numeric field reference', () => {
   it('creates a numeric reference with inc and dec helpers', () => {
     const store = new Store();

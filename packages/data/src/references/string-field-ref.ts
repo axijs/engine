@@ -1,5 +1,5 @@
 import {FieldRef} from './field-ref';
-import type {StringFieldReference} from './field-reference';
+import type {StringFieldReference} from './string-field-reference';
 
 export class StringFieldRef extends FieldRef<string> implements StringFieldReference {
   append(str: string | number): this {

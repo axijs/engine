@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest';
 import {Store} from '../store';
 import {DataReferences} from './data-references';
 
+
 describe('readonly field reference', () => {
   it('returns a readonly reference and subscribes to change/delete events', () => {
     const store = new Store();

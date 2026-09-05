@@ -2,6 +2,7 @@ import {describe, expect, it} from 'vitest';
 import {Store} from '../store';
 import {DataReferences} from './data-references';
 
+
 describe('string field reference', () => {
   it('creates a string reference with append, prepend, trim, isEmpty and clear', () => {
     const store = new Store();

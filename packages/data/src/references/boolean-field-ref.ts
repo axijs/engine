@@ -1,5 +1,5 @@
 import {FieldRef} from './field-ref';
-import type {BooleanFieldReference} from './field-reference';
+import type {BooleanFieldReference} from './boolean-field-reference';
 
 export class BooleanFieldRef extends FieldRef<boolean> implements BooleanFieldReference {
   toggle(): boolean {
