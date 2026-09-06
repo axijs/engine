@@ -1,6 +1,7 @@
 import {describe, expect, it} from 'vitest';
-import {Store} from '../store';
-import {DataReferences} from './data-references';
+import {Store} from '../../store';
+import {DataReferences} from '../implementations';
+
 
 describe('boolean field references', () => {
   it('creates a boolean reference and toggles value', () => {

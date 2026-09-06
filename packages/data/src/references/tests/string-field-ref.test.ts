@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest';
-import {Store} from '../store';
-import {DataReferences} from './data-references';
+import {Store} from '../../store';
+import {DataReferences} from '../implementations';
 
 
 describe('string field reference', () => {

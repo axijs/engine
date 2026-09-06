@@ -1,4 +1,4 @@
-import type {FieldReference} from './field-reference';
+import type {FieldReference} from '../field-reference';
 import {ReadonlyFieldRef} from './readonly-field-ref';
 
 export class FieldRef<T> extends ReadonlyFieldRef<T> implements FieldReference<T> {

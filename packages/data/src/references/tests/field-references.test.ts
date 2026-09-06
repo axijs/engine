@@ -1,9 +1,6 @@
 import {describe, expect, it} from 'vitest';
-import {Store} from '../store';
-import {BooleanFieldRef} from './boolean-field-ref';
-import {NumericFieldRef} from './numeric-field-ref';
-import {StringFieldRef} from './string-field-ref';
-import {DataReferences} from './data-references';
+import {Store} from '../../store';
+import {BooleanFieldRef, DataReferences, NumericFieldRef, StringFieldRef} from '../implementations';
 
 
 describe('references', () => {

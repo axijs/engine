@@ -1,7 +1,7 @@
-import type {ReadonlyFieldReference} from './readonly-field-reference';
 import {ensurePathArray, ensurePathString, type PathType} from '@axi-engine/utils';
-import type {ChangeFieldListener, DeleteNodeListener} from '../event-bus';
-import type {StoreWithEvents} from './types';
+import type {ReadonlyFieldReference} from '../readonly-field-reference';
+import type {ChangeFieldListener, DeleteNodeListener} from '../../event-bus';
+import type {StoreWithEvents} from '../types';
 
 
 export class ReadonlyFieldRef<T> implements ReadonlyFieldReference<T> {
