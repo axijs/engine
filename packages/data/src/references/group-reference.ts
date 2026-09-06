@@ -1,6 +1,6 @@
-import {FieldReference} from './field-reference';
+import {NodeReference} from './node-reference';
 
-export interface GroupReference<T extends FieldReference<any>> {
+export interface GroupReference extends NodeReference<void> {
 
 
   clear(): void;
