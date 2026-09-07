@@ -1,14 +1,15 @@
-import {GroupReference} from '../group-reference';
+import {NodeRef} from './node-ref';
 import type {StoreWithEvents} from '../types';
 import {PathType} from '@axi-engine/utils';
-import {NodeRef} from './node-ref';
+import {CollectionReference} from '../collection-reference';
 
-export class GroupRef extends NodeRef<void> implements GroupReference {
-
+export class CollectionRef extends NodeRef<void> implements CollectionReference {
   constructor(store: StoreWithEvents, path: PathType) {
     super(store, path);
   }
 
   clear() {
+
   }
+
 }

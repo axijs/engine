@@ -1,5 +1,5 @@
 import {NodeReference} from './node-reference';
 
-export interface CollectionReference<T> extends NodeReference<T> {
-
+export interface CollectionReference extends NodeReference<void> {
+  clear(): void;
 }
