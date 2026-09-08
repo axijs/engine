@@ -1,12 +1,12 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {DataReferences} from '../implementations';
+import {FieldNodeReferences} from '../implementations';
 
 
 describe('boolean field references', () => {
   it('creates a boolean reference and toggles value', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     store.create('ui/visible', false);
 
     const ref = refs.get('boolean', 'ui/visible');

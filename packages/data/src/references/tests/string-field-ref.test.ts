@@ -1,12 +1,12 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {DataReferences} from '../implementations';
+import {FieldNodeReferences} from '../implementations';
 
 
 describe('string field reference', () => {
   it('creates a string reference with append, prepend, trim, isEmpty and clear', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     store.create('settings/title', '  Hello ');
 
     const ref = refs.get('string', 'settings/title');

@@ -8,6 +8,6 @@ export * from './numeric-field-reference'
 export * from './group-reference'
 export * from './collection-reference'
 export * from './field-references'
-export * from './reference-source'
+export * from './field-reference-source'
 
 export * from './implementations'

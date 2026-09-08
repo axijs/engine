@@ -1,4 +1,4 @@
-import {DataReferences, GroupRef, NodeFactory as f, Store} from '@axi-engine/data';
+import {/*DataReferences, GroupRef, */NodeFactory as f, Store} from '@axi-engine/data';
 
 
 export async function testNewScopeSystem() {
@@ -21,12 +21,13 @@ export async function testNewScopeSystem() {
     })
   });
 
+  console.log(catTest);
 
-  const store = new Store({group: catTest});
-  const refs = new DataReferences(store);
-
-  const groupRef = new GroupRef(refs);
-  console.log(groupRef);
+  // const store = new Store({group: catTest});
+  // const refs = new DataReferences(store);
+  //
+  // const groupRef = new GroupRef(refs);
+  // console.log(groupRef);
 
   store.tick();
 }

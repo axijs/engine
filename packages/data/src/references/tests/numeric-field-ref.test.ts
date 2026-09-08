@@ -1,12 +1,12 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {DataReferences} from '../implementations';
+import {FieldNodeReferences} from '../implementations';
 
 
 describe('numeric field reference', () => {
   it('creates a numeric reference with inc and dec helpers', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
 
     store.create('player/points', 5);
 

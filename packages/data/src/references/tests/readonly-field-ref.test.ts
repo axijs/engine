@@ -1,12 +1,12 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {DataReferences} from '../implementations';
+import {FieldNodeReferences} from '../implementations';
 
 
 describe('readonly field reference', () => {
   it('returns a readonly reference and subscribes to change/delete events', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     store.eventMode = 'eager';
     store.create('player/name', 'hero');
 

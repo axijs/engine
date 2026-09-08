@@ -3,7 +3,7 @@ import type {FieldReference} from './field-reference';
 import type {FieldReferenceName, FieldReferences} from './field-references';
 import {ReadonlyFieldReference} from './readonly-field-reference';
 
-export interface ReferenceSource {
+export interface FieldReferenceSource {
 
   get<K extends FieldReferenceName>(type: K, path: PathType): FieldReferences[K];
 

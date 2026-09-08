@@ -1,11 +1,11 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {DataReferences} from '../implementations';
+import {FieldNodeReferences} from '../implementations';
 
 describe('generic field reference', () => {
   it('returns a generic reference and updates store through value assignment', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     store.create('player/score', 10);
 
     const ref = refs.getBase<number>('player/score');

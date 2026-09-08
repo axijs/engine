@@ -10,13 +10,13 @@ Defined in: packages/data/src/references/data-references.ts:10
 
 ## Implements
 
-- [`ReferenceSource`](../interfaces/ReferenceSource.md)
+- [`FieldReferenceSource`](../interfaces/ReferenceSource.md)
 
 ## Constructors
 
 ### Constructor
 
-> **new DataReferences**(`data`, `options?`): `DataReferences`
+> **new DataReferences**(`data`, `options?`): `FieldNodeReferences`
 
 Defined in: packages/data/src/references/data-references.ts:16
 
@@ -38,7 +38,7 @@ Defined in: packages/data/src/references/data-references.ts:16
 
 #### Returns
 
-`DataReferences`
+`FieldNodeReferences`
 
 ## Properties
 
@@ -96,7 +96,7 @@ create field and return auto ref on it
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`createAndRef`](../interfaces/ReferenceSource.md#createandref)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`createAndRef`](../interfaces/ReferenceSource.md#createandref)
 
 ***
 
@@ -128,7 +128,7 @@ Defined in: packages/data/src/references/data-references.ts:25
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`get`](../interfaces/ReferenceSource.md#get)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`get`](../interfaces/ReferenceSource.md#get)
 
 ***
 
@@ -156,7 +156,7 @@ Defined in: packages/data/src/references/data-references.ts:37
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`getAuto`](../interfaces/ReferenceSource.md#getauto)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`getAuto`](../interfaces/ReferenceSource.md#getauto)
 
 ***
 
@@ -184,7 +184,7 @@ Defined in: packages/data/src/references/data-references.ts:29
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`getBase`](../interfaces/ReferenceSource.md#getbase)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`getBase`](../interfaces/ReferenceSource.md#getbase)
 
 ***
 
@@ -212,7 +212,7 @@ Defined in: packages/data/src/references/data-references.ts:33
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`getReadonly`](../interfaces/ReferenceSource.md#getreadonly)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`getReadonly`](../interfaces/ReferenceSource.md#getreadonly)
 
 ***
 
@@ -246,4 +246,4 @@ create or update field and return auto ref on it
 
 #### Implementation of
 
-[`ReferenceSource`](../interfaces/ReferenceSource.md).[`upsertAndRef`](../interfaces/ReferenceSource.md#upsertandref)
+[`FieldReferenceSource`](../interfaces/ReferenceSource.md).[`upsertAndRef`](../interfaces/ReferenceSource.md#upsertandref)

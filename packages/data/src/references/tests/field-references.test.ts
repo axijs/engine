@@ -1,12 +1,12 @@
 import {describe, expect, it} from 'vitest';
 import {Store} from '../../store';
-import {BooleanFieldRef, DataReferences, NumericFieldRef, StringFieldRef} from '../implementations';
+import {BooleanFieldRef, FieldNodeReferences, NumericFieldRef, StringFieldRef} from '../implementations';
 
 
 describe('references', () => {
   it('returns an auto reference by field type', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     store.create('auto/flag', true);
     store.create('auto/count', 3);
     store.create('auto/name', 'test');
@@ -26,7 +26,7 @@ describe('references', () => {
 
   it('uses createRef and upsertRef to create typed references', () => {
     const store = new Store();
-    const refs = new DataReferences(store);
+    const refs = new FieldNodeReferences(store);
     const ref = refs.createAndRef<NumericFieldRef>('created/age', 21);
     expect(ref.value).toBe(21);
     ref.value = 22;

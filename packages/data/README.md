@@ -9,7 +9,7 @@ Tiny typed data layer for tree-based state.
 `@axi-engine/data` is built around a typed field tree and three main pieces:
 
 - `Store` — mutable data tree. Use it for create / read / update / delete operations on path-based values.
-- `DataReferences` — typed accessors for values. They provide `FieldRef`, `NumericFieldRef`, `StringFieldRef`, `BooleanFieldRef`, and custom references.
+- `FieldNodeReferences` — typed accessors for values. They provide `FieldRef`, `NumericFieldRef`, `StringFieldRef`, `BooleanFieldRef`, and custom references.
 - `CoreScope` / `Scope` — hierarchical data context with parent-child resolution and inheritance.
 
 The package also exposes registries:
@@ -86,7 +86,7 @@ Main API:
 
 ## References
 
-Use `DataReferences` to get a typed accessor to a node.
+Use `FieldNodeReferences` to get a typed accessor to a node.
 
 `createAndRef` and `upsertAndRef` are convenience helpers: they write the value to the store and immediately return the matching reference for that path.
 

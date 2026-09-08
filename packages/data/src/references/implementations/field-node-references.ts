@@ -1,5 +1,5 @@
 import {type PathType} from '@axi-engine/utils';
-import {ReferenceSource} from '../reference-source';
+import {FieldReferenceSource} from '../field-reference-source';
 import {FieldReference} from '../field-reference';
 import {StoreWithEvents} from '../types';
 import {ReferenceRegistry} from '../../reference-registry';
@@ -8,7 +8,7 @@ import {ReadonlyFieldReference} from '../readonly-field-reference';
 import {FieldReferenceName, FieldReferences} from '../field-references';
 import {getDefaultReferenceRegistry, getDefaultFieldTypeRegistry} from '../../config';
 
-export class DataReferences implements ReferenceSource {
+export class FieldNodeReferences implements FieldReferenceSource {
 
   data: StoreWithEvents;
   fieldTypeRegistry: FieldTypeRegistry;
