@@ -1,7 +1,7 @@
-import {FieldsHydrator, FieldsSnapshotter, NodeFactory as f} from '@axi-engine/data';
+import {BooleanFieldRef, DataReferences, FieldsHydrator, FieldsSnapshotter, NumericFieldRef, Store, NodeFactory as f} from '@axi-engine/data';
 
 
-export async function testNewScopeSystem() {
+export async function testDataSystem() {
 
   const catTest = f.group({
     name: f.str('Little Jo'),
@@ -21,7 +21,7 @@ export async function testNewScopeSystem() {
     })
   });
 
-  const fieldsSnapshotter  = new FieldsSnapshotter();
+  const fieldsSnapshotter = new FieldsSnapshotter();
   const fieldsHydrator = new FieldsHydrator();
   const catTestSnapshot = fieldsSnapshotter.snapshot(catTest);
   console.log('catTest snapshot: ', catTestSnapshot);
@@ -51,37 +51,35 @@ export async function testNewScopeSystem() {
   console.log('Path test', patchTest);
   console.log('patched fields: ', patchRes);
 
-  // const store = new Store({group: catTest});
-  //
-  // store.onCreate<number>(['stats', 'hp'], (event) => {
-  //   console.log(`'Hp' created:`, event);
-  // });
-  //
-  // store.onChange<number>(['stats', 'hp'], (event) => {
-  //   console.log(`'Hp' changed:`, event);
-  // });
-  //
-  // const hpRef = store.getTypedRef<'numeric'>('numeric', ['stats', 'hp']);
-  // console.log('hp ref val: ', hpRef.value);
-  //
-  // const readonlyHpRef = store.getReadonlyRef<number>(['stats', 'hp']);
-  // console.log('readonly hp: ', readonlyHpRef.value);
-  //
-  // const autoRef: NumericFieldRef = store.getAutoRef<NumericFieldRef>(['stats', 'hp']);
-  // console.log(autoRef.value);
-  //
-  // const numRef = store.createRef<NumericFieldRef>(['stats', 'test'], 50);
-  // console.log(numRef);
-  //
-  // const anyRef = store.upsertRef(['stats', 'test2'], 'test');
-  // console.log(anyRef);
-  //
-  // store.set(['stats', 'hp'], 25);
-  // store.tick();
-  //
-  // store.set(['stats', 'hp'], 30);
-  // store.tick();
-  //
-  // hpRef.inc(10);
-  // store.tick();
+
+  console.log('events after sub test');
+  const store = new Store();
+  const refs = new DataReferences(store);
+
+  store.create(['test', 'hp'], 100);
+  store.create(['test', 'isDead'], false);
+
+  const hp: NumericFieldRef = refs.getAuto(['test', 'hp']);
+  const isDead: BooleanFieldRef = refs.getAuto(['test', 'isDead']);
+  hp.onChange((e) => {
+    console.log('hp changed: ', e);
+    if (e.value <= 0) {
+      isDead.value = true;
+    }
+  });
+
+  isDead.onChange((e) => console.log('isDead changed: ', e));
+
+  console.log('--> before tick');
+  console.log(store.changes.getCreatedPaths());
+  console.log(store.changes.getChangedPaths());
+  console.log(hp.value, isDead.value);
+
+  hp.value = 0;
+  store.tick();
+
+  console.log('--> after tick');
+  console.log(store.changes.getCreatedPaths());
+  console.log(store.changes.getChangedPaths());  
+  console.log(hp.value, isDead.value);
 }
