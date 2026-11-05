@@ -133,4 +133,18 @@ describe('Store', () => {
     store.set('test', 'hello');
     expect(store.get('test')).toEqual('hello');
   });
+
+  /** todo: correct description */
+  it('Registered change record after tick', () => {
+    const store = new Store();
+    store.create('test', 0);
+    store.create('isPassed', false);
+    store.onChange('test', e => store.set('isPassed', true));
+    store.set('test', 100);
+
+    store.tick();
+    expect(store.get('test')).toEqual(100);
+    expect(store.get('isPassed')).toEqual(true);
+    expect(store.changes.getCreatedPaths().length).toEqual(1);
+  });
 });
