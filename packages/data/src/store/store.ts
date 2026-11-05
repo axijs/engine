@@ -153,7 +153,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
       if (isField(node)) {
         val = this.typeRegistry.cloneValue(node.value);
       } else if (isGroup(node)) {
-        const buffer: { path: string, node: FieldNode }[] = [];
+        const buffer: {path: string, node: FieldNode}[] = [];
         this.collectNodeChildrenPaths(node, pathStr, buffer);
         for (let i = buffer.length - 1; i >= 0; i--) {
           const {path: childPathStr, node: childNode} = buffer[i];
@@ -178,7 +178,11 @@ export class Store implements DataStorage, StoreEventSubscriber {
     this.onClear.emit();
   }
 
-  tick() {
+  /**
+   * todo: description
+   */
+  tick(loopFlush?: number | {limith: number, isThrowError: boolean}) {
+    // todo: global flush configuration and code 
     this.eventDispatcher.flush();
     this.changes.clear();
   }
@@ -198,7 +202,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   private collectNodeChildrenPaths(
     node: FieldGroup,
     nodePath: string,
-    buffer: { path: string, node: FieldNode }[]
+    buffer: {path: string, node: FieldNode}[]
   ) {
     const keys = Object.keys(node.items);
     for (let key of keys) {
