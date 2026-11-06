@@ -134,31 +134,61 @@ describe('Store', () => {
     expect(store.get('test')).toEqual('hello');
   });
 
-  /** todo: correct description */
-  it('Registered change record after tick', () => {
+  it('keeps cascaded change records pending until tick flushes them', () => {
     const store = new Store();
     store.create('test', 0);
     store.create('isPassed', false);
     store.onChange('test', e => store.set('isPassed', true));
     store.set('test', 100);
-    
-    // have created 'test' and 'isPassed' fields
-    expect(store.changes.getCreatedPaths().length).toEqual(2);
 
-    // have changed 'test' field
+    // both fields are already created, but only the direct 'test' mutation is queued
+    expect(store.changes.getCreatedPaths().length).toEqual(2);
     expect(store.changes.getChangedPaths().length).toEqual(1);
-    
-    store.tick();
+
+    store.tick(0);
     expect(store.get('test')).toEqual(100);
     expect(store.get('isPassed')).toEqual(true);
 
-    // have changed 'isPassed' field
+    // after the flush, the cascaded reaction produced a second pending change record
     expect(store.changes.getChangedPaths().length).toEqual(1);
     expect(store.changes.hasChanged('isPassed')).toEqual(true);
   });
 
-  /** todo: description and code */
-  it('loopFlush test', () => {
+  it('flushes cascading updates while loopFlush allows the chain to settle', () => {
+    const store = new Store();
 
+    store.create('a', 0);
+    store.create('b', 0);
+    store.create('c', 0);
+
+    store.onChange('a', () => store.set('b', 10));
+    store.onChange('b', () => store.set('c', 20));
+
+    store.set('a', 1);
+    expect(store.changes.getChangedPaths().length).toEqual(1);
+
+    store.tick({limit: 2, isThrowError: true});
+
+    expect(store.get('a')).toEqual(1);
+    expect(store.get('b')).toEqual(10);
+    expect(store.get('c')).toEqual(20);
+    expect(store.changes.getChangedPaths()).toEqual([]);
+  });
+
+  it('throws when a cascading update chain exceeds the loopFlush limit', () => {
+    const store = new Store();
+
+    store.create('a', 0);
+    store.create('b', 0);
+    store.create('c', 0);
+    store.create('d', 0);
+
+    store.onChange('a', () => store.set('b', 1));
+    store.onChange('b', () => store.set('c', 2));
+    store.onChange('c', () => store.set('d', 3));
+
+    store.set('a', 10);
+
+    expect(() => store.tick({limit: 1, isThrowError: true})).toThrow(/To many types to call flush events/);
   });
 });
