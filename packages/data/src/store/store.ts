@@ -184,7 +184,6 @@ export class Store implements DataStorage, StoreEventSubscriber {
   tick(loopFlush?: number | {limith: number, isThrowError: boolean}) {
     // todo: global flush configuration and code 
     this.eventDispatcher.flush();
-    this.changes.clear();
   }
 
   private getField(path: PathType): Field<any> {

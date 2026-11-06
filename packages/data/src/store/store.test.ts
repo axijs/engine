@@ -141,10 +141,24 @@ describe('Store', () => {
     store.create('isPassed', false);
     store.onChange('test', e => store.set('isPassed', true));
     store.set('test', 100);
+    
+    // have created 'test' and 'isPassed' fields
+    expect(store.changes.getCreatedPaths().length).toEqual(2);
 
+    // have changed 'test' field
+    expect(store.changes.getChangedPaths().length).toEqual(1);
+    
     store.tick();
     expect(store.get('test')).toEqual(100);
     expect(store.get('isPassed')).toEqual(true);
-    expect(store.changes.getCreatedPaths().length).toEqual(1);
+
+    // have changed 'isPassed' field
+    expect(store.changes.getChangedPaths().length).toEqual(1);
+    expect(store.changes.hasChanged('isPassed')).toEqual(true);
+  });
+
+  /** todo: description and code */
+  it('loopFlush test', () => {
+
   });
 });

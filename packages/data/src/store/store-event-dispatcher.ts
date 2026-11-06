@@ -50,7 +50,11 @@ export class StoreEventDispatcher {
     if (!paths.length) return;
 
     this.events.emitOnAnyCreate(paths);
-    paths.forEach(path => this.events.emitOnCreate(path, this.changes.getCreatedValue(path)));
+    paths.forEach(path => {
+      const val = this.changes.getCreatedValue(path);
+      this.changes.unsetCreated(path);
+      this.events.emitOnCreate(path, val);      
+    });
   }
 
   private flushChanged() {
@@ -58,9 +62,9 @@ export class StoreEventDispatcher {
     if (!paths.length) return;
 
     this.events.emitOnAnyChange(paths);
-
     paths.forEach(path => {
       const val = this.changes.getChangedValue(path);
+      this.changes.unsetChanged(path);
       this.events.emitOnChange(path, val.value, val.oldValue)
     });
   }
@@ -70,6 +74,10 @@ export class StoreEventDispatcher {
     if (!paths.length) return;
 
     this.events.emitOnAnyDelete(paths);
-    paths.forEach(path => this.events.emitOnDelete(path, this.changes.getDeletedValue(path)));
+    paths.forEach(path => {
+      const val = this.changes.getDeletedValue(path);
+      this.changes.unsetDeleted(path);
+      this.events.emitOnDelete(path, val);
+    });
   }
 }
