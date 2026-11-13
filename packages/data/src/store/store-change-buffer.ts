@@ -5,6 +5,10 @@ export class StoreChangeBuffer {
   _changed = new Map<string, {value: unknown, oldValue: unknown}>();
   _deleted  = new Map<string, unknown>();
 
+  get isEmpty() {
+    return !this._created.size && !this._changed.size && !this._deleted.size;
+  }
+
   created(path: string, val: unknown) {
     this._created.set(path, val);
   }

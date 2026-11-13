@@ -1,5 +1,5 @@
 import {type DataStorage, ensurePathString, type PathType, utilsSettings} from '@axi-engine/utils';
-import {isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
+import {isNumber, isUndefined, throwIf, throwIfEmpty} from '@axijs/ensure';
 import {Emitter} from '@axijs/emitter';
 import {
   type Field,
@@ -20,7 +20,8 @@ import {
 } from '../event-bus';
 import {StoreChangeBuffer} from './store-change-buffer';
 import {type EventDispatcherMode, StoreEventDispatcher} from './store-event-dispatcher';
-import {getDefaultFieldTypeRegistry} from '../config';
+import {getDefaultFieldTypeRegistry, getDefaultStoreTickParams} from '../config';
+import {StoreTickParams} from './types';
 
 export class Store implements DataStorage, StoreEventSubscriber {
   group: FieldGroup;
@@ -153,7 +154,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
       if (isField(node)) {
         val = this.typeRegistry.cloneValue(node.value);
       } else if (isGroup(node)) {
-        const buffer: { path: string, node: FieldNode }[] = [];
+        const buffer: {path: string, node: FieldNode}[] = [];
         this.collectNodeChildrenPaths(node, pathStr, buffer);
         for (let i = buffer.length - 1; i >= 0; i--) {
           const {path: childPathStr, node: childNode} = buffer[i];
@@ -178,9 +179,63 @@ export class Store implements DataStorage, StoreEventSubscriber {
     this.onClear.emit();
   }
 
-  tick() {
+  /**
+   * Flushes queued store mutations and delivers them to listeners when the store is running in lazy mode.
+   *
+   * By default, `Store` uses `eventMode = 'lazy'`, so methods such as `set()`, `create()`, `upsert()`,
+   * and `delete()` do not emit listeners immediately. Instead, they register the mutation in the internal
+   * `changes` buffer and wait until `tick()` is called to drain the queue through `eventDispatcher.flush()`.
+   * This makes lazy mode suitable for batched updates, deferred subscriptions, or cases where the app wants
+   * to process all pending changes at a chosen point in time.
+   *
+   * If `eventMode` is switched to `'eager'`, the dispatcher emits events immediately as each mutation is
+   * recorded, and `tick()` still acts as a safety net for any remaining buffered work.
+   *
+   * The method first flushes the queue once, then keeps flushing while there are pending changes and the
+   * `limit` budget has not been exceeded. This prevents endless loops when a flush triggers additional
+   * changes, while still allowing nested updates to settle before returning control to the caller.
+   *
+   * @param {number | StoreTickParams} [loopFlush] Optional flush limit.
+   *  - If a number is passed, it becomes the maximum number of flush iterations.
+   *  - If a `StoreTickParams` object is passed, it uses `limit` as the iteration cap and `isThrowError`
+   *    to decide whether to throw when the cap is reached.
+   *
+   * @returns {void} Nothing; the method performs side effects by dispatching queued events.
+   *
+   * @remarks The default values come from `getDefaultStoreTickParams()`, which is configured with
+   * `{ limit: 100, isThrowError: true }`. The guard loop exists to stop runaway event chains and make
+   * the store behavior predictable in reactive pipelines.
+   *
+   * @example
+   * const store = new Store();
+   * store.create('user.name', 'Alice');
+   * store.set('user.age', 30);
+   * store.tick(); // lazy mode: emit create/change events only here
+   */
+  tick(loopFlush?: number | StoreTickParams) {
+    const tickParams = getDefaultStoreTickParams();
+    if (!isUndefined(loopFlush)) {
+      if (isNumber(loopFlush)) {
+        tickParams.limit = loopFlush;
+      } else {
+        tickParams.limit = loopFlush.limit;
+        tickParams.isThrowError = loopFlush.isThrowError;
+      }
+    }
+
     this.eventDispatcher.flush();
-    this.changes.clear();
+    if (this.changes.isEmpty || !tickParams.limit) {
+      return;
+    }
+    let counter = 0;
+    while (!this.changes.isEmpty) {
+      this.eventDispatcher.flush();
+      counter++;
+      if (counter > tickParams.limit) {
+        throwIf(tickParams.isThrowError, `To many types to call flush events, limit is reached: ${tickParams.limit}`);
+        break;
+      }
+    }
   }
 
   private getField(path: PathType): Field<any> {
@@ -198,7 +253,7 @@ export class Store implements DataStorage, StoreEventSubscriber {
   private collectNodeChildrenPaths(
     node: FieldGroup,
     nodePath: string,
-    buffer: { path: string, node: FieldNode }[]
+    buffer: {path: string, node: FieldNode}[]
   ) {
     const keys = Object.keys(node.items);
     for (let key of keys) {

@@ -7,4 +7,12 @@ export class BooleanFieldRef extends FieldRef<boolean> implements BooleanFieldRe
     this.value = res;
     return res;
   }
+
+  setTrue() {
+    this.value = true;
+  }
+
+  setFalse() {
+    this.value = false;
+  }
 }
