@@ -1,4 +1,4 @@
-import {BooleanFieldRef, DataReferences, FieldsHydrator, FieldsSnapshotter, NumericFieldRef, Store, NodeFactory as f} from '@axi-engine/data';
+import {BooleanFieldRef, FieldNodeReferences, FieldsHydrator, FieldsSnapshotter, NumericFieldRef, Store, NodeFactory as f} from '@axi-engine/data';
 
 
 export async function testDataSystem() {
@@ -54,7 +54,7 @@ export async function testDataSystem() {
 
   console.log('events after sub test');
   const store = new Store();
-  const refs = new DataReferences(store);
+  const refs = new FieldNodeReferences(store);
 
   store.create(['test', 'hp'], 100);
   store.create(['test', 'isDead'], false);
